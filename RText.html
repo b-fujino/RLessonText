@@ -2020,7 +2020,7 @@ Shohoku</code></pre>
 <p><code>data.frame()</code>関数の中で<code>name</code>、<code>number</code>、<code>score</code>の3つのベクトルが作られている。つまりデータフレームとは<strong>同じ長さのベクトルが複数まとまったもの</strong>と捉えることができる。</p>
 <div class="ref">
 <p>
-上の例では分かりやすさのため<code>data.frame()</code>の中で改行（Enter）を入れているが、改行は入れても入れなくても良い。console上で<code>()</code>や<code>&quot;&quot;</code>、<code>&#39;&#39;</code>の中で改行を入れた場合、行頭が<code>&gt;</code>から<code>+</code>にかわり、直近の<code>(</code>や<code>&quot;</code>、<code>&#39;</code>閉じられずに続いていることを示す。閉じられていない間はコマンドは実行されない。適切にこれらが閉じられた場合には、閉じられた行でEnterキーを押すとことで一連の入力が一つながりのコマンドとして実行される。
+上の例では分かりやすさのため<code>data.frame()</code>の中で改行（Enter）を入れているが、改行は入れても入れなくても良い。console上で<code>()</code>や<code>&quot;&quot;</code>、<code>&#39;&#39;</code>の中で改行を入れた場合、行頭が<code>&gt;</code>から<code>+</code>にかわり、直近の<code>(</code>や<code>&quot;</code>、<code>&#39;</code>の範囲（<strong>スコープ</strong>と呼ぶ）閉じられずに続いていることを示す。スコープ閉じられていない限りはどれだけEnterを押してもコマンドは実行されない。適切にこれらが閉じられた場合には、閉じられた行でEnterキーを押すとことで一連の入力が一つながりのコマンドとして実行される。
 </p>
 </div>
 </div>
@@ -2450,7 +2450,8 @@ Shohoku</code></pre>
 </div>
 <div id="データの読み込み" class="section level2" number="2.7">
 <h2><span class="header-section-number">2.7</span> データの読み込み</h2>
-<p>実際の調査結果のデータを扱うときには、data.frameを毎度自分でちまちま作ってなんていられないので、表計算ソフトで作成されたデータファイルを読み込むことになる。</p>
+<p>実際の調査結果のデータを扱うときには、data.frameを毎度自分でちまちま作ってなんていられないので、表計算ソフトで作成されたデータファイルを読み込むことになる。
+以下では <a href="https://b-fujino.github.io/RLessonText/test.csv">test.csv</a>と<a href="https://b-fujino.github.io/RLessonText/test.xlsx">test.xlsx</a>を用いるので、それぞれファイル名をクリックしてダウンロードしておくこと。</p>
 <div id="データのアップロード" class="section level3" number="2.7.1">
 <h3><span class="header-section-number">2.7.1</span>
 データのアップロード</h3>
