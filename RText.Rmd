@@ -17,8 +17,11 @@ knitr::opts_chunk$set(echo = TRUE)
 ```{css, echo=FALSE}
 
 img{
-/* 上右下左 */
-  margin: 5% 0% 0% 0% ; 
+  /* 上右下左 */
+  /* margin: 5% 0% 0% 0% ;*/ 
+  width : 75%;
+  margin: auto;
+  display: block;
 }
 
 .figcaption {
