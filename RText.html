@@ -1731,12 +1731,12 @@ Project」と書かれてある箇所をクリックして、名前を書き入�
 <p>ちなみに、出力結果の前にある<code>[1]</code>という表記は、出力結果が長さ1の<strong>ベクトル(Vector)</strong>の1つ目の要素であることを示している。このベクトルについては後で改めて説明する。</p>
 <div class="ref">
 <P>
-なお、このようにconsoleに1行1行数式や関数（まとめて<strong>コマンド</strong>）を入力していく形をCommand
+<p>なお、このようにconsoleに1行1行数式や関数（まとめて<strong>コマンド</strong>）を入力していく形をCommand
 Line Interface (CLI)
-と呼ぶ。CLIでは、操作できるのはあくまで現在カーソルが置かれている行だけである。過去の行はログとして見えているだけであり、ログを消したり、書き換えたりはできない。
+と呼ぶ。CLIでは、操作できるのはあくまで現在カーソルが置かれている行だけである。過去の行はログとして見えているだけであり、ログを消したり、書き換えたりはできない。</p>
 </p>
 <p>
-もし誤ったコマンドを入力しているのに気づかずに実行してしまった場合には、もう一度正しいコマンドを改めて入力すればよい。
+<p>もし誤ったコマンドを入力しているのに気づかずに実行してしまった場合には、もう一度正しいコマンドを改めて入力すればよい。</p>
 </P>
 </div>
 </div>
@@ -1783,7 +1783,7 @@ myName</code></pre>
 <p>オブジェクトにどのようなデータが収められているかによって、そのオブジェクトには「型」と呼ばれる属性が付与される。数値が収められていれば、そのオブジェクトは数値型（<code>Numeric</code>）となるし、文字列が収められていれば文字列型(<code>Character</code>)となる。ほかにも論理型(<code>Logical</code>)や日付型(<code>Date</code>)などいろいろな型がある。</p>
 <div class="ref">
 <P>
-厳密には、オブジェクトに入れていない数値や文字列そのものも、それぞれ数値型や文字列型のデータである。つまり型とはデータそのものに付随する属性であり、<code>オブジェクトの型＝その中見のデータの型</code>である。
+<p>厳密には、オブジェクトに入れていない数値や文字列そのものも、それぞれ数値型や文字列型のデータである。つまり型とはデータそのものに付随する属性であり、<code>オブジェクトの型＝その中見のデータの型</code>である。</p>
 </p>
 </div>
 <p>基本的に型が異なる者同士を計算させることはできない。</p>
@@ -2248,7 +2248,7 @@ Shohoku</code></pre>
 <p>以下の例のように、<code>[]</code>を使って複数の列を同時に追加することもできる。ただし、実用の場面では<strong>記述している処理の分かりやすさ</strong>の観点から、1つ1つ追加していく方が良い。</p>
 <div class="ref">
 <P>
-Rの場合、それほど処理速度に敏感になる必要がないので、人から見た分かりやすさを重視した記述を心掛けるようにしよう。一方で、PythonやJavascript、あるいはC言語系などのプログラム言語を使って、動画像処理などリアルタイム性や高速な処理が求められるプログラムを記述する場合には、分かりやすさを犠牲にして、コンピュータ内部での計算処理回数の少ない書き方をすることもある。
+<p>Rの場合、それほど処理速度に敏感になる必要がないので、人から見た分かりやすさを重視した記述を心掛けるようにしよう。一方で、PythonやJavascript、あるいはC言語系などのプログラム言語を使って、動画像処理などリアルタイム性や高速な処理が求められるプログラムを記述する場合には、分かりやすさを犠牲にして、コンピュータ内部での計算処理回数の少ない書き方をすることもある。</p>
 </p>
 </div>
 <pre class="r"><code>Shohoku[c(&quot;UnderName&quot;,&quot;Roman&quot;)] &lt;-data.frame(
@@ -2576,8 +2576,8 @@ Database -&gt;From Excelを選択する。</p>
 <p>このプレビューの下部にあるオプションを指定することによって、読み込みにあたっての細かな設定をする事が出来る。それぞれ、以下の通りである。</p>
 <table>
 <colgroup>
-<col width="22%" />
-<col width="77%" />
+<col width="25%" />
+<col width="75%" />
 </colgroup>
 <thead>
 <tr class="header">
@@ -2740,64 +2740,169 @@ Cloud上のファイル一式が手許のPCに展開される。</p>
 <div id="記述統計量と推測統計量" class="section level1" number="3">
 <h1><span class="header-section-number">3</span>
 記述統計量と推測統計量</h1>
-<p>代表値（平均、中央値、最頻値）
-ばらつき（分散・標準偏差、四分位数）</p>
+<div id="記述統計量" class="section level2" number="3.1">
+<h2><span class="header-section-number">3.1</span> 記述統計量</h2>
+<p>あるデータセットの特徴を把握するときに用いられる統計量。元のデータから算出される。なお、ここではデータとは数値のみで構成されているものとする。</p>
+<p>以下では実際に以下のデータを使って例を示していく。</p>
+<pre class="r"><code>Shohoku &lt;- data.frame(
+  name = c(&quot;赤木&quot;,&quot;桜木&quot;,&quot;三井&quot;,&quot;宮城&quot;,&quot;流川&quot;,&quot;木暮&quot;,&quot;潮崎&quot;,&quot;安田&quot;,&quot;角田&quot;,&quot;石井&quot;,&quot;佐々岡&quot;,&quot;桑田&quot;),
+  number=c(4,10,13,7,11,5, 8, 6, 9, 12, 13, 15),
+  score= c(7,4,10,7,9,6,6, 7, 7,  5,  5,  4)
+)
+Shohoku</code></pre>
+<pre><code>##      name number score
+## 1    赤木      4     7
+## 2    桜木     10     4
+## 3    三井     13    10
+## 4    宮城      7     7
+## 5    流川     11     9
+## 6    木暮      5     6
+## 7    潮崎      8     6
+## 8    安田      6     7
+## 9    角田      9     7
+## 10   石井     12     5
+## 11 佐々岡     13     5
+## 12   桑田     15     4</code></pre>
+<div id="代表値平均中央値最頻値" class="section level3" number="3.1.1">
+<h3><span class="header-section-number">3.1.1</span>
+代表値（平均、中央値、最頻値）</h3>
+<p>あるデータセット全体的な特徴を一番端的に表現する値。あるいは、そのデータセットを文字通り「代表」する値。平均、中央値、最頻値の3種類がある。</p>
+<p><strong>平均</strong>
+・・・すべてのデータ（数値）を足し合わせて、データの数で割った値のこと。</p>
+<p><span class="math display">\[
+\bar{x} =\frac{1}{n}\sum^{n}_{i=1}x_{i}  
+\]</span>
+Rで求めるには<code>mean()</code>関数を用いる。（各自、スクリプトファイルを作成し、以下の内容を自分でも入力・実行して出力結果を確認すること)</p>
+<pre class="r"><code>example&lt;-c(1,2,3,4,5) # 例として1,2,3,4,5という5つの数値からなるベクトルを使った
+mean(example)</code></pre>
+<pre><code>## [1] 3</code></pre>
+<pre class="r"><code>mean(Shohoku$score) #先ほどの湘北高校バスケ部のフリースロー10本勝負のスコアの平均</code></pre>
+<pre><code>## [1] 6.416667</code></pre>
+<p>なお、実際のデータを扱う際には、CSVファイルやExcelファイルからデータを読み込むことが多くなる。そうしたデータファイルにはたまに「空白」が含まれているケースがある（例えばアンケートで無回答だったり、実験で計測に失敗したりした場合）。その場合、Rにそれらのデータを読み込むと、空白だった箇所には<code>NA</code>(Not
+Available：利用不可能という意味)という記号が自動的に入力される。</p>
+<p><code>mean()</code>関数を用いる際に、与えたベクトルに<code>NA</code>が含まれていた場合、Errorにはならないが出力は<code>NA</code>となる。</p>
+<p>このようなデータの場合には、以下のように<code>na.omit</code>オプションを<code>True</code>（真）に設定するとNAを除いた上で平均が算出される（データの総数はNAの数の分だけへることになる。）。</p>
+<pre class="r"><code>example&lt;- c(1,2,3,4,NA)
+mean(example)</code></pre>
+<pre><code>## [1] NA</code></pre>
+<pre class="r"><code>example&lt;- c(1,2,3,4,NA)
+mean(example, na.rm = T) </code></pre>
+<pre><code>## [1] 2.5</code></pre>
+<p><strong>中央値</strong>・・・全てのデータ（数値）を数の大小で順に並べ、ちょうど中央の順位に来る数値。データ点数が偶数だった場合には、中央の位置の前後の数字の平均値を中央値とする。</p>
+<p>Rでは<code>median()</code>を用いる</p>
+<pre class="r"><code>median(Shohoku$score)</code></pre>
+<pre><code>## [1] 6.5</code></pre>
+<p>先の湘北高校のデータは12人分なので、中央値は6位と7位の間をとることになるため、小数の値が出てきている。</p>
+<p><strong>最頻値</strong>・・・全てのデータ（数値）について、度数分布をとり、最も度数が大きい（出現頻度が最も多い）数値。</p>
+<p>Rでは最頻値を直接求める関数は存在しない。そのため、まずは<code>table()</code>コマンドを使って、対象となるデータの度数分布表を求める。
+ついで、その度数分布表に度数が最も高いものを求める、という手続きで算出する。
+ただし、度数分布表で最も度数が高いものを取り出したときのデータは、「名前付きベクトル」と呼ばれる形式で出力され、最頻値を表す値は度数値に対する「名前」（すなわち文字列）として出力れる。そこでその名前を数値として読みなおす必要がある。
+以下は例である。行っている一連の処理をよく確認しておくこと。</p>
+<pre class="r"><code>table_data&lt;-table(Shohoku$score) ## 度数分布表を作成
+print(table_data)</code></pre>
+<pre><code>## 
+##  4  5  6  7  9 10 
+##  2  2  2  4  1  1</code></pre>
+<pre class="r"><code>d&lt;-which.max(table_data) ##度数分布表から最も度数が高い値を取り出す
+print(d) # 7と4が表示されている。わかりにくいが、これは&quot;7&quot;という名前の付いた列に4という度数データが入っている、ということを表している。ここで&quot;7&quot;は数値ではなく文字列である。</code></pre>
+<pre><code>## 7 
+## 4</code></pre>
+<pre class="r"><code>mode&lt;-as.numeric(names(d)) #欲しいのは最頻値である「7」のほうであり、かつ数値として取り出したいので、names()を掛けた後に、as.numeric()を行っている。
+print(mode)</code></pre>
+<pre><code>## [1] 7</code></pre>
+<p>ちなみに、上記のスクリプトファイルは細かく一つ一つ分けて書いているが、以下のように関数の中に関数を入れることで、シンプルに書くことができる。このように関数が入れ子になっている場合、内側の関数から順次実行されている。</p>
+<pre class="r"><code>as.numeric(names(which.max(table(Shohoku$score))))</code></pre>
+<pre><code>## [1] 7</code></pre>
+<div class="ref">
+<p>
+<p>さらには、<code>tidyvers</code>というライブラリを読み込んでおくことによって、以下のような書き方もできる。なお、初めてTidyverseを使う場合には、library(tidyverse)を読み込んだときにパッケージのインストールをするかどうか聞かれるので、installを選択しておく。</p>
+<pre class="r"><code>library(tidyverse)
+Shohoku$score %&gt;%
+  table() %&gt;%
+  which.max() %&gt;%
+  names() %&gt;%
+  as.numeric() </code></pre>
+<pre><code>## [1] 7</code></pre>
+</p>
+</div>
+</div>
+<div id="ばらつき分散標準偏差四分位数" class="section level3" number="3.1.2">
+<h3><span class="header-section-number">3.1.2</span>
+ばらつき（分散・標準偏差、四分位数）</h3>
+</div>
+</div>
+<div id="section" class="section level2" number="3.2">
+<h2><span class="header-section-number">3.2</span> </h2>
 <p>全数調査とサンプリング調査 点推定（不偏推定量）と区間推定</p>
+</div>
 </div>
 <div id="データの可視化" class="section level1" number="4">
 <h1><span class="header-section-number">4</span> データの可視化</h1>
 <p>ggplot2を用いた可視化</p>
 </div>
-<div id="基本的な検定" class="section level1" number="5">
-<h1><span class="header-section-number">5</span> 基本的な検定</h1>
-<div id="平均と分散の比較" class="section level2" number="5.1">
-<h2><span class="header-section-number">5.1</span> 平均と分散の比較</h2>
+<div id="データハンドリング" class="section level1" number="5">
+<h1><span class="header-section-number">5</span> データハンドリング</h1>
+<div id="検索や置換" class="section level2" number="5.1">
+<h2><span class="header-section-number">5.1</span> 検索や置換</h2>
+</div>
+<div id="tidyverseの利用" class="section level2" number="5.2">
+<h2><span class="header-section-number">5.2</span> tidyverseの利用</h2>
+</div>
+</div>
+<div id="基本的な検定" class="section level1" number="6">
+<h1><span class="header-section-number">6</span> 基本的な検定</h1>
+<div id="平均と分散の比較" class="section level2" number="6.1">
+<h2><span class="header-section-number">6.1</span> 平均と分散の比較</h2>
 <p>T検定とF検定 結果の可視化 結果の報告の仕方</p>
 </div>
-<div id="比率の比較" class="section level2" number="5.2">
-<h2><span class="header-section-number">5.2</span> 比率の比較</h2>
+<div id="比率の比較" class="section level2" number="6.2">
+<h2><span class="header-section-number">6.2</span> 比率の比較</h2>
 <p>X2乗検定 Fisherの正確確率検定 結果の報告の仕方</p>
 </div>
-<div id="多重比較" class="section level2" number="5.3">
-<h2><span class="header-section-number">5.3</span> 多重比較</h2>
+<div id="多重比較" class="section level2" number="6.3">
+<h2><span class="header-section-number">6.3</span> 多重比較</h2>
 <p>検定の多重性問題 結果の可視化 結果の報告の仕方</p>
 </div>
 </div>
-<div id="分散分析" class="section level1" number="6">
-<h1><span class="header-section-number">6</span> 分散分析</h1>
+<div id="分散分析" class="section level1" number="7">
+<h1><span class="header-section-number">7</span> 分散分析</h1>
 <p>一要因分散分析 結果の報告の仕方 二要因分散分析 結果の報告の仕方
 調整変数を含んだ分散分析</p>
 <p>対応のあるデータでの分散分析 分散分析のタイプ</p>
 </div>
-<div id="回帰分析と重回帰分析" class="section level1" number="7">
-<h1><span class="header-section-number">7</span>
+<div id="回帰分析と重回帰分析" class="section level1" number="8">
+<h1><span class="header-section-number">8</span>
 回帰分析と重回帰分析</h1>
-<div id="相関分析" class="section level2" number="7.1">
-<h2><span class="header-section-number">7.1</span> 相関分析</h2>
+<div id="相関分析" class="section level2" number="8.1">
+<h2><span class="header-section-number">8.1</span> 相関分析</h2>
 </div>
-<div id="回帰直線の可視化" class="section level2" number="7.2">
-<h2><span class="header-section-number">7.2</span> 回帰直線の可視化</h2>
+<div id="回帰直線の可視化" class="section level2" number="8.2">
+<h2><span class="header-section-number">8.2</span> 回帰直線の可視化</h2>
 </div>
 </div>
-<div id="一般化線形モデル" class="section level1" number="8">
-<h1><span class="header-section-number">8</span> 一般化線形モデル</h1>
+<div id="一般化線形モデル" class="section level1" number="9">
+<h1><span class="header-section-number">9</span> 一般化線形モデル</h1>
 </div>
-<div id="混合モデル" class="section level1" number="9">
-<h1><span class="header-section-number">9</span> 混合モデル</h1>
+<div id="混合モデル" class="section level1" number="10">
+<h1><span class="header-section-number">10</span> 混合モデル</h1>
 </div>
-<div id="パス解析と構造方程式モデリング" class="section level1" number="10">
-<h1><span class="header-section-number">10</span>
+<div id="パス解析と構造方程式モデリング" class="section level1" number="11">
+<h1><span class="header-section-number">11</span>
 パス解析と構造方程式モデリング</h1>
 </div>
-<div id="rstudioのさらなる活用" class="section level1" number="11">
-<h1><span class="header-section-number">11</span>
+<div id="テキストマイニング" class="section level1" number="12">
+<h1><span class="header-section-number">12</span>
+テキストマイニング</h1>
+</div>
+<div id="rstudioのさらなる活用" class="section level1" number="13">
+<h1><span class="header-section-number">13</span>
 RStudioのさらなる活用</h1>
-<div id="rmarkdownとhtml出力" class="section level2" number="11.1">
-<h2><span class="header-section-number">11.1</span>
+<div id="rmarkdownとhtml出力" class="section level2" number="13.1">
+<h2><span class="header-section-number">13.1</span>
 RmarkdownとHTML出力</h2>
 </div>
-<div id="githubとposit-cloudとの連携" class="section level2" number="11.2">
-<h2><span class="header-section-number">11.2</span> GitHubとPosit
+<div id="githubとposit-cloudとの連携" class="section level2" number="13.2">
+<h2><span class="header-section-number">13.2</span> GitHubとPosit
 Cloudとの連携</h2>
 </div>
 </div>
