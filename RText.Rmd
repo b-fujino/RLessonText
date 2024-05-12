@@ -8,8 +8,7 @@ output:
     toc_depth: '4'
     toc_float: true
     number_section: true
-    df_print: "default"
-  fig_width: 8
+    fig_width: 8
   html_notebook:
     toc: true
     toc_depth: 3
@@ -219,16 +218,25 @@ Rでは<strong>オブジェクト</strong>と呼ばれる箱に計算結果の�
 ```{r object}
 Res <- 5-3
 Res
-## print()関数を使って表記させることも可能
-print(Res)
 ```
 
+### print()関数
+オブジェクトの内容は、上記のようにオブジェクト名を記載するだけでも出力されるが、`print()`関数使って出力させることもできる。なお、`print()`関数はオブジェクトだけでなく数字や文字列も表示させることが出来る。
+```{R}
+## print()関数を使って表記させることも可能
+print(Res)
+print(1)
+print("Hello World.")
+```
+
+### オブジェクトを使った演算
 オブジェクトに格納された値は、そのままオブジェクト名で計算させることもできる。
 
 ```{r object2}
 8+Res
 ```
 
+### オブジェクトの名前設定
 オブジェクト名はどのような名前でも構わない。ただし、半角スペースや演算子に用いられている記号、アットマーク記号`@`などは利用することができない。また、数字から始まる名前を付けることも不可である（名前の途中に数字が入っている分には問題ない）。
 ピリオド`.`やアンダーバー`_`は利用できる。一般的には、複数の単語を連結させて用いる場合には`_`で区切る。`.`は階層性を持ったデータを区別する使われる。以下はそれらの例。
 
@@ -323,7 +331,7 @@ a+b #　これはエラー
 a + as.numeric(b) 
 ```
 
-このほかにも、型変換関数はたくさんある。`as.`まで打つと様々な型変換関数がリスト表記される。データ分析でよく使用するものとしては`as.factor()`（データを要素型に変換する）や`as.data.frame()`（データをデータフレーム型に変換する）などがある。それぞれいずれ出てくるので、頭の片隅に置いておいてほしい。
+このほかにも、型変換関数はたくさんある。`as.`まで打つと様々な型変換関数がリスト表記される。データ分析でよく使用するものとしては`as.factor()`（データを要因型([参考](#要因型変数の作成))に変換する）や`as.data.frame()`（データをデータフレーム型に変換する）などがある。それぞれいずれ出てくるので、頭の片隅に置いておいてほしい。
 
 ## ベクトル
 
@@ -1284,6 +1292,15 @@ print(Q)
 ```
 ちなみに、`quantile()`の出力は[名前付きベクトル](#名前付きベクトル)である。
 
+
+:::ref
+四分位数はその数字そのものを示すより、一般に「箱ひげ図」と呼ばれるグラフを作成する際に用いられることが多い。箱ひげ図の具体例を以下に示す。箱の上端と下端で第1、第3四分位数を示し、箱の中の線で中央値を示す。さらに上下に伸びたひげで最大値、最小値を示す。場合によっては、箱の中に点線で平均値を示したり、一点鎖線で最頻値を示したりといったことも可能である。
+
+![箱ひげ図](./Img/20240509_Boxplot.png)
+このグラフの秀逸な点は、データが概ねどのような分布をしているかを示すことができることである。例えば上の箱ひげ図の場合、上にひげが長く伸び、さらに第3四分位数と中央値の間が、第1四分位数と中央値の間よりも広がっていることから、データの分布として、全体として点の低いほうに山が偏っており、点の高いほうに裾野が伸びた分布をしているということが読み取れる。
+以前は棒グラフで平均値を示したグラフや、平均値の棒グラフに標準偏差の幅分だけ「ひげ」（エラーバーと呼ぶ）をつけたグラフを示すのがほとんどであったが、平均と標準偏差を示すだけでは、上記のような分布の形状までは分からない。このため、最近では、箱ひげ図を示すことも多くなってきている。
+:::
+
 ### 記述統計量をまとめて出力するコマンド
 以上、個別に記述統計量を算出する方法について説明した。
 算出したこれらの統計量を別の計算で用いたい場合には、個別にこれらのコマンドで算出する必要がある。
@@ -1525,30 +1542,526 @@ c(Band_Lower, Band_Upper)
 平均値の区間推定にしろ、分散の区間推定にしろ、「95%」信頼区間なのに、$\alpha＝0.05$や$0.95$ではなく$\alpha＝0.025$や$0.975$の値を読むのはなぜなのか疑問に思う人もいると思う。これは「95％の確率でその区間の中に平均値がある」という範囲を取り出す、ということはその範囲よりも上下にある2.5%ずつを切り落とすということだからである。仮に5%と95%の値を読むことにしてしまうと、残された区間は90%となってしまう。
 :::
 
+## グループごとの統計量の算出
+
+これまでつかってきたデータ（湘北高校のデータ）には特にグループ（群）分けという概念は存在していないデータであった。
+しかし実際のデータには大抵、属性項目（例えば、性別や、実験データにおいては実験条件、あるいは学年や年齢区分、国籍など）によるグループ分けというものが存在する。そういったグループ分けが存在するときに、グループごとに記述統計量（推測統計量）を算出するには、`aggregate()`関数もしくはby()` 関数を用いると良い。
+
+
+以下では先の湘北高校のデータを、レギュラー組と控え組にグループ分けしたものにしたうえで、グループごとの平均と標準偏差を算出させてみる。
+
+### 要因型変数の作成
+まずは湘北高校のデータにグルプ分けのための変数`Group`を追加する。
+```{r}
+Shohoku["Group"] <- as.factor(c("レギュラー", "レギュラー", "レギュラー", "レギュラー", "レギュラー", "控え", "控え", "控え", "控え", "控え", "控え", "控え"))
+Shohoku # 確認
+```
+
+`as.factor()`関数に関しては先に軽く触れたが([参考](#型の変換))、ここで改めて詳しく説明する。
+グループ分けに使う変数の型は**「要因型」**と呼ぶ。要因型に設定するためには`c()`関数を使って作成したベクトルを`as.factor()`関数で括ってやる必要がある。内容は`レギュラー`や`控え`という文字列になっているが、列全体としては文字列型ではないことに注意してもらいたい。
+
+文字列型と要因型とで、関数の結果が大きく変わらない場合もあるものの(内部で文字列型を自動で要因型に変換している）、分かりやすく結果が異なる例として`summary()`の実行結果として出力されるものが異なってくる。それぞれ以下で確認してみてほしい。
+
+```{r results='hold'}
+Shohoku$Group <- as.factor(c("レギュラー", "レギュラー", "レギュラー", "レギュラー", "レギュラー", "控え", "控え", "控え", "控え", "控え", "控え", "控え"))
+summary(Shohoku)
+```
+
+```{r results='hold'}
+Shohoku$Group <- c("レギュラー", "レギュラー", "レギュラー", "レギュラー", "レギュラー", "控え", "控え", "控え", "控え", "控え", "控え", "控え")
+summary(Shohoku)
+```
+
+また、要因型に設定するのであれば、その内容は数値でも構わない。ただ、数値をグループ分け変数に使用する場合には特に`as.factor()`を実行するのを忘れないようにしなければならない。これを忘れてしまうと、グループ分け変数としていたつもりでも数値の変数として、演算処理の中に組み込まれてしまうことがあり、誤った結果を出力するケースがあるためである（例えば、回帰分析が代表例）
+
+
+```{r results='hold'}
+Shohoku$Group <- as.factor(c(1,1,1,1,1,2,2,2,2,2,2,2)) #1:レギュラー, 2:控え
+summary(Shohoku)
+```
+
+```{r results='hold'}
+Shohoku$Group <- c(1,1,1,1,1,2,2,2,2,2,2,2)
+summary(Shohoku)
+```
+
+### グループ別での演算の実行
+
+`by()`関数の機能は、ベクトルデータに対して、グループ分けを行った上で、それぞれのグループのデータに対して設定した関数演算を実行するというものである。
+第1引数には、演算を行いたいデータが入っているベクトルを与える。第2引数には、グループ分け変数のベクトルを与える。第3引数には、実行したい**演算関数の名前**を与える。
+
+```{r}
+#グループ分け変数の設定
+Shohoku$Group <- as.factor(c("レギュラー", "レギュラー", "レギュラー", "レギュラー", "レギュラー", "控え", "控え", "控え", "控え", "控え", "控え", "控え"))
+
+#平均を算出
+res.mean<-aggregate(score~Group, Shohoku,FUN=function(x) c( 平均=mean(x), 標準偏差=sd(x)))
+print(res.mean)
+
+
+#標準偏差を算出
+res.sd<-by(Shohoku$score, Shohoku$Group, FUN=function(x) c( 平均=mean(x), 標準偏差=sd(x)))
+print(res.sd)
+```
+それぞれ個別のデータにアクセスしたい場合には、以下のようにする。名前付きベクトルとして数値が返される。
+```{r error=TRUE}
+print(res.mean["レギュラー"]) #名前付きベクトル
+print(res.sd["レギュラー"])
+```
 
 # 基本的なデータの可視化
 
 平均や分散、標準偏差、あるいは四分位数といった基本的な統計量の算出方法が分かったので、ここでggplot2というパッケージを用いたデータの可視化の方法の基礎について学習する。
 
 ## 準備：ggplot2のインストール
-ggplot2は美しい描画をしてくれる様々な関数を提供してくる外部パッケージである。利用するためには、まずTools -> install.packagesを選択し、`ggplot2`と入力する。ついで、スクリプトの冒頭に`library(ggplo2)`と書き入れ、パッケージを読み込む。
+ggplot2は美しい描画をしてくれる様々な関数を提供する外部パッケージである。利用するためには、まずTools -> install.packagesを選択し、`tidyverse`と入力する。ついで、スクリプトの冒頭に`library(tidyvers)`と書き入れ、パッケージを読み込む。
 
-## ggplot2の使い方
+```{r include=FALSE}
+library(tidyverse)
+```
+
+:::ref
+ggplot2自体は「ggplot2」という名前のパッケージであり、インストールするパッケージも本来であれば「ggplot2パッケージ」で良いのだが、「tidyverse」パッケージではggplot2、様々な便利なパッケージがまとめられている。なので、ここではtidyverseパッケージを利用する。
+:::
+
+## ggplot2をつかった描画の基本的な流れ
+Step1：データとx軸、y軸を与えて描画キャンバスを作る
+
+↓
+
+Step2：与えたデータに対して各種の描画命令を与える
+
+↓
+
+Step3：必要ならば凡例や軸の書式の設定をする
+
+↓
+
+Step4:`plot()`関数を実行する。
+
+以下では具体的な例を示すためにRに最初から入っているデモ用データの`iris`を用いる。
+irisデータはアイリス（菖蒲）の花びらとがくの長さと幅の実測データが3つの種類（`Setosa`, `vergicolor`, `virginica`）ごとに50点ずつ格納されている。
+内容を確認するために、`summary()`関数と`head()`関数（データフレームの冒頭データを出力させる関数)を実行してみた。
+```{r }
+d <- iris #irisデータを呼び出してdというオブジェクトに格納
+summary(d)
+head(d)
+```
+
+列名が英語のままだと分かりにくいので、日本語に翻訳した名前に置き換える(->[参考](#列名へのアクセスと変更))。以下はそのためのコード。
+```{R}
+colnames(d) <-  c("がく長","がく幅","花びら長","花びら幅","種類")
+```
+
+
+## キャンバスの作成
+キャンバスの作成には`ggplot()`関数を用いる。引数にはデータを与える。
+```{r}
+g <- ggplot(d)
+```
+
+これでキャンバスのオブジェクトが`g`という名前で格納された。この`g`に対して、色々な描画関数を与えていき、最後に`g`を`plot()`関数で実際に描画させる、というのが基本的な描画のフローとなる。
+
+ちなみに現時点で`plot()`を実行すると以下のようになる。
+
+```{r}
+plot(g)
+```
+
+このとおり、まだ中身がなにもないので描画エリアだけの描画となる。
+
+## 描画関数の実行
+### 箱ひげ図
+まずはがく長の箱ひげ図を書かせることにしよう。
+
+#### 単純な箱ひげ図
+箱ひげ図を書かせる命令は`geom_boxplot()`関数となる。この関数の第1引数に`aes()`関数をあたえる。`aes()`関数ではさらにy軸のデータを設定する。
+
+```{r}
+g <- ggplot(d) + geom_boxplot(aes(y=がく長))
+plot(g)
+```
+
+y をxに返ると以下の通りとなる。
+```{r}
+g <- ggplot(d) + geom_boxplot(aes(x=がく長))
+plot(g)
+```
+
+#### 種類ごとの箱ひげ図
+
+上記はxないしはyのいずれかの軸しか設定していないが、例えば、x軸を種類に設定して、種類ごとの箱ひげ図を書かせたいといった場合には以下の通りにする。
+
+```{r}
+g <- ggplot(d) + geom_boxplot(aes(x=種類, y=がく長))
+plot(g)
+```
+
+このように箱ひげ図が種類ごとに描かれる。
+
+#### 箱ひげ図へ塗色
+箱ひげ図に色を塗りたい場合には、`aes()`に`fill`(塗りつぶし)の設定を与える。塗分けは箱ひげ図の場合にはグループ単位で行いたいであろう。そういう場合には、グループ分けに使っている変数、すなわち種類を与えると良い。
+
+```{r}
+g <- ggplot(d) + geom_boxplot(aes(x=種類, y=がく長, fill=種類))
+plot(g)
+```
+
+#### 箱の幅を変える
+`geom_boxplot()`の第2引数（`aes()`関数の外の引数）としてwidthを与える。デフォルトは0.75に設定されてる。
+
+```{r}
+g <- ggplot(d) + geom_boxplot(aes(x=種類, y=がく長, fill=種類),width=0.3 )
+plot(g)
+
+g <- ggplot(d) + geom_boxplot(aes(x=種類, y=がく長, fill=種類),width=1.0 )
+plot(g)
+
+g <- ggplot(d) + geom_boxplot(aes(x=種類, y=がく長, fill=種類),width=0.75)
+plot(g)
+```
+
+### データを点でプロットする
+
+`geom_jitter()`を使う。引数として`aes()`を使って同じようにx、yを設定する。
+
+```{R}
+g <- ggplot(d)+geom_jitter(aes(x=種類, y=がく長))
+plot(g)
+```
+y軸（がく長）については、それぞれ値を持っているが、x軸については3種類のグループ分けしかない。それをそのまま描画したのでは、同じがく長になっているものが全部重なってしまうので、そうならないように、x軸方向にランダムにバラつかせて描画されている。このx軸方向のバラつきは描画のたびにランダムに変わる。
+
+もう一度描画させると、先ほどと違うばらつき方になる。
+```{R}
+g <- ggplot(d)+geom_jitter(aes(x=種類, y=がく長))
+plot(g)
+```
+
+#### 色やプロット範囲の幅を変える
+
+箱ひげ図の時と同様に、色や幅を変えることができる。色については`fill`（塗りつぶし）ではなく`color`を設定したり、`Width`を設定したりして、色や幅を変えることができる。
+
+```{R}
+g <- ggplot(d)+geom_jitter(aes(x=種類, y=がく長, color=種類))
+plot(g)
+g <- ggplot(d)+geom_jitter(aes(x=種類, y=がく長, color=種類), width = 0.3)
+plot(g)
+```
+
+#### Jitterではなく度数分布にする
+
+先の例では点をプロットするときに横方向にランダム化させるjitter表示にしていたが、度数分布にすることもできる。
+度数分布の場合には、`geom_jitter()`の代わりに`geom_dotplot()`関数を用いる。引数がやや多いので以下に表で示す。
+
+|引数名|内容|
+|:--|:--|
+|aes(x=, y=)|x軸、y軸の設定|
+|binaxis|どちらの軸の変数についての度数分布にするのか|
+|dotsize|プロットする点のサイズ|
+|stackdir|どの方向にプロットしていくか。Up(右向き), down(左向き), center(中心ぞろえ)のいずれか|
+|binwidth|度数分布における区間幅の設定|
+|position|` position_nudge()`関数によって描画開始をそれぞれのグループのx軸の中心からどちら向き（正か負か）にどれだけ離すかの設定する。stackdirをcenterにした場合には中心がずれる|
+
+以下に、実際にいくつか例示してみる。
+```{R}
+g <- ggplot(d)+
+  geom_dotplot(aes(x=種類, y=がく長), binaxis = "y", dotsize = 1.0, stackdir = "down",
+               binwidth = 0.1, position = position_nudge(-0.025))
+plot(g)
+
+
+g <- ggplot(d)+
+  geom_dotplot(aes(x=種類, y=がく長), binaxis = "y", dotsize = 0.50, stackdir = "up",
+               binwidth = 0.1, position = position_nudge(0.025))
+plot(g)
+
+
+g <- ggplot(d)+
+  geom_dotplot(aes(x=種類, y=がく長), binaxis = "y", dotsize = 0.3, stackdir = "center",
+               binwidth = 0.3, position = position_nudge(0.225))
+plot(g)
+```
+以下はbinaxisをxに設定しているためエラーとなる（xはグループ分け変数であり、概念上度数分布というものが存在しないので）。
+```{r error=T}
+g <- ggplot(d)+
+  geom_dotplot(aes(x=種類, y=がく長), binaxis = "x", dotsize = 0.3, stackdir = "up",
+               binwidth = 0.1, position = position_nudge(0.025))
+plot(g)
+```
+
+### 箱ひげ図と散布図を重ねる
+
+点のプロットと箱ひげ図を重ねることもできる。以下のように`geom_boxplot()`と`geom_dotplot()`や`geom_jitter()`を`+`でつなげればよい。
+
+```{r}
+g<- ggplot(d)+
+  geom_boxplot(aes(x=種類,y=がく長))+
+  geom_jitter(aes(x=種類, y=がく長, color=種類))
+plot(g)
+
+g<- ggplot(d)+
+  geom_boxplot(aes(x=種類,y=がく長), width=0.5)+
+  geom_dotplot(aes(x=種類, y=がく長, color=種類, fill=種類), binaxis = "y", 
+               dotsize = 0.75, stackdir = "down",binwidth = 0.1, 
+               position = position_nudge(-0.025))
+plot(g)
+
+```
+
+:::ref
+`aes()`（エステティック）関数の設定項目はx、y軸とfill(塗りつぶし),　color(線や点の色設定)が出てきているが、それ以外に以下のようなものがある。
+
+|項目|内容|
+|:--|:--|
+|x, y| x軸に設定する変数、y軸に設定する変数
+|color|点や線の色
+|fill| 面の色
+|alpha|不透明度 (0が透明、1が不透明)
+|size|点や文字の大きさ、線の太さ
+|shape|点の形
+|linetype|線の種類
+|group|反復試行の折れ線グラフなど、色や形はそのままで切り分けたいときに。
+|xmin, xmax, ymin, ymax, xend, yend| ものによって
+
+:::
+
+### 棒グラフ
+平均や標準偏差が得られているなら棒グラフとしてそれらを描きたいであろう。その場合には、まずは平均と標準偏差のグループごとのデータを用意した上で、以下のようにする。
+
+```{R}
+#データの準備
+d.mean <- by(d$がく長, d$種類, mean)
+d.sd <- by(d$がく長, d$種類, sd)
+d.mean
+d.sd
+
+d2 <- data.frame(
+  種類 = c("setosa","versicolor","virginica"),
+  平均 = d.mean[c("setosa","versicolor","virginica")],
+  標準偏差= d.sd[c("setosa","versicolor","virginica")]
+)
+ print(d2) 
+ 
+ g <- ggplot(d2)+
+  geom_bar(aes(x=種類,y=平均,fill=種類),stat="identity")+
+  geom_errorbar(aes(x=種類,y=平均,ymin=平均-標準偏差, ymax=平均+標準偏差,width=0.15))
+plot(g)
+```
+
+:::ref
+今まで、キャンバスを作った際にデータフレームを与え、その後、描画をする際にxとyを指摘してきましたが、キャンバスを作るときにxとyも指定することができます。そうすると、描画をするときに、いちいちx、yを指定しなくても良くなります。
+
+```{r}
+g <- ggplot(d2)+
+  geom_bar(aes(x=種類,y=平均,fill=種類),stat="identity")+
+  geom_errorbar(aes(x=種類,y=平均,ymin=平均-標準偏差, ymax=平均+標準偏差,width=0.3))
+plot(g)
+
+g <- ggplot(d2,aes(x=種類,y=平均))+
+  geom_bar(aes(fill=種類),stat="identity")+
+  geom_errorbar(aes(ymin=平均-標準偏差, ymax=平均+標準偏差,width=0.3))
+plot(g)
+```
+:::
+## 書式や凡例を弄る
+
+
+軸や凡例の書き方はいろいろと設定方法があるみたいだけど、とりあえず自分のなかで一番整理がついたものを紹介します。
+### 軸のタイトルを消したり書き換えたり
+デフォルトでは軸タイトルはaesで設定した各軸の変数名がそのまま入ってしまいます。
+
+そこでこれを`xlab`と`ylab`を使って自分の好きなように変えます。
+引数に`NULL`を設定するとタイトルが消えます。
+
+```{r}
+g <- ggplot(d2,aes(x=種類,y=平均))+
+  geom_bar(aes(fill=種類),stat="identity")+
+  geom_errorbar(aes(ymin=平均-標準偏差, ymax=平均+標準偏差,width=0.3))+
+  xlab(NULL)+ylab("花弁の幅")
+plot(g)
+```
+
+### 凡例を消す
+`theme(legend.position = "none")`を使います。
+
+```{r}
+g <- ggplot(d2,aes(x=種類,y=平均))+
+  geom_bar(aes(fill=種類),stat="identity")+
+  geom_errorbar(aes(ymin=平均-標準偏差, ymax=平均+標準偏差,width=0.3))+
+  xlab(NULL)+ylab("花弁の幅")+
+  theme(legend.position = "none")
+plot(g)
+```
+
+### 凡例タイトルを書き換える
+`labs()`を使います。
+引数には、aesで色を指定するときに使った引数に、書き換えたいタイトルを与えます。
+これまでの例だと、`fill`を使って色を与えているので、`fill=****`というのを引数としてlabelに与えます。
+
+```{r}
+g <- ggplot(d2,aes(x=種類,y=平均))+
+  geom_bar(aes(fill=種類),stat="identity")+
+  geom_errorbar(aes(ymin=平均-標準偏差, ymax=平均+標準偏差,width=0.3))+
+  xlab("種類")+ylab("花弁の幅")+labs(fill="種類")
+
+plot(g)
+```
+
+ちなみにlabsは引数として以下のものを取ります。この通りに、xlabやylabもlabsでまとめて設定することもできます。
+
+|項目|内容|
+|:--|:--|
+title|タイトル
+subtitle|サブタイトル
+x|x軸ラベル
+y|y軸ラベル
+caption|キャプション
+fill またはcolor|凡例ラベルのタイトル
 
 
 
+### 軸タイトルや軸ラベル、凡例の文字サイズを換える
+
+凡例を消した時と同じようにthemeを使う。引数には以下のようなものを入れる。
+`axis.text.x=element_text(size=15)`
+`axis.text.y=element_text(size=15)`
+`axis.title.x=element_text(size=15)`
+`axis.title.y=element_text(size=15)`
+`legend.text=element_text(size=9)`
+
+```{r}
+g <- ggplot(d2,aes(x=種類,y=平均))+
+  geom_bar(aes(fill=種類),stat="identity")+
+  geom_errorbar(aes(ymin=平均-標準偏差, ymax=平均+標準偏差,width=0.3))+
+  xlab("種類")+ylab("花弁の幅")+
+  theme(legend.position = 'none')+
+  theme(
+    axis.title.x=element_text(size=15),
+    axis.title.y=element_text(size=15),
+    axis.text.x=element_text(size=10),
+    axis.text.y=element_text(size=10),
+    legend.text=element_text(size=5),
+    legend.title = element_text(size=8)  )
+
+plot(g)
+```
+
+:::ref
+themeの設定項目
+
+themeは細かくいろいろ設定できます。設定できるものは以下の通りです。
+
+|名前|説明|要素の型|
+|:--|:--|:--|
+|text|すべてのテキスト要素|element_text()|
+|axis.title|両軸ラベルの体裁|element_text()|
+|axis.title.x|x軸ラベルの体裁|element_text()|
+|axis.title.y|y軸ラベルの体裁|element_text()|
+|axis.text|両軸目盛ラベルの体裁|element_text()|
+|axis.text.x|x軸目盛ラベルの体裁|element_text()|
+|axis.text.y|y軸目盛ラベルの体裁|element_text()|
+|legend.text|凡例項目の体裁|element_text()|
+|legend.title|凡例タイトルの体裁|element_text()|
+|plot.title|タイトルの体裁|element_text()|
+|strip.text|両方向ファセットラベルテキストの体裁|element_text()|
+|strip.text.x|水平方向ファセットラベルテキストの体裁|element_text()|
+|strip.text.y|垂直方向ファセットラベルテキストの体裁|element_text()|
+|legend.position|凡例の位置|left, right, bottom, top, c(x,y) :x,yは0~1|
+|legend.background|凡例の背景|element_rect(fill="xxx", color="yyy") fillは塗りつぶし、colorは枠線|
+|plot.background|プロット全体の背景|element_rect(fill="xxx", color="yyy")|
+|panel.background|プロット領域の背景|element_rect()|
+|panel.border|プロット領域の枠線|element_rect(linetype="xxx")|
+|rect|全ての長方形要素|element_rect()|
+|panel.grid.major|主目盛線|element_line()|
+|panel.grid.major.x|主目盛線の垂直方向|element_line()|
+|panel.grid.major.y|主目盛線の水平方向|element_line()|
+|panel.grid.minor|補助目盛線|element_line()|
+|panel.grid.minor.x|補助目盛線の垂直方向|element_line()|
+|panel.grid.minor.y|補助目盛線の水平方向|element_line()|
+|axis.line|軸に沿った線|element_line()|
+|line|すべての線要素|element_line()|
+
+引用（順序は改変しました）：https://knknkn.hatenablog.com/entry/2019/02/23/181311
+:::
+
+:::ref
+element_text()の設定項目
+
+設定項目|element_text()の引数
+:--|:--
+角度|angle
+水平位置	|hjust(0:左揃え～1:右揃え)
+垂直位置|vjust(0:下揃え～1:上揃え)
+サイズ|	size
+色|	colour
+スタイル|	face(bold or italic)
+フォントファミリー|	family
+
+参考：http://mukkujohn.hatenablog.com/entry/2016/10/11/220722
+:::
+
+:::ref
+
+element_xxxのその他の項目
+`element_rect(fill, color, size, linetype, inherit.blank)` — 長方形
+
+|項目|内容|
+|:--|:--|
+fill| 塗りつぶしの色
+color| 枠の色
+
+`element_line(color, size, linetype, lineend, arrow, inherit.blank) `— 線
+
+`element_blank()` — 空
+消したい要素にはこれを指定する
+
+参考：https://heavywatal.github.io/rstats/ggplot2.html
+:::
+
+### 目盛ラベルを変える
+目盛ラベルを変えるには、`scale_x_****`や`scale_y_***`を使います。
+以下は、x軸の目盛りをsetosa, versicolor, virgnicaから、a, b, cに変え、y軸を普通の目盛から対数目盛に変えた例です。
+
+```{r}
+g <- ggplot(d)+
+  geom_bar(aes(x=種類,fill=種類),stat="count") +
+  scale_x_discrete(labels=c("a","b","c"))+
+  scale_y_log10(limits=c(1,1000))
+plot(g)
+```
+
+`***`の部分には、いずれも以下のものが入ります。
+
+|***|内容|
+|:--|:--|
+discrete|離散目盛
+continuous|連続目盛
+log10|対数目盛
+reverse|目盛の逆転
+sqrt|平方根目盛
+
+また、代表的な引数としては以下のものが入ります。
+
+|引数|内容|
+|:--|:--|
+labels|離散目盛のラベルを変える（以下のbreaksを併用すると、連続変数でも可能）
+breaks|連続変数の目盛のうち指定したものだけを表示させる
+limits|連続変数の表示範囲を指定したものにする.xlim,ylimと同じ効果。
+name | 変数の軸ラベルを変える。xlab,ylabと同じ効果。
 
 
+結局、軸タイトルを変える方法って、色々あるってことですね。
+xlabでもよいし、labs(x=)dでもよいし、scale_x_***(name=)でも変えれる。
 
-## 箱ひげ図
-四分位数はその数字そのものを示すより、一般に「箱ひげ図」と呼ばれるグラフを作成する際に用いられることが多い。箱ひげ図の具体例を以下に示す。箱の上端と下端で第1、第3四分位数を示し、箱の中の線で中央値を示す。さらに上下に伸びたひげで最大値、最小値を示す。場合によっては、箱の中に点線で平均値を示したり、一点鎖線で最頻値を示したりといったことも可能である。
+### 凡例の各項目のラベルを書き換える。
+グループ分けにfillを使っている場合は、`sacle_fill_dicrete()`を、Colorを使っている場合は`scale_color_discrete()`を使います。
 
-![箱ひげ図](./Img/20240509_Boxplot.png)
-
-
-
-このグラフの秀逸な点は、データが概ねどのような分布をしているかを示すことができることである。例えば上の箱ひげ図の場合、上にひげが長く伸び、さらに第3四分位数と中央値の間が、第1四分位数と中央値の間よりも広がっていることから、データの分布として、全体として点の低いほうに山が偏っており、点の高いほうに裾野が伸びた分布をしているということが読み取れる。
-以前は棒グラフで平均値を示したグラフや、平均値の棒グラフに標準偏差の幅分だけ「ひげ」（エラーバーと呼ぶ）をつけたグラフを示すのがほとんどであったが、平均と標準偏差を示すだけでは、上記のような分布の形状までは分からない。このため、最近では、箱ひげ図を示すことも多くなってきている。
+```{r}
+g <- ggplot(d)+
+  geom_bar(aes(x=種類,fill=種類),stat="count")+
+  scale_fill_discrete(label=c("花1","花2","花3"))
+plot(g)
+```
 
 
 # データハンドリング（基礎）
