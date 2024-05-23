@@ -2792,7 +2792,63 @@ plot(g)
 ```
 
 ## 分散の比較
-T検定とF検定 結果の可視化 結果の報告の仕方
+
+先ほどは2つのグループの間での平均の比較、すなわち「2つのグループの間で平均値の差が意味のある差なのか誤差の範囲に収まる差なのか」を検証する方法について説明した。次に、2つのグループの間で「ばらつき」、すなわち分散に違いがあるのかどうかを検定する方法について説明する。
+
+分散の場合には「差」をとるのではなく、「比率」（すなわち割り算をする）をとることになる。すなわち、2つのグループの分散の比率を求め、それが1（すなわち等しい）かどうかを検定することになる。この検定方法はF検定と呼ばれる。
+
+F検定は、Rの`var.test()`関数を用いて行う。この関数は、第1引数と第2引数に比較したい2つのグループのデータを与える。この関数は、t検定と同様に「2つのグループは同じ母集団から抽出されたサンプルである」という仮説の元で、2つのグループの分散の比率が1であるかどうかを検定する。
+
+:::practice
+ある製品の製造工程を変更したところ、製品の重量にばらつきが生じた。このばらつきが工程変更の影響によるものなのか、単なる偶然によるものなのかを検証するために、工程変更前と工程変更後の製品の重量を測定した。その結果、次のようなデータ（[リンク](./practice/example_vartest.csv)）が得られた。このデータから工程変更によるばらつきの変化があるのかを検証せよ。
+:::
+
+```{r include=FALSE}
+#./practice/example_vartest.csvの作成
+set.seed(42)
+num_samples <- 20
+before_change <- round(rnorm(num_samples, mean = 100, sd = 5),2)
+after_change <- round(rnorm(num_samples, mean = 100, sd = 10),2)
+data <- tibble(
+  工程変更前 = before_change,
+  工程変更後 = after_change
+)
+
+write_csv(data, "./practice/example_vartest.csv")
+```
+
+Rのスクリプトは以下の通りとなる。
+
+```{r}
+mydata_vartest <- read.csv(
+  "./practice/example_vartest.csv", 
+  header=T, 
+  fileEncoding="UTF8"
+) # データ読み込み
+
+var.test(mydata_vartest$工程変更前, mydata_vartest$工程変更後)
+
+```
+
+この結果から、P値が0.02となっており、5％の有意水準を下回っているため、工程変更によって製品の重量のばらつきに有意な変化が生じたと結論づけることができる。
+
+
+上記の例はワード形式のデータであるが、ｔ検定のときと同じように、ロング形式のデータであっても同様に検定を行うことができる。以下にその例を示す。
+
+```{r}
+long_data_vartest <- pivot_longer(
+  mydata_vartest,
+  cols=colnames(mydata_vartest)[],
+  names_to = "工程",
+  values_to= "重量" #測定変数に与える列名
+) 
+
+long_data_vartest$工程 <- as.factor(long_data_vartest$工程)
+
+var.test(重量~工程, long_data_vartest)
+
+```
+
 
 ## 比率の比較
 
