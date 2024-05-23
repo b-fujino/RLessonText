@@ -25,6 +25,10 @@ knitr::opts_chunk$set(echo = TRUE)
 
 ```{css, echo=FALSE}
 
+body{
+  counter-reset: ref_number practice_number;
+}
+
 .float img{
   /* 上右下左 */
   /* margin: 5% 0% 0% 0% ;*/ 
@@ -2531,7 +2535,10 @@ class(long_data)
 
 そして、その確率が0.05、すなわち5%未満であったならば「2つは同じ母集団から抽出されたサンプルである」という仮定のもとでは極めて珍しい（発生確率が5%未満でしかない）値が出た、ということになる。ここで解釈の転換をして、「そんな珍しい値が出るなんてそうそうあることではない。そもそも元の仮説が誤っていたのではないか」と考える。つまり、「2つは同じ母集団から抽出されたサンプルである」という仮説を否定するのである。この仮説を否定するということは、「2つのグループは互いに性質の異なる（それゆえ母平均も異なる）母集団から抽出されたサンプルである」という仮説を支持する、ということである。こうして、2つのグループには「母集団のレベルで差がある」と主張するのがt検定である。
 
-### t検定の方法
+### t検定の方法（ワイド形式データ）
+
+t検定を行う場合、ワード形式でもロング形式でも、Rの`t.test()`関数を用いるが、ここではわかりやすさのため、まずワイド形式のデータを用いたt検定の方法を説明する。
+
 Rでt検定を行うには`t.test()`関数を用いる。
 
 第1引数と第2引数には比較したい2つのグループのデータを与える。いずれもベクトルデータで与える必要がある点に注意が必要である。
@@ -2580,11 +2587,18 @@ write_csv(data, "./practice/example_ttest.csv")
 
 この例題の場合、以下の通りとなる。
 ```{r}
-mydata <- read.csv("./practice/example_ttest.csv", header=T, fileEncoding="UTF8")　# データ読み込み
-# もしデータの内容を確認したければ、右上ペインのEvironmentのmydataをクリックするか、以下のコマンドを実行。
+mydata_ttest <- read.csv( # データ読み込み オブジェクト名は自由につけてよい
+  "./practice/example_ttest.csv", 
+  header=T, 
+  fileEncoding="UTF8"
+)　
+
+# もしデータの内容を確認したければ、
+# 右上ペインのEvironmentのmydataをクリックするか、
+# 以下のコマンドを実行。
 # view(mydata)
 
-t.test(mydata$新しい肥料を使用, mydata$通常の肥料を使用)
+t.test(mydata_ttest$新しい肥料を使用, mydata_ttest$通常の肥料を使用)
 
 ```
 
@@ -2627,21 +2641,155 @@ write_csv(data, "./practice/example_ttest_paired.csv")
 この例題の場合、以下の通りとなる。
 
 ```{r}
-mydata <- read.csv("./practice/example_ttest_paired.csv", header=T, fileEncoding="UTF8")　# データ読み込み
+mydata_ttest_paired <- read.csv(
+  "./practice/example_ttest_paired.csv", 
+  header=T, 
+  fileEncoding="UTF8"
+) # データ読み込み
 # もしデータの内容を確認したければ、右上ペインのEvironmentのmydataをクリックするか、以下のコマンドを実行。
 # view(mydata)
 
-t.test(mydata$従来品, mydata$試作品, paired=TRUE)
+t.test(mydata_ttest_paired$従来品, mydata_ttest_paired$試作品, paired=TRUE)
 
 ```
 今回のデータの場合、p値は0.8123となっており、0.05を大きく上回っており、試作品と従来品とでおいしさに有意な差はない、という結論となる。
 また、`paired`の設定をしたので、表題も`Paired t-test`となり、最後の結果も両群の平均値ではなく、群間の差のみが算出される。
 
-### t検定の結果の報告方法
 
 :::ref
-データに欠損値がある場合のｔ検定について、対応関係のないデータの場合には、互いにデータ点数が異なっていても問題なく検定を行うことができる。一方で対応関係がある場合には、対応関係がある以上、互いにデータ点数が等しいことが前提となる。もし、一方のデータに欠損がある場合には、欠損しているものと対応する他方のデータは分析から除外されることになる。ただし、データの除外を自分でする必要はなく、`paired=TRUE`を設定した場合には、`ttest()`関数内で自動で対応する相手のいないデータは除外される。
+データに欠損値がある場合のｔ検定について、対応関係のないデータの場合には、互いにデータ点数が異なっていても問題なく検定を行うことができる。
+
+一方で対応関係がある場合には、対応関係がある以上、互いにデータ点数が等しいことが前提となる。もし、一方のデータに欠損がある場合には、欠損しているものと対応する他方のデータは分析から自動的に除外される。
 :::
+
+
+
+
+### t検定の結果の報告方法
+t検定の結果を報告する際には棒グラフを用いるのが一般的である（平均なので箱ひげ図は用いない）。二つの群の平均と標準偏差を棒グラフで表現したうえで、角傘（ブラケットと呼ぶ）をつけてp値を記載するのが一般的である。
+
+具体的にggplotを使って、先の2つの例題の結果を棒グラフで表記してみよう。まずは、[こちら](#棒グラフ)のコードを参考に棒グラフを作成する。まずは例題1。
+```{r}
+#まずは両群の平均と標準偏差を算出する。
+mymean_new <- mean(mydata_ttest$新しい肥料を使用)
+mymean_old <- mean(mydata_ttest$通常の肥料を使用)
+mysd_new <- sd(mydata_ttest$新しい肥料を使用)
+mysd_old <- sd(mydata_ttest$通常の肥料を使用)
+
+mydf <- data.frame(
+  条件=c("新しい肥料を使用", "通常の肥料を使用"),
+  収穫量=c(mymean_new, mymean_old),
+  標準偏差=c(mysd_new, mysd_old)
+)
+
+# ggplotで棒グラフを表示　
+g <- ggplot(data=mydf)+ 
+  geom_bar(aes(x=条件, y=収穫量, fill=条件), stat="identity")+
+  geom_errorbar(aes(x=条件, ymin=収穫量-標準偏差, ymax=収穫量+標準偏差, width=0.1))
+plot(g)
+```
+
+続いて、このグラフに角傘をつけてp値を記載する。角傘をつけるためには、`geom_segment()`関数を用いて線分を描画する。この関数は引数として与える`aes()`関数で始点と終点の座標を指定すると、その間に線分を描画する関数である。これを組み合わせて角傘を描画する。x軸方向は「新しい肥料を使用」「通常の肥料を使用」というように数値ではなくラベルとなっているが、内部では座標として、それぞれ1、2とされているので、これを利用して角傘を描画する。y座標については、エラーバーと干渉しないような値を設定してやる。以下では`y＝61, yend=64`としているが、別にこの値でなくてもよい。
+
+```{r}
+#エラーバーの上に実線を引く
+g <- g + geom_segment(aes(x=1, xend=1, y=61, yend=64))+
+  geom_segment(aes(x=1, xend=2, y=64, yend=64))+
+  geom_segment(aes(x=2, xend=2, y=61, yend=64))
+
+plot(g)
+```
+
+さらに、これにp値を与える。これには`geom_text()`関数を用いる。この関数は、`aes()`関数で座標を指定し、`label`引数で表示する文字列を、`size`引数で文字の大きさを指定することで、グラフ上に文字列を表示する関数である。この関数を用いて、p値を表示する。なお座標は文字列の中心点の座標となる。
+
+```{r}
+# 各傘の上に
+g <- g+geom_text(aes(x=1.5, y=66, label="p=0.0002922, ***"), size=3)
+plot(g)
+```
+
+p値にはアスタリスクをつけるのが一般的である。アスタリスクの数はp値の大小に応じて変わる。p値が0.05未満であれば1つ、0.01未満であれば2つ、0.001未満であれば3つとする。
+
+逆に有意でなかった場合には、P値を表記するだけで何も記載しないか、あるいは、`n.s.`と記載する。これは`not significant`の略であり、「有意でない」という意味である（さらに[多重比較](#多重比較)を行うケースでは有意でないものについてはブラケットも含め何も表記しないのが一般的である）。
+
+また、上記の例のようにP値が0.000を下回っている場合には、桁を省略して、`P<0.001`と表記することもある。さらに、論文や報告書などでP値を文章中に明記している場合には、図ではP値を省略して、アスタリスクだけを記載することもある。
+
+例題2の方でも同様に棒グラフを作成してみよう。今度は描画関数をすべてまとめて記載する。
+```{r}
+#まずは両群の平均と標準偏差を算出する。
+mymean_new <- mean(mydata_ttest_paired$試作品)
+mymean_old <- mean(mydata_ttest_paired$従来品)
+mysd_new <- sd(mydata_ttest_paired$試作品)
+mysd_old <- sd(mydata_ttest_paired$従来品)
+
+# データフレームの作成
+mydf <- data.frame(
+  条件=c("試作品", "従来品"),
+  おいしさ=c(mymean_new, mymean_old),
+  標準偏差=c(mysd_new, mysd_old)
+)
+
+# ggplotで棒グラフを表示
+g<- ggplot(data=mydf)+ 
+  geom_bar(aes(x=条件, y=おいしさ, fill=条件), stat="identity")+
+  geom_errorbar(aes(x=条件, ymin=おいしさ-標準偏差, ymax=おいしさ+標準偏差, width=0.1))+
+  geom_segment(aes(x=1, xend=1, y=9, yend=10))+
+  geom_segment(aes(x=1, xend=2, y=10, yend=10))+
+  geom_segment(aes(x=2, xend=2, y=9, yend=10))+
+  geom_text(aes(x=1.5, y=10.5, label="p=0.8123, n.s."), size=5)
+plot(g)
+
+```
+
+
+### t検定の方法（ロング形式データ）
+
+最後にロング型のデータの場合のt検定の方法を説明する。ロング形式のデータの場合、t検定を行う場合には、`t.test()`関数の第1引数には測定変数と属性変数を`~`（チルダ）で結んだ「式」を与える。なお、属性変数のデータは因子型である必要がある。第2引数にはそれぞれの変数を含んだデータフレームのオブジェクト名を与える。
+
+```{r}
+# ロング形式のデータを作成
+long_data <- pivot_longer(
+  mydata_ttest,
+  cols=colnames(mydata_ttest),
+  names_to = "肥料",
+  values_to= "収穫量" #測定変数に与える列名
+)
+
+# 肥料列を因子型に変換
+long_data$肥料 <- as.factor(long_data$肥料)
+
+# 内容確認
+summary(long_data)
+
+#t検定
+t.test(収穫量~肥料, long_data)
+```
+
+また、ロング型のデータの場合には、[こちら](#グループごとの統計量の算出)で説明した通り、平均や標準偏差は`aggregate()`関数を用いて算出するとよい。以下これらを使って棒グラフを表示させる。
+
+```{r}
+# 平均値の算出
+平均<-aggregate(収穫量~肥料, long_data, mean)
+# 標準偏差の算出
+標準偏差<-aggregate(収穫量~肥料, long_data, sd)
+
+#データフレームの作成
+mydf <- data.frame(
+  条件=平均$肥料,
+  収穫量=平均$収穫量,
+  標準偏差=標準偏差$収穫量
+)
+
+# ggplotで棒グラフを表示
+g<- ggplot(data=mydf)+ 
+  geom_bar(aes(x=条件, y=収穫量, fill=条件), stat="identity")+
+  geom_errorbar(aes(x=条件, ymin=収穫量-標準偏差, ymax=収穫量+標準偏差, width=0.1))+
+  geom_segment(aes(x=1, xend=1, y=61, yend=64))+
+  geom_segment(aes(x=1, xend=2, y=64, yend=64))+
+  geom_segment(aes(x=2, xend=2, y=61, yend=64))+
+  geom_text(aes(x=1.5, y=66, label="p=0.0002922, ***"), size=4)
+plot(g)
+```
 
 ## 分散の比較
 T検定とF検定 結果の可視化 結果の報告の仕方
