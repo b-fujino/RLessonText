@@ -1,0 +1,190 @@
+---
+title: "R実行環境の整備"
+author: "福井県立大学経済学部教授　藤野秀則"
+date: "`r Sys.Date()`"
+output:
+  html_document: 
+    toc: true
+    toc_depth: 4
+    toc_float: true
+    number_section: true
+    fig_width: 8
+  # html_notebook:
+  #   toc: true
+  #   toc_depth: 3
+  #   toc_float: true
+  #   number_section: true
+editor_options:
+  markdown:
+    wrap: 72
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+```{css, echo=FALSE}
+.tocify-subheader { /* 全部のサブヘッダーを最初から表示する*/
+    display: block !important;
+}
+.tocify-item {/*長いヘッダーも折り返さない*/
+    white-space: nowrap;
+}
+body{
+  counter-reset: ref_number practice_number;
+}
+
+.float img{
+  /* 上右下左 */
+  /* margin: 5% 0% 0% 0% ;*/ 
+  /* width : 75%; */
+  margin: auto;
+  display: block;
+
+  border-radius: 8px 8px 0 0 ;
+  position: relative;
+  width : 60%;
+}
+
+.float .figcaption {
+  position: relative;
+  font-style: italic;
+  font-size: large;
+  font-weight: bold;
+  color: #666;
+  text-align: center;
+  margin:0% auto 5% auto;
+  border-bottom: solid 1px #666;
+  border-left: solid 1px #666;
+  border-right: solid 1px #666;
+  border-radius:0 0 8px 8px;
+  width : 60%
+}
+
+img {
+  margin: auto;
+  display: block;
+  border: solid 1px #666;
+  border-radius: 8px;
+  position: relative;
+  width : 100%;
+}
+
+.ref {
+  position: relative;
+  margin:5%;
+  padding:5px;
+  background-color: rgba(255, 255, 128, .5);
+  color: #666;
+}
+.ref::before{
+  counter-increment: ref_number 1;
+  content: "[参考 " counter(ref_number) "]";
+  font-weight: bold;
+  display: block;
+  margin-bottom: 3px;
+}
+
+h1 {
+  margin-top : 10px;
+  padding-top : 50px;
+}
+
+
+.practice {
+  position: relative;
+  margin:5%;
+  padding:5px;
+  background-color: rgba(128, 255, 200, .5);
+  color: #666;
+}
+.practice::before{
+  counter-increment: practice_number 1;
+  content: "[例題 " counter(practice_number) "]";
+  font-weight: bold;
+  display: block;
+  margin-bottom: 3px;
+}
+
+.r{ 
+　/**copy の禁止**/
+  user-select: none;
+  -moz-user-select: none;
+  -webkit-user-select: none;
+  -ms-user-select: none;
+  -khtml-user-select: none;
+  -webkit-touch-callout: none;
+}
+
+```
+
+
+# Posit Cloudへのサインアップ
+
+Rを使って統計分析を行う際には、本来は[R](https://cran.r-project.org/)と[RStudio](https://posit.co/download/rstudio-desktop/)という2つのアプリを自分のPCにインストールする必要があるが、インターネットに接続できている場合には、Posit
+Cloudというオンラインサービスを利用することによって、これらのアプリを自分のPCにインストールすることなくWebブラウザ上でRStudioを利用することができる。
+
+今回はPosit Cloudを利用することを前提に説明していく。
+
+[Posit Cloud](https://posit.cloud/)にアクセス。
+下記の通りのページが表示される。
+
+![Posit Cloud](./Img/2024_5_1_PositCloudTop.png)
+
+「Get Started」をクリック
+
+↓
+
+Freeプランの「Learn more」をクリック
+
+↓
+
+「Sign Up」をクリック。下記のページが表示される。
+
+![Sign Up](./Img/2024_5_1_PositCloud_Sign_Up.png)
+
+「Sign Up with Google」を選択して、各自のGmailアドレスで登録。
+
+↓
+
+「Posit
+Cloudにログイン」の画面で「次へ」を選択すると、サインアップが完了し、以下のような画面が表示される。
+
+![WorkspaceTop](./Img/2024_5_1_PositCloudWorkspaceTop.png)
+
+なお、Posit
+Cloudは英語のサイトだが、GoogleChromeの「翻訳」で「日本語」にすればある程度は日本語表記がされる。（あくまである程度であって、Rを操作する画面までは残念ながら日本語化されない）
+
+:::ref
+posit cloudのFreeプランには毎月25時間までの利用制限があり、これを超えると一時的に利用できなくなる。ただし、次の月になればまた利用できるようになる。
+もし制限を超えて利用したい場合には、各自でデスクトップ版をダウンロード・インストールして利用するとよい。
+:::
+
+
+# Procjectの作成
+
+右上にある「New Project」をクリック
+
+↓
+
+「New RStduio Project」をクリック。「Deploying
+Project」とプログレスバーがしばらく表示されたあと、以下のような画面が表示される。
+
+![RStduio](./Img/2024_5_1_PositCloudRStduio.png)
+
+この画面がR（Rstduio）の基本操作画面になる。
+
+# Project名の設定
+
+続いて、プロジェクトに名前を付ける。 画面トップにある「Untitled
+Project」と書かれてある箇所をクリックして、名前を書き入れよう。
+
+![ProjectName](./Img/2024_5_1_ProjectName.png)
+
+ただし、注意しないといけない点として、Project名は半角文字しか受け付けてくれない（アルファベットや数字、アンダーバーなど）。日本語を書き入れても、最初は表示されてもリロードされたときに「?」という表記に変わってしまう。
+
+![日本語名入力](./Img/2024_5_1_ProjectNameError.png)
+
+ページをリロード（再読み込み）すると、以下のようになる。
+
+![日本語名](./Img/2024_5_1_ProjectNameError2.png)
