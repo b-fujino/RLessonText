@@ -1975,640 +1975,640 @@ class(long_data)
 
 # 基本的なデータの可視化
 
-平均や分散、標準偏差、あるいは四分位数といった基本的な統計量の算出方法が分かったので、ここでggplot2というパッケージを用いたデータの可視化の方法の基礎について学習する。
+<!-- 平均や分散、標準偏差、あるいは四分位数といった基本的な統計量の算出方法が分かったので、ここでggplot2というパッケージを用いたデータの可視化の方法の基礎について学習する。 -->
 
-## ggplot2のインストール
-ggplot2は美しい描画をしてくれる様々な関数を提供する外部パッケージである。利用するためには、まずTools -> install.packagesを選択し、`tidyverse`と入力する。ついで、スクリプトの冒頭に`library(tidyvers)`と書き入れ、パッケージを読み込む。
+<!-- ## ggplot2のインストール -->
+<!-- ggplot2は美しい描画をしてくれる様々な関数を提供する外部パッケージである。利用するためには、まずTools -> install.packagesを選択し、`tidyverse`と入力する。ついで、スクリプトの冒頭に`library(tidyvers)`と書き入れ、パッケージを読み込む。 -->
 
-```{r include=FALSE}
-library(tidyverse)
-```
+<!-- ```{r include=FALSE} -->
+<!-- library(tidyverse) -->
+<!-- ``` -->
 
-:::ref
-ggplot2自体は「ggplot2」という名前のパッケージであり、インストールするパッケージも本来であれば「ggplot2」パッケージで良いのだが、「tidyverse」パッケージではggplot2を含め様々な便利なパッケージがまとめられている。後々それらのパッケージも利用していきたいので、ここではtidyverseパッケージを利用する。
-:::
+<!-- :::ref -->
+<!-- ggplot2自体は「ggplot2」という名前のパッケージであり、インストールするパッケージも本来であれば「ggplot2」パッケージで良いのだが、「tidyverse」パッケージではggplot2を含め様々な便利なパッケージがまとめられている。後々それらのパッケージも利用していきたいので、ここではtidyverseパッケージを利用する。 -->
+<!-- ::: -->
 
-## ggplot2をつかった描画の基本的な流れ
-Step1：データを与えて描画キャンバスを作る
+<!-- ## ggplot2をつかった描画の基本的な流れ -->
+<!-- Step1：データを与えて描画キャンバスを作る -->
 
-↓
+<!-- ↓ -->
 
-Step2：与えたデータに対して各種の描画命令を与える
+<!-- Step2：与えたデータに対して各種の描画命令を与える -->
 
-↓
+<!-- ↓ -->
 
-Step3：必要ならば凡例や軸の書式の設定をする
+<!-- Step3：必要ならば凡例や軸の書式の設定をする -->
 
-↓
+<!-- ↓ -->
 
-Step4:`plot()`関数を実行する。
+<!-- Step4:`plot()`関数を実行する。 -->
 
 
-## キャンバスの作成
-キャンバスの作成には`ggplot()`関数を用いる。引数にはデータを与える。
-```{r}
-g <- ggplot(d)
-```
+<!-- ## キャンバスの作成 -->
+<!-- キャンバスの作成には`ggplot()`関数を用いる。引数にはデータを与える。 -->
+<!-- ```{r} -->
+<!-- g <- ggplot(d) -->
+<!-- ``` -->
 
-これでキャンバスのオブジェクトが`g`という名前で格納された。この`g`に対して、色々な描画関数を与えていき、最後に`g`を`plot()`関数で実際に描画させる、というのが基本的な描画のフローとなる。
+<!-- これでキャンバスのオブジェクトが`g`という名前で格納された。この`g`に対して、色々な描画関数を与えていき、最後に`g`を`plot()`関数で実際に描画させる、というのが基本的な描画のフローとなる。 -->
 
-ちなみに現時点で`plot()`を実行すると以下のようになる。
+<!-- ちなみに現時点で`plot()`を実行すると以下のようになる。 -->
 
-```{r}
-plot(g)
-```
+<!-- ```{r} -->
+<!-- plot(g) -->
+<!-- ``` -->
 
-このとおり、まだ中身がなにもないので描画エリアだけの描画となる。
+<!-- このとおり、まだ中身がなにもないので描画エリアだけの描画となる。 -->
 
-## 描画関数の実行
-### 箱ひげ図
-まずはがく長の箱ひげ図を書かせることにしよう。
+<!-- ## 描画関数の実行 -->
+<!-- ### 箱ひげ図 -->
+<!-- まずはがく長の箱ひげ図を書かせることにしよう。 -->
 
-#### 単純な箱ひげ図
-箱ひげ図を書かせる命令は`geom_boxplot()`関数となる。この関数の第1引数に`aes()`関数をあたえる。`aes()`関数ではさらにy軸のデータを設定する。
+<!-- #### 単純な箱ひげ図 -->
+<!-- 箱ひげ図を書かせる命令は`geom_boxplot()`関数となる。この関数の第1引数に`aes()`関数をあたえる。`aes()`関数ではさらにy軸のデータを設定する。 -->
 
-```{r}
-g <- ggplot(d) + geom_boxplot(aes(y=がく長))
-plot(g)
-```
+<!-- ```{r} -->
+<!-- g <- ggplot(d) + geom_boxplot(aes(y=がく長)) -->
+<!-- plot(g) -->
+<!-- ``` -->
 
-y をxに返ると以下の通りとなる。
-```{r}
-g <- ggplot(d) + geom_boxplot(aes(x=がく長))
-plot(g)
-```
+<!-- y をxに返ると以下の通りとなる。 -->
+<!-- ```{r} -->
+<!-- g <- ggplot(d) + geom_boxplot(aes(x=がく長)) -->
+<!-- plot(g) -->
+<!-- ``` -->
 
-#### 種類ごとの箱ひげ図
+<!-- #### 種類ごとの箱ひげ図 -->
 
-上記はxないしはyのいずれかの軸しか設定していないが、例えば、x軸を種類に設定して、種類ごとの箱ひげ図を書かせたいといった場合には以下の通りにする。
+<!-- 上記はxないしはyのいずれかの軸しか設定していないが、例えば、x軸を種類に設定して、種類ごとの箱ひげ図を書かせたいといった場合には以下の通りにする。 -->
 
-```{r}
-g <- ggplot(d) + geom_boxplot(aes(x=種類, y=がく長))
-plot(g)
-```
+<!-- ```{r} -->
+<!-- g <- ggplot(d) + geom_boxplot(aes(x=種類, y=がく長)) -->
+<!-- plot(g) -->
+<!-- ``` -->
 
-このように箱ひげ図が種類ごとに描かれる。
+<!-- このように箱ひげ図が種類ごとに描かれる。 -->
 
-#### 箱ひげ図へ塗色
-箱ひげ図に色を塗りたい場合には、`aes()`に`fill`(塗りつぶし)の設定を与える。塗分けは箱ひげ図の場合にはグループ単位で行いたいであろう。そういう場合には、グループ分けに使っている変数、すなわち種類を与えると良い。
+<!-- #### 箱ひげ図へ塗色 -->
+<!-- 箱ひげ図に色を塗りたい場合には、`aes()`に`fill`(塗りつぶし)の設定を与える。塗分けは箱ひげ図の場合にはグループ単位で行いたいであろう。そういう場合には、グループ分けに使っている変数、すなわち種類を与えると良い。 -->
 
-```{r}
-g <- ggplot(d) + geom_boxplot(aes(x=種類, y=がく長, fill=種類))
-plot(g)
-```
+<!-- ```{r} -->
+<!-- g <- ggplot(d) + geom_boxplot(aes(x=種類, y=がく長, fill=種類)) -->
+<!-- plot(g) -->
+<!-- ``` -->
 
-#### 箱の幅を変える
-`geom_boxplot()`の第2引数（`aes()`関数の外の引数）としてwidthを与える。デフォルトは0.75に設定されてる。
+<!-- #### 箱の幅を変える -->
+<!-- `geom_boxplot()`の第2引数（`aes()`関数の外の引数）としてwidthを与える。デフォルトは0.75に設定されてる。 -->
 
-```{r}
-g <- ggplot(d) + geom_boxplot(aes(x=種類, y=がく長, fill=種類),width=0.3 )
-plot(g)
+<!-- ```{r} -->
+<!-- g <- ggplot(d) + geom_boxplot(aes(x=種類, y=がく長, fill=種類),width=0.3 ) -->
+<!-- plot(g) -->
 
-g <- ggplot(d) + geom_boxplot(aes(x=種類, y=がく長, fill=種類),width=1.0 )
-plot(g)
+<!-- g <- ggplot(d) + geom_boxplot(aes(x=種類, y=がく長, fill=種類),width=1.0 ) -->
+<!-- plot(g) -->
 
-g <- ggplot(d) + geom_boxplot(aes(x=種類, y=がく長, fill=種類),width=0.75)
-plot(g)
-```
+<!-- g <- ggplot(d) + geom_boxplot(aes(x=種類, y=がく長, fill=種類),width=0.75) -->
+<!-- plot(g) -->
+<!-- ``` -->
 
-### 点プロット
+<!-- ### 点プロット -->
 
-`geom_jitter()`を使う。引数として`aes()`を使って同じようにx、yを設定する。
+<!-- `geom_jitter()`を使う。引数として`aes()`を使って同じようにx、yを設定する。 -->
 
-```{R}
-g <- ggplot(d)+geom_jitter(aes(x=種類, y=がく長))
-plot(g)
-```
-y軸（がく長）については、それぞれ値を持っているが、x軸については3種類のグループ分けしかない。それをそのまま描画したのでは、同じがく長になっているものが全部重なってしまうので、そうならないように、x軸方向にランダムにバラつかせて描画されている。このx軸方向のバラつきは描画のたびにランダムに変わる。
-
-もう一度描画させると、先ほどと違うばらつき方になる。
-```{R}
-g <- ggplot(d)+geom_jitter(aes(x=種類, y=がく長))
-plot(g)
-```
-
-#### 色やプロット範囲の幅を変える
-
-箱ひげ図の時と同様に、色や幅を変えることができる。色については`fill`（塗りつぶし）ではなく`color`を設定したり、`Width`を設定したりして、色や幅を変えることができる。
-
-```{R}
-g <- ggplot(d)+geom_jitter(aes(x=種類, y=がく長, color=種類))
-plot(g)
-g <- ggplot(d)+geom_jitter(aes(x=種類, y=がく長, color=種類), width = 0.3)
-plot(g)
-```
-
-#### Jitterではなく度数分布にする
-
-先の例では点をプロットするときに横方向にランダム化させるjitter表示にしていたが、度数分布にすることもできる。
-度数分布の場合には、`geom_jitter()`の代わりに`geom_dotplot()`関数を用いる。引数がやや多いので以下に表で示す。
-
-|引数名|内容|
-|:--|:--|
-|aes(x=, y=)|x軸、y軸の設定|
-|binaxis|どちらの軸の変数についての度数分布にするのか|
-|dotsize|プロットする点のサイズ|
-|stackdir|どの方向にプロットしていくか。Up(右向き), down(左向き), center(中心ぞろえ)のいずれか|
-|binwidth|度数分布における区間幅の設定|
-|position|` position_nudge()`関数によって描画開始をそれぞれのグループのx軸の中心からどちら向き（正か負か）にどれだけ離すかの設定する。stackdirをcenterにした場合には中心がずれる|
-
-以下に、実際にいくつか例示してみる。
-```{R}
-g <- ggplot(d)+
-  geom_dotplot(aes(x=種類, y=がく長), binaxis = "y", dotsize = 1.0, stackdir = "down",
-               binwidth = 0.1, position = position_nudge(-0.025))
-plot(g)
-
-
-g <- ggplot(d)+
-  geom_dotplot(aes(x=種類, y=がく長), binaxis = "y", dotsize = 0.50, stackdir = "up",
-               binwidth = 0.1, position = position_nudge(0.025))
-plot(g)
-
-
-g <- ggplot(d)+
-  geom_dotplot(aes(x=種類, y=がく長), binaxis = "y", dotsize = 0.3, stackdir = "center",
-               binwidth = 0.3, position = position_nudge(0.225))
-plot(g)
-```
-以下はbinaxisをxに設定しているためエラーとなる（xはグループ分け変数であり、概念上度数分布というものが存在しないので）。
-```{r error=T}
-g <- ggplot(d)+
-  geom_dotplot(aes(x=種類, y=がく長), binaxis = "x", dotsize = 0.3, stackdir = "up",
-               binwidth = 0.1, position = position_nudge(0.025))
-plot(g)
-```
-
-#### 箱ひげ図との重ね合わせ
-
-点のプロットと箱ひげ図を重ねることもできる。以下のように`geom_boxplot()`と`geom_dotplot()`や`geom_jitter()`を`+`でつなげればよい。
-
-```{r}
-g<- ggplot(d)+
-  geom_boxplot(aes(x=種類,y=がく長))+
-  geom_jitter(aes(x=種類, y=がく長, color=種類))
-plot(g)
-
-g<- ggplot(d)+
-  geom_boxplot(aes(x=種類,y=がく長), width=0.5)+
-  geom_dotplot(aes(x=種類, y=がく長, color=種類, fill=種類), binaxis = "y", 
-               dotsize = 0.75, stackdir = "down",binwidth = 0.1, 
-               position = position_nudge(-0.025))
-plot(g)
-
-```
-
-:::ref
-`aes()`（エステティック）関数の設定項目はx、y軸とfill(塗りつぶし),　color(線や点の色設定)が出てきているが、それ以外に以下のようなものがある。
-
-|項目|内容|
-|:--|:--|
-|x, y| x軸に設定する変数、y軸に設定する変数
-|color|点や線の色
-|fill| 面の色
-|alpha|不透明度 (0が透明、1が不透明)
-|size|点や文字の大きさ、線の太さ
-|shape|点の形
-|linetype|線の種類
-|group|反復試行の折れ線グラフなど、色や形はそのままで切り分けたいときに。
-|xmin, xmax, ymin, ymax, xend, yend| ものによってつかう。
-
-:::
-
-:::ref
-極めて多いエラーとして、各`geom()`関数を実行していくときに、前の行の末尾に`+`を付け忘れたり、最後の行の末尾に`+`をつけたりしてしまうことがよくある。
-もし、エラーが出てグラフ描画ができなかった場合には、これらのミスをしていないかを確認してみてほしい。
-:::
-
-### 棒グラフ
-平均や標準偏差が得られているなら棒グラフとしてそれらを描きたい。その場合には、まずは平均と標準偏差のグループごとのデータを用意した上で、以下のようにする。
-
-```{R}
-#データの準備
-d.mean <- aggregate(がく長~種類,d, mean)
-d.sd <- aggregate(がく長~種類,d, sd)
-d.mean
-d.sd
-
-d2 <- data.frame(
-  種類 = d.mean$種類,
-  平均 = d.mean$がく長,
-  標準偏差= d.sd$がく長
-)
-print(d2) 
- 
- g <- ggplot(d2)+
-  geom_bar(aes(x=種類,y=平均,fill=種類),stat="identity")+
-  geom_errorbar(aes(x=種類,y=平均,ymin=平均-標準偏差, ymax=平均+標準偏差,width=0.15))
-plot(g)
-```
-
-さらに、平均値自体を棒グラフに重ねて記述したい場合には以下のようにする。vjustは、テキストの位置を調整するためのパラメータで、数値が大きいほど下に移動する。負の値にした場合は棒グラフよりも上の表記される。
-```{R}
-g <- ggplot(d2)+
-  geom_bar(aes(x=種類,y=平均,fill=種類),stat="identity")+
-  geom_errorbar(aes(x=種類,y=平均,ymin=平均-標準偏差, ymax=平均+標準偏差,width=0.15))+
-  geom_text(aes(x=種類,y=平均,label=round(平均,1)),vjust=5)
-plot(g)
-```
-
-
-:::ref
-今まで、キャンバスを作った際にデータフレームを与え、その後、描画をする際にxとyを指摘してきたが、キャンバスを作るときにxとyも指定することができる。そうすると、描画をするときに、いちいちx、yを指定しなくても良くなる。以下に例を示す。
-
-```{r}
-g <- ggplot(d2)+
-  geom_bar(aes(x=種類,y=平均,fill=種類),stat="identity")+
-  geom_errorbar(aes(x=種類,y=平均,ymin=平均-標準偏差, ymax=平均+標準偏差,width=0.3))+
-  geom_text(aes(x=種類,y=平均,label=round(平均,1)),vjust=5)
-plot(g)
-
-g <- ggplot(d2,aes(x=種類,y=平均))+
-  geom_bar(aes(fill=種類),stat="identity")+
-  geom_errorbar(aes(ymin=平均-標準偏差, ymax=平均+標準偏差,width=0.3))+
-  geom_text(aes(label=round(平均,1)),vjust=5)
-plot(g)
-```
-:::
-
-### ヒストグラム
-
-ヒストグラムを作成する方法は2つある。
-
-1. `geom_bar()`で`stat`を`count`に設定する。
-1. `geom_histgram()`を使う
-
-#### geom_bar()を使う
-
-度数分布をグラフ表示したものをヒストグラムと呼ぶ。ヒストグラムは棒グラフの派生形として、以下のように、`stat`を`count`に設定することで描くことができる。ただし、この場合には区間幅を自分で設定することはできない。
-```{r}
-g <- ggplot(d)+
-  geom_bar(aes(x=がく長),stat="count")
-plot(g)
-```
-
-#### geom_histgram()を使う
-`geom_histgram`を使う場合、区間幅はデフォルトではデータの範囲を30等分した値が自動的に設定されるが、`binwidth`を設定することによって任意の区間幅に設定することもできる。
-```{r}
-g <- ggplot(d)+
-  geom_histogram(aes(x=がく長), binwidth = 0.1)
-plot(g)
-```
-
-これだと区間の境界がわかりにくいので、境界を描かせるためには以下のようにする。
-```{r}
-g <- ggplot(d)+
-  geom_histogram(aes(x=がく長),color="white", binwidth = 0.1)
-plot(g)
-```
-
-
-
-
-#### 種類ごとの色分け
-
-種類ごとに分けて分布表を作る場合は、`geom_bar`にせよ、`geom_histgram`にせよ`aes()`の中で`fill`を設定する。
-```{r}
-g <- ggplot(d)+
-  geom_bar(aes(x=がく長, fill=種類),stat="count")
-plot(g)
-
-g <- ggplot(d)+
-  geom_histogram(aes(x=がく長, fill=種類),color="white", binwidth = 0.1)
-plot(g)
-
-
-```
-
-なお、例えば、がく長が5.7は度数として8となっているが、これは3つの種類をすべて積み上げたものである。すなわち、setosaにおいてがく長5.8なのは2点、Versicolorでは5点、virginicaで1点となっている。
-
-
-#### 種類別のヒストグラム作成
-
-あくまで種類ごとにそれぞれ別々のヒストグラムにしたい、ということであれば、以下のように2つの方法が考えられる。
-
-**方法1 データを端からバラバラにして3つのグラフを別々に描く**
-
-この場合には、データを`filter()`関数(->[参考](#抽出))を用いて種類ごとに分け、それぞれを描画する。ただし、この場合、`coord_cartesian(xlim =)`関数を使ってx軸の変域を設定しないと、3つのグラフのx軸の変域がバラバラになってしまう。
-
-```{r}
-g <- ggplot(filter(d,種類=="setosa"))+
-  geom_histogram(aes(x=がく長),color="white", binwidth = 0.1)+
-  coord_cartesian(xlim = c(4, 8))
-plot(g)
-g <- ggplot(filter(d,種類=="versicolor"))+
-  geom_histogram(aes(x=がく長),color="white", binwidth = 0.1)+
-  coord_cartesian(xlim = c(4, 8))
-plot(g)
-g <- ggplot(filter(d,種類=="virginica") )+
-  geom_histogram(aes(x=がく長),color="white", binwidth = 0.1)+
-  coord_cartesian(xlim = c(4, 8))
-plot(g)
-
-```
-
-:::ref
-変数の内容を知るための関数として`str()`という関数がある。実際にこれを`filter()`関数の結果に対してかけてみると、以下の通りとなる。
-```{r}
-res<-filter(d,種類=="setosa")
-str(res)
-```
-データ点数は50点とあり、確かにsetosaのみを取り出せているのがわかる。一方で「種類」列の情報としては、この列は要因型であり、3つの水準（setosa, versicolorだけが表示されているが・・・）で構成されていることが記載されていることがわかる。
-:::
-
-**方法2: 1つの絵の中で3つに分割して描く(`facet_wrap()`の利用)**
-
-`facet_wrap()`を利用することで1枚のキャンバスを分割して表示させることができる。
-```{r}
-g <- ggplot(d )+
-  geom_histogram(aes(x=がく長),color="white", binwidth = 0.1)+
-    facet_wrap(d$種類) 
-plot(g)
-```
-
-デフォルトでは、横方向（列方向）に分割されていくが、`nrow`(行数)を設定することによって縦方向（行方向）にも分割させることができる。
-```{r}
-g <- ggplot(d )+
-  geom_histogram(aes(x=がく長),color="white", binwidth = 0.1)+
-    facet_wrap(d$種類,nrow=2) 
-plot(g)
-```
-
-
-
-
-
-### 散布図
-2つのデータの関係性を可視化するグラフの代表格は散布図である。散布図は以下のようにして描く。
-
-```{R}
-g <- ggplot(d)+
-  geom_point(aes(x=がく長, y=花びら長))
-plot(g)
-```
-
-#### 種類ごとに色分け
-
-`geom_point()`の`aes()`に`color`を与える。
-
-```{R}
-g <- ggplot(d)+
-  geom_point(aes(x=がく長, y=花びら長, color=種類))
-plot(g)
-```
-
-#### 種類ごとにプロットの形を分ける
-`geom_point()`の`aes()`に`shape`を与える。
-```{R}
-g <- ggplot(d)+
-  geom_point(aes(x=がく長, y=花びら長, color=種類, shape=種類))
-plot(g)
-```
-
-分かりやすく、がく長と花びら長に関係性として、setosaにはほぼ関係性はないが、versicolorとvirginicaにはがく長が長くなると、花びら長も長くなる傾向にあることが分かった。
-
-散布図は回帰分析を行う際の結果の可視化でも改めて触れることにする。
-
-### 任意の位置に文字や図形を書き入れる
-
-任意の場所に任意の文字や線、図形を書き入れる場合には、`annotate()`関数を使う。以下のように、`geom_point()`の後に`annotate()`を使って、任意の位置に任意の文字を書き入れることができる。以下に代表的な引数を示す。これら以外にも円を描いたり、矢印を描いたりできるので、興味がある人はChatGPTに聞いてみてほしい。
-
-
-|引数名|内容|
-|:--|:--|
-|第1引数|アノテーションの種類の指定。"text"(テキスト)、"segment"(線分)、"rect"(四角形)などがある|
-|x,y|アノテーションを書き入れるx,y座標|
-|xend|線を引く場合の終点のx座標|
-|yend|線を引く場合の終点のy座標|
-|xmin, xmax, ymin, ymax|四角形を描く場合の座標
-|label|書き入れる文字列|
-|color|文字の色、線の色|
-|fill|四角形の塗りつぶしの色|
-|size|文字の大きさ|
-|angle|文字の角度|
-|linewidth|線の幅|
-
-
-```{r}
-g <- ggplot(d)+
-  geom_point(aes(x=がく長, y=花びら長, color=種類, shape=種類))+
-  annotate("text", x=5, y=2, label="ここに文字を書き入れる",color="orange",size=7, angle=39)+
-  annotate("segment", x=4, y=2, xend=6, yend=3, linewidth=1.5)+
-  annotate("rect", xmin=5, xmax=6, ymin=4, ymax=6,color="red",fill="blue")
-plot(g)
-```
-
-## 書式や凡例を弄る
-
-### 軸のタイトルを消したり書き換えたり
-デフォルトでは軸タイトルは`aes()`で設定した各軸の変数名がそのまま入るが、`xlab`や`ylab`を使って自分の好きなように変えることができる。
-引数に`NULL`を設定すると軸タイトルを消せる。
-
-```{r}
-g <- ggplot(d2,aes(x=種類,y=平均))+
-  geom_bar(aes(fill=種類),stat="identity")+
-  geom_errorbar(aes(ymin=平均-標準偏差, ymax=平均+標準偏差,width=0.3))+
-  xlab(NULL)+ylab("がく長")
-plot(g)
-```
-
-
-### 凡例タイトルを書き換える
-`labs()`を使う。
-引数には、`aes()`で色を指定するときに使った引数に、書き換えたいタイトルを与える。
-以下の例では、`fill`を使って色を与えているので、`fill=****`というのを引数としてlabelに与える。
-
-```{r}
-g <- ggplot(d2,aes(x=種類,y=平均))+
-  geom_bar(aes(fill=種類),stat="identity")+
-  geom_errorbar(aes(ymin=平均-標準偏差, ymax=平均+標準偏差,width=0.3))+
-  xlab(NULL)+ylab("学長")+labs(fill="種類")
-plot(g)
-```
-
-ちなみにlabsは引数として以下のものを取る。
-
-|項目|内容|
-|:--|:--|
-title|タイトル
-subtitle|サブタイトル
-x|x軸ラベル
-y|y軸ラベル
-caption|キャプション
-fill またはcolor|凡例ラベルのタイトル
-
-この通りに、xlabやylabもlabsでまとめて設定することもできる。
-```{r}
-g <- ggplot(d2,aes(x=種類,y=平均))+
-  geom_bar(aes(fill=種類),stat="identity")+
-  geom_errorbar(aes(ymin=平均-標準偏差, ymax=平均+標準偏差,width=0.3))+
-  labs(x=NULL, y="がく長", fill="種類")
-plot(g)
-```
-
-### 凡例を消す
-`theme(legend.position = "none")`を使う。
-
-```{r}
-g <- ggplot(d2,aes(x=種類,y=平均))+
-  geom_bar(aes(fill=種類),stat="identity")+
-  geom_errorbar(aes(ymin=平均-標準偏差, ymax=平均+標準偏差,width=0.3))+
-  xlab(NULL)+ylab("がく長")+
-  theme(legend.position = "none")
-plot(g)
-```
-
-### 軸タイトルや軸ラベル、凡例の文字サイズを換える
-
-凡例を消した時と同じようにthemeを使う。引数には以下のようなものを入れる。
-`axis.text.x=element_text(size=15)`
-`axis.text.y=element_text(size=15)`
-`axis.title.x=element_text(size=15)`
-`axis.title.y=element_text(size=15)`
-`legend.text=element_text(size=9)`
-
-```{r}
-g <- ggplot(d2,aes(x=種類,y=平均))+
-  geom_bar(aes(fill=種類),stat="identity")+
-  geom_errorbar(aes(ymin=平均-標準偏差, ymax=平均+標準偏差,width=0.3))+
-  xlab("種類")+ylab("花弁の幅")+
-  theme(legend.position = 'none')+
-  theme(
-    axis.title.x=element_text(size=15),
-    axis.title.y=element_text(size=15),
-    axis.text.x=element_text(size=10),
-    axis.text.y=element_text(size=10),
-    legend.text=element_text(size=5),
-    legend.title = element_text(size=8)  )
-
-plot(g)
-```
-
-:::ref
-themeの設定項目
-
-themeは細かくいろいろ設定できる。設定できるものは以下の通り。
-
-|名前|説明|要素の型|
-|:--|:--|:--|
-|text|すべてのテキスト要素|element_text()|
-|axis.title|両軸ラベルの体裁|element_text()|
-|axis.title.x|x軸ラベルの体裁|element_text()|
-|axis.title.y|y軸ラベルの体裁|element_text()|
-|axis.text|両軸目盛ラベルの体裁|element_text()|
-|axis.text.x|x軸目盛ラベルの体裁|element_text()|
-|axis.text.y|y軸目盛ラベルの体裁|element_text()|
-|legend.text|凡例項目の体裁|element_text()|
-|legend.title|凡例タイトルの体裁|element_text()|
-|plot.title|タイトルの体裁|element_text()|
-|strip.text|両方向ファセットラベルテキストの体裁|element_text()|
-|strip.text.x|水平方向ファセットラベルテキストの体裁|element_text()|
-|strip.text.y|垂直方向ファセットラベルテキストの体裁|element_text()|
-|legend.position|凡例の位置|left, right, bottom, top, c(x,y) :x,yは0~1|
-|legend.background|凡例の背景|element_rect(fill="xxx", color="yyy") fillは塗りつぶし、colorは枠線|
-|plot.background|プロット全体の背景|element_rect(fill="xxx", color="yyy")|
-|panel.background|プロット領域の背景|element_rect()|
-|panel.border|プロット領域の枠線|element_rect(linetype="xxx")|
-|rect|全ての長方形要素|element_rect()|
-|panel.grid.major|主目盛線|element_line()|
-|panel.grid.major.x|主目盛線の垂直方向|element_line()|
-|panel.grid.major.y|主目盛線の水平方向|element_line()|
-|panel.grid.minor|補助目盛線|element_line()|
-|panel.grid.minor.x|補助目盛線の垂直方向|element_line()|
-|panel.grid.minor.y|補助目盛線の水平方向|element_line()|
-|axis.line|軸に沿った線|element_line()|
-|line|すべての線要素|element_line()|
-
-引用（順序は改変しました）：https://knknkn.hatenablog.com/entry/2019/02/23/181311
-:::
-
-:::ref
-element_text()の設定項目
-
-設定項目|element_text()の引数
-:--|:--
-角度|angle
-水平位置	|hjust(0:左揃え～1:右揃え)
-垂直位置|vjust(0:下揃え～1:上揃え)
-サイズ|	size
-色|	colour
-スタイル|	face(bold or italic)
-フォントファミリー|	family
-
-参考：http://mukkujohn.hatenablog.com/entry/2016/10/11/220722
-:::
-
-:::ref
-
-element_xxxのその他の項目
-`element_rect(fill, color, size, linetype, inherit.blank)` — 長方形
-
-|項目|内容|
-|:--|:--|
-fill| 塗りつぶしの色
-color| 枠の色
-
-`element_line(color, size, linetype, lineend, arrow, inherit.blank) `— 線
-
-`element_blank()` — 空
-消したい要素にはこれを指定する
-
-参考：https://heavywatal.github.io/rstats/ggplot2.html
-:::
-
-### 目盛ラベルを変える
-目盛ラベルを変えるには、`scale_x_****`や`scale_y_***`を使う。
-以下は、x軸の目盛りをsetosa, versicolor, virgnicaから、a, b, cに変え、y軸を普通の目盛から対数目盛に変えた例である。
-
-```{r}
-g <- ggplot(d)+
-  geom_bar(aes(x=種類,fill=種類),stat="count") +
-  scale_x_discrete(labels=c("a","b","c"))+
-  scale_y_log10(limits=c(1,1000))
-plot(g)
-```
-
-`***`の部分には、いずれも以下のものが入る。
-
-|***|内容|
-|:--|:--|
-discrete|離散目盛
-continuous|連続目盛
-log10|対数目盛
-reverse|目盛の逆転
-sqrt|平方根目盛
-
-また、代表的な引数としては以下のものが入る。
-
-|引数|内容|
-|:--|:--|
-labels|離散目盛のラベルを変える（以下のbreaksを併用すると、連続変数でも可能）
-breaks|連続変数の目盛のうち指定したものだけを表示させる
-limits|連続変数の表示範囲を指定したものにする.xlim,ylimと同じ効果。
-name | 変数の軸ラベルを変える。xlab,ylabと同じ効果。
-
-
-結局、軸タイトルを変える方法って、色々あるということである。
-xlabでもよいし、labs(x=)dでもよいし、scale_x_***(name=)でも変えれる。
-
-### 凡例の各項目のラベルを書き換える。
-グループ分けにfillを使っている場合は、`sacle_fill_dicrete()`を、Colorを使っている場合は`scale_color_discrete()`を使う。
-
-```{r}
-g <- ggplot(d)+
-  geom_bar(aes(x=種類,fill=種類),stat="count")+
-  scale_fill_discrete(label=c("花1","花2","花3"))
-plot(g)
-```
-
-:::ref
-ggplot2で描画するときにエラーが出るケースとして、**行末の「＋」の付け忘れや消し忘れ**がある。もし思い通りにグラフが描画されない場合には、この点を確認してみるとよい。の絵が 
-:::
-
-  <!----------------------------- 仕切り ----------------------------------->
-  
-
- 
+<!-- ```{R} -->
+<!-- g <- ggplot(d)+geom_jitter(aes(x=種類, y=がく長)) -->
+<!-- plot(g) -->
+<!-- ``` -->
+<!-- y軸（がく長）については、それぞれ値を持っているが、x軸については3種類のグループ分けしかない。それをそのまま描画したのでは、同じがく長になっているものが全部重なってしまうので、そうならないように、x軸方向にランダムにバラつかせて描画されている。このx軸方向のバラつきは描画のたびにランダムに変わる。 -->
+
+<!-- もう一度描画させると、先ほどと違うばらつき方になる。 -->
+<!-- ```{R} -->
+<!-- g <- ggplot(d)+geom_jitter(aes(x=種類, y=がく長)) -->
+<!-- plot(g) -->
+<!-- ``` -->
+
+<!-- #### 色やプロット範囲の幅を変える -->
+
+<!-- 箱ひげ図の時と同様に、色や幅を変えることができる。色については`fill`（塗りつぶし）ではなく`color`を設定したり、`Width`を設定したりして、色や幅を変えることができる。 -->
+
+<!-- ```{R} -->
+<!-- g <- ggplot(d)+geom_jitter(aes(x=種類, y=がく長, color=種類)) -->
+<!-- plot(g) -->
+<!-- g <- ggplot(d)+geom_jitter(aes(x=種類, y=がく長, color=種類), width = 0.3) -->
+<!-- plot(g) -->
+<!-- ``` -->
+
+<!-- #### Jitterではなく度数分布にする -->
+
+<!-- 先の例では点をプロットするときに横方向にランダム化させるjitter表示にしていたが、度数分布にすることもできる。 -->
+<!-- 度数分布の場合には、`geom_jitter()`の代わりに`geom_dotplot()`関数を用いる。引数がやや多いので以下に表で示す。 -->
+
+<!-- |引数名|内容| -->
+<!-- |:--|:--| -->
+<!-- |aes(x=, y=)|x軸、y軸の設定| -->
+<!-- |binaxis|どちらの軸の変数についての度数分布にするのか| -->
+<!-- |dotsize|プロットする点のサイズ| -->
+<!-- |stackdir|どの方向にプロットしていくか。Up(右向き), down(左向き), center(中心ぞろえ)のいずれか| -->
+<!-- |binwidth|度数分布における区間幅の設定| -->
+<!-- |position|` position_nudge()`関数によって描画開始をそれぞれのグループのx軸の中心からどちら向き（正か負か）にどれだけ離すかの設定する。stackdirをcenterにした場合には中心がずれる| -->
+
+<!-- 以下に、実際にいくつか例示してみる。 -->
+<!-- ```{R} -->
+<!-- g <- ggplot(d)+ -->
+<!--   geom_dotplot(aes(x=種類, y=がく長), binaxis = "y", dotsize = 1.0, stackdir = "down", -->
+<!--                binwidth = 0.1, position = position_nudge(-0.025)) -->
+<!-- plot(g) -->
+
+
+<!-- g <- ggplot(d)+ -->
+<!--   geom_dotplot(aes(x=種類, y=がく長), binaxis = "y", dotsize = 0.50, stackdir = "up", -->
+<!--                binwidth = 0.1, position = position_nudge(0.025)) -->
+<!-- plot(g) -->
+
+
+<!-- g <- ggplot(d)+ -->
+<!--   geom_dotplot(aes(x=種類, y=がく長), binaxis = "y", dotsize = 0.3, stackdir = "center", -->
+<!--                binwidth = 0.3, position = position_nudge(0.225)) -->
+<!-- plot(g) -->
+<!-- ``` -->
+<!-- 以下はbinaxisをxに設定しているためエラーとなる（xはグループ分け変数であり、概念上度数分布というものが存在しないので）。 -->
+<!-- ```{r error=T} -->
+<!-- g <- ggplot(d)+ -->
+<!--   geom_dotplot(aes(x=種類, y=がく長), binaxis = "x", dotsize = 0.3, stackdir = "up", -->
+<!--                binwidth = 0.1, position = position_nudge(0.025)) -->
+<!-- plot(g) -->
+<!-- ``` -->
+
+<!-- #### 箱ひげ図との重ね合わせ -->
+
+<!-- 点のプロットと箱ひげ図を重ねることもできる。以下のように`geom_boxplot()`と`geom_dotplot()`や`geom_jitter()`を`+`でつなげればよい。 -->
+
+<!-- ```{r} -->
+<!-- g<- ggplot(d)+ -->
+<!--   geom_boxplot(aes(x=種類,y=がく長))+ -->
+<!--   geom_jitter(aes(x=種類, y=がく長, color=種類)) -->
+<!-- plot(g) -->
+
+<!-- g<- ggplot(d)+ -->
+<!--   geom_boxplot(aes(x=種類,y=がく長), width=0.5)+ -->
+<!--   geom_dotplot(aes(x=種類, y=がく長, color=種類, fill=種類), binaxis = "y",  -->
+<!--                dotsize = 0.75, stackdir = "down",binwidth = 0.1,  -->
+<!--                position = position_nudge(-0.025)) -->
+<!-- plot(g) -->
+
+<!-- ``` -->
+
+<!-- :::ref -->
+<!-- `aes()`（エステティック）関数の設定項目はx、y軸とfill(塗りつぶし),　color(線や点の色設定)が出てきているが、それ以外に以下のようなものがある。 -->
+
+<!-- |項目|内容| -->
+<!-- |:--|:--| -->
+<!-- |x, y| x軸に設定する変数、y軸に設定する変数 -->
+<!-- |color|点や線の色 -->
+<!-- |fill| 面の色 -->
+<!-- |alpha|不透明度 (0が透明、1が不透明) -->
+<!-- |size|点や文字の大きさ、線の太さ -->
+<!-- |shape|点の形 -->
+<!-- |linetype|線の種類 -->
+<!-- |group|反復試行の折れ線グラフなど、色や形はそのままで切り分けたいときに。 -->
+<!-- |xmin, xmax, ymin, ymax, xend, yend| ものによってつかう。 -->
+
+<!-- ::: -->
+
+<!-- :::ref -->
+<!-- 極めて多いエラーとして、各`geom()`関数を実行していくときに、前の行の末尾に`+`を付け忘れたり、最後の行の末尾に`+`をつけたりしてしまうことがよくある。 -->
+<!-- もし、エラーが出てグラフ描画ができなかった場合には、これらのミスをしていないかを確認してみてほしい。 -->
+<!-- ::: -->
+
+<!-- ### 棒グラフ -->
+<!-- 平均や標準偏差が得られているなら棒グラフとしてそれらを描きたい。その場合には、まずは平均と標準偏差のグループごとのデータを用意した上で、以下のようにする。 -->
+
+<!-- ```{R} -->
+<!-- #データの準備 -->
+<!-- d.mean <- aggregate(がく長~種類,d, mean) -->
+<!-- d.sd <- aggregate(がく長~種類,d, sd) -->
+<!-- d.mean -->
+<!-- d.sd -->
+
+<!-- d2 <- data.frame( -->
+<!--   種類 = d.mean$種類, -->
+<!--   平均 = d.mean$がく長, -->
+<!--   標準偏差= d.sd$がく長 -->
+<!-- ) -->
+<!-- print(d2)  -->
+
+<!--  g <- ggplot(d2)+ -->
+<!--   geom_bar(aes(x=種類,y=平均,fill=種類),stat="identity")+ -->
+<!--   geom_errorbar(aes(x=種類,y=平均,ymin=平均-標準偏差, ymax=平均+標準偏差,width=0.15)) -->
+<!-- plot(g) -->
+<!-- ``` -->
+
+<!-- さらに、平均値自体を棒グラフに重ねて記述したい場合には以下のようにする。vjustは、テキストの位置を調整するためのパラメータで、数値が大きいほど下に移動する。負の値にした場合は棒グラフよりも上の表記される。 -->
+<!-- ```{R} -->
+<!-- g <- ggplot(d2)+ -->
+<!--   geom_bar(aes(x=種類,y=平均,fill=種類),stat="identity")+ -->
+<!--   geom_errorbar(aes(x=種類,y=平均,ymin=平均-標準偏差, ymax=平均+標準偏差,width=0.15))+ -->
+<!--   geom_text(aes(x=種類,y=平均,label=round(平均,1)),vjust=5) -->
+<!-- plot(g) -->
+<!-- ``` -->
+
+
+<!-- :::ref -->
+<!-- 今まで、キャンバスを作った際にデータフレームを与え、その後、描画をする際にxとyを指摘してきたが、キャンバスを作るときにxとyも指定することができる。そうすると、描画をするときに、いちいちx、yを指定しなくても良くなる。以下に例を示す。 -->
+
+<!-- ```{r} -->
+<!-- g <- ggplot(d2)+ -->
+<!--   geom_bar(aes(x=種類,y=平均,fill=種類),stat="identity")+ -->
+<!--   geom_errorbar(aes(x=種類,y=平均,ymin=平均-標準偏差, ymax=平均+標準偏差,width=0.3))+ -->
+<!--   geom_text(aes(x=種類,y=平均,label=round(平均,1)),vjust=5) -->
+<!-- plot(g) -->
+
+<!-- g <- ggplot(d2,aes(x=種類,y=平均))+ -->
+<!--   geom_bar(aes(fill=種類),stat="identity")+ -->
+<!--   geom_errorbar(aes(ymin=平均-標準偏差, ymax=平均+標準偏差,width=0.3))+ -->
+<!--   geom_text(aes(label=round(平均,1)),vjust=5) -->
+<!-- plot(g) -->
+<!-- ``` -->
+<!-- ::: -->
+
+<!-- ### ヒストグラム -->
+
+<!-- ヒストグラムを作成する方法は2つある。 -->
+
+<!-- 1. `geom_bar()`で`stat`を`count`に設定する。 -->
+<!-- 1. `geom_histgram()`を使う -->
+
+<!-- #### geom_bar()を使う -->
+
+<!-- 度数分布をグラフ表示したものをヒストグラムと呼ぶ。ヒストグラムは棒グラフの派生形として、以下のように、`stat`を`count`に設定することで描くことができる。ただし、この場合には区間幅を自分で設定することはできない。 -->
+<!-- ```{r} -->
+<!-- g <- ggplot(d)+ -->
+<!--   geom_bar(aes(x=がく長),stat="count") -->
+<!-- plot(g) -->
+<!-- ``` -->
+
+<!-- #### geom_histgram()を使う -->
+<!-- `geom_histgram`を使う場合、区間幅はデフォルトではデータの範囲を30等分した値が自動的に設定されるが、`binwidth`を設定することによって任意の区間幅に設定することもできる。 -->
+<!-- ```{r} -->
+<!-- g <- ggplot(d)+ -->
+<!--   geom_histogram(aes(x=がく長), binwidth = 0.1) -->
+<!-- plot(g) -->
+<!-- ``` -->
+
+<!-- これだと区間の境界がわかりにくいので、境界を描かせるためには以下のようにする。 -->
+<!-- ```{r} -->
+<!-- g <- ggplot(d)+ -->
+<!--   geom_histogram(aes(x=がく長),color="white", binwidth = 0.1) -->
+<!-- plot(g) -->
+<!-- ``` -->
+
+
+
+
+<!-- #### 種類ごとの色分け -->
+
+<!-- 種類ごとに分けて分布表を作る場合は、`geom_bar`にせよ、`geom_histgram`にせよ`aes()`の中で`fill`を設定する。 -->
+<!-- ```{r} -->
+<!-- g <- ggplot(d)+ -->
+<!--   geom_bar(aes(x=がく長, fill=種類),stat="count") -->
+<!-- plot(g) -->
+
+<!-- g <- ggplot(d)+ -->
+<!--   geom_histogram(aes(x=がく長, fill=種類),color="white", binwidth = 0.1) -->
+<!-- plot(g) -->
+
+
+<!-- ``` -->
+
+<!-- なお、例えば、がく長が5.7は度数として8となっているが、これは3つの種類をすべて積み上げたものである。すなわち、setosaにおいてがく長5.8なのは2点、Versicolorでは5点、virginicaで1点となっている。 -->
+
+
+<!-- #### 種類別のヒストグラム作成 -->
+
+<!-- あくまで種類ごとにそれぞれ別々のヒストグラムにしたい、ということであれば、以下のように2つの方法が考えられる。 -->
+
+<!-- **方法1 データを端からバラバラにして3つのグラフを別々に描く** -->
+
+<!-- この場合には、データを`filter()`関数(->[参考](#抽出))を用いて種類ごとに分け、それぞれを描画する。ただし、この場合、`coord_cartesian(xlim =)`関数を使ってx軸の変域を設定しないと、3つのグラフのx軸の変域がバラバラになってしまう。 -->
+
+<!-- ```{r} -->
+<!-- g <- ggplot(filter(d,種類=="setosa"))+ -->
+<!--   geom_histogram(aes(x=がく長),color="white", binwidth = 0.1)+ -->
+<!--   coord_cartesian(xlim = c(4, 8)) -->
+<!-- plot(g) -->
+<!-- g <- ggplot(filter(d,種類=="versicolor"))+ -->
+<!--   geom_histogram(aes(x=がく長),color="white", binwidth = 0.1)+ -->
+<!--   coord_cartesian(xlim = c(4, 8)) -->
+<!-- plot(g) -->
+<!-- g <- ggplot(filter(d,種類=="virginica") )+ -->
+<!--   geom_histogram(aes(x=がく長),color="white", binwidth = 0.1)+ -->
+<!--   coord_cartesian(xlim = c(4, 8)) -->
+<!-- plot(g) -->
+
+<!-- ``` -->
+
+<!-- :::ref -->
+<!-- 変数の内容を知るための関数として`str()`という関数がある。実際にこれを`filter()`関数の結果に対してかけてみると、以下の通りとなる。 -->
+<!-- ```{r} -->
+<!-- res<-filter(d,種類=="setosa") -->
+<!-- str(res) -->
+<!-- ``` -->
+<!-- データ点数は50点とあり、確かにsetosaのみを取り出せているのがわかる。一方で「種類」列の情報としては、この列は要因型であり、3つの水準（setosa, versicolorだけが表示されているが・・・）で構成されていることが記載されていることがわかる。 -->
+<!-- ::: -->
+
+<!-- **方法2: 1つの絵の中で3つに分割して描く(`facet_wrap()`の利用)** -->
+
+<!-- `facet_wrap()`を利用することで1枚のキャンバスを分割して表示させることができる。 -->
+<!-- ```{r} -->
+<!-- g <- ggplot(d )+ -->
+<!--   geom_histogram(aes(x=がく長),color="white", binwidth = 0.1)+ -->
+<!--     facet_wrap(d$種類)  -->
+<!-- plot(g) -->
+<!-- ``` -->
+
+<!-- デフォルトでは、横方向（列方向）に分割されていくが、`nrow`(行数)を設定することによって縦方向（行方向）にも分割させることができる。 -->
+<!-- ```{r} -->
+<!-- g <- ggplot(d )+ -->
+<!--   geom_histogram(aes(x=がく長),color="white", binwidth = 0.1)+ -->
+<!--     facet_wrap(d$種類,nrow=2)  -->
+<!-- plot(g) -->
+<!-- ``` -->
+
+
+
+
+
+<!-- ### 散布図 -->
+<!-- 2つのデータの関係性を可視化するグラフの代表格は散布図である。散布図は以下のようにして描く。 -->
+
+<!-- ```{R} -->
+<!-- g <- ggplot(d)+ -->
+<!--   geom_point(aes(x=がく長, y=花びら長)) -->
+<!-- plot(g) -->
+<!-- ``` -->
+
+<!-- #### 種類ごとに色分け -->
+
+<!-- `geom_point()`の`aes()`に`color`を与える。 -->
+
+<!-- ```{R} -->
+<!-- g <- ggplot(d)+ -->
+<!--   geom_point(aes(x=がく長, y=花びら長, color=種類)) -->
+<!-- plot(g) -->
+<!-- ``` -->
+
+<!-- #### 種類ごとにプロットの形を分ける -->
+<!-- `geom_point()`の`aes()`に`shape`を与える。 -->
+<!-- ```{R} -->
+<!-- g <- ggplot(d)+ -->
+<!--   geom_point(aes(x=がく長, y=花びら長, color=種類, shape=種類)) -->
+<!-- plot(g) -->
+<!-- ``` -->
+
+<!-- 分かりやすく、がく長と花びら長に関係性として、setosaにはほぼ関係性はないが、versicolorとvirginicaにはがく長が長くなると、花びら長も長くなる傾向にあることが分かった。 -->
+
+<!-- 散布図は回帰分析を行う際の結果の可視化でも改めて触れることにする。 -->
+
+<!-- ### 任意の位置に文字や図形を書き入れる -->
+
+<!-- 任意の場所に任意の文字や線、図形を書き入れる場合には、`annotate()`関数を使う。以下のように、`geom_point()`の後に`annotate()`を使って、任意の位置に任意の文字を書き入れることができる。以下に代表的な引数を示す。これら以外にも円を描いたり、矢印を描いたりできるので、興味がある人はChatGPTに聞いてみてほしい。 -->
+
+
+<!-- |引数名|内容| -->
+<!-- |:--|:--| -->
+<!-- |第1引数|アノテーションの種類の指定。"text"(テキスト)、"segment"(線分)、"rect"(四角形)などがある| -->
+<!-- |x,y|アノテーションを書き入れるx,y座標| -->
+<!-- |xend|線を引く場合の終点のx座標| -->
+<!-- |yend|線を引く場合の終点のy座標| -->
+<!-- |xmin, xmax, ymin, ymax|四角形を描く場合の座標 -->
+<!-- |label|書き入れる文字列| -->
+<!-- |color|文字の色、線の色| -->
+<!-- |fill|四角形の塗りつぶしの色| -->
+<!-- |size|文字の大きさ| -->
+<!-- |angle|文字の角度| -->
+<!-- |linewidth|線の幅| -->
+
+
+<!-- ```{r} -->
+<!-- g <- ggplot(d)+ -->
+<!--   geom_point(aes(x=がく長, y=花びら長, color=種類, shape=種類))+ -->
+<!--   annotate("text", x=5, y=2, label="ここに文字を書き入れる",color="orange",size=7, angle=39)+ -->
+<!--   annotate("segment", x=4, y=2, xend=6, yend=3, linewidth=1.5)+ -->
+<!--   annotate("rect", xmin=5, xmax=6, ymin=4, ymax=6,color="red",fill="blue") -->
+<!-- plot(g) -->
+<!-- ``` -->
+
+<!-- ## 書式や凡例を弄る -->
+
+<!-- ### 軸のタイトルを消したり書き換えたり -->
+<!-- デフォルトでは軸タイトルは`aes()`で設定した各軸の変数名がそのまま入るが、`xlab`や`ylab`を使って自分の好きなように変えることができる。 -->
+<!-- 引数に`NULL`を設定すると軸タイトルを消せる。 -->
+
+<!-- ```{r} -->
+<!-- g <- ggplot(d2,aes(x=種類,y=平均))+ -->
+<!--   geom_bar(aes(fill=種類),stat="identity")+ -->
+<!--   geom_errorbar(aes(ymin=平均-標準偏差, ymax=平均+標準偏差,width=0.3))+ -->
+<!--   xlab(NULL)+ylab("がく長") -->
+<!-- plot(g) -->
+<!-- ``` -->
+
+
+<!-- ### 凡例タイトルを書き換える -->
+<!-- `labs()`を使う。 -->
+<!-- 引数には、`aes()`で色を指定するときに使った引数に、書き換えたいタイトルを与える。 -->
+<!-- 以下の例では、`fill`を使って色を与えているので、`fill=****`というのを引数としてlabelに与える。 -->
+
+<!-- ```{r} -->
+<!-- g <- ggplot(d2,aes(x=種類,y=平均))+ -->
+<!--   geom_bar(aes(fill=種類),stat="identity")+ -->
+<!--   geom_errorbar(aes(ymin=平均-標準偏差, ymax=平均+標準偏差,width=0.3))+ -->
+<!--   xlab(NULL)+ylab("学長")+labs(fill="種類") -->
+<!-- plot(g) -->
+<!-- ``` -->
+
+<!-- ちなみにlabsは引数として以下のものを取る。 -->
+
+<!-- |項目|内容| -->
+<!-- |:--|:--| -->
+<!-- title|タイトル -->
+<!-- subtitle|サブタイトル -->
+<!-- x|x軸ラベル -->
+<!-- y|y軸ラベル -->
+<!-- caption|キャプション -->
+<!-- fill またはcolor|凡例ラベルのタイトル -->
+
+<!-- この通りに、xlabやylabもlabsでまとめて設定することもできる。 -->
+<!-- ```{r} -->
+<!-- g <- ggplot(d2,aes(x=種類,y=平均))+ -->
+<!--   geom_bar(aes(fill=種類),stat="identity")+ -->
+<!--   geom_errorbar(aes(ymin=平均-標準偏差, ymax=平均+標準偏差,width=0.3))+ -->
+<!--   labs(x=NULL, y="がく長", fill="種類") -->
+<!-- plot(g) -->
+<!-- ``` -->
+
+<!-- ### 凡例を消す -->
+<!-- `theme(legend.position = "none")`を使う。 -->
+
+<!-- ```{r} -->
+<!-- g <- ggplot(d2,aes(x=種類,y=平均))+ -->
+<!--   geom_bar(aes(fill=種類),stat="identity")+ -->
+<!--   geom_errorbar(aes(ymin=平均-標準偏差, ymax=平均+標準偏差,width=0.3))+ -->
+<!--   xlab(NULL)+ylab("がく長")+ -->
+<!--   theme(legend.position = "none") -->
+<!-- plot(g) -->
+<!-- ``` -->
+
+<!-- ### 軸タイトルや軸ラベル、凡例の文字サイズを換える -->
+
+<!-- 凡例を消した時と同じようにthemeを使う。引数には以下のようなものを入れる。 -->
+<!-- `axis.text.x=element_text(size=15)` -->
+<!-- `axis.text.y=element_text(size=15)` -->
+<!-- `axis.title.x=element_text(size=15)` -->
+<!-- `axis.title.y=element_text(size=15)` -->
+<!-- `legend.text=element_text(size=9)` -->
+
+<!-- ```{r} -->
+<!-- g <- ggplot(d2,aes(x=種類,y=平均))+ -->
+<!--   geom_bar(aes(fill=種類),stat="identity")+ -->
+<!--   geom_errorbar(aes(ymin=平均-標準偏差, ymax=平均+標準偏差,width=0.3))+ -->
+<!--   xlab("種類")+ylab("花弁の幅")+ -->
+<!--   theme(legend.position = 'none')+ -->
+<!--   theme( -->
+<!--     axis.title.x=element_text(size=15), -->
+<!--     axis.title.y=element_text(size=15), -->
+<!--     axis.text.x=element_text(size=10), -->
+<!--     axis.text.y=element_text(size=10), -->
+<!--     legend.text=element_text(size=5), -->
+<!--     legend.title = element_text(size=8)  ) -->
+
+<!-- plot(g) -->
+<!-- ``` -->
+
+<!-- :::ref -->
+<!-- themeの設定項目 -->
+
+<!-- themeは細かくいろいろ設定できる。設定できるものは以下の通り。 -->
+
+<!-- |名前|説明|要素の型| -->
+<!-- |:--|:--|:--| -->
+<!-- |text|すべてのテキスト要素|element_text()| -->
+<!-- |axis.title|両軸ラベルの体裁|element_text()| -->
+<!-- |axis.title.x|x軸ラベルの体裁|element_text()| -->
+<!-- |axis.title.y|y軸ラベルの体裁|element_text()| -->
+<!-- |axis.text|両軸目盛ラベルの体裁|element_text()| -->
+<!-- |axis.text.x|x軸目盛ラベルの体裁|element_text()| -->
+<!-- |axis.text.y|y軸目盛ラベルの体裁|element_text()| -->
+<!-- |legend.text|凡例項目の体裁|element_text()| -->
+<!-- |legend.title|凡例タイトルの体裁|element_text()| -->
+<!-- |plot.title|タイトルの体裁|element_text()| -->
+<!-- |strip.text|両方向ファセットラベルテキストの体裁|element_text()| -->
+<!-- |strip.text.x|水平方向ファセットラベルテキストの体裁|element_text()| -->
+<!-- |strip.text.y|垂直方向ファセットラベルテキストの体裁|element_text()| -->
+<!-- |legend.position|凡例の位置|left, right, bottom, top, c(x,y) :x,yは0~1| -->
+<!-- |legend.background|凡例の背景|element_rect(fill="xxx", color="yyy") fillは塗りつぶし、colorは枠線| -->
+<!-- |plot.background|プロット全体の背景|element_rect(fill="xxx", color="yyy")| -->
+<!-- |panel.background|プロット領域の背景|element_rect()| -->
+<!-- |panel.border|プロット領域の枠線|element_rect(linetype="xxx")| -->
+<!-- |rect|全ての長方形要素|element_rect()| -->
+<!-- |panel.grid.major|主目盛線|element_line()| -->
+<!-- |panel.grid.major.x|主目盛線の垂直方向|element_line()| -->
+<!-- |panel.grid.major.y|主目盛線の水平方向|element_line()| -->
+<!-- |panel.grid.minor|補助目盛線|element_line()| -->
+<!-- |panel.grid.minor.x|補助目盛線の垂直方向|element_line()| -->
+<!-- |panel.grid.minor.y|補助目盛線の水平方向|element_line()| -->
+<!-- |axis.line|軸に沿った線|element_line()| -->
+<!-- |line|すべての線要素|element_line()| -->
+
+<!-- 引用（順序は改変しました）：https://knknkn.hatenablog.com/entry/2019/02/23/181311 -->
+<!-- ::: -->
+
+<!-- :::ref -->
+<!-- element_text()の設定項目 -->
+
+<!-- 設定項目|element_text()の引数 -->
+<!-- :--|:-- -->
+<!-- 角度|angle -->
+<!-- 水平位置	|hjust(0:左揃え～1:右揃え) -->
+<!-- 垂直位置|vjust(0:下揃え～1:上揃え) -->
+<!-- サイズ|	size -->
+<!-- 色|	colour -->
+<!-- スタイル|	face(bold or italic) -->
+<!-- フォントファミリー|	family -->
+
+<!-- 参考：http://mukkujohn.hatenablog.com/entry/2016/10/11/220722 -->
+<!-- ::: -->
+
+<!-- :::ref -->
+
+<!-- element_xxxのその他の項目 -->
+<!-- `element_rect(fill, color, size, linetype, inherit.blank)` — 長方形 -->
+
+<!-- |項目|内容| -->
+<!-- |:--|:--| -->
+<!-- fill| 塗りつぶしの色 -->
+<!-- color| 枠の色 -->
+
+<!-- `element_line(color, size, linetype, lineend, arrow, inherit.blank) `— 線 -->
+
+<!-- `element_blank()` — 空 -->
+<!-- 消したい要素にはこれを指定する -->
+
+<!-- 参考：https://heavywatal.github.io/rstats/ggplot2.html -->
+<!-- ::: -->
+
+<!-- ### 目盛ラベルを変える -->
+<!-- 目盛ラベルを変えるには、`scale_x_****`や`scale_y_***`を使う。 -->
+<!-- 以下は、x軸の目盛りをsetosa, versicolor, virgnicaから、a, b, cに変え、y軸を普通の目盛から対数目盛に変えた例である。 -->
+
+<!-- ```{r} -->
+<!-- g <- ggplot(d)+ -->
+<!--   geom_bar(aes(x=種類,fill=種類),stat="count") + -->
+<!--   scale_x_discrete(labels=c("a","b","c"))+ -->
+<!--   scale_y_log10(limits=c(1,1000)) -->
+<!-- plot(g) -->
+<!-- ``` -->
+
+<!-- `***`の部分には、いずれも以下のものが入る。 -->
+
+<!-- |***|内容| -->
+<!-- |:--|:--| -->
+<!-- discrete|離散目盛 -->
+<!-- continuous|連続目盛 -->
+<!-- log10|対数目盛 -->
+<!-- reverse|目盛の逆転 -->
+<!-- sqrt|平方根目盛 -->
+
+<!-- また、代表的な引数としては以下のものが入る。 -->
+
+<!-- |引数|内容| -->
+<!-- |:--|:--| -->
+<!-- labels|離散目盛のラベルを変える（以下のbreaksを併用すると、連続変数でも可能） -->
+<!-- breaks|連続変数の目盛のうち指定したものだけを表示させる -->
+<!-- limits|連続変数の表示範囲を指定したものにする.xlim,ylimと同じ効果。 -->
+<!-- name | 変数の軸ラベルを変える。xlab,ylabと同じ効果。 -->
+
+
+<!-- 結局、軸タイトルを変える方法って、色々あるということである。 -->
+<!-- xlabでもよいし、labs(x=)dでもよいし、scale_x_***(name=)でも変えれる。 -->
+
+<!-- ### 凡例の各項目のラベルを書き換える。 -->
+<!-- グループ分けにfillを使っている場合は、`sacle_fill_dicrete()`を、Colorを使っている場合は`scale_color_discrete()`を使う。 -->
+
+<!-- ```{r} -->
+<!-- g <- ggplot(d)+ -->
+<!--   geom_bar(aes(x=種類,fill=種類),stat="count")+ -->
+<!--   scale_fill_discrete(label=c("花1","花2","花3")) -->
+<!-- plot(g) -->
+<!-- ``` -->
+
+<!-- :::ref -->
+<!-- ggplot2で描画するときにエラーが出るケースとして、**行末の「＋」の付け忘れや消し忘れ**がある。もし思い通りにグラフが描画されない場合には、この点を確認してみるとよい。の絵が  -->
+<!-- ::: -->
+
+<!--   <!----------------------------- 仕切り -----------------------------------> -->
+
+
+
   <!----------------------------- 仕切り ----------------------------------->
   
 # 基本的な検定
