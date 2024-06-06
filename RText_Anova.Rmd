@@ -558,7 +558,10 @@ mean_data <- data.frame(
   肥料 = c("X", "Y", "X", "Y"),
   小麦 = c("A", "A", "B", "B"),
   mean = c(mean(data_A$収穫量[data_A$肥料 == "X"]), mean(data_A$収穫量[data_A$肥料 == "Y"]),
-           mean(data_B$収穫量[data_B$肥料 == "X"]), mean(data_B$収穫量[data_B$肥料 == "Y"]))
+           mean(data_B$収穫量[data_B$肥料 == "X"]), mean(data_B$収穫量[data_B$肥料 == "Y"])),
+  sd = c(sd(data_A$収穫量[data_A$肥料 == "X"]), sd(data_A$収穫量[data_A$肥料 == "Y"]),
+        sd(data_B$収穫量[data_B$肥料 == "X"]), sd(data_B$収穫量[data_B$肥料 == "Y"]))
+
 )
 
 # ggplotでの点プロットし点を線分で結ぶ
@@ -574,7 +577,7 @@ g + coord_cartesian(ylim = c(0, max(mean_data$mean) + 10))
 
 # エラーバーを表記。そのために点プロットはすこし左右にずらす
 g <-ggplot(mean_data, aes(x=肥料, y=mean, group=小麦, color=小麦)) +
-  geom_errorbar(aes(ymin=mean-1, ymax=mean+1), width=.1, position=position_dodge(width=0.2)) +
+  geom_errorbar(aes(ymin=mean-sd, ymax=mean+sd), width=.1, position=position_dodge(width=0.2)) +
   geom_point(position=position_dodge(width=0.2), size=3) +
   geom_line(position=position_dodge(width=0.2)) +
   coord_cartesian(ylim = c(0, max(mean_data$mean) + 10))
