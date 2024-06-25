@@ -121,7 +121,7 @@ h1 {
 
 # R実行環境の整備
 
-[こちらのページ](./Rtext_Preparing_REnvironment.html)を参照してください。
+[こちらのページ](./RText_Preparing_REnvironment.html)を参照してください。
 
 
 <!--
