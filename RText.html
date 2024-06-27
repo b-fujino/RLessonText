@@ -11,7 +11,7 @@
 
 <meta name="author" content="福井県立大学経済学部教授　藤野秀則" />
 
-<meta name="date" content="2024-06-25" />
+<meta name="date" content="2024-06-27" />
 
 <title>RとRStudio学習教材</title>
 
@@ -1481,7 +1481,7 @@ border-radius: 0px;
 
 <h1 class="title toc-ignore">RとRStudio学習教材</h1>
 <h4 class="author">福井県立大学経済学部教授　藤野秀則</h4>
-<h4 class="date">2024-06-25</h4>
+<h4 class="date">2024-06-27</h4>
 
 </div>
 
@@ -4193,10 +4193,6 @@ library(psych)
 ```
 
 ```
-## Warning: パッケージ 'psych' はバージョン 4.3.2 の R の下で造られました
-```
-
-```
 ## 
 ##  次のパッケージを付け加えます: 'psych'
 ```
@@ -5909,6 +5905,8 @@ t検定の方法（ワイド形式データ）</h3>
 </div>
 <p>この例題の場合、以下の通りとなる。</p>
 <pre class="r"><code>mydata_ttest &lt;- read.csv( # データ読み込み オブジェクト名は自由につけてよい
+# データは以下の設定ではpracticeというフォルダに入っているコトになっているが、
+# 特にそうしたフォルダに入れていない場合には ./example_ttest.csv とすればよい。
   &quot;./practice/example_ttest.csv&quot;, 
   header=T, 
   fileEncoding=&quot;UTF8&quot;
@@ -5937,7 +5935,7 @@ t.test(mydata_ttest$新しい肥料を使用, mydata_ttest$通常の肥料を使
 <p>は、それぞれのデータの平均値である。この結果から、平均値としては約8の違いがあるのがわかる。</p>
 <p>このデータではP値は0.05を下回ってり、「二つのグループは同じ母集団から抽出されたサンプルである」という帰無仮説を棄却された。すなわち、両者の平均は有意な違いがあるという結論となり、新しい肥料を用いることで収穫量の向上が望めることが示されたこととなる。</p>
 <div class="practice">
-<p>15人の協力者に、新しく試作した食パンと従来の食パンの食べ比べをしてもらい、おいしさを10段階で評価してもらったところ、次のようなデータ（<a href="./practice/example_ttest_paried.csv">リンク</a>）が得られた。このデータをもとに、試作品と従来品とで美味しさの違いがあるのかを検証せよ。</p>
+<p>15人の協力者に、新しく試作した食パンと従来の食パンの食べ比べをしてもらい、おいしさを10段階で評価してもらったところ、次のようなデータ（<a href="./practice/example_ttest_paired.csv">リンク</a>）が得られた。このデータをもとに、試作品と従来品とで美味しさの違いがあるのかを検証せよ。</p>
 </div>
 <p>この例題の場合、以下の通りとなる。</p>
 <pre class="r"><code>mydata_ttest_paired &lt;- read.csv(

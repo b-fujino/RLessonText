@@ -11,7 +11,7 @@
 
 <meta name="author" content="藤野秀則," />
 
-<meta name="date" content="2024-05-31" />
+<meta name="date" content="2024-06-02" />
 
 <title>記述統計量と推測統計量</title>
 
@@ -1481,7 +1481,7 @@ border-radius: 0px;
 
 <h1 class="title toc-ignore">記述統計量と推測統計量</h1>
 <h4 class="author">藤野秀則,</h4>
-<h4 class="date">2024-05-31</h4>
+<h4 class="date">2024-06-02</h4>
 
 </div>
 
@@ -2205,6 +2205,25 @@ print(res.sd)</code></pre>
 ## 1 レギュラー 2.302173
 ## 2       控え 1.112697</code></pre>
 </div>
+</div>
+<div id="まとめ" class="section level1" number="4">
+<h1><span class="header-section-number">4</span> まとめ</h1>
+<p>この章では、母集団とサンプル、母数と標本統計量、点推定と区間推定について説明した。また、グループごとの統計量の算出についても説明した。</p>
+</div>
+<div id="練習問題1" class="section level1" number="5">
+<h1><span class="header-section-number">5</span> 練習問題1</h1>
+<ol style="list-style-type: decimal">
+<li>次のデータについて、平均値と標準偏差（母数）を算出せよ。また、95%信頼区間を求めよ。なお、データは以下の通りである。</li>
+</ol>
+<pre class="r"><code>data &lt;- c(1,2,3,4,5,6,7,8,9,10)</code></pre>
+</div>
+<div id="練習問題2" class="section level1" number="6">
+<h1><span class="header-section-number">6</span> 練習問題2</h1>
+<p>次のデータについて、各グループの平均値と標準偏差（母数）を算出せよ。また、95%信頼区間を求めよ。なお、データは以下の通りである。</p>
+<pre class="r"><code>data&lt;-data.frame(
+  score=c(1,2,3,4,5,6,7,8,9,10), 
+  group=c(&quot;A&quot;,&quot;A&quot;,&quot;A&quot;,&quot;A&quot;,&quot;A&quot;,&quot;B&quot;,&quot;B&quot;,&quot;B&quot;,&quot;B&quot;,&quot;B&quot;)
+)</code></pre>
 </div>
 
 
