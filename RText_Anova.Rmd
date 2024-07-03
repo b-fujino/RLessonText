@@ -469,7 +469,7 @@ t.test(おいしさ~パンの種類, data=mydata_anova_within_long, paired=T)
 次のような例題を考えてみよう。
 
 :::practice
-ある農業試験場では新しい小麦の品種開発とその品種向けの新しい肥料の開発を行っている。今回、新しい小麦の品種Aと新しい肥料Xが開発された。AとXが既製品種B、既製肥料Yよりもより病気に強く収穫量が多くなることを実証するために、実際にそれぞれ40の畝を10ずつの4グループに分け、A-X、A-Y、B-X、B-Yの組み合わせで小麦を作付けし収穫量を評価することにした。結果そうして得られたデータである。このデータ（[リンク]()）をもとに、新しい品種、新しい肥料がそれぞれ既製のものに比べて優れているのかを検証せよ。
+ある農業試験場では新しい小麦の品種開発とその品種向けの新しい肥料の開発を行っている。今回、新しい小麦の品種Aと新しい肥料Xが開発された。AとXが既製品種B、既製肥料Yよりもより病気に強く収穫量が多くなることを実証するために、実際にそれぞれ40の畝を10ずつの4グループに分け、A-X、A-Y、B-X、B-Yの組み合わせで小麦を作付けし収穫量を評価することにした。結果そうして得られたデータである。このデータ（[リンク](./practice/example_anova_2way.csv)）をもとに、新しい品種、新しい肥料がそれぞれ既製のものに比べて優れているのかを検証せよ。
 :::
 
 ```{r include=FALSE}
@@ -492,12 +492,13 @@ write_csv(data, "./practice/example_anova_2way.csv")
 
 この事例の場合、説明変数として「小麦品種（水準：A、B）」と「肥料（水準：X、Y）」という2つの変数があり、目的変数として「収穫量（連続変数）」があることになる。したがって、この例でのモデル図は以下のものがまず考えられる。
 
-![この例題のモデル図](./Img/2024_6_6_2wayAnova.png)
+![この例題のモデル図（誤り）](./Img/2024_6_6_2wayAnova.png)
 
 しかしながら、このモデル図は誤りとなる。2要因分散分析では基本的に交互作用というものを考慮する必要がある。これは「説明変数同士の掛け算の効果」あるいは「相乗効果」のことである。例えば、品種AはBよりも病気に強い、肥料Xは肥料Yに対して基本的に効果が高い、ということであれば、A＋Xが最も収穫量が高く、B＋Yがもっとも収穫量が低いということになるだろう。しかしながら、既製品同士のBとYは非常に相性が良く、この二つを組み合わせると、AとYを組み合わせたり、BとXを組み合わせたりするよりも収穫量が高くなる、ということもあり得る。こうした組み合わせたことによって相乗的に生じてくる効果のことを交互作用と呼ぶ。
-こうした交互作用も含めたモデル図にする必要があるので、正しくは以下のようなモデル図となる。
+2要因分散分析では基本的にこうした交互作用も含めたモデル図にする必要があるので、正しくは以下のようなモデル図となる。
 
-![この例題のモデル図](./Img/2024_6_6_2wayAnovaWithInteraction.png)
+![この例題の正しいモデル図](./Img/2024_6_6_2wayAnovaWithInteraction.png)
+
 こうした交互作用を含んだ2要因分散分析を行う方法も、基本的に[1要因分散分析（対応あり）](#1要因分散分析（対応あり）)と大して変わらない。すなわち、使うコマンドは`aov()`関数と`car`パッケージの`Anova()`関数である。違う点は、`aov()`関数に与えるモデル式に交互作用項が加わることと、`Anova()`関数の`type`引数に`3`を指定することである。
 
 今回のデータもワイド形式となっているのでロング形式に変換する必要がある。
@@ -524,11 +525,21 @@ Anova(anova_res_2way, type=3)
 この結果から、小麦の主効果とこれらの交互作用が収穫量に対して有意な影響を与えていることが示された。
 すなわち、全体としては小麦の種類の違いは収穫量に影響を及ぼすこと、肥料の種類の違い単独では収穫量には影響がないことが示されたが、**肥料と小麦の種類の組み合わせによって収穫量が違ってくる**ことも示された。
 
+
+ちなみに、交互作用を考慮した分散分析を行う際に`aov()`に与える式は、以下のように`*`を用いて記述することもできる。
+```{r}
+anova_res_2way <- aov(収穫量~小麦*肥料, mydata_anova_2way_long)
+Anova(anova_res_2way, type=3)
+```
+このようにすることで、`小麦:肥料`という交互作用項の記述を省略することができる。
+
+
 ## 下位検定（単純主効果検定）
 
 このように交互作用が有意であった場合には、下位検定として「単純主効果検定」というものを実施するのが一般的である。これは、交互作用の内容を把握するために行われる分析で、一方の説明変数の水準ごとに、他方の要因の効果を調べる分析である。つまり、以下のようなモデル図でそれぞれ分析をする、ということである。
 
 ![下位検定のモデル図](./Img/2024_6_6_2wayAnovaPostHocTest.png)
+
 単純主効果検定を実際に行うには以下のようにする。
 
 
@@ -590,8 +601,9 @@ mean_data <- data.frame(
 
 ```
 
-## ggplotで平均を点でプロット
-続いて、`ggplot2`パッケージを用いて、平均を点でプロットする。ggplot2の使い方については[こちら](./RText_ggplot2_basicUsage.html)を参照。特に今回は`aes()`関数をデータを与えた段階で記述している。
+### ggplotで平均を点でプロット
+続いて、`ggplot2`パッケージを用いて、平均を点でプロットする。ggplot2の使い方については[こちら](./RText_ggplot2_basicUsage.html)を参照。特に今回は冒頭のデータを与えた段階で`aes()`関数も記述している。こうすることで、それ以降のgeom_***関数内で`aes()`関数を記述する必要がなくなる。
+
 ```{r}
 g<-ggplot(mean_data, aes(x=肥料, y=収穫量, group=小麦)) +
   geom_point(size=3)
@@ -601,7 +613,7 @@ plot(g)
 
 ```{r}
 # ggplotでの点プロットし点を線分で結ぶ
-g<-ggplot(mean_data, aes(x=肥料, y=mean, group=小麦, color=小麦)) +
+g<-ggplot(mean_data, aes(x=肥料, y=収穫量, group=小麦, color=小麦)) +
   geom_point(size=3) +
   geom_line() +
   labs(title="肥料の効果", x="肥料", y="収穫量")
@@ -609,19 +621,247 @@ g<-ggplot(mean_data, aes(x=肥料, y=mean, group=小麦, color=小麦)) +
 print(g)
 
 # gのy軸の範囲を0から最大値までに設定
-g + coord_cartesian(ylim = c(0, max(mean_data$mean) + 10))
+g<-g + coord_cartesian(ylim = c(0, max(mean_data$収穫量) + 10))
+print(g)
 
 # エラーバーを表記。そのために点プロットはすこし左右にずらす
-g <-ggplot(mean_data, aes(x=肥料, y=mean, group=小麦, color=小麦)) +
-  geom_errorbar(aes(ymin=mean-sd, ymax=mean+sd), width=.1, position=position_dodge(width=0.2)) +
+g <-ggplot(mean_data, aes(x=肥料, y=収穫量, group=小麦, color=小麦)) +
+  geom_errorbar(aes(ymin=収穫量-sd, ymax=収穫量+sd), width=.1, position=position_dodge(width=0.2)) +
   geom_point(position=position_dodge(width=0.2), size=3) +
   geom_line(position=position_dodge(width=0.2)) +
-  coord_cartesian(ylim = c(0, max(mean_data$mean) + 10))
+  coord_cartesian(ylim = c(0, max(mean_data$収穫量) + 10))
 print(g)
 
 
 ```
 
+# 2要因分散分析(対応あり)
+
+次のような例題を考えてみよう。
+
+:::practice
+3つのメーカの同価格帯の食パンA、B、Cと、2つのメーカの同価格帯の苺ジャムX、Yを用いて、苺ジャムを塗った食パンのおいしさを20人に試食してもらい、それぞれのおいしさを10段階で評価してもらった。この結果から、メーカーによって食パンや苺ジャムの味に違いがあるのかを検討せよ。なお、評価の際には、食べる量はあくまで1口大（3㎝四方）とし、ジャムを塗る量は全てで統一している。また、それぞれ試食のたびに水で口をゆすいでもらっており、食べる順序については考慮しなくてもよいようにしている。
+:::
+
+```{r include=FALSE}
+#./practice/example_anova_2way_within.csvの作成
+set.seed(32)
+num_samples <- 20
+A_X <- round(rnorm(num_samples, mean = 5, sd = 1),0)
+A_Y <- round(rnorm(num_samples, mean = 4, sd = 1),0)
+B_X <- round(rnorm(num_samples, mean = 3, sd = 1),0)
+B_Y <- round(rnorm(num_samples, mean = 6, sd = 1),0)
+C_X <- round(rnorm(num_samples, mean = 4, sd = 1),0)
+C_Y <- round(rnorm(num_samples, mean = 5, sd = 1),0)
+
+data <- tibble(
+  個人No.=rep(1:num_samples, 6),
+  メーカー=c(rep("A", num_samples*2), rep("B", num_samples*2), rep("C", num_samples*2)),
+  ジャム = c(rep("X", num_samples), 
+              rep("Y", num_samples),
+              rep("X", num_samples), 
+              rep("Y", num_samples),
+              rep("X", num_samples), 
+              rep("Y", num_samples)
+            ),
+  評価 = c(A_X, A_Y, B_X, B_Y, C_X, C_Y)
+)
+
+write_csv(data, "./practice/example_anova_2way_within.csv")
+```
+
+
+この事例の場合、説明変数として「食パン（水準：A、B、C）」と「苺ジャム（水準：X、Y）」という2つの変数があり、目的変数として「おいしさ（1～10の連続変数）」を設定している。そしてさらに、個人差要因も入っている。この事例の場合のモデル図は以下のようなものとなる。
+
+
+![この例題のモデル図](./Img/2024_7_3_2wayAnovaWithInteractionAndPaired.png)
+
+
+このような対応ありデータ(反復測定のデータ）での2要因分散分析を行う方法も、基本的に[1要因分散分析（対応あり）](#1要因分散分析（対応あり）)と大して変わらない。すなわち、使うコマンドは`aov()`関数と`car`パッケージの`Anova()`関数である。違う点は、`aov()`関数に与えるモデル式に交互作用項が加わることと、`Anova()`関数の`type`引数に`3`を指定することである。
+
+
+この例題の場合は以下のようなコードとなる。なお、今回のデータでは、「パンの種類」「苺ジャム」「被験者No.」という3つの変数が存在しているため、ワイド形式では1枚の表で記述するのは不可能となる。このため、今回読み込むデータでも予めロング形式のデータとしている。また交互作用項の記述に関しても`*`を用いて省略した記述法を行っている。
+
+
+```{r results='hold'}
+mydata_anova_2way_within <- read.csv(
+  "./practice/example_anova_2way_within.csv",
+  header=T,
+  fileEncoding="UTF8"
+) # データ読み込み
+
+#分散分析の実施
+anova_res_2way_within <- aov(評価~メーカー*ジャム + 個人No., mydata_anova_2way_within)
+Anova(anova_res_2way_within, type=3)
+```
+
+この結果から、メーカーの主効果、ジャムの主効果とこれらの交互作用が評価に対して有意な影響を与えていることが示された。
+
+## 下位検定（単純主効果検定）
+
+交互作用が有意であったことから下位検定として単純主効果検定を行うことになる。先に紹介した通り、単純主効果検定では、どちらの独立変数をデータ切り分けの基軸にするかによって2通りの単純主効果検定が可能である。
+
+なお、分析に先立って、それぞれの組み合わせの下での平均と標準偏差を算出しておく。
+
+```{r}
+#メーカーAのデータきりだし
+data_A <- filter(mydata_anova_2way_within, メーカー == "A")
+#メーカーAのジャムXの評価の平均・標準偏差
+mean_A_X <- mean(filter(data_A, ジャム == "X")$評価)
+sd_A_X <- sd(filter(data_A, ジャム == "X")$評価)
+#メーカーAのジャムYの評価の平均・標準偏差
+mean_A_Y <- mean(filter(data_A, ジャム == "Y")$評価)
+sd_A_Y <- sd(filter(data_A, ジャム == "Y")$評価)
+
+#メーカーBの場合
+data_B <- filter(mydata_anova_2way_within, メーカー == "B")
+mean_B_X <- mean(filter(data_B, ジャム == "X")$評価)
+sd_B_X <- sd(filter(data_B, ジャム == "X")$評価)
+mean_B_Y <- mean(filter(data_B, ジャム == "Y")$評価)
+sd_B_Y <- sd(filter(data_B, ジャム == "Y")$評価)
+
+#メーカーCの場合
+data_C <- filter(mydata_anova_2way_within, メーカー == "C")
+mean_C_X <- mean(filter(data_C, ジャム == "X")$評価)
+sd_C_X <- sd(filter(data_C, ジャム == "X")$評価)
+mean_C_Y <- mean(filter(data_C, ジャム == "Y")$評価)
+sd_C_Y <- sd(filter(data_C, ジャム == "Y")$評価)
+
+#データフレーム化
+mean_data <- data.frame(
+  メーカー = c("A", "A", "B", "B", "C", "C"),
+  ジャム = c("X", "Y", "X", "Y", "X", "Y"),
+  評価 = c(mean_A_X, mean_A_Y, mean_B_X, mean_B_Y, mean_C_X, mean_C_Y),
+  sd = c(sd_A_X, sd_A_Y, sd_B_X, sd_B_Y, sd_C_X, sd_C_Y)
+)
+
+print(mean_data)
+```
+
+
+### メーカーを基軸にした単純主効果検定
+
+メーカーを基軸にして見る場合、食パンA、B、Cごとのジャム間の差を見ることになる。ジャムはX、Yの2水準しかないので、単純にT検定すればよい。
+個人で対応のあるデータなので、paired＝TRUEをつける必要がある点には注意してほしい。
+
+```{r}
+# メーカーAの場合
+data_A <- filter(mydata_anova_2way_within, メーカー == "A")
+t.test(評価~ジャム, data=data_A, paired=TRUE)
+
+# メーカーBの場合
+data_B <- filter(mydata_anova_2way_within, メーカー == "B")
+t.test(評価~ジャム, data=data_B, paired=TRUE)
+
+# メーカーCの場合
+data_C <- filter(mydata_anova_2way_within, メーカー == "C")
+t.test(評価~ジャム, data=data_C, paired=TRUE)
+```
+この結果から、食パンAでは、ジャムXの方がジャムYよりも有意に評価が高い一方、B、Cでは、ジャムYの方がジャムXよりも有意に評価が高いことが示された。
+
+### ggplotによる可視化
+ggplotでこの結果を可視化すると以下の通りとなる。
+
+```{r}
+# ggplotで棒グラフで表示
+g<-ggplot(mean_data, aes(x=メーカー, y=評価, fill=ジャム)) +
+  geom_bar(stat="identity", position="dodge") +
+  geom_errorbar(aes(ymin=評価-sd, ymax=評価+sd), width=.1, position=position_dodge(width=0.9)) +
+  coord_cartesian(ylim = c(0, max(mean_data$評価) + 3))
+
+# Aに対するブラケットを記述
+g <- g + 
+  annotate("segment",x=0.775, xend=0.775, y=6, yend=6.5,color="darkgray")+
+  annotate("segment",x=0.775, xend=1.225, y=6.5, yend=6.5,color="darkgray")+
+  annotate("segment",x=1.225, xend=1.225, y=6.5, yend=5.5,color="darkgray")+
+  annotate("text", x=1, y=7, label="p=.006,**", color="black")
+# Bに対するブラケットを記述
+g <- g + 
+  annotate("segment",x=1.775, xend=1.775, y=3.8, yend=7,color="darkgray")+
+  annotate("segment",x=1.775, xend=2.225, y=7, yend=7,color="darkgray")+
+  annotate("segment",x=2.225, xend=2.225, y=7, yend=6.5,color="darkgray")+
+  annotate("text", x=2, y=7.5, label="p<.001,***", color="black")
+
+# Cに対するブラケットを記述
+g <- g + 
+  annotate("segment",x=2.775, xend=2.775, y=5.6, yend=7.5,color="darkgray")+
+  annotate("segment",x=2.775, xend=3.225, y=7.5, yend=7.5,color="darkgray")+
+  annotate("segment",x=3.225, xend=3.225, y=7.5, yend=6,color="darkgray")+  
+  annotate("text", x=3, y=8, label="p=.010,*", color="black")
+
+
+plot(g)
+
+
+```
+
+
+
+
+### ジャムを基軸にした単純主効果検定
+
+ジャムを基軸にして見る場合、ジャムX、Yごとの食パンA, B, C間の差を見ることになる。この場合には、多重比較となるので`pairwise.t.test()`を用いる。
+なお、ここでも個人で対応のあるデータなので、paired＝TRUEをつける必要がある点には注意してほしい。
+
+```{r}
+# メーカーAの場合
+data_X <- filter(mydata_anova_2way_within, ジャム == "X")
+pairwise.t.test(data_X$評価, data_X$メーカー, paired=TRUE)
+
+# メーカーBの場合
+data_Y <- filter(mydata_anova_2way_within, ジャム == "Y")
+pairwise.t.test(data_Y$評価, data_Y$メーカー, paired=TRUE)
+```
+
+### ggplotによる可視化
+ggplotでこの結果を可視化すると以下の通りとなる。
+
+```{r}
+# ggplotで棒グラフで表示
+g<-ggplot(mean_data, aes(x=ジャム, y=評価, fill=メーカー)) +
+  geom_bar(stat="identity", position="dodge") +
+  geom_errorbar(aes(ymin=評価-sd, ymax=評価+sd), width=.1, position=position_dodge(width=0.9)) +
+  coord_cartesian(ylim = c(0, max(mean_data$評価) + 3))
+
+# Xに対するブラケットを記述
+g <- g + 
+#A-C
+  annotate("segment",x=0.65, xend=0.65, y=6, yend=7.5,color="darkgray")+
+  annotate("segment",x=0.65, xend=1.35, y=7.5, yend=7.5,color="darkgray")+
+  annotate("segment",x=1.35, xend=1.35, y=7.5, yend=5.5,color="darkgray")+
+  annotate("text", x=1, y=8, label="p<.001,***", color="black")+
+#A-B
+  annotate("segment",x=0.75, xend=0.75, y=6, yend=6.5,color="darkgray")+
+  annotate("segment",x=0.75, xend=0.95, y=6.5, yend=6.5,color="darkgray")+
+  annotate("segment",x=0.95, xend=0.95, y=6.5, yend=5.5,color="darkgray")+
+  annotate("text", x=0.85, y=7, label="p<.001,***", color="black")+
+#B-C
+  annotate("segment",x=1.05, xend=1.05, y=6, yend=6.5,color="darkgray")+
+  annotate("segment",x=1.05, xend=1.25, y=6.5, yend=6.5,color="darkgray")+
+  annotate("segment",x=1.25, xend=1.25, y=6.5, yend=5.5,color="darkgray")+
+  annotate("text", x=1.15, y=7, label="p<.001,***", color="black")
+
+
+# Yに対するブラケットを記述
+g <- g + 
+#A-B
+  annotate("segment",x=1.75, xend=1.75, y=5.5, yend=7.0,color="darkgray")+
+  annotate("segment",x=1.75, xend=1.95, y=7.0, yend=7.0,color="darkgray")+
+  annotate("segment",x=1.95, xend=1.95, y=7.0, yend=6.5,color="darkgray")+
+  annotate("text", x=1.85, y=7.5, label="p=.002,**", color="black")+
+#B-C
+  annotate("segment",x=2.05, xend=2.05, y=6.5, yend=7.0,color="darkgray")+
+  annotate("segment",x=2.05, xend=2.25, y=7.0, yend=7.0,color="darkgray")+
+  annotate("segment",x=2.25, xend=2.25, y=7.0, yend=6.0,color="darkgray")+
+  annotate("text", x=2.15, y=7.5, label="p<.024,*", color="black")
+
+
+
+
+plot(g)
+
+
+```
 
 # 練習問題1
 
