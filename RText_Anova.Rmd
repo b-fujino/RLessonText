@@ -833,10 +833,10 @@ g <- g +
 #A-B
   annotate("segment",x=0.75, xend=0.75, y=6, yend=6.5,color="darkgray")+
   annotate("segment",x=0.75, xend=0.95, y=6.5, yend=6.5,color="darkgray")+
-  annotate("segment",x=0.95, xend=0.95, y=6.5, yend=5.5,color="darkgray")+
+  annotate("segment",x=0.95, xend=0.95, y=6.5, yend=4.0,color="darkgray")+
   annotate("text", x=0.85, y=7, label="p<.001,***", color="black")+
 #B-C
-  annotate("segment",x=1.05, xend=1.05, y=6, yend=6.5,color="darkgray")+
+  annotate("segment",x=1.05, xend=1.05, y=4.0, yend=6.5,color="darkgray")+
   annotate("segment",x=1.05, xend=1.25, y=6.5, yend=6.5,color="darkgray")+
   annotate("segment",x=1.25, xend=1.25, y=6.5, yend=5.5,color="darkgray")+
   annotate("text", x=1.15, y=7, label="p<.001,***", color="black")
