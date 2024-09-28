@@ -11,7 +11,7 @@
 
 <meta name="author" content="藤野秀則," />
 
-<meta name="date" content="2024-09-27" />
+<meta name="date" content="2024-09-28" />
 
 <title>RとRStuidoの基本操作</title>
 
@@ -1481,7 +1481,7 @@ border-radius: 0px;
 
 <h1 class="title toc-ignore">RとRStuidoの基本操作</h1>
 <h4 class="author">藤野秀則,</h4>
-<h4 class="date">2024-09-27</h4>
+<h4 class="date">2024-09-28</h4>
 
 </div>
 
@@ -1555,6 +1555,20 @@ color: #666;
 .practice::before{
 counter-increment: practice_number 1;
 content: "[例題 " counter(practice_number) "]";
+font-weight: bold;
+display: block;
+margin-bottom: 3px;
+}
+.work {
+position: relative;
+margin:5%;
+padding:5px;
+background-color: rgba(128, 200, 255, .2);
+color: #666;
+}
+.work::before{
+counter-increment: practice_number 1;
+content: "[課題 " counter(practice_number) "]";
 font-weight: bold;
 display: block;
 margin-bottom: 3px;
@@ -1723,7 +1737,7 @@ Line Interface (CLI)
 <p>もし誤ったコマンドを入力しているのに気づかずに実行してしまった場合には、もう一度正しいコマンドを改めて入力すればよい。</p>
 </P>
 </div>
-<div class="practice">
+<div class="work">
 <p>次の計算を行いなさい。</p>
 <ul>
 <li>25 * 3 + 4 / 2</li>
@@ -1775,6 +1789,9 @@ my_res.power &lt;- my_res ^3</code></pre>
 <pre><code>## Error in eval(expr, envir, enclos):  オブジェクト &#39;RES&#39; がありません</code></pre>
 <p>「オブジェクトが見つかりません」ということで、このエラーが帰ってきたら、オブジェクト名が間違えているかを確認してほしい。</p>
 <p>ただし、オブジェクト名を間違えていた時に、間違えた名前と同一の名前のオブジェクトが別に存在していた場合には、このようなエラーは帰って来ずに、そのまま間違えたオブジェクトを使って続く処理が実行されていくので、その場合には自分で間違いに気づきにくくなる。RStduioではすでに使われているオブジェクト名であれば、最初の数文字を入力するとリスト表示してくれる入力支援機能があるので、オブジェクトが増えてきたときにはそれを是非利用して入力するとよい。</p>
+<div class="work">
+<p>課題1の計算課題について，それぞれ計算結果をオブジェクトに出力させるとともに，print()関数を用いてその内容を出力させないさい．なお，オブジェクト名は好きな名前をつけて構わない．</p>
+</div>
 </div>
 </div>
 <div id="文字列" class="section level1" number="3">
@@ -1789,6 +1806,9 @@ myName</code></pre>
 <pre><code>## [1] &quot;Hidenori Fujino&quot;</code></pre>
 <pre class="r"><code>nchar(myName)</code></pre>
 <pre><code>## [1] 15</code></pre>
+<div class="work">
+<p>あなたの名前を文字列としてオブジェクトに格納し，print()関数を用いて出力させなさい．またnchar()関数を用いてその文字列の長さを求めなさい．</p>
+</div>
 </div>
 <div id="型" class="section level1" number="4">
 <h1><span class="header-section-number">4</span> 型</h1>
@@ -1835,6 +1855,9 @@ a+b #　これはエラー</code></pre>
 <pre><code>## Error in a + b:  二項演算子の引数が数値ではありません</code></pre>
 <pre class="r"><code>a + as.numeric(b) </code></pre>
 <pre><code>## [1] 24690</code></pre>
+<div class="work">
+<p>課題1の任意の問題を1つとりあげ，その計算結果を収めたオブジェクトの型をclass()関数を用いて確認しなさい．また，その計算結果をas.charctor()関数を用いて文字列型に変換させたものを別のオブジェクトに格納したうえで，そのオブジェクトの内容をprint()関数を用いて表示させなさい．そして，もとの計算結果を収めたオブジェクトをprint()関数で表示させたときとどの点で異なっているかを述べなさい．</p>
+</div>
 <p>このほかにも、型変換関数はたくさんある。<code>as.</code>まで打つと様々な型変換関数がリスト表記される。データ分析でよく使用するものとしては<code>as.factor()</code>（データを要因型(<a href="#要因型変数の作成">参考</a>)に変換する）や<code>as.data.frame()</code>（データをデータフレーム型に変換する）などがある。それぞれいずれ出てくるので、頭の片隅に置いておいてほしい。</p>
 </div>
 </div>
