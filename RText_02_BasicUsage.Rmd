@@ -1,0 +1,378 @@
+---
+title: "RとRStuidoの基本操作"
+author: "藤野秀則,"
+date: "`r Sys.Date()`"
+output:
+  html_document: 
+    toc: true
+    toc_depth: 4
+    toc_float: true
+    number_section: true
+    fig_width: 8
+  # html_notebook:
+  #   toc: true
+  #   toc_depth: 3
+  #   toc_float: true
+  #   number_section: true
+editor_options:
+  markdown:
+    wrap: 72
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+```{css, echo=FALSE}
+.tocify-subheader { /* 全部のサブヘッダーを最初から表示する*/
+    display: block !important;
+}
+.tocify-item {/*長いヘッダーも折り返さない*/
+    white-space: nowrap;
+}
+
+body{
+  counter-reset: ref_number practice_number;
+}
+
+.float img{
+  /* 上右下左 */
+  /* margin: 5% 0% 0% 0% ;*/ 
+  /* width : 75%; */
+  margin: auto;
+  display: block;
+
+  border-radius: 8px 8px 0 0 ;
+  position: relative;
+  width : 60%;
+}
+
+.float .figcaption {
+  position: relative;
+  font-style: italic;
+  font-size: large;
+  font-weight: bold;
+  color: #666;
+  text-align: center;
+  margin:0% auto 5% auto;
+  border-bottom: solid 1px #666;
+  border-left: solid 1px #666;
+  border-right: solid 1px #666;
+  border-radius:0 0 8px 8px;
+  width : 60%
+}
+
+img {
+  margin: auto;
+  display: block;
+  border: solid 1px #666;
+  border-radius: 8px;
+  position: relative;
+  width : 100%;
+}
+
+.ref {
+  position: relative;
+  margin:5%;
+  padding:5px;
+  background-color: rgba(255, 255, 128, .5);
+  color: #666;
+}
+.ref::before{
+  counter-increment: ref_number 1;
+  content: "[参考 " counter(ref_number) "]";
+  font-weight: bold;
+  display: block;
+  margin-bottom: 3px;
+}
+
+h1 {
+  margin-top : 10px;
+  padding-top : 50px;
+}
+
+
+.practice {
+  position: relative;
+  margin:5%;
+  padding:5px;
+  background-color: rgba(128, 255, 200, .5);
+  color: #666;
+}
+.practice::before{
+  counter-increment: practice_number 1;
+  content: "[例題 " counter(practice_number) "]";
+  font-weight: bold;
+  display: block;
+  margin-bottom: 3px;
+}
+
+
+.work {
+  position: relative;
+  margin:5%;
+  padding:5px;
+  background-color: rgba(128, 200, 255, .2);
+  color: #666;
+}
+.work::before{
+  counter-increment: practice_number 1;
+  content: "[課題 " counter(practice_number) "]";
+  font-weight: bold;
+  display: block;
+  margin-bottom: 3px;
+}
+
+
+
+
+.r{ 
+　/**copy の禁止**/
+  user-select: none;
+  -moz-user-select: none;
+  -webkit-user-select: none;
+  -ms-user-select: none;
+  -khtml-user-select: none;
+  -webkit-touch-callout: none;
+}
+
+```
+
+# 基本的な計算の実行
+
+「Console」と書かれた以下の画面に数式を入力することによって、Rに計算をさせることができる。
+
+![Console](./Img/2024_5_1_Console.png)
+
+実際に各自で好きな数で四則演算をさせてみよう。以下は一例。数式は基本的に1行ごとに入力し，Enterキーを押すことで実行される。
+
+```{r}
+5+1
+5-7
+6*4
+9/3
+```
+
+さらには、カッコを使ったり、累乗演算をさせたり、剰余演算をさせたりもできる。
+
+```{r parenthesis}
+# カッコつき
+5*3*(11-23)
+# カッコを重ねることもできる（中カッコ[]や大カッコ{}は用いない）
+5+3*(11-23*(4+3))
+```
+
+```{r power}
+# 累乗演算
+2^3
+```
+
+```{r remainder}
+#　剰余演算
+15%%6
+```
+
+このように、`+`、`-`、`*`、`/`、`()`、`^`、`%%`などの演算記号のことを<strong>演算子(Operator)</strong>と呼ぶ。演算子にはこれら以外にもいろいろある。以下にRで使われる代表的な演算子を示す。
+
+| 演算子 | 説明                       | 例             |
+|--------|----------------------------|----------------|
+| \+     | 加算                       | `x + y`        |
+| \-     | 減算                       | `x - y`        |
+| \*     | 乗算                       | `x * y`        |
+| /      | 除算                       | `x / y`        |
+| \^     | 累乗                       | `x ^ y`        |
+| %%     | 剰余                       | `x %% y`       |
+| %/%    | 整数除算                   | `x %/% y`      |
+| ==     | 等しい                     | `x == y`       |
+| !=     | 等しくない                 | `x != y`       |
+| \<     | より小さい                 | `x < y`        |
+| \>     | より大きい                 | `x > y`        |
+| \<=    | 以下                       | `x <= y`       |
+| \>=    | 以上                       | `x >= y`       |
+| &      | 論理積 (AND)               | `x & y`        |
+| \|     | 論理和 (OR)                | `x | y`        |
+| !      | 否定 (NOT)                 | `!x`           |
+| %in%   | ベクトルの要素が含まれるか | `x %in% y`     |
+| :      | シーケンスの生成           | `1:10`         |
+| \<-    | 代入                       | `x <- 10`      |
+| =      | 代入 (引数で使用)          | `func(x = 10)` |
+
+平方根の場合には、`sqrt()`という**関数**を使う。
+
+```{r sqrt}
+sqrt(16)
+```
+
+ちなみに、出力結果の前にある`[1]`という表記は、出力結果が長さ1の**ベクトル(Vector)**の1つ目の要素であることを示している。このベクトルについては後で改めて説明する。
+
+::: ref
+<P>
+
+なお、このようにconsoleに1行1行数式や関数（まとめて**コマンド**）を入力していく形をCommand
+Line Interface (CLI)
+と呼ぶ。CLIでは、操作できるのはあくまで現在カーソルが置かれている行だけである。過去の行はログとして見えているだけであり、ログを消したり、書き換えたりはできない。
+
+</p>
+
+<p>
+
+もし誤ったコマンドを入力しているのに気づかずに実行してしまった場合には、もう一度正しいコマンドを改めて入力すればよい。
+
+</P>
+:::
+
+:::work
+次の計算を行いなさい。
+
+- 25 * 3 + 4 / 2
+- 11^3
+- 100 %% 7
+- 2 * (3 + 4) - 5
+- 2^3 * 3^2
+- ((2 + 3) * (4 + 5)) / 6
+- 3+4*5-6/3
+- 453 %/% 10
+- 453 %% 10
+:::
+
+# オブジェクト
+
+Rでは<strong>オブジェクト</strong>と呼ばれる箱に計算結果の数値や読み込んだデータ（後で説明する）を格納することができる。オブジェクトに格納しておくと、後からそれらの値やデータを再度利用したくなったときに、いちいち再度計算式を入力したり、データの読み込みをすることなく、オブジェクトを呼び出すだけで、それらの値やデータを呼び出すことができる。
+
+以下の例では`5－3`の結果を`Res`という名前のオブジェクトに格納し、さらに`Res`というオブジェクト名を使ってその中身（計算結果）を呼び出している。
+
+```{r object}
+Res <- 5-3
+Res
+```
+
+## print()関数
+オブジェクトの内容は、上記のようにオブジェクト名を記載するだけでも出力されるが、`print()`関数使って出力させることもできる。なお、`print()`関数はオブジェクトだけでなく数字や文字列も表示させることが出来る。
+```{R}
+## print()関数を使って表記させることも可能
+print(Res)
+print(1)
+print("Hello World.")
+```
+
+## オブジェクトを使った演算
+オブジェクトに格納された値は、そのままオブジェクト名で計算させることもできる。
+
+```{r object2}
+8+Res
+```
+
+## オブジェクトの名前設定
+オブジェクト名はどのような名前でも構わない。ただし、半角スペースや演算子に用いられている記号、アットマーク記号`@`などは利用することができない。また、数字から始まる名前を付けることも不可である（名前の途中に数字が入っている分には問題ない）。
+ピリオド`.`やアンダーバー`_`は利用できる。一般的には、複数の単語を連結させて用いる場合には`_`で区切る。`.`は階層性を持ったデータを区別する使われる。以下はそれらの例。
+
+```{r objectName}
+my_res <- 9-4
+my_res.power <- my_res ^3
+```
+
+なお、間違えた名前で呼び出すと、もしその名前のオブジェクトが他にないのであれば、以下のようなエラーが帰ってくる
+
+```{r objectNameError,error=TRUE}
+RES
+```
+
+「オブジェクトが見つかりません」ということで、このエラーが帰ってきたら、オブジェクト名が間違えているかを確認してほしい。
+
+ただし、オブジェクト名を間違えていた時に、間違えた名前と同一の名前のオブジェクトが別に存在していた場合には、このようなエラーは帰って来ずに、そのまま間違えたオブジェクトを使って続く処理が実行されていくので、その場合には自分で間違いに気づきにくくなる。RStduioではすでに使われているオブジェクト名であれば、最初の数文字を入力するとリスト表示してくれる入力支援機能があるので、オブジェクトが増えてきたときにはそれを是非利用して入力するとよい。
+
+
+:::work
+課題1の計算課題について，それぞれ計算結果をオブジェクトに出力させるとともに，print()関数を用いてその内容を出力させないさい．なお，オブジェクト名は好きな名前をつけて構わない．
+:::
+
+
+# 文字列
+
+これまで数値ばかりを扱ってきたが、Rでは数値だけでなく文字列を扱うこともできる。
+
+```{r strings}
+nchar("Hidenori Fujino")
+```
+
+`nchar()`は文字列の長さを求める関数である。ほかにも検索をしたり、置換したり、分割したり、結合したりといったことができる関数が用意されている。
+
+また、オブジェクトに文字列を格納することもできる。
+
+```{r strings2}
+myName <-"Hidenori Fujino"
+myName
+nchar(myName)
+```
+
+:::work
+あなたの名前を文字列としてオブジェクトに格納し，print()関数を用いて出力させなさい．またnchar()関数を用いてその文字列の長さを求めなさい．
+:::
+
+
+# 型
+
+## データの型
+
+オブジェクトにどのようなデータが収められているかによって、そのオブジェクトには「型」と呼ばれる属性が付与される。数値が収められていれば、そのオブジェクトは数値型（`Numeric`）となるし、文字列が収められていれば文字列型(`Character`)となる。ほかにも論理型(`Logical`)や日付型(`Date`)などいろいろな型がある。
+
+::: ref
+<P>
+
+厳密には、オブジェクトに入れていない数値や文字列そのものも、それぞれ数値型や文字列型のデータである。つまり型とはデータそのものに付随する属性であり、`オブジェクトの型＝その中見のデータの型`である。
+
+</p>
+:::
+
+基本的に型が異なる者同士を計算させることはできない。
+
+```{r defferenttype, error = T}
+a <- 5
+b <- "2"
+a-b
+```
+
+この例では、bには`2`ではなく`"2"`という文字列が格納されている。このため`数値‐文字列`という形で方の異なるもの同士を計算しようとしたので、エラーとなった。
+
+ただし、関数の場合には、数値でもそのまま文字列をとして扱ってくれるものもある。
+
+```{r wrongtype, error=T}
+a <- 12345
+b <- "12345"
+nchar(a)
+nchar(b)
+```
+
+## 型の把握
+
+あるオブジェクトがどの型なのかを知るためには、`class()`関数を用いる。
+
+```{r class}
+a <- 12345
+b <- "12345"
+class(a)
+class(b)
+```
+
+## 型の変換
+
+たとえば文字列として与えられた数値を数値型に変換して処理したり、逆に数値型として与えられた数値を文字列型に変換したい、といったケースはよくある。
+その場合、`as.numeric`や`as.character`といった型変換関数を用いる。
+
+例えば、以下は文字列型の数値を数値型に変換している例である。
+
+```{r , error=T}
+a <- 12345
+b <- "12345"
+a+b #　これはエラー
+a + as.numeric(b) 
+```
+
+:::work
+課題1の任意の問題を1つとりあげ，その計算結果を収めたオブジェクトの型をclass()関数を用いて確認しなさい．また，その計算結果をas.charctor()関数を用いて文字列型に変換させたものを別のオブジェクトに格納したうえで，そのオブジェクトの内容をprint()関数を用いて表示させなさい．そして，もとの計算結果を収めたオブジェクトをprint()関数で表示させたときとどの点で異なっているかを述べなさい．
+:::
+
+このほかにも、型変換関数はたくさんある。`as.`まで打つと様々な型変換関数がリスト表記される。データ分析でよく使用するものとしては`as.factor()`（データを要因型([参考](#要因型変数の作成))に変換する）や`as.data.frame()`（データをデータフレーム型に変換する）などがある。それぞれいずれ出てくるので、頭の片隅に置いておいてほしい。
+
+
+

@@ -199,6 +199,11 @@ Project」と書かれてある箇所をクリックして、名前を書き入�
 # RとRStudioの基本操作
 [こちら](./RText_BasicUsage.html)を参照してください。
 
+
+
+# RとRStudioの基本操作その2
+[こちら](./RText_BasicUsage2.html)を参照してください。
+
 <!--
 ## 基本的な計算の実行
 
