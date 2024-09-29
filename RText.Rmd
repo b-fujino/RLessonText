@@ -121,7 +121,7 @@ h1 {
 
 # R実行環境の整備
 
-[こちらのページ](./RText_Preparing_REnvironment.html)を参照してください。
+[こちらのページ](./RText_01_Preparing_REnvironment.html)を参照してください。
 
 
 <!--
@@ -197,12 +197,12 @@ Project」と書かれてある箇所をクリックして、名前を書き入�
 -->
 
 # RとRStudioの基本操作
-[こちら](./RText_BasicUsage.html)を参照してください。
+[こちら](./RText_02_BasicUsage.html)を参照してください。
 
 
 
 # RとRStudioの基本操作その2
-[こちら](./RText_BasicUsage2.html)を参照してください。
+[こちら](./RText_03_BasicUsage2.html)を参照してください。
 
 <!--
 ## 基本的な計算の実行
@@ -1154,7 +1154,7 @@ ls()
 -->
 
 # 記述統計量と推測統計量
-[こちら](./RText_DescriptiveStatistics.html)を参照してください。
+[こちら](./RText_04_DescriptiveStatistics.html)を参照してください。
 <!--
 ## 記述統計量
 

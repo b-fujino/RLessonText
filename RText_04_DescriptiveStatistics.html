@@ -11,7 +11,7 @@
 
 <meta name="author" content="藤野秀則," />
 
-<meta name="date" content="2024-06-02" />
+<meta name="date" content="2024-09-28" />
 
 <title>記述統計量と推測統計量</title>
 
@@ -1481,7 +1481,7 @@ border-radius: 0px;
 
 <h1 class="title toc-ignore">記述統計量と推測統計量</h1>
 <h4 class="author">藤野秀則,</h4>
-<h4 class="date">2024-06-02</h4>
+<h4 class="date">2024-09-28</h4>
 
 </div>
 
@@ -1559,6 +1559,20 @@ font-weight: bold;
 display: block;
 margin-bottom: 3px;
 }
+.work {
+position: relative;
+margin:5%;
+padding:5px;
+background-color: rgba(128, 200, 255, .2);
+color: #666;
+}
+.work::before{
+counter-increment: practice_number 1;
+content: "[課題 " counter(practice_number) "]";
+font-weight: bold;
+display: block;
+margin-bottom: 3px;
+}
 .r{ 　
 user-select: none;
 -moz-user-select: none;
@@ -1571,14 +1585,11 @@ user-select: none;
 <div id="記述統計量" class="section level1" number="1">
 <h1><span class="header-section-number">1</span> 記述統計量</h1>
 <p>あるデータセットの特徴を把握するときに用いられる統計量。元のデータから算出される。なお、ここではデータとは数値のみで構成されているものとする。</p>
-<p>以下では実際に以下のデータを使って例を示していく。</p>
-<pre class="r"><code>Shohoku &lt;- data.frame(
-  name = c(&quot;赤木&quot;,&quot;桜木&quot;,&quot;三井&quot;,&quot;宮城&quot;,&quot;流川&quot;,&quot;木暮&quot;,&quot;潮崎&quot;,&quot;安田&quot;,&quot;角田&quot;,&quot;石井&quot;,&quot;佐々岡&quot;,&quot;桑田&quot;),
-  number=c(4,10,13,7,11,5, 8, 6, 9, 12, 13, 15),
-  score= c(7,4,10,7,9,6,6, 7, 7,  5,  5,  4)
-)
+<p>以下では実際に次のデータ<a href="./practice/03_example_Shohoku.csv">【03_example.csv】</a>を使って例を示していく。このデータを右クリックメニューからダウンロードしたうえで，自分自身のPosit
+CloudのProjectに<a href="./RText_03_BasicUsage2.html#データの読み込み">前回の要領</a>でアップロードしておくこと．</p>
+<pre class="r"><code>Shohoku &lt;- read.csv(&quot;practice/04_example_Shohoku.csv&quot;, header = TRUE, fileEncoding=&quot;UTF8&quot;)
 Shohoku</code></pre>
-<pre><code>##      name number score
+<pre><code>##       nam number score
 ## 1    赤木      4     7
 ## 2    桜木     10     4
 ## 3    三井     13    10
@@ -1591,7 +1602,16 @@ Shohoku</code></pre>
 ## 10   石井     12     5
 ## 11 佐々岡     13     5
 ## 12   桑田     15     4</code></pre>
-<p><strong>以降は、前回紹介した<a href="./RText_BasicUsage.html#スクリプト">スクリプトファイル</a>を作成し、上記の内容を含めて自分で入力・実行して出力結果を確認しながら進めていくこと。</strong></p>
+<div class="ref">
+<p>なお，ダウンロードしたcsvファイルは<strong><em>UTF-8</em></strong>という形式で保存したファイルであり，そのまま読み込めば問題なくRで読み込めるが，このファイルをExcelで開いた場合には，文字化けが起こることがある．
+このファイルをExcelで開きたい場合には，一旦このファイルを右クリックメニューからメモ帳で開き，「名前を付けて保存」で「文字コード」を「ANSI」に変更して保存し直すことで，Excelで開いても文字化けが起こらないようになる．
+ただし，今度はRで読み込んだ場合に文字化けが起こる可能性がある．その場合には，Rで読み込む際に<code>fileEncoding=&quot;SJIS&quot;</code>というオプションを追加して読み込むことで文字化けを防ぐことができる．</p>
+<!-- ```{r} -->
+<!-- Shohoku <- read.csv("practice/03_example_Shohoku.csv", header = TRUE, fileEncoding="SJIS") -->
+<!-- Shohoku -->
+<!-- ``` -->
+</div>
+<p><strong>以降は、前回紹介した<a href="./RText_03_BasicUsage2.html#スクリプト">スクリプトファイル</a>を作成し、上記の内容を含めて自分で入力・実行して出力結果を確認しながら進めていくこと。</strong></p>
 <div id="代表値平均中央値最頻値" class="section level2" number="1.1">
 <h2><span class="header-section-number">1.1</span>
 代表値（平均、中央値、最頻値）</h2>
@@ -1610,7 +1630,7 @@ mean(example)</code></pre>
 <p>なお、実際のデータを扱う際には、CSVファイルやExcelファイルからデータを読み込むことが多くなる。そうしたデータファイルにはたまに「空白」が含まれているケースがある（例えばアンケートで無回答だったり、実験で計測に失敗したりした場合）。その場合、Rにそれらのデータを読み込むと、空白だった箇所には<code>NA</code>(Not
 Available：利用不可能という意味)という記号が自動的に入力される。</p>
 <p><code>mean()</code>関数を用いる際に、与えたベクトルに<code>NA</code>が含まれていた場合、Errorにはならないが出力は<code>NA</code>となる。</p>
-<p>このようなデータの場合には、以下のように<code>na.omit</code>オプションを<code>True</code>（真）に設定する。するとNAを除いた上で平均が算出される（当然、データの総数はNAの数の分だけ減ることになる）。</p>
+<p>このようなデータの場合には、以下のように<code>na.rm</code>オプションを<code>True</code>（真）に設定する。するとNAを除いた上で平均が算出される（当然、データの総数はNAの数の分だけ減ることになる）。</p>
 <pre class="r"><code>example&lt;- c(1,2,3,4,NA)
 mean(example) #NAが含まれているのでNAが出力される</code></pre>
 <pre><code>## [1] NA</code></pre>
@@ -1630,8 +1650,8 @@ mean(example, na.rm = T) </code></pre>
 <h3><span class="header-section-number">1.1.3</span> 最頻値</h3>
 <p>全てのデータ（数値）について、度数分布をとり、最も度数が大きい（出現頻度が最も多い）数値。</p>
 <p>Rでは最頻値を直接求める関数は存在しない。そのため、まずは<code>table()</code>コマンドを使って、対象となるデータの度数分布表を求める。
-次いで、その度数分布表に度数が最も高いものを求める、という手続きで算出する。
-ただし、度数分布表で最も度数が高いものを取り出したときのデータは<a href="./RText_BasicUsage.html#名前付きベクトル">名前付きベクトル</a>で出力され、最頻値を表す値は度数値に対する「名前」（すなわち文字列）として出力れる。そこでその名前を数値として読みなおす必要がある。
+次いで、その度数分布表で度数が最も高いものを求める、という手続きで算出する。
+ただし、度数分布表で最も度数が高いものを取り出したときのデータは<a href="./RText_02_BasicUsage.html#名前付きベクトル">名前付きベクトル</a>で出力され、最頻値を表す値は度数値に対する「名前」（すなわち文字列）として出力れる。そこでその名前を数値として読みなおす必要がある。
 以下は例である。行っている一連の処理をよく確認しておくこと。</p>
 <pre class="r"><code>table_data&lt;-table(Shohoku$score) # 度数分布表を作成
 print(table_data)</code></pre>
@@ -1809,7 +1829,7 @@ print(Q)</code></pre>
 <p><code>summary()</code>関数を使うと、ベクトルやデータフレームに含まれている各列について、四分位数と平均値を一度に得ることができる。また、ベクトルやデータフレームの列が文字列型だった場合にはデータの点数が、ベクトルやデータフレームの列が要因型（factor型）だった場合には要因ごとのデータ点数が表示される。</p>
 <p>簡単にデータ全体の傾向を把握することができるので、データを読み込んだ場合には<code>summary()</code>をまずは実施する、というのがデータ分析の基本フローと言えるだろう。</p>
 <pre class="r"><code>summary(Shohoku) #データフレームを与えると、含まれているベクトルごとの平均と四分位数を出力される。</code></pre>
-<pre><code>##      name               number           score       
+<pre><code>##      nam                number           score       
 ##  Length:12          Min.   : 4.000   Min.   : 4.000  
 ##  Class :character   1st Qu.: 6.750   1st Qu.: 5.000  
 ##  Mode  :character   Median : 9.500   Median : 6.500  
@@ -1836,7 +1856,7 @@ print(Q)</code></pre>
 ##     %+%, alpha</code></pre>
 <pre class="r"><code>describe(Shohoku)</code></pre>
 <pre><code>##        vars  n mean   sd median trimmed  mad min max range  skew kurtosis   se
-## name*     1 12 6.50 3.61    6.5     6.5 4.45   1  12    11  0.00    -1.50 1.04
+## nam*      1 12 6.50 3.61    6.5     6.5 4.45   1  12    11  0.00    -1.50 1.04
 ## number    2 12 9.42 3.50    9.5     9.4 4.45   4  15    11 -0.03    -1.47 1.01
 ## score     3 12 6.42 1.83    6.5     6.3 1.48   4  10     6  0.41    -0.88 0.53</code></pre>
 <p>それぞれ、以下のような指標である</p>
@@ -1904,6 +1924,9 @@ print(Q)</code></pre>
 この例のようにRでは標準的なコマンド以外にも様々なコマンドが用意されている。ただし、それらのコマンドを利用するためには、そのコマンドが定義された外部パッケージをTools-&gt;install.packagesによってインストールし、さらにスクリプト内で<code>library()</code>関数を使ってそのパッケージを読み込む必要がある。
 なお<code>library()</code>関数での外部パッケージの読み込みはスクリプトの実行中1回だけで良い。1度読み込みば、その後はその外部パッケージのコマンドを入力するだけでコマンドを実行することができる。
 またパッケージのインストールも一度行えばその後は行う必要はなくなる。</p>
+</div>
+<div class="work">
+<p><a href="./practice/04_work_basicStatistics.csv">【課題ファイル】</a>には大学共通テストの結果を基にシミュレーションした1000人分の各教科の得点を記載している．このデータについて，各教科の平均値，中央値，最頻値，分散，標準偏差，第1四分位数，第3四分位数を求めなさい．ただし，summary()関数とdescribe()関数は用いてはらならない．</p>
 </div>
 </div>
 </div>
@@ -1996,7 +2019,7 @@ SE = \sqrt{\frac{\hat{\sigma^2}}{n}}=\frac{\hat{\sigma}}{\sqrt{n}}
 <div class="figcaption">T分布表</div>
 </div>
 <p>Rで平均値の信頼区間を求めるにあたっては、2つの方法がある。</p>
-<p>まず一つ目は<code>t.test()</code>を使う方法である。本来<code>t.test()</code>関数は後で説明する<a href="#平均と分散の比較">平均の比較</a>に用いる関数であるが、信頼区間を出力させるのに用いることができる。</p>
+<p>まず一つ目は<code>t.test()</code>を使う方法である。本来<code>t.test()</code>関数は後日説明する<a href="#平均と分散の比較">平均の比較</a>に用いる関数であるが、信頼区間を出力させるのに用いることができる。</p>
 <pre class="r"><code>res&lt;-t.test(Shohoku$score)
 res$conf.int</code></pre>
 <pre><code>## [1] 5.252698 7.580636
@@ -2114,6 +2137,9 @@ c(Band_Lower, Band_Upper)</code></pre>
 <div class="ref">
 <p>平均値の区間推定にしろ、分散の区間推定にしろ、「95%」信頼区間なのに、<span class="math inline">\(\alpha＝0.05\)</span>や<span class="math inline">\(0.95\)</span>ではなく<span class="math inline">\(\alpha＝0.025\)</span>や<span class="math inline">\(0.975\)</span>の値を読むのはなぜなのか疑問に思う人もいると思う。これは「95％の確率でその区間の中に平均値がある」という範囲を取り出す、ということはその範囲よりも上下にある2.5%ずつを切り落とすということだからである。仮に5%と95%の値を読むことにしてしまうと、残された区間は90%となってしまう。</p>
 </div>
+<div class="work">
+<p><a href="./practice/04_work_basicStatistics.csv">【課題ファイル】</a>にある大学共通テストのデータについて，各教科の平均と分散の点推定値および95%の推定区間を求めなさい．</p>
+</div>
 </div>
 </div>
 </div>
@@ -2128,7 +2154,7 @@ c(Band_Lower, Band_Upper)</code></pre>
 <p>まずは湘北高校のデータにグルプ分けのための変数<code>Group</code>を追加する。</p>
 <pre class="r"><code>Shohoku[&quot;Group&quot;] &lt;- as.factor(c(&quot;レギュラー&quot;, &quot;レギュラー&quot;, &quot;レギュラー&quot;, &quot;レギュラー&quot;, &quot;レギュラー&quot;, &quot;控え&quot;, &quot;控え&quot;, &quot;控え&quot;, &quot;控え&quot;, &quot;控え&quot;, &quot;控え&quot;, &quot;控え&quot;))
 Shohoku # 確認</code></pre>
-<pre><code>##      name number score      Group
+<pre><code>##       nam number score      Group
 ## 1    赤木      4     7 レギュラー
 ## 2    桜木     10     4 レギュラー
 ## 3    三井     13    10 レギュラー
@@ -2141,12 +2167,12 @@ Shohoku # 確認</code></pre>
 ## 10   石井     12     5       控え
 ## 11 佐々岡     13     5       控え
 ## 12   桑田     15     4       控え</code></pre>
-<p><code>as.factor()</code>関数に関しては先に軽く触れたが(<a href="#型の変換">参考</a>)、ここで改めて詳しく説明する。
+<p><code>as.factor()</code>関数に関しては先に軽く触れたが(<a href="./RText_02_BasicUsage.html#型の変換">参考</a>)、ここで改めて詳しく説明する。
 グループ分けに使う変数の型は<strong>「要因型」</strong>と呼ぶ。要因型に設定するためには<code>c()</code>関数を使って作成したベクトルを<code>as.factor()</code>関数で括ってやる必要がある。内容は<code>レギュラー</code>や<code>控え</code>という文字列になっているが、列全体としては文字列型ではないことに注意してもらいたい。</p>
 <p>文字列型と要因型とでは結果が異なる。<code>summary()</code>の実行結果として出力されるものが異なってくる。それぞれ以下で確認してみてほしい。</p>
 <pre class="r"><code>Shohoku$Group &lt;- as.factor(c(&quot;レギュラー&quot;, &quot;レギュラー&quot;, &quot;レギュラー&quot;, &quot;レギュラー&quot;, &quot;レギュラー&quot;, &quot;控え&quot;, &quot;控え&quot;, &quot;控え&quot;, &quot;控え&quot;, &quot;控え&quot;, &quot;控え&quot;, &quot;控え&quot;))
 summary(Shohoku)</code></pre>
-<pre><code>##      name               number           score               Group  
+<pre><code>##      nam                number           score               Group  
 ##  Length:12          Min.   : 4.000   Min.   : 4.000   レギュラー:5  
 ##  Class :character   1st Qu.: 6.750   1st Qu.: 5.000   控え      :7  
 ##  Mode  :character   Median : 9.500   Median : 6.500                 
@@ -2155,7 +2181,7 @@ summary(Shohoku)</code></pre>
 ##                     Max.   :15.000   Max.   :10.000</code></pre>
 <pre class="r"><code>Shohoku$Group &lt;- c(&quot;レギュラー&quot;, &quot;レギュラー&quot;, &quot;レギュラー&quot;, &quot;レギュラー&quot;, &quot;レギュラー&quot;, &quot;控え&quot;, &quot;控え&quot;, &quot;控え&quot;, &quot;控え&quot;, &quot;控え&quot;, &quot;控え&quot;, &quot;控え&quot;)
 summary(Shohoku)</code></pre>
-<pre><code>##      name               number           score           Group          
+<pre><code>##      nam                number           score           Group          
 ##  Length:12          Min.   : 4.000   Min.   : 4.000   Length:12         
 ##  Class :character   1st Qu.: 6.750   1st Qu.: 5.000   Class :character  
 ##  Mode  :character   Median : 9.500   Median : 6.500   Mode  :character  
@@ -2166,7 +2192,7 @@ summary(Shohoku)</code></pre>
 <p>なお、要因型に設定するのであれば、その内容は数値でも構わない。ただ、<strong>数値をグループ分け変数に使用する場合には特に<code>as.factor()</code>を実行するのを忘れないようにしなければならない。文字列型だった場合には数値演算はできないので結果自体は要因型であってもなくても変わらないことはよくあるが、数値型のときに<code>as.factor()</code>を忘れてしまうと、グループ分け用の変数としていたつもりでも数値の変数として処理され、演算の中に組み込まれてしまうことがあり、誤った結果を出力するケースがある</strong>（例えば、回帰分析）。</p>
 <pre class="r"><code>Shohoku$Group &lt;- as.factor(c(1,1,1,1,1,2,2,2,2,2,2,2)) #1:レギュラー, 2:控え
 summary(Shohoku)</code></pre>
-<pre><code>##      name               number           score        Group
+<pre><code>##      nam                number           score        Group
 ##  Length:12          Min.   : 4.000   Min.   : 4.000   1:5  
 ##  Class :character   1st Qu.: 6.750   1st Qu.: 5.000   2:7  
 ##  Mode  :character   Median : 9.500   Median : 6.500        
@@ -2175,7 +2201,7 @@ summary(Shohoku)</code></pre>
 ##                     Max.   :15.000   Max.   :10.000</code></pre>
 <pre class="r"><code>Shohoku$Group &lt;- c(1,1,1,1,1,2,2,2,2,2,2,2)
 summary(Shohoku)</code></pre>
-<pre><code>##      name               number           score            Group      
+<pre><code>##      nam                number           score            Group      
 ##  Length:12          Min.   : 4.000   Min.   : 4.000   Min.   :1.000  
 ##  Class :character   1st Qu.: 6.750   1st Qu.: 5.000   1st Qu.:1.000  
 ##  Mode  :character   Median : 9.500   Median : 6.500   Median :2.000  
@@ -2205,25 +2231,6 @@ print(res.sd)</code></pre>
 ## 1 レギュラー 2.302173
 ## 2       控え 1.112697</code></pre>
 </div>
-</div>
-<div id="まとめ" class="section level1" number="4">
-<h1><span class="header-section-number">4</span> まとめ</h1>
-<p>この章では、母集団とサンプル、母数と標本統計量、点推定と区間推定について説明した。また、グループごとの統計量の算出についても説明した。</p>
-</div>
-<div id="練習問題1" class="section level1" number="5">
-<h1><span class="header-section-number">5</span> 練習問題1</h1>
-<ol style="list-style-type: decimal">
-<li>次のデータについて、平均値と標準偏差（母数）を算出せよ。また、95%信頼区間を求めよ。なお、データは以下の通りである。</li>
-</ol>
-<pre class="r"><code>data &lt;- c(1,2,3,4,5,6,7,8,9,10)</code></pre>
-</div>
-<div id="練習問題2" class="section level1" number="6">
-<h1><span class="header-section-number">6</span> 練習問題2</h1>
-<p>次のデータについて、各グループの平均値と標準偏差（母数）を算出せよ。また、95%信頼区間を求めよ。なお、データは以下の通りである。</p>
-<pre class="r"><code>data&lt;-data.frame(
-  score=c(1,2,3,4,5,6,7,8,9,10), 
-  group=c(&quot;A&quot;,&quot;A&quot;,&quot;A&quot;,&quot;A&quot;,&quot;A&quot;,&quot;B&quot;,&quot;B&quot;,&quot;B&quot;,&quot;B&quot;,&quot;B&quot;)
-)</code></pre>
 </div>
 
 
