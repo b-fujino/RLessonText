@@ -1,0 +1,187 @@
+---
+title: "相関分析・回帰分析"
+author: "藤野秀則,"
+date: 
+  初版日:2024-09-30
+  更新日:`r Sys.Date()`
+output:
+  html_document: 
+    toc: true
+    toc_depth: 4
+    toc_float: true
+    number_section: true
+    fig_width: 8
+  # html_notebook:
+  #   toc: true
+  #   toc_depth: 3
+  #   toc_float: true
+  #   number_section: true
+editor_options:
+  markdown:
+    wrap: 72
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+```{css, echo=FALSE}
+.tocify-subheader { /* 全部のサブヘッダーを最初から表示する*/
+    display: block !important;
+}
+.tocify-item {/*長いヘッダーも折り返さない*/
+    white-space: nowrap;
+}
+
+body{
+  counter-reset: ref_number practice_number work_number;
+}
+
+.float img{
+  /* 上右下左 */
+  /* margin: 5% 0% 0% 0% ;*/ 
+  /* width : 75%; */
+  margin: auto;
+  display: block;
+
+  border-radius: 8px 8px 0 0 ;
+  position: relative;
+  width : 60%;
+}
+
+.float .figcaption {
+  position: relative;
+  font-style: italic;
+  font-size: large;
+  font-weight: bold;
+  color: #666;
+  text-align: center;
+  margin:0% auto 5% auto;
+  border-bottom: solid 1px #666;
+  border-left: solid 1px #666;
+  border-right: solid 1px #666;
+  border-radius:0 0 8px 8px;
+  width : 60%
+}
+
+img {
+  margin: auto;
+  display: block;
+  border: solid 1px #666;
+  border-radius: 8px;
+  position: relative;
+  width : 100%;
+}
+
+.ref {
+  position: relative;
+  margin:5%;
+  padding:5px;
+  background-color: rgba(255, 255, 128, .5);
+  color: #666;
+}
+.ref::before{
+  counter-increment: ref_number 1;
+  content: "[参考 " counter(ref_number) "]";
+  font-weight: bold;
+  display: block;
+  margin-bottom: 3px;
+}
+
+h1 {
+  margin-top : 10px;
+  padding-top : 50px;
+}
+
+
+.practice {
+  position: relative;
+  margin:5%;
+  padding:5px;
+  background-color: rgba(128, 255, 200, .5);
+  color: #666;
+}
+.practice::before{
+  counter-increment: practice_number 1;
+  content: "[例題 " counter(practice_number) "]";
+  font-weight: bold;
+  display: block;
+  margin-bottom: 3px;
+}
+
+
+
+
+.work {
+  position: relative;
+  margin:5%;
+  padding:5px;
+  background-color: rgba(128, 200, 255, .2);
+  color: #666;
+}
+.work::before{
+  counter-increment: work_number 1;
+  content: "[課題 " counter(work_number) "]";
+  font-weight: bold;
+  display: block;
+  margin-bottom: 3px;
+}
+
+
+
+
+.r{ 
+　/**copy の禁止**/
+  user-select: none;
+  -moz-user-select: none;
+  -webkit-user-select: none;
+  -ms-user-select: none;
+  -khtml-user-select: none;
+  -webkit-touch-callout: none;
+}
+
+```
+
+
+# 相関分析
+
+「ある変数Aの値が上がると、他の変数Bの値も上がる」「ある変数Aの値が上がると、他の変数Bの値は下がる」といったように、2つの変数の動きが連動しているような場合、その変数の間にある関係性の強さを数値で表したものを**相関係数**と呼び、相関係数を計算したり、その有意性を評価したりすることを**相関分析**と呼ぶ。
+
+## 相関係数
+
+数式そのものはそこそこ複雑な数式であるが、Rで相関を算出するのは極めて簡単である．以下のような例題を考えよう．
+
+:::practice
+次のデータは，ある高校の生徒数学と英語のテストの点数である．[このデータ](./practice/example_09_Correl.csv)を用いて，数学と英語の点数の相関係数を求めよ．
+
+
+```{r include=FALSE}
+#./practice/example_09_Correl.csvの作成
+set.seed(123)
+math <- rnorm(100, mean=60, sd=10)
+english <- math + rnorm(100, mean=0, sd=5)
+data <- data.frame(math, english)
+write.csv(data, file = "./practice/example_09_Correl.csv", row.names = FALSE)
+```
+
+:::
+
+相関係数を算出する関数は`cor()`である．この関数の引数には互いの相関を求めたい変数のベクトルがそれぞれ入る．
+```{r}
+data <- read.csv("./practice/example_09_Correl.csv")
+cor(data$math, data$english)
+```
+
+なお，出力させる際に桁数を制限したい場合には以下のようにすればよい（->[【参考】](./RText_02_BasicUsage.html#print()関数))．
+
+```{r}
+Res<-cor(data$math, data$english)
+print(Res, digits=3)
+```
+
+
+
+
+
+# 回帰分析
+

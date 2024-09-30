@@ -1598,6 +1598,12 @@ print(Res)</code></pre>
 <pre><code>## [1] 1</code></pre>
 <pre class="r"><code>print(&quot;Hello World.&quot;)</code></pre>
 <pre><code>## [1] &quot;Hello World.&quot;</code></pre>
+<p>なお，print()関数には，小数点の桁数を指定する<code>digits</code>という引数がある．この引数には表示させたい小数点以下の桁数を指定する．以下は<code>pi</code>の値を小数点以下3桁まで表示させる例である．なお，piは円周率を表す定数であり，Rでは予めその数値が組み込まれている．</p>
+<pre class="r"><code>print(pi, digits=3)</code></pre>
+<pre><code>## [1] 3.14</code></pre>
+<div class="work">
+<p>2，3，5のそれぞれ正の平方根について，print()関数とdigits引数を用いて小数第5桁まで表示させなさい.</p>
+</div>
 </div>
 <div id="オブジェクトを使った演算" class="section level2" number="1.2">
 <h2><span class="header-section-number">1.2</span>
@@ -1880,7 +1886,7 @@ Format</strong>：出力する文書の種類を選択する．
 <p><span style="font-size: 48px;">見出し1 </span></p>
 <p><span style="font-size: 36px;">見出し2 </span></p>
 <p><span style="font-size: 24px;">見出し3 </span></p>
-<p>なお，<strong>見出しの前後は空白行をいれておくこと</strong>．空白行は入っていないと見出しとして機能しない．</p>
+<p>なお，<strong>見出しの前後は空白行をいれておくこと</strong>．空白行は入っていないと見出しとして機能しない．また<strong>「#」の後には半角スペースを入れておくこと</strong>．</p>
 </div>
 <div id="箇条書き" class="section level4" number="5.3.3.3">
 <h4><span class="header-section-number">5.3.3.3</span> 箇条書き</h4>
@@ -1901,7 +1907,7 @@ Format</strong>：出力する文書の種類を選択する．
 <li>番号付きリスト2</li>
 <li>番号付きリスト3</li>
 </ol>
-<p>この場合も箇条書きやリストの開始前，終了後には空白行をいれておくこと．</p>
+<p>この場合も箇条書きやリストの開始前，終了後には空白行をいれておくこと．また「-」や「1.」の後にはやはり半角スペースをいれておくこと．</p>
 </div>
 <div id="強調表現" class="section level4" number="5.3.3.4">
 <h4><span class="header-section-number">5.3.3.4</span> 強調表現</h4>
@@ -2018,7 +2024,8 @@ Cloud上のファイル一式が手許のPCに展開される．</p>
 <li>print()
 <ul>
 <li>説明：オブジェクトの内容や指定した文字列をコンソールに表示する．</li>
-<li>引数：表示させたい数値，文字，オブジェクト．</li>
+<li>第1引数：表示させたい数値，文字，オブジェクト．</li>
+<li>第2引数：数値を含むオブジェクトの場合に表示させる小数の桁数．digits=で与える．数値を含まないオブジェクトの場合には無視させる．また，数値と数値以外が混在しているデータフレーム型オブジェクトの場合，数値に対してのみ適用される．</li>
 </ul></li>
 <li>nchar()
 <ul>
