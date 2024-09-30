@@ -30,8 +30,9 @@ knitr::opts_chunk$set(echo = TRUE)
 .tocify-item {/*長いヘッダーも折り返さない*/
     white-space: nowrap;
 }
+
 body{
-  counter-reset: ref_number practice_number;
+  counter-reset: ref_number practice_number work_number;
 }
 
 .float img{
@@ -105,6 +106,27 @@ h1 {
   display: block;
   margin-bottom: 3px;
 }
+
+
+
+
+.work {
+  position: relative;
+  margin:5%;
+  padding:5px;
+  background-color: rgba(128, 200, 255, .2);
+  color: #666;
+}
+.work::before{
+  counter-increment: work_number 1;
+  content: "[課題 " counter(work_number) "]";
+  font-weight: bold;
+  display: block;
+  margin-bottom: 3px;
+}
+
+
+
 
 .r{ 
 　/**copy の禁止**/

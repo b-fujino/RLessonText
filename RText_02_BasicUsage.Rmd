@@ -34,7 +34,7 @@ knitr::opts_chunk$set(echo = TRUE)
 }
 
 body{
-  counter-reset: ref_number practice_number;
+  counter-reset: ref_number practice_number work_number;
 }
 
 .float img{
@@ -110,6 +110,8 @@ h1 {
 }
 
 
+
+
 .work {
   position: relative;
   margin:5%;
@@ -118,8 +120,8 @@ h1 {
   color: #666;
 }
 .work::before{
-  counter-increment: practice_number 1;
-  content: "[課題 " counter(practice_number) "]";
+  counter-increment: work_number 1;
+  content: "[課題 " counter(work_number) "]";
   font-weight: bold;
   display: block;
   margin-bottom: 3px;
@@ -137,7 +139,6 @@ h1 {
   -khtml-user-select: none;
   -webkit-touch-callout: none;
 }
-
 ```
 
 # 基本的な計算の実行
@@ -687,7 +688,7 @@ RMarkdownファイルは，スクリプトファイルと同様に保存する�
 Knitが完了すると，指定した出力形式（今回であればhtml）のファイルが作成され，右下のペインに作成されたhtmlファイルが追加される．このファイルをクリックすることで，作成したhtmlファイルをブラウザで表示することもできる．
 
 :::work
-こでまでの課題1～4の内容をRMarkdownで記述し，Knitしてhtmlファイルを作成しなさい．
+課題1～4の内容をRMarkdownで記述し，Knitしてhtmlファイルを作成しなさい．
 :::
 
 

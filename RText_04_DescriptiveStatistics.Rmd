@@ -31,8 +31,8 @@ knitr::opts_chunk$set(echo = TRUE)
     white-space: nowrap;
 }
 
-body{/**カウンターのリセット**/
-  counter-reset: ref_number practice_number;
+body{
+  counter-reset: ref_number practice_number work_number;
 }
 
 .float img{
@@ -108,6 +108,8 @@ h1 {
 }
 
 
+
+
 .work {
   position: relative;
   margin:5%;
@@ -116,12 +118,14 @@ h1 {
   color: #666;
 }
 .work::before{
-  counter-increment: practice_number 1;
-  content: "[課題 " counter(practice_number) "]";
+  counter-increment: work_number 1;
+  content: "[課題 " counter(work_number) "]";
   font-weight: bold;
   display: block;
   margin-bottom: 3px;
 }
+
+
 
 
 .r{ 
@@ -133,7 +137,6 @@ h1 {
   -khtml-user-select: none;
   -webkit-touch-callout: none;
 }
-
 ```
 
 

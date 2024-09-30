@@ -1493,7 +1493,7 @@ display: block !important;
 white-space: nowrap;
 }
 body{
-counter-reset: ref_number practice_number;
+counter-reset: ref_number practice_number work_number;
 }
 .float img{
 
@@ -1566,8 +1566,8 @@ background-color: rgba(128, 200, 255, .2);
 color: #666;
 }
 .work::before{
-counter-increment: practice_number 1;
-content: "[課題 " counter(practice_number) "]";
+counter-increment: work_number 1;
+content: "[課題 " counter(work_number) "]";
 font-weight: bold;
 display: block;
 margin-bottom: 3px;
@@ -2018,18 +2018,15 @@ Format</strong>：出力する文書の種類を選択する．
 </div>
 <p>コードセルには名前を振ることができる．例えば，先ほど実行したコードセルでは<code>{r car}</code>という形でcarという名前が付与されていた．このように，<code>{r}</code>のなかに半角スペースを置いて任意の単語を書き込むことで，そのコードセルに名前を付けることができる．
 名前を付けておくと，コードセルの実行結果が表示される際に，その名前が表示されるので，どのコードセルがどの結果を出力しているのかがわかりやすくなる．</p>
+<p>そのほかにも，例えば，<code>{r, echo=FALSE}</code>と記載すると，knit（後述）した際にそのコードセルのコードが表示されなくなるなど，<code>{r}</code>の中には様々なオプションを記載することができる．</p>
 </div>
 <div id="テキストセルの追加" class="section level3" number="6.3.3">
 <h3><span class="header-section-number">6.3.3</span>
 テキストセルの追加</h3>
 <p>テキストセルの追加は，そのまま文章を記載していけばよい．記載に当たっては各種のマークダウン記法を利用できる．</p>
-</div>
-<div id="代表的なマークダウン記法" class="section level3" number="6.3.4">
-<h3><span class="header-section-number">6.3.4</span>
-代表的なマークダウン記法</h3>
 <p>代表的な記法を以下に示す．</p>
-<div id="改行" class="section level4" number="6.3.4.1">
-<h4><span class="header-section-number">6.3.4.1</span> 改行</h4>
+<div id="改行" class="section level4" number="6.3.3.1">
+<h4><span class="header-section-number">6.3.3.1</span> 改行</h4>
 <p>マークダウンでは改行は「空白行」を入れることで反映される．空白行を入れていない場合，たとえ編集画面で改行していても，実際の表示では改行されない．</p>
 <pre class="markdown"><code>行1
 行2</code></pre>
@@ -2042,8 +2039,8 @@ Format</strong>：出力する文書の種類を選択する．
 <p>行1</p>
 <p>行2</p>
 </div>
-<div id="見出し" class="section level4" number="6.3.4.2">
-<h4><span class="header-section-number">6.3.4.2</span> 見出し</h4>
+<div id="見出し" class="section level4" number="6.3.3.2">
+<h4><span class="header-section-number">6.3.3.2</span> 見出し</h4>
 <pre class="markdown"><code># 見出し1
 
 ## 見出し2
@@ -2055,8 +2052,8 @@ Format</strong>：出力する文書の種類を選択する．
 <p><span style="font-size: 24px;">見出し3 </span></p>
 <p>なお，<strong>見出しの前後は空白行をいれておくこと</strong>．空白行は入っていないと見出しとして機能しない．</p>
 </div>
-<div id="箇条書き" class="section level4" number="6.3.4.3">
-<h4><span class="header-section-number">6.3.4.3</span> 箇条書き</h4>
+<div id="箇条書き" class="section level4" number="6.3.3.3">
+<h4><span class="header-section-number">6.3.3.3</span> 箇条書き</h4>
 <pre class="markdown"><code>- 箇条書き1
 - 箇条書き2
 - 箇条書き3
@@ -2076,8 +2073,8 @@ Format</strong>：出力する文書の種類を選択する．
 </ol>
 <p>この場合も箇条書きやリストの開始前，終了後には空白行をいれておくこと．</p>
 </div>
-<div id="強調表現" class="section level4" number="6.3.4.4">
-<h4><span class="header-section-number">6.3.4.4</span> 強調表現</h4>
+<div id="強調表現" class="section level4" number="6.3.3.4">
+<h4><span class="header-section-number">6.3.3.4</span> 強調表現</h4>
 <pre class="markdown"><code>強調表現1:**太字**にする
 強調表現2:*斜体*にする
 強調表現3:***太字・斜体***にする
@@ -2150,6 +2147,11 @@ RMarkdownの保存とKnit</h2>
 <div class="work">
 <p>こでまでの課題1～4の内容をRMarkdownで記述し，Knitしてhtmlファイルを作成しなさい．</p>
 </div>
+</div>
+<div id="rmarkdownファイルを開く" class="section level2" number="6.6">
+<h2><span class="header-section-number">6.6</span>
+RMarkdownファイルを開く</h2>
+<p>右下の「Files」タブ内に作成したファイルの一覧が表示されている．この中で開きたいファイルを選択すると，そのファイルが開かれる．</p>
 </div>
 </div>
 <div id="ファイルのダウンロード" class="section level1" number="7">
