@@ -1695,7 +1695,7 @@ print(res.sd)
 
 # データハンドリング
 
-[こちらのページ](./RText_DataHandling.html)を参照してください。
+[こちらのページ](./RText_05_DataHandling.html)を参照してください。
 
 <!--
 以下では具体的な例を示すためにRに最初から入っているデモ用データの`iris`を用いる。

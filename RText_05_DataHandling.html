@@ -11,7 +11,7 @@
 
 <meta name="author" content="藤野秀則," />
 
-<meta name="date" content="2024-05-31" />
+<meta name="date" content="2024-09-30" />
 
 <title>データハンドリング</title>
 
@@ -1481,7 +1481,7 @@ border-radius: 0px;
 
 <h1 class="title toc-ignore">データハンドリング</h1>
 <h4 class="author">藤野秀則,</h4>
-<h4 class="date">2024-05-31</h4>
+<h4 class="date">2024-09-30</h4>
 
 </div>
 
@@ -1597,7 +1597,7 @@ summary(data_iris)</code></pre>
 ## 4          4.6         3.1          1.5         0.2  setosa
 ## 5          5.0         3.6          1.4         0.2  setosa
 ## 6          5.4         3.9          1.7         0.4  setosa</code></pre>
-<p>列名が英語のままだと分かりにくいので、日本語に翻訳した名前に置き換える(-&gt;<a href="#列名へのアクセスと変更">参考</a>)。以下はそのためのコード。</p>
+<p>列名が英語のままだと分かりにくいので、日本語に翻訳した名前に置き換える(-&gt;<a href="./RText_03_BasicUsage2.html#列名へのアクセスと変更">参考</a>)。以下はそのためのコード。</p>
 <pre class="r"><code>colnames(data_iris) &lt;-  c(&quot;がく長&quot;,&quot;がく幅&quot;,&quot;花びら長&quot;,&quot;花びら幅&quot;,&quot;種類&quot;)
 head(data_iris)</code></pre>
 <pre><code>##   がく長 がく幅 花びら長 花びら幅   種類
@@ -1647,18 +1647,10 @@ head(data_iris)</code></pre>
 </tbody>
 </table>
 <pre class="r"><code>library(tidyverse)</code></pre>
-<pre><code>## Warning: パッケージ &#39;tidyverse&#39; はバージョン 4.3.3 の R の下で造られました</code></pre>
-<pre><code>## Warning: パッケージ &#39;tidyr&#39; はバージョン 4.3.2 の R の下で造られました</code></pre>
-<pre><code>## Warning: パッケージ &#39;readr&#39; はバージョン 4.3.3 の R の下で造られました</code></pre>
-<pre><code>## Warning: パッケージ &#39;purrr&#39; はバージョン 4.3.2 の R の下で造られました</code></pre>
-<pre><code>## Warning: パッケージ &#39;dplyr&#39; はバージョン 4.3.2 の R の下で造られました</code></pre>
-<pre><code>## Warning: パッケージ &#39;stringr&#39; はバージョン 4.3.2 の R の下で造られました</code></pre>
-<pre><code>## Warning: パッケージ &#39;forcats&#39; はバージョン 4.3.3 の R の下で造られました</code></pre>
-<pre><code>## Warning: パッケージ &#39;lubridate&#39; はバージョン 4.3.3 の R の下で造られました</code></pre>
 <pre><code>## ── Attaching core tidyverse packages ──────────────────────── tidyverse 2.0.0 ──
 ## ✔ dplyr     1.1.4     ✔ readr     2.1.5
 ## ✔ forcats   1.0.0     ✔ stringr   1.5.1
-## ✔ ggplot2   3.4.3     ✔ tibble    3.2.1
+## ✔ ggplot2   3.5.0     ✔ tibble    3.2.1
 ## ✔ lubridate 1.9.3     ✔ tidyr     1.3.0
 ## ✔ purrr     1.0.2     
 ## ── Conflicts ────────────────────────────────────────── tidyverse_conflicts() ──
@@ -1855,8 +1847,9 @@ summary(data_iris2)</code></pre>
 ##                         
 ##                         
 ## </code></pre>
-<div id="文字列の置換" class="section level2" number="2.1">
-<h2><span class="header-section-number">2.1</span> 文字列の置換</h2>
+</div>
+<div id="文字列の置換" class="section level1" number="3">
+<h1><span class="header-section-number">3</span> 文字列の置換</h1>
 <p>文字列型の列や要因型の列を置換したい場合には<code>ifelse()</code>関数を使うよりも、<code>recorde()</code>関数を使うほうが簡単である。変換したいものの対応を第2引数に以下の例の通りに与えればよい。変換式が指定されていないものは元の値が維持される。</p>
 <pre class="r"><code>data_iris2 &lt;- data_iris 
 data_iris2$種類 &lt;- recode(data_iris2$種類, &quot;setosa&quot;=&quot;セトサ&quot;, &quot;versicolor&quot;=&quot;バーシカラー&quot;)
@@ -1932,9 +1925,8 @@ summary(data_iris2$種類) #サマリー表示　要因型に変換したので�
 ## versicolor  virginica     セトサ 
 ##         50         50         50</code></pre>
 </div>
-</div>
-<div id="欠損データの除外" class="section level1" number="3">
-<h1><span class="header-section-number">3</span> 欠損データの除外</h1>
+<div id="欠損データの除外" class="section level1" number="4">
+<h1><span class="header-section-number">4</span> 欠損データの除外</h1>
 <p>実験や調査を行った際にデータの一部が欠損しているケースは多々ある。Rでは欠損データはデータフレーム上で<code>NA</code>（Not
 Available：利用不可能の意味）と表記されている。</p>
 <p>関数によっては欠損データを含んでいるデータを受け付けないケースがある。例えばすでに<a href="#平均値">平均値</a>で紹介したように<code>mean()</code>関数は、そのままでは欠損値を含んだデータは受け付けない。</p>
@@ -1974,8 +1966,8 @@ data_iris3.naomit</code></pre>
 <pre><code>## [1] 0.5773503</code></pre>
 <p>こうした欠損値は特に任意回答の項目を入れているアンケート調査では間違いなく含まれてくるし、紙でとったアンケート調査においては無回答であったり、択一回答の質問なのに勝手に2つ以上の選ぶなど不正回答をしてくるケースも多々ある。そういう場合にはデータ上は<code>NA</code>として処理すべきデータとなる。そのような形で<code>NA</code>を含んだデータではデータを読み込んだ時点で上記の通りに<code>na.omit()</code>を実施しておくとよい。</p>
 </div>
-<div id="データの整理方法ワイド形式とロング形式" class="section level1" number="4">
-<h1><span class="header-section-number">4</span>
+<div id="データの整理方法ワイド形式とロング形式" class="section level1" number="5">
+<h1><span class="header-section-number">5</span>
 データの整理方法（ワイド形式とロング形式）</h1>
 <p>例えば、ある中学校のあるクラス(25人)での1年間の定期テストでの数学の得点をデータとして扱う事例を考えてみよう。</p>
 <p>人がそのようなデータを扱うときには以下のような表を作るだろう。</p>
