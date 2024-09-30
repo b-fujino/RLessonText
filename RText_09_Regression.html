@@ -1593,7 +1593,7 @@ user-select: none;
 <p>相関係数を算出する関数は<code>cor()</code>である．この関数の引数には互いの相関を求めたい変数のベクトルがそれぞれ入る．</p>
 <pre class="r"><code>data &lt;- read.csv(&quot;./practice/example_09_Correl.csv&quot;)
 cor(data$math, data$english)</code></pre>
-<pre><code>## [1] 0.8786993</code></pre>
+<pre><code>## [1] 0.879465</code></pre>
 <p>なお，出力させる際に桁数を制限したい場合には以下のようにすればよい（-&gt;<a href="./RText_02_BasicUsage.html#print()関数">【参考】</a>)．</p>
 <pre class="r"><code>Res&lt;-cor(data$math, data$english)
 print(Res, digits=3)</code></pre>

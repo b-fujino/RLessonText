@@ -158,8 +158,8 @@ h1 {
 ```{r include=FALSE}
 #./practice/example_09_Correl.csvの作成
 set.seed(123)
-math <- rnorm(100, mean=60, sd=10)
-english <- math + rnorm(100, mean=0, sd=5)
+math <- round(rnorm(100, mean=60, sd=10),0)
+english <- round(math + rnorm(100, mean=0, sd=5),0)
 data <- data.frame(math, english)
 write.csv(data, file = "./practice/example_09_Correl.csv", row.names = FALSE)
 ```
