@@ -1494,7 +1494,7 @@ display: block !important;
 white-space: nowrap;
 }
 body{
-counter-reset: ref_number practice_number;
+counter-reset: ref_number practice_number work_number;
 }
 .float img{
 
@@ -1559,6 +1559,20 @@ font-weight: bold;
 display: block;
 margin-bottom: 3px;
 }
+.work {
+position: relative;
+margin:5%;
+padding:5px;
+background-color: rgba(128, 200, 255, .2);
+color: #666;
+}
+.work::before{
+counter-increment: work_number 1;
+content: "[課題 " counter(work_number) "]";
+font-weight: bold;
+display: block;
+margin-bottom: 3px;
+}
 .r{ 　
 user-select: none;
 -moz-user-select: none;
@@ -1568,18 +1582,19 @@ user-select: none;
 -webkit-touch-callout: none;
 }
 </style>
-<div id="r実行環境の整備" class="section level1" number="1">
-<h1><span class="header-section-number">1</span> R実行環境の整備</h1>
-<p><a href="./RText_01_Preparing_REnvironment.html">こちらのページ</a>を参照してください。</p>
+<div id="r実行環境の整備と基本的な計算" class="section level1" number="1">
+<h1><span class="header-section-number">1</span>
+R実行環境の整備と基本的な計算</h1>
+<p><a href="./RText_01_Preparing_REnvironment.html">こちら</a>を参照してください。</p>
 </div>
-<div id="rとrstudioの基本操作" class="section level1" number="2">
+<div id="rとrstudioの基本操作-その1" class="section level1" number="2">
 <h1><span class="header-section-number">2</span>
-RとRStudioの基本操作</h1>
+RとRStudioの基本操作　その1</h1>
 <p><a href="./RText_02_BasicUsage.html">こちら</a>を参照してください。</p>
 </div>
-<div id="rとrstudioの基本操作その2" class="section level1" number="3">
+<div id="rとrstudioの基本操作-その2" class="section level1" number="3">
 <h1><span class="header-section-number">3</span>
-RとRStudioの基本操作その2</h1>
+RとRStudioの基本操作　その2</h1>
 <p><a href="./RText_03_BasicUsage2.html">こちら</a>を参照してください。</p>
 </div>
 <div id="記述統計量と推測統計量" class="section level1" number="4">
@@ -1606,83 +1621,40 @@ RとRStudioの基本操作その2</h1>
 </div>
 <div id="回帰分析" class="section level1" number="9">
 <h1><span class="header-section-number">9</span> 回帰分析</h1>
-<p><a href="./RText_09_Regression.html">こちらのページ</a>を参照してください。
-&lt;</p>
-<p><!----------------------------- 仕切り -----------------------------------></p>
-</div>
-<div id="関係性の分析" class="section level1" number="10">
-<h1><span class="header-section-number">10</span> 関係性の分析</h1>
-<div id="相関分析" class="section level2" number="10.1">
-<h2><span class="header-section-number">10.1</span> 相関分析</h2>
-<div id="共分散と相関" class="section level3" number="10.1.1">
-<h3><span class="header-section-number">10.1.1</span> 共分散と相関</h3>
-</div>
-<div id="疑似相関と重相関" class="section level3" number="10.1.2">
-<h3><span class="header-section-number">10.1.2</span>
-疑似相関と重相関</h3>
-</div>
-</div>
-<div id="回帰分析重回帰分析" class="section level2" number="10.2">
-<h2><span class="header-section-number">10.2</span>
-回帰分析・重回帰分析</h2>
-<div id="回帰直線の可視化" class="section level3" number="10.2.1">
-<h3><span class="header-section-number">10.2.1</span>
-回帰直線の可視化</h3>
-<p><!----------------------------- 仕切り -----------------------------------></p>
-</div>
-</div>
-</div>
-<div id="関係性の分析2" class="section level1" number="11">
-<h1><span class="header-section-number">11</span> 関係性の分析（2）</h1>
-<div id="一般化線形モデル" class="section level2" number="11.1">
-<h2><span class="header-section-number">11.1</span>
-一般化線形モデル</h2>
-</div>
-<div id="混合モデル" class="section level2" number="11.2">
-<h2><span class="header-section-number">11.2</span> 混合モデル</h2>
-<p><!----------------------------- 仕切り -----------------------------------></p>
-</div>
-</div>
-<div id="共分散構造分析" class="section level1" number="12">
-<h1><span class="header-section-number">12</span> 共分散構造分析</h1>
-<div id="パス解析" class="section level2" number="12.1">
-<h2><span class="header-section-number">12.1</span> パス解析</h2>
-</div>
-<div id="構造方程式モデリング" class="section level2" number="12.2">
-<h2><span class="header-section-number">12.2</span>
-構造方程式モデリング</h2>
-<p><!----------------------------- 仕切り -----------------------------------></p>
-</div>
-</div>
-<div id="主成分分析と因子分析" class="section level1" number="13">
-<h1><span class="header-section-number">13</span>
-主成分分析と因子分析</h1>
-<p><!----------------------------- 仕切り -----------------------------------></p>
-</div>
-<div id="クラスター分析" class="section level1" number="14">
-<h1><span class="header-section-number">14</span> クラスター分析</h1>
-<p><!----------------------------- 仕切り -----------------------------------></p>
-</div>
-<div id="テキストマイニング" class="section level1" number="15">
-<h1><span class="header-section-number">15</span>
-テキストマイニング</h1>
-<p><!----------------------------- 仕切り -----------------------------------></p>
-</div>
-<div id="rrstudioのさらなる活用" class="section level1" number="16">
-<h1><span class="header-section-number">16</span>
-R・RStudioのさらなる活用</h1>
-<div id="プログラムを活用した分析と自作関数の利用" class="section level2" number="16.1">
-<h2><span class="header-section-number">16.1</span>
-プログラムを活用した分析と自作関数の利用</h2>
-</div>
-<div id="rmarkdownとhtml出力" class="section level2" number="16.2">
-<h2><span class="header-section-number">16.2</span>
-RmarkdownとHTML出力</h2>
-</div>
-<div id="githubとposit-cloudとの連携" class="section level2" number="16.3">
-<h2><span class="header-section-number">16.3</span> GitHubとPosit
-Cloudとの連携</h2>
-</div>
+<p><a href="./RText_09_Regression.html">こちらのページ</a>を参照してください。</p>
+<!--   <!----------------------------- 仕切り ----------------------------------->
+<p>–&gt;</p>
+<!-- # 関係性の分析 -->
+<!-- ## 相関分析 -->
+<!-- ### 共分散と相関 -->
+<!-- ### 疑似相関と重相関 -->
+<!-- ## 回帰分析・重回帰分析 -->
+<!-- ### 回帰直線の可視化 -->
+<!--   <!----------------------------- 仕切り ----------------------------------->
+<p>–&gt;</p>
+<!-- # 関係性の分析（2） -->
+<!-- ## 一般化線形モデル -->
+<!-- ## 混合モデル -->
+<!--   <!----------------------------- 仕切り ----------------------------------->
+<p>–&gt;</p>
+<!-- # 共分散構造分析 -->
+<!-- ## パス解析 -->
+<!-- ## 構造方程式モデリング -->
+<!--   <!----------------------------- 仕切り ----------------------------------->
+<p>–&gt;</p>
+<!-- # 主成分分析と因子分析 -->
+<!--   <!----------------------------- 仕切り ----------------------------------->
+<p>–&gt;</p>
+<!-- # クラスター分析 -->
+<!--   <!----------------------------- 仕切り ----------------------------------->
+<p>–&gt;</p>
+<!-- # テキストマイニング -->
+<!--   <!----------------------------- 仕切り ----------------------------------->
+<p>–&gt;</p>
+<!-- # R・RStudioのさらなる活用 -->
+<!-- ## プログラムを活用した分析と自作関数の利用 -->
+<!-- ## RmarkdownとHTML出力 -->
+<!-- ## GitHubとPosit Cloudとの連携 -->
 </div>
 
 
