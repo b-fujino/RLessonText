@@ -9,6 +9,7 @@ output:
     toc_float: true
     number_section: true
     fig_width: 8
+    css: style.css
   # html_notebook:
   #   toc: true
   #   toc_depth: 3
@@ -22,7 +23,7 @@ editor_options:
 knitr::opts_chunk$set(echo = TRUE)
 ```
 
-```{css, echo=FALSE}
+```{css, eval=FALSE, echo=FALSE}
 .tocify-subheader { /* 全部のサブヘッダーを最初から表示する*/
     display: block !important;
 }
