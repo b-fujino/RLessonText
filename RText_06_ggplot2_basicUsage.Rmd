@@ -23,7 +23,7 @@ editor_options:
 knitr::opts_chunk$set(echo = TRUE)
 ```
 
-```{css, eval=FALSE, echo=FALSE} }
+```{css, eval=FALSE, echo=FALSE}
 .tocify-subheader { /* 全部のサブヘッダーを最初から表示する*/
     display: block !important;
 }
@@ -253,14 +253,14 @@ plot(g)
 
 `geom_jitter()`を使う。引数として`aes()`を使って同じようにx、yを設定する。
 
-```{R}
+```{r}
 g <- ggplot(data_iris)+geom_jitter(aes(x=種類, y=がく長))
 plot(g)
 ```
 y軸（がく長）については、それぞれ値を持っているが、x軸については3種類のグループ分けしかない。それをそのまま描画したのでは、同じがく長になっているものが全部重なってしまうので、そうならないように、x軸方向にランダムにバラつかせて描画されている。このx軸方向のバラつきは描画のたびにランダムに変わる。
 
 もう一度描画させると、先ほどと違うばらつき方になる。
-```{R}
+```{r}
 g <- ggplot(data_iris)+geom_jitter(aes(x=種類, y=がく長))
 plot(g)
 ```
@@ -269,7 +269,7 @@ plot(g)
 
 箱ひげ図の時と同様に、色や幅を変えることができる。色については`fill`（塗りつぶし）ではなく`color`を設定したり、`Width`を設定したりして、色や幅を変えることができる。
 
-```{R}
+```{r}
 g <- ggplot(data_iris)+geom_jitter(aes(x=種類, y=がく長, color=種類))
 plot(g)
 g <- ggplot(data_iris)+geom_jitter(aes(x=種類, y=がく長, color=種類), width = 0.3)
@@ -290,8 +290,8 @@ plot(g)
 |binwidth|度数分布における区間幅の設定|
 |position|` position_nudge()`関数によって描画開始をそれぞれのグループのx軸の中心からどちら向き（正か負か）にどれだけ離すかの設定する。stackdirをcenterにした場合には中心がずれる|
 
-以下に、実際にいくつか例示してみる。
-```{R}
+以下に、実際にいくつか例示してみる。なお，1行のソースコードが長くなってきたので，見やすさのため`+`で改行しているほか，関数内でも引数単位で適宜改行を入れている．
+```{r}
 g <- ggplot(data_iris)+
   geom_dotplot(aes(x=種類, y=がく長), binaxis = "y", dotsize = 1.0, stackdir = "down",
                binwidth = 0.1, position = position_nudge(-0.025))
@@ -361,7 +361,7 @@ plot(g)
 ## 棒グラフ
 平均や標準偏差が得られているなら棒グラフとしてそれらを描きたい。その場合には、まずは平均と標準偏差のグループごとのデータを用意した上で、以下のようにする。
 
-```{R}
+```{r}
 #データの準備
 d.mean <- aggregate(がく長~種類,data_iris, mean)
 d.sd <- aggregate(がく長~種類,data_iris, sd)
@@ -382,7 +382,7 @@ plot(g)
 ```
 
 さらに、平均値自体を棒グラフに重ねて記述したい場合には以下のようにする。vjustは、テキストの位置を調整するためのパラメータで、数値が大きいほど下に移動する。負の値にした場合は棒グラフよりも上の表記される。
-```{R}
+```{r}
 g <- ggplot(d2)+
   geom_bar(aes(x=種類,y=平均,fill=種類),stat="identity")+
   geom_errorbar(aes(x=種類,y=平均,ymin=平均-標準偏差, ymax=平均+標準偏差,width=0.15))+
@@ -519,7 +519,7 @@ plot(g)
 ## 散布図
 2つのデータの関係性を可視化するグラフの代表格は散布図である。散布図は以下のようにして描く。
 
-```{R}
+```{r}
 g <- ggplot(data_iris)+
   geom_point(aes(x=がく長, y=花びら長))
 plot(g)
@@ -529,7 +529,7 @@ plot(g)
 
 `geom_point()`の`aes()`に`color`を与える。
 
-```{R}
+```{r}
 g <- ggplot(data_iris)+
   geom_point(aes(x=がく長, y=花びら長, color=種類))
 plot(g)
@@ -537,7 +537,7 @@ plot(g)
 
 ### 種類ごとにプロットの形を分ける
 `geom_point()`の`aes()`に`shape`を与える。
-```{R}
+```{r}
 g <- ggplot(data_iris)+
   geom_point(aes(x=がく長, y=花びら長, color=種類, shape=種類))
 plot(g)

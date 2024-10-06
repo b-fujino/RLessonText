@@ -42,7 +42,7 @@ img {
   border: solid 1px #666;
   border-radius: 8px;
   position: relative;
-  width : 75%;
+  width : 60%;
 }
 
 .ref {
@@ -109,7 +109,6 @@ h1 {
   -khtml-user-select: none;
   -webkit-touch-callout: none;
 }
-
 
 
 .res_table {
