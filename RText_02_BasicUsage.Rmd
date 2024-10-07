@@ -26,123 +26,6 @@ editor_options:
 knitr::opts_chunk$set(echo = TRUE)
 ```
 
-```{css,eval=FALSE, echo=FALSE}
-.tocify-subheader { /* 全部のサブヘッダーを最初から表示する*/
-    display: block !important;
-}
-.tocify-item {/*長いヘッダーも折り返さない*/
-    white-space: nowrap;
-}
-
-body{
-  counter-reset: ref_number practice_number work_number;
-}
-
-.float img{
-  /* 上右下左 */
-  /* margin: 5% 0% 0% 0% ;*/ 
-  /* width : 75%; */
-  margin: auto;
-  display: block;
-
-  border-radius: 8px 8px 0 0 ;
-  position: relative;
-  width : 60%;
-}
-
-.float .figcaption {
-  position: relative;
-  font-style: italic;
-  font-size: large;
-  font-weight: bold;
-  color: #666;
-  text-align: center;
-  margin:0% auto 5% auto;
-  border-bottom: solid 1px #666;
-  border-left: solid 1px #666;
-  border-right: solid 1px #666;
-  border-radius:0 0 8px 8px;
-  width : 60%
-}
-
-img {
-  margin: auto;
-  display: block;
-  border: solid 1px #666;
-  border-radius: 8px;
-  position: relative;
-  width : 100%;
-}
-
-.ref {
-  position: relative;
-  margin:5%;
-  padding:5px;
-  background-color: rgba(255, 255, 128, .5);
-  color: #666;
-}
-.ref::before{
-  counter-increment: ref_number 1;
-  content: "[参考 " counter(ref_number) "]";
-  font-weight: bold;
-  display: block;
-  margin-bottom: 3px;
-}
-
-h1 {
-  margin-top : 10px;
-  padding-top : 50px;
-}
-
-
-.practice {
-  position: relative;
-  margin:5%;
-  padding:5px;
-  background-color: rgba(128, 255, 200, .5);
-  color: #666;
-}
-.practice::before{
-  counter-increment: practice_number 1;
-  content: "[例題 " counter(practice_number) "]";
-  font-weight: bold;
-  display: block;
-  margin-bottom: 3px;
-}
-
-
-
-
-.work {
-  position: relative;
-  margin:5%;
-  padding:5px;
-  background-color: rgba(128, 200, 255, .2);
-  color: #666;
-}
-.work::before{
-  counter-increment: work_number 1;
-  content: "[課題 " counter(work_number) "]";
-  font-weight: bold;
-  display: block;
-  margin-bottom: 3px;
-}
-
-
-
-
-.r{ 
-　/**copy の禁止**/
-  user-select: none;
-  -moz-user-select: none;
-  -webkit-user-select: none;
-  -ms-user-select: none;
-  -khtml-user-select: none;
-  -webkit-touch-callout: none;
-}
-```
-
-
 # オブジェクト
 
 Rでは<strong>オブジェクト</strong>と呼ばれる箱に計算結果の数値や読み込んだデータ（後で説明する）を格納することができる．オブジェクトに格納しておくと，後からそれらの値やデータを再度利用したくなったときに，いちいち再度計算式を入力したり，データの読み込みをすることなく，オブジェクトを呼び出すだけで，それらの値やデータを呼び出すことができる．
@@ -201,20 +84,20 @@ RES
 ただし，オブジェクト名を間違えていた時に，間違えた名前と同一の名前のオブジェクトが別に存在していた場合には，このようなエラーは帰って来ずに，そのまま間違えたオブジェクトを使って続く処理が実行されていくので，その場合には自分で間違いに気づきにくくなる．RStduioではすでに使われているオブジェクト名であれば，最初の数文字を入力するとリスト表示してくれる入力支援機能があるので，オブジェクトが増えてきたときにはそれを是非利用して入力するとよい．
 
 
-:::work
-前回の課題について，各式の計算結果をオブジェクトに出力させるとともに，print()関数を用いてその内容を出力させないさい．なお，それぞれのオブジェクト名は好きな名前をつけて構わない．
-:::
-
-
 
 ## オブジェクトの削除
-作ったオブジェクトはRStudio上の右上ペインの「Environment」タブで確認することができる．
+作ったオブジェクトはconsoleでls()関数を実行するか（console内にその時点で存在するオブジェクトがすべて表示される），RStudio上の右上ペインの「Environment」タブで確認することができる．
+
+```{r}
+ls()
+```
 
 ![オブジェクトリスト](./Img/20240509_ObjectList.png)
 
 オブジェクトはいくつでも作ることができるが，あまりに多くなってくるとそれだけPCのメモリを喰ってしまうことになる．
 そういった場合には作ったオブジェクトの中で使わなくなったオブジェクトを削除すると良い．
-削除する方法は大きく2つある．
+
+オブジェクトを削除する方法は大きく2つある．
 1つは，すべてのオブジェクトをまとめて削除する方法で，これは，単にEnvironmentタブの中にあるほうきのアイコンをクリックすればよい．
 
 ![オブジェクトの全削除](./Img/20240509_ObjectClear.png)
@@ -230,7 +113,7 @@ ls()
 ```
 `a`オブジェクトが除かれているのが確認できるだろう．
 
-複数のオブジェクトを削除したい場合には，それらを書き込めばよい．`rm()`関数については，`c()`で括る必要はない．
+複数のオブジェクトを削除したい場合には，それらを書き込めばよい．
 
 ```{r}
 rm(b,c)
@@ -238,7 +121,75 @@ ls()
 ```
 `b`と`c`が除かれたのが確認できる．
 
-なお，`rm()`をスクリプトに書き入れても構わないが，スクリプトに書き入れると，そのスクリプトを実行する度にオブジェクトの削除が行われることになるので，必要に応じてConsoleで実行するのが良いだろう．
+なお，`rm()`を[スクリプト](#スクリプト)（後程説明）に書き入れても構わないが，スクリプトに書き入れると，そのスクリプトを実行する度にオブジェクトの削除が行われることになるので，必要に応じてConsoleで実行するのが良いだろう．
+
+
+:::ref
+** 予約語 **
+
+Rでは，予約語と呼ばれる特定の単語は変数名として使うことができない．予約語は以下の通りである．
+
+| 予約語         | 説明                                |
+|----------------|-------------------------------------|
+| `if`           | 条件式（if文）                      |
+| `else`         | if文に続く条件が満たされない場合の処理 |
+| `repeat`       | 無限ループ                           |
+| `while`        | 条件が満たされる間ループ             |
+| `function`     | 関数定義                            |
+| `for`          | 繰り返し処理（forループ）            |
+| `in`           | for文の範囲指定やベクトル内の要素    |
+| `next`         | ループの次の反復にスキップ           |
+| `break`        | ループの終了                        |
+| `TRUE`         | 論理値（真）                        |
+| `FALSE`        | 論理値（偽）                        |
+| `Inf`          | 無限大（Infinity）                  |
+| `NaN`          | 数値として定義できない値             |
+| `NA`           | 欠損値                              |
+| `...`          | 不特定多数の引数                    |
+| `return`       | 関数の戻り値                        |
+| `switch`       | 条件に基づく処理の分岐              |
+| `break`        | ループから抜ける                    |
+| `NA`           | 欠損値                              |
+| `Inf`          | 無限大（∞）                         |
+| `NaN`          | 非数（Not a Number）                |
+| `NULL`         | 空のオブジェクト                    |
+
+これらの予約語を単独でオブジェクト名にして値を代入しようとしてもエラーが帰ってくる．
+
+```{r error=T}
+if <- 5
+```
+
+さらに，以下のものは定数として予め数値が定義されている．
+
+| 定数名         | 説明                                |
+|----------------|-------------------------------------|
+| `pi`           | 円周率                              |
+| `letters`      | アルファベット小文字のベクトル      |
+| `LETTERS`      | アルファベット大文字のベクトル      |
+| `month.name`   | 月名のベクトル                      |
+| `month.abb`    | 月名の略称のベクトル                |
+| `T`            | 論理値（TRUE）                      |
+| `F`            | 論理値（FALSE）                     |
+| `.Machine `          | コンピュータの数値計算に関する定数（精度や最大値などの情報）                              |
+
+予約語とはことなり，これらの定数については別な値を代入することは可能であるが，その後の計算に影響を及ぼす可能性があるので，基本的には変更しない方がよい．なお，もし定数に値を代入してしまった場合には，`rm()`関数をその定数名を引数として与えて実行すれば，元の定数に戻る．
+
+```{r}
+print(pi)
+pi<-3
+print(pi)
+rm(pi)
+print(pi)
+```
+:::
+
+
+:::work
+前回の課題について，各式の計算結果をオブジェクトに出力させるとともに，print()関数を用いてその内容を出力させないさい．なお，それぞれのオブジェクト名は好きな名前をつけて構わない．
+:::
+
+
 
 
 # 文字列
@@ -344,7 +295,7 @@ Scriptを選択する．
 
 すると，以下のようなスクリプト編集画面が開く．この画面上で一連のコマンドを入力していく．
 
-実際にスクリプトを入力した例を以下に示す．
+実際にこれまで入力してきたRのコードをスクリプトファイルに書き込んだ例を以下に示す．
 <!-- なお，このスクリプトではExcelのデータの読み込みから始めている．Excelデータの読み込みは，先ほどはImportボタンを押す前のプレビュー画面の右下部にスクリプトのプレビューも表示されていた．あの部分をマウスでコピーし，スクリプト編集画面で貼り付けるとよい． -->
 
 ![スクリプトの例](./Img/2024_5_2_Example.png)
@@ -395,7 +346,7 @@ RMarkdownファイルは，スクリプトファイルと同様にFile メニュ
 ![RMarkdownの初期設定](./Img/2024_09_30_RmdConfig.png)
 
 左側の`Document`，`Presentation`，`Shiny`，`From Template`のいずれかを選択することで，それぞれの文書を作成することができる．
-とりあえずは`Document`を選択しおく．
+とりあえずは`Document`を選択しおく．右側には以下のものが設定できる．
 
 - **Title**：文書のタイトルを入力する．
 - **Author**：文書の著者名を入力する．
@@ -405,7 +356,7 @@ RMarkdownファイルは，スクリプトファイルと同様にFile メニュ
   - **PDF**：PDF文書を作成する．
   - **Word**：Word文書を作成する．
 
-とりあえずは，`HTML`を選択しておこう．
+TitleやAuthor，Dateは自由に設定してよい．Default Output Formatはとりあえず`HTML`を選択しておこう．
 
 ## RMarkdownの編集
 
@@ -494,7 +445,7 @@ RMarkdownは，スクリプトファイルとは異なり，テキストセル�
 
 <span style="font-size: 24px;">見出し3 </span>
 
-なお，**見出しの前後は空白行をいれておくこと**．空白行は入っていないと見出しとして機能しない．また**「#」の後には半角スペースを入れておくこと**．
+なお，**見出しの前後は空白行をいれておくこと**．空白行は入っていないと見出しとして機能しない．また**「#」と見出し語の間には半角スペースを入れておくこと**．半角スペースが入っていない場合は見出しとして処理されなくなる．
 
 #### 箇条書き
 
@@ -551,7 +502,7 @@ RMarkdownは，スクリプトファイルとは異なり，テキストセル�
 
 RMarkdownファイルの冒頭にはヘッダーが記述されている．例文のままでも特に問題はないが，以下のようなヘッダーにしておくと，dateが自動的に更新されていくほか，目次が追加される．
 
-```YAML
+```{YAML}
 ---
 title: "RとRStuidoの基本操作"
 author: "藤野秀則,"
