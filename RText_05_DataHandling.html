@@ -11,7 +11,6 @@
 
 <meta name="author" content="藤野秀則," />
 
-<meta name="date" content="2024-09-30" />
 
 <title>データハンドリング</title>
 
@@ -1322,6 +1321,7 @@ if (window.hljs) {
 
 
 
+<style type="text/css">.tocify-subheader { display: block !important;}.tocify-item {white-space: nowrap;}body{counter-reset: ref_number practice_number work_number;}.float img{ margin: auto;display: block;border-radius: 8px 8px 0 0 ;position: relative;width : 60%;}.float .figcaption {position: relative;font-style: italic;font-size: large;font-weight: bold;color: #666;text-align: center;margin:0% auto 5% auto;border-bottom: solid 1px #666;border-left: solid 1px #666;border-right: solid 1px #666;border-radius:0 0 8px 8px;width : 60%}img {margin: auto;display: block;border: solid 1px #666;border-radius: 8px;position: relative;width : 60%;}.ref {position: relative;margin:5%;padding:5px;background-color: rgba(255, 255, 128, .5);color: #666;}.ref::before{counter-increment: ref_number 1;content: "[参考 " counter(ref_number) "]";font-weight: bold;display: block;margin-bottom: 3px;}h1 {margin-top : 10px;padding-top : 50px;}.practice {position: relative;margin:5%;padding:5px;background-color: rgba(128, 255, 200, .5);color: #666;}.practice::before{counter-increment: practice_number 1;content: "[例題 " counter(practice_number) "]";font-weight: bold;display: block;margin-bottom: 3px;}.work {position: relative;margin:5%;padding:5px;background-color: rgba(128, 200, 255, .2);color: #666;}.work::before{counter-increment: work_number 1;content: "[課題 " counter(work_number) "]";font-weight: bold;display: block;margin-bottom: 3px;}user-select: none;-moz-user-select: none;-webkit-user-select: none;-ms-user-select: none;-khtml-user-select: none;-webkit-touch-callout: none;}***/.res_table {border-collapse: collapse;width: 50%;margin: 0 auto;border-top: 1px solid #666;border-bottom: 1px solid #666;}.res_table th {border-bottom: 1px solid #666;text-align: center;}.res_table td {text-align: right;}.res_table .td_left {text-align: left;}.res_table .tr_topborder {border-top: 1px solid #666;}</style>
 
 
 
@@ -1481,107 +1481,11 @@ border-radius: 0px;
 
 <h1 class="title toc-ignore">データハンドリング</h1>
 <h4 class="author">藤野秀則,</h4>
-<h4 class="date">2024-09-30</h4>
+<h4 class="date">初稿日:2024-06-01 更新日:2024-10-08</h4>
 
 </div>
 
 
-<style type="text/css">
-.tocify-subheader { 
-display: block !important;
-}
-.tocify-item {
-white-space: nowrap;
-}
-body{
-counter-reset: ref_number practice_number work_number;
-}
-.float img{
-
- 
-margin: auto;
-display: block;
-border-radius: 8px 8px 0 0 ;
-position: relative;
-width : 60%;
-}
-.float .figcaption {
-position: relative;
-font-style: italic;
-font-size: large;
-font-weight: bold;
-color: #666;
-text-align: center;
-margin:0% auto 5% auto;
-border-bottom: solid 1px #666;
-border-left: solid 1px #666;
-border-right: solid 1px #666;
-border-radius:0 0 8px 8px;
-width : 60%
-}
-img {
-margin: auto;
-display: block;
-border: solid 1px #666;
-border-radius: 8px;
-position: relative;
-width : 100%;
-}
-.ref {
-position: relative;
-margin:5%;
-padding:5px;
-background-color: rgba(255, 255, 128, .5);
-color: #666;
-}
-.ref::before{
-counter-increment: ref_number 1;
-content: "[参考 " counter(ref_number) "]";
-font-weight: bold;
-display: block;
-margin-bottom: 3px;
-}
-h1 {
-margin-top : 10px;
-padding-top : 50px;
-}
-.practice {
-position: relative;
-margin:5%;
-padding:5px;
-background-color: rgba(128, 255, 200, .5);
-color: #666;
-}
-.practice::before{
-counter-increment: practice_number 1;
-content: "[例題 " counter(practice_number) "]";
-font-weight: bold;
-display: block;
-margin-bottom: 3px;
-}
-.work {
-position: relative;
-margin:5%;
-padding:5px;
-background-color: rgba(128, 200, 255, .2);
-color: #666;
-}
-.work::before{
-counter-increment: work_number 1;
-content: "[課題 " counter(work_number) "]";
-font-weight: bold;
-display: block;
-margin-bottom: 3px;
-}
-.r{ 　
-user-select: none;
--moz-user-select: none;
--webkit-user-select: none;
--ms-user-select: none;
--khtml-user-select: none;
--webkit-touch-callout: none;
-}
-</style>
 <p>以下では具体的な例を示すためにRに最初から入っているデモ用データの<code>iris</code>を用いる。
 irisデータはアイリス（菖蒲）のがく(Sepal)と花びら(Petal)の長さ(length)と幅(width)の実測データが3つの種類（<code>Setosa</code>,
 <code>vergicolor</code>,
@@ -1624,7 +1528,7 @@ head(data_iris)</code></pre>
 <div id="抽出" class="section level1" number="1">
 <h1><span class="header-section-number">1</span> 抽出</h1>
 <p>グループ分け変数を持ったデータを処理するときには、ある特定のグループのデータだけを抜き出したいということはよくある。
-そうした「データの抽出」を行うための関数として<code>tidyverse</code>パッケージには<code>filter()</code>関数が設けられている。利用するためにはTools-&gt;install.packagesで<code>tidyverse</code>パッケージをインストールしたうえで、スクリプト上で<code>library(tidyverse)</code>と入力してパッケージを読み込む必要がある。</p>
+そうした「データの抽出」を行うための関数として<code>tidyverse</code>パッケージに<code>filter()</code>関数が設けられている。利用するためにはTools-&gt;install.packagesで<code>tidyverse</code>パッケージをインストールしたうえで、スクリプト上で<code>library(tidyverse)</code>と入力してパッケージを読み込む必要がある。</p>
 <p><code>filter()</code>関数の利用法は、第1引数に元のデータを与え、第2引数に検索条件を与える。検索条件の書式のパターンは以下の通り。</p>
 <table>
 <colgroup>
@@ -1794,12 +1698,11 @@ head(res)</code></pre>
 ## 4      1.7
 ## 5      1.7
 ## 6      1.9</code></pre>
-<pre class="r"><code>#次のように関数に対して直接[]や$を書ける
+<pre class="r"><code>#次のように関数に対して直接[]や$を書くこともできる
 res2 &lt;- filter(data_iris, data_iris$がく長&gt;=6 | data_iris$花びら長&gt;1.5)$花びら長
 head(res2)</code></pre>
 <pre><code>## [1] 1.7 1.6 1.7 1.7 1.7 1.9</code></pre>
-<pre class="r"><code>#次のように関数に対して直接[]や$を書ける
-res2 &lt;- filter(data_iris, data_iris$がく長&gt;=6 | data_iris$花びら長&gt;1.5)[&quot;花びら長&quot;]
+<pre class="r"><code>res2 &lt;- filter(data_iris, data_iris$がく長&gt;=6 | data_iris$花びら長&gt;1.5)[&quot;花びら長&quot;]
 head(res2)</code></pre>
 <pre><code>##   花びら長
 ## 1      1.7
@@ -1818,7 +1721,7 @@ head(res3)</code></pre>
 ## 4      1.7      0.2
 ## 5      1.7      0.5
 ## 6      1.9      0.2</code></pre>
-<p><code>$</code>と<code>[]</code>とで出力が違うのは<a href="#列（ベクトル）へのアクセス">こちら</a>で説明したように、<code>$</code>は指定した列をベクトルとして取り出すのに対して、<code>[]</code>は指定した列だけで構成されるデータフレームとして取り出されるためである。</p>
+<p><code>$</code>と<code>[]</code>とで出力が違うのは<a href="./RText_03_BasicUsage2.html#列へのアクセス">こちら</a>で説明したように、<code>$</code>は指定した列をベクトルとして取り出すのに対して、<code>[]</code>は指定した列だけで構成されるデータフレームとして取り出されるためである。</p>
 <!--以下、2024/5/16　追記 -->
 </div>
 <div id="数値の置換" class="section level1" number="2">

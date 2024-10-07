@@ -11,7 +11,6 @@
 
 <meta name="author" content="藤野秀則," />
 
-<meta name="date" content="2024-10-06" />
 
 <title>RとRStuidoの基本操作</title>
 
@@ -1322,7 +1321,7 @@ if (window.hljs) {
 
 
 
-<style type="text/css">.tocify-subheader { display: block !important;}.tocify-item {white-space: nowrap;}body{counter-reset: ref_number practice_number work_number;}.float img{ margin: auto;display: block;border-radius: 8px 8px 0 0 ;position: relative;width : 60%;}.float .figcaption {position: relative;font-style: italic;font-size: large;font-weight: bold;color: #666;text-align: center;margin:0% auto 5% auto;border-bottom: solid 1px #666;border-left: solid 1px #666;border-right: solid 1px #666;border-radius:0 0 8px 8px;width : 60%}img {margin: auto;display: block;border: solid 1px #666;border-radius: 8px;position: relative;width : 75%;}.ref {position: relative;margin:5%;padding:5px;background-color: rgba(255, 255, 128, .5);color: #666;}.ref::before{counter-increment: ref_number 1;content: "[参考 " counter(ref_number) "]";font-weight: bold;display: block;margin-bottom: 3px;}h1 {margin-top : 10px;padding-top : 50px;}.practice {position: relative;margin:5%;padding:5px;background-color: rgba(128, 255, 200, .5);color: #666;}.practice::before{counter-increment: practice_number 1;content: "[例題 " counter(practice_number) "]";font-weight: bold;display: block;margin-bottom: 3px;}.work {position: relative;margin:5%;padding:5px;background-color: rgba(128, 200, 255, .2);color: #666;}.work::before{counter-increment: work_number 1;content: "[課題 " counter(work_number) "]";font-weight: bold;display: block;margin-bottom: 3px;}.r{ 　user-select: none;-moz-user-select: none;-webkit-user-select: none;-ms-user-select: none;-khtml-user-select: none;-webkit-touch-callout: none;}.res_table {border-collapse: collapse;width: 50%;margin: 0 auto;border-top: 1px solid #666;border-bottom: 1px solid #666;}.res_table th {border-bottom: 1px solid #666;text-align: center;}.res_table td {text-align: right;}.res_table .td_left {text-align: left;}.res_table .tr_topborder {border-top: 1px solid #666;}</style>
+<style type="text/css">.tocify-subheader { display: block !important;}.tocify-item {white-space: nowrap;}body{counter-reset: ref_number practice_number work_number;}.float img{ margin: auto;display: block;border-radius: 8px 8px 0 0 ;position: relative;width : 60%;}.float .figcaption {position: relative;font-style: italic;font-size: large;font-weight: bold;color: #666;text-align: center;margin:0% auto 5% auto;border-bottom: solid 1px #666;border-left: solid 1px #666;border-right: solid 1px #666;border-radius:0 0 8px 8px;width : 60%}img {margin: auto;display: block;border: solid 1px #666;border-radius: 8px;position: relative;width : 60%;}.ref {position: relative;margin:5%;padding:5px;background-color: rgba(255, 255, 128, .5);color: #666;}.ref::before{counter-increment: ref_number 1;content: "[参考 " counter(ref_number) "]";font-weight: bold;display: block;margin-bottom: 3px;}h1 {margin-top : 10px;padding-top : 50px;}.practice {position: relative;margin:5%;padding:5px;background-color: rgba(128, 255, 200, .5);color: #666;}.practice::before{counter-increment: practice_number 1;content: "[例題 " counter(practice_number) "]";font-weight: bold;display: block;margin-bottom: 3px;}.work {position: relative;margin:5%;padding:5px;background-color: rgba(128, 200, 255, .2);color: #666;}.work::before{counter-increment: work_number 1;content: "[課題 " counter(work_number) "]";font-weight: bold;display: block;margin-bottom: 3px;}user-select: none;-moz-user-select: none;-webkit-user-select: none;-ms-user-select: none;-khtml-user-select: none;-webkit-touch-callout: none;}***/.res_table {border-collapse: collapse;width: 50%;margin: 0 auto;border-top: 1px solid #666;border-bottom: 1px solid #666;}.res_table th {border-bottom: 1px solid #666;text-align: center;}.res_table td {text-align: right;}.res_table .td_left {text-align: left;}.res_table .tr_topborder {border-top: 1px solid #666;}</style>
 
 
 
@@ -1482,7 +1481,7 @@ border-radius: 0px;
 
 <h1 class="title toc-ignore">RとRStuidoの基本操作</h1>
 <h4 class="author">藤野秀則,</h4>
-<h4 class="date">2024-10-06</h4>
+<h4 class="date">初稿日:2024-05-02 更新日:2024-10-08</h4>
 
 </div>
 
@@ -1617,21 +1616,8 @@ print(NamedScore)</code></pre>
 <pre class="r"><code>NamedScore[[c(&quot;赤木&quot;,&quot;三井&quot;,&quot;宮城&quot;)]] #これもエラー</code></pre>
 <pre><code>## Error in NamedScore[[c(&quot;赤木&quot;, &quot;三井&quot;, &quot;宮城&quot;)]]: attempt to select more than one element in vectorIndex</code></pre>
 </div>
-<div id="個々のデータの削除" class="section level2" number="1.4">
+<div id="個々のデータの書き換え" class="section level2" number="1.4">
 <h2><span class="header-section-number">1.4</span>
-個々のデータの削除</h2>
-<p>インデックス番号に<code>-</code>記号を付けると、その番号のデータが除かれたものが返ってくる。</p>
-<pre class="r"><code>Full[-3] #3番目の三井が除かれる</code></pre>
-<pre><code>##  [1] &quot;赤木&quot;   &quot;桜木&quot;   &quot;宮城&quot;   &quot;流川&quot;   &quot;小暮&quot;   &quot;潮崎&quot;   &quot;安田&quot;   &quot;石井&quot;  
-##  [9] &quot;佐々岡&quot; &quot;桑田&quot;</code></pre>
-<pre class="r"><code>Full[c(-4,-6)] # 4番目の宮城と6番目の木暮が除かれる</code></pre>
-<pre><code>## [1] &quot;赤木&quot;   &quot;桜木&quot;   &quot;三井&quot;   &quot;流川&quot;   &quot;潮崎&quot;   &quot;安田&quot;   &quot;石井&quot;   &quot;佐々岡&quot;
-## [9] &quot;桑田&quot;</code></pre>
-<pre class="r"><code>Full[c(4,6,-7)] #これはエラー。取り出しと除外を同時できない。</code></pre>
-<pre><code>## Error in Full[c(4, 6, -7)]:  負の添字と混在できるのは 0 という添字だけです</code></pre>
-</div>
-<div id="個々のデータの書き換え" class="section level2" number="1.5">
-<h2><span class="header-section-number">1.5</span>
 個々のデータの書き換え</h2>
 <p>ベクトル内のデータへのアクセスと同じ要領で書き換えたいデータを指定し、代入演算子を使って値を与えればよい</p>
 <pre class="r"><code>Starting[1] &lt;- &quot;Akagi&quot;
@@ -1642,8 +1628,8 @@ Starting</code></pre>
 Starting</code></pre>
 <pre><code>## [1] &quot;Akagi&quot;    &quot;Sakuragi&quot; &quot;三井&quot;     &quot;宮城&quot;     &quot;流川&quot;</code></pre>
 </div>
-<div id="ベクトルと数値の演算" class="section level2" number="1.6">
-<h2><span class="header-section-number">1.6</span>
+<div id="ベクトルと数値の演算" class="section level2" number="1.5">
+<h2><span class="header-section-number">1.5</span>
 ベクトルと数値の演算</h2>
 <p>ベクトルに対して数値を使って演算をすると、ベクトル内のすべてのデータに対してその数値の演算が行われる。</p>
 <pre class="r"><code>Score + 10</code></pre>
@@ -1673,8 +1659,8 @@ Starting</code></pre>
 <pre><code>## 赤木 桜木 三井 宮城 流川 
 ##   49   16  100   49   81</code></pre>
 </div>
-<div id="ベクトル同士の演算" class="section level2" number="1.7">
-<h2><span class="header-section-number">1.7</span>
+<div id="ベクトル同士の演算" class="section level2" number="1.6">
+<h2><span class="header-section-number">1.6</span>
 ベクトル同士の演算</h2>
 <p>同じ長さのベクトルであればベクトル同士の掛け算ができる。</p>
 <pre class="r"><code>hoge &lt;- c(3,5,0,2,1)
@@ -1716,8 +1702,8 @@ Score + hoge2 # 長さが合ってないのでWarningが出てくる</code></pre
 Score + hoge3 </code></pre>
 <pre><code>##  [1] 10  9 10  9 10 11  7 13 11 13</code></pre>
 </div>
-<div id="ベクトルへの要素の追加" class="section level2" number="1.8">
-<h2><span class="header-section-number">1.8</span>
+<div id="ベクトルへの要素の追加" class="section level2" number="1.7">
+<h2><span class="header-section-number">1.7</span>
 ベクトルへの要素の追加</h2>
 <p>ベクトルに要素を追加したい場合には、追加されるベクトルと追加したい要素やベクトルを<code>c()</code>で結び付けて、元のベクトルオブジェクトに格納すればよい。もちろん、元のベクトルではなく別のベクトルオブジェクトとして格納することもできる。</p>
 <p><code>木暮</code>を追加してみよう。</p>
@@ -1733,16 +1719,54 @@ print(Full)</code></pre>
 <pre><code>##  [1] &quot;Akagi&quot;    &quot;Sakuragi&quot; &quot;三井&quot;     &quot;宮城&quot;     &quot;流川&quot;     &quot;小暮&quot;    
 ##  [7] &quot;潮崎&quot;     &quot;安田&quot;     &quot;角田&quot;     &quot;石井&quot;     &quot;佐々岡&quot;   &quot;桑田&quot;</code></pre>
 </div>
-<div id="ベクトルからの要素の削除" class="section level2" number="1.9">
-<h2><span class="header-section-number">1.9</span>
+<div id="ベクトルからの要素の削除" class="section level2" number="1.8">
+<h2><span class="header-section-number">1.8</span>
 ベクトルからの要素の削除</h2>
-<p>ベクトルから特定の要素を削除したい場合には、先に説明した<a href="#個々のデータへのアクセス">個々のデータへのアクセス</a>の方法に従って、残したい要素だけを取り出し、それをもとのベクトルオブジェクトに格納すればよい。</p>
+<p>ベクトルから特定の要素を削除したい場合には、残したい要素だけを取り出し、それをもとのベクトルオブジェクトに格納すればよい（もちろん別のオブジェクトとして格納してもよい）。</p>
 <p>先ほど<code>木暮</code>を追加した<code>Starting</code>から<code>木暮</code>を削除してみよう。</p>
 <pre class="r"><code>print(Starting) # 小暮が入っている</code></pre>
 <pre><code>## [1] &quot;Akagi&quot;    &quot;Sakuragi&quot; &quot;三井&quot;     &quot;宮城&quot;     &quot;流川&quot;     &quot;小暮&quot;</code></pre>
 <pre class="r"><code>Starting &lt;- Starting[c(1:5)]
 print(Starting) # 小暮が除外された</code></pre>
 <pre><code>## [1] &quot;Akagi&quot;    &quot;Sakuragi&quot; &quot;三井&quot;     &quot;宮城&quot;     &quot;流川&quot;</code></pre>
+<p>あるいは，以下のように<code>-</code>をつけてインデックス番号を与えると，そのインデックスで指定されたデータが除外される．</p>
+<pre class="r"><code>print(Full)</code></pre>
+<pre><code>##  [1] &quot;Akagi&quot;    &quot;Sakuragi&quot; &quot;三井&quot;     &quot;宮城&quot;     &quot;流川&quot;     &quot;小暮&quot;    
+##  [7] &quot;潮崎&quot;     &quot;安田&quot;     &quot;角田&quot;     &quot;石井&quot;     &quot;佐々岡&quot;   &quot;桑田&quot;</code></pre>
+<pre class="r"><code>Full&lt;-Full[-3] #3番目の三井が除かれる
+print(Full)</code></pre>
+<pre><code>##  [1] &quot;Akagi&quot;    &quot;Sakuragi&quot; &quot;宮城&quot;     &quot;流川&quot;     &quot;小暮&quot;     &quot;潮崎&quot;    
+##  [7] &quot;安田&quot;     &quot;角田&quot;     &quot;石井&quot;     &quot;佐々岡&quot;   &quot;桑田&quot;</code></pre>
+<pre class="r"><code>Full&lt;-Full[c(-4,-6)] # 4番目の流川と6番目の潮崎が除かれる
+print(Full)</code></pre>
+<pre><code>## [1] &quot;Akagi&quot;    &quot;Sakuragi&quot; &quot;宮城&quot;     &quot;小暮&quot;     &quot;安田&quot;     &quot;角田&quot;     &quot;石井&quot;    
+## [8] &quot;佐々岡&quot;   &quot;桑田&quot;</code></pre>
+<p>ただし，除外と抽出を同時にはできない．</p>
+<pre class="r"><code>Full[c(1:5,-3)] #これはエラー。取り出しと除外を同時できない。</code></pre>
+<pre><code>## Error in Full[c(1:5, -3)]:  負の添字と混在できるのは 0 という添字だけです</code></pre>
+<div class="work">
+<ol style="list-style-type: decimal">
+<li>以下の3つのベクトル<code>a</code>，<code>b</code>,
+<code>C</code>を作成し，それぞれの内容を<code>print()</code>を用いて出力させよ。
+<ul>
+<li><code>a</code> : 1,2,3,4,5</li>
+<li><code>b</code> : 6,7,8,9,10</li>
+<li><code>c</code> : 11,12,13,14,15</li>
+</ul></li>
+<li><code>a</code>と<code>b</code>を足して<code>d</code>とし，その内容を<code>print()</code>を用いて出力させよ。</li>
+<li><code>d</code>と<code>c</code>を掛け合わせて<code>e</code>とし，その内容を<code>print()</code>を用いて出力させよ。</li>
+<li>以下の都道府県名を持つ地方名のベクトルを作成し，それぞれの内容を<code>print()</code>を用いて出力させよ。
+<ul>
+<li><code>関東</code> : “東京”, “千葉”, “埼玉”, “神奈川”, “茨城”,
+“栃木”, “群馬”</li>
+<li><code>近畿</code> : “大阪”, “京都”, “兵庫”, “奈良”, “和歌山”,
+“滋賀”, “三重”</li>
+</ul></li>
+<li><code>関東</code>と<code>近畿</code>を合わせて<code>都市</code>とし，その内容を<code>print()</code>を用いて出力させよ。</li>
+<li><code>都市</code>から”東京”,
+“大阪”だけを除外し，その内容を<code>print()</code>を用いて出力させよ。</li>
+</ol>
+</div>
 </div>
 </div>
 <div id="データフレーム" class="section level1" number="2">
@@ -1922,13 +1946,20 @@ Shohoku</code></pre>
 <pre><code>## [1] 4</code></pre>
 <pre class="r"><code>Shohoku[1,3]</code></pre>
 <pre><code>## [1] 7</code></pre>
-<p>列番号は以下のように、列名（ベクトル名）で指定しても良い。</p>
+<p>列番号は以下のように、列名（ベクトル名）で指定しても良い。行については，番号でしか基本的にアクセスできない．</p>
 <pre class="r"><code>Shohoku[2,&quot;name&quot;]</code></pre>
 <pre><code>## [1] &quot;桜木&quot;</code></pre>
 <pre class="r"><code>Shohoku[2,&quot;number&quot;]</code></pre>
 <pre><code>## [1] 10</code></pre>
 <pre class="r"><code>Shohoku[2,&quot;score&quot;]</code></pre>
 <pre><code>## [1] 4</code></pre>
+<pre class="r"><code>Shohoku[&quot;桜木&quot;,&quot;score&quot;] # これはNAが返される</code></pre>
+<pre><code>## [1] NA</code></pre>
+<div class="ref">
+<p>以下のように，指定した列の条件にマッチする行の番号を取り出すコマンドを行番号指定の箇所に入れることによって，行の要素を使ったアクセスは可能であるが，これは<a href="./RText_05_DataHandling.html#フィルタリング">後述</a>のデータフレームのフィルタリングを使う方が簡単である。</p>
+<pre class="r"><code>Shohoku[Shohoku$name==&quot;桜木&quot;,&quot;score&quot;] </code></pre>
+<pre><code>## [1] 4</code></pre>
+</div>
 <p><code>$</code>にせよ<code>[]</code>にせよ、複数の要素を同時に取り出すことができる。</p>
 <pre class="r"><code>Shohoku$name[c(1,3,5)]  # これは単純にベクトルとして取り出した後に[]でベクトル要素をしている</code></pre>
 <pre><code>## [1] &quot;赤木&quot; &quot;三井&quot; &quot;流川&quot;</code></pre>
@@ -1936,7 +1967,7 @@ Shohoku</code></pre>
 <pre><code>## [1] &quot;赤木&quot; &quot;三井&quot; &quot;流川&quot;</code></pre>
 <pre class="r"><code>Shohoku[c(1,3,5),&quot;name&quot;] #列番号をベクトル名で指定した</code></pre>
 <pre><code>## [1] &quot;赤木&quot; &quot;三井&quot; &quot;流川&quot;</code></pre>
-<p><code>[]</code>を使う場合で列を1つしか指定しなかった場合には上記のようにベクトルとしてデータが返される。一方、以下のように列を複数指定した場合には、データフレームとしてデータが返される。</p>
+<p><code>[]</code>を使う場合で列を1つしか指定しなかった場合には上記のように<strong>ベクトル</strong>としてデータが返される。一方、以下のように列を複数指定した場合には、<strong>データフレーム</strong>としてデータが返される。</p>
 <pre class="r"><code>Shohoku[c(1,3,5),c(1,3)] #複数の列から複数の行番号のデータを同時に取り出そうとしている。</code></pre>
 <pre><code>##   name score
 ## 1 赤木     7
@@ -2228,6 +2259,27 @@ Shohoku</code></pre>
 ## 4 宮城      7     7
 ## 5 流川     11     9</code></pre>
 <p>自分で作れる程度のデータフレームであればあまり使うことは無いが、後で述べるように、外部のファイルからデータを読み込んだ場合には、そのファイルにどのような列が含まれているのかを把握したり、列名を変更したりするケースはよくある。</p>
+<div class="work">
+<ol style="list-style-type: decimal">
+<li>次の2つの列を持つデータフレーム<code>Kanto</code>を作成し，print()を用いて出力させよ。</li>
+</ol>
+<ul>
+<li><code>都道府県名</code> : “東京”, “千葉”, “埼玉”, “神奈川”, “茨城”,
+“栃木”, “群馬”</li>
+<li><code>県庁所在地</code> : “東京”, “千葉”, “さいたま”, “横浜”,
+“水戸”, “宇都宮”, “前橋”
+1.　<code>Kanto</code>に次の列を追加し，<code>print()</code>を用いて出力させよ。</li>
+<li><code>市外局番</code> : “03”, “043”, “048”, “045”, “029”, “028”,
+“027”</li>
+</ul>
+<ol style="list-style-type: decimal">
+<li><code>Kanto</code>から東京の行だけを取り出し，<code>print()</code>を用いて出力させよ。</li>
+<li><code>Kanto</code>から埼玉と神奈川の行の市外局番だけを取り出し，<code>print()</code>を用いて出力させよ。</li>
+<li><code>Kanto</code>の列名を<code>Prefecture</code>、<code>Capital</code>、<code>AreaCode</code>に変更せよ。</li>
+<li><code>Kanto</code>から埼玉と神奈川の行を削除せよ。</li>
+<li><code>Kanto</code>から<code>AreaCode</code>の列を削除せよ。</li>
+</ol>
+</div>
 </div>
 </div>
 <div id="データの読み込み" class="section level1" number="3">
@@ -2416,6 +2468,21 @@ Database -&gt;From Excelを選択する。</p>
 ## 3 三井     14   10
 ## 4 宮城      7    7
 ## 5 流川     11    9</code></pre>
+<div id="スクリプトでexcelファイルを読み込む" class="section level3" number="3.3.1">
+<h3><span class="header-section-number">3.3.1</span>
+スクリプトでExcelファイルを読み込む</h3>
+<p>以上の処理は、GUIを使ってExcelデータを読み込む方法であったが，この方法の場合，Rを立ち上げ直したり，プロジェクトを再読み込みしたりすると，毎回GUIを使ってExcelファイルを読み込む必要がある．</p>
+<p>スクリプトにExcelファイルを読みこむコードを記述しておけば，そのスクリプトを実行するだけで，Excelファイルを読み込むことができる．</p>
+<p>そのための方法は，先ほどの「Excelファイルの読み込み画面の右下に表示されている<strong>Code
+Previewに記載されているスクリプトをコピーして，スクリプトエディタに貼り付ける</strong>ことである．</p>
+<p>もっともシンプルなものとしては，以下のようなコードとなっているので，これをコピぺすればよ．</p>
+<pre class="r"><code>library(readxl)
+myData &lt;- read_excel(&quot;test.xlsx&quot;)
+View(myData)</code></pre>
+<p>このスクリプトを実行することで，Excelファイルを読み込むことができる．</p>
+<p>読み込むシートを変更したり，読み込む範囲を限定したり，あるいは先頭行をヘッダとして読み込むかどうかなどの設定は，<code>read_excel()</code>関数のオプションで指定することもできるが，このあたりはExcelファイルの読み込み画面のGUI上で設定しておくと，その設定がCode
+Previewに反映されるので，それをコピーすると良いだろう．</p>
+</div>
 </div>
 <div id="データのアクセス加工" class="section level2" number="3.4">
 <h2><span class="header-section-number">3.4</span>
