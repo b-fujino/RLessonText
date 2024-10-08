@@ -456,12 +456,22 @@ $$
 ```{r}
 #水準Aを除外する
 mydata_anova_within_long <- filter(mydata_anova_within_long, パンの種類 != "A")
+# 確認
+summary(mydata_anova_within_long)
+mydata_anova_within_long$パンの種類<-as.factor(mydata_anova_within_long$パンの種類)
+
 #分散分析の実施
 anova_res_within <- aov(おいしさ~パンの種類 + 被験者No., mydata_anova_within_long)
 Anova(anova_res_within, type=2)
 
-#t検定
-t.test(おいしさ~パンの種類, data=mydata_anova_within_long, paired=T)
+#t検定のためにBとCのみのデータをとりだす
+B<- filter(mydata_anova_within_long, パンの種類=="B")
+C<- filter(mydata_anova_within_long, パンの種類=="C")
+summary(B)
+summary(C)
+
+#B, Cのおいしさのデータを取り出してt検定
+t.test(B$おいしさ,C$おいしさ, paired=T)
 ```
 
 
@@ -766,7 +776,10 @@ print(mean_data)
 メーカーを基軸にして見る場合，食パンA，B，Cごとのジャム間の差を見ることになる．ジャムはX，Yの2水準しかないので，単純にT検定すればよい．
 個人で対応のあるデータなので，paired＝TRUEをつける必要がある点には注意してほしい．
 
-```{r}
+**RのVer.4.3.3まではt.testに(式, data)の形でデータ与えた場合でもpairedオプションの設定が出来たが，R Ver.4.4.1(2024.10.9に時点でのPosit Cloudのバージョンはこちら）においては(式,data)方式でデータを与えた場合にはpairedオプションの設定が出来なくなった．このため，以下のコードはエラーを吐き出す．したがって，R Ver. 4.4.1の場合には，一つしたのコードを使うこと！！(2024.10.9)**
+
+```{r error=TRUE}
+# R 4.3.3ではこちらのコードでも正常に動作するが，R 4.4.1ではこちらだとエラーになる
 # メーカーAの場合
 data_A <- filter(mydata_anova_2way_within, メーカー == "A")
 t.test(評価~ジャム, data=data_A, paired=TRUE)
@@ -778,6 +791,30 @@ t.test(評価~ジャム, data=data_B, paired=TRUE)
 # メーカーCの場合
 data_C <- filter(mydata_anova_2way_within, メーカー == "C")
 t.test(評価~ジャム, data=data_C, paired=TRUE)
+```
+
+```{r}
+# R 4.4.1ではこちらのコード.(R 4.3.3でも動作する)
+# メーカーAの場合
+data_A <- filter(mydata_anova_2way_within, メーカー == "A")
+data_A_X <- filter(data_A, ジャム=="X")
+data_A_Y <- filter(data_A, ジャム=="Y")
+t.test(data_A_X$評価,data_A_Y$評価, paired=TRUE)
+
+# メーカーBの場合
+data_B <- filter(mydata_anova_2way_within, メーカー == "B")
+data_B_X <- filter(data_B, ジャム=="X")
+data_B_Y <- filter(data_B, ジャム=="Y")
+t.test(data_B_X$評価,data_B_Y$評価, paired=TRUE)
+
+# メーカーCの場合
+data_C <- filter(mydata_anova_2way_within, メーカー == "C")
+data_C_X <- filter(data_C, ジャム=="X")
+data_C_Y <- filter(data_C, ジャム=="Y")
+t.test(data_C_X$評価,data_C_Y$評価, paired=TRUE)
+```
+
+
 ```
 この結果から，食パンAでは，ジャムXの方がジャムYよりも有意に評価が高い一方，B，Cでは，ジャムYの方がジャムXよりも有意に評価が高いことが示された．
 
