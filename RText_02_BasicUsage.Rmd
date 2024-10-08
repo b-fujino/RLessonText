@@ -10,13 +10,7 @@ output:
     toc_depth: 4
     toc_float: true
     number_section: true
-    fig_width: 8
     css: style.css
-  # html_notebook:
-  #   toc: true
-  #   toc_depth: 3
-  #   toc_float: true
-  #   number_section: true
 editor_options:
   markdown:
     wrap: 72
@@ -535,7 +529,7 @@ output:
 (いずれも，2024年9月30日時点で確認)
 
 
-なお，YAMLの記述ではインデントが非常に重要になる．インデントが崩れていると機能しなくなるので，全体としてインデントが統一されているか（レベル下げの時の半角スペースの数が統一されているか）に注意しておくこと．
+なお，YAMLの記述ではインデントと`:`が非常に重要になる．インデントが崩れていると機能しなくなるので，全体としてインデントが統一されているか（レベル下げの時の半角スペースの数が統一されているか）に注意しておくこと．
 
 
 ## RMarkdownの保存とKnit
