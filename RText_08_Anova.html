@@ -1853,6 +1853,18 @@ pp.397–406, 2011.</a></p>
 以下に実際に行った事例を示す．分散分析の結果とt検定の結果のP値が一致しているのが見て取れる．</p>
 <pre class="r"><code>#水準Aを除外する
 mydata_anova_within_long &lt;- filter(mydata_anova_within_long, パンの種類 != &quot;A&quot;)
+# 確認
+summary(mydata_anova_within_long)</code></pre>
+<pre><code>##    被験者No.   パンの種類           おいしさ   
+##  1      : 2   Length:40          Min.   :4.00  
+##  2      : 2   Class :character   1st Qu.:6.00  
+##  3      : 2   Mode  :character   Median :6.50  
+##  4      : 2                      Mean   :6.35  
+##  5      : 2                      3rd Qu.:7.00  
+##  6      : 2                      Max.   :9.00  
+##  (Other):28</code></pre>
+<pre class="r"><code>mydata_anova_within_long$パンの種類&lt;-as.factor(mydata_anova_within_long$パンの種類)
+
 #分散分析の実施
 anova_res_within &lt;- aov(おいしさ~パンの種類 + 被験者No., mydata_anova_within_long)
 Anova(anova_res_within, type=2)</code></pre>
@@ -1865,12 +1877,33 @@ Anova(anova_res_within, type=2)</code></pre>
 ## Residuals    25.1 19                    
 ## ---
 ## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1</code></pre>
-<pre class="r"><code>#t検定
-t.test(おいしさ~パンの種類, data=mydata_anova_within_long, paired=T)</code></pre>
+<pre class="r"><code>#t検定のためにBとCのみのデータをとりだす
+B&lt;- filter(mydata_anova_within_long, パンの種類==&quot;B&quot;)
+C&lt;- filter(mydata_anova_within_long, パンの種類==&quot;C&quot;)
+summary(B)</code></pre>
+<pre><code>##    被験者No.  パンの種類    おいしさ   
+##  1      : 1   B:20       Min.   :4.00  
+##  2      : 1   C: 0       1st Qu.:5.00  
+##  3      : 1              Median :6.00  
+##  4      : 1              Mean   :5.70  
+##  5      : 1              3rd Qu.:6.25  
+##  6      : 1              Max.   :8.00  
+##  (Other):14</code></pre>
+<pre class="r"><code>summary(C)</code></pre>
+<pre><code>##    被験者No.  パンの種類    おいしさ   
+##  1      : 1   B: 0       Min.   :4.00  
+##  2      : 1   C:20       1st Qu.:6.75  
+##  3      : 1              Median :7.00  
+##  4      : 1              Mean   :7.00  
+##  5      : 1              3rd Qu.:8.00  
+##  6      : 1              Max.   :9.00  
+##  (Other):14</code></pre>
+<pre class="r"><code>#B, Cのおいしさのデータを取り出してt検定
+t.test(B$おいしさ,C$おいしさ, paired=T)</code></pre>
 <pre><code>## 
 ##  Paired t-test
 ## 
-## data:  おいしさ by パンの種類
+## data:  B$おいしさ and C$おいしさ
 ## t = -3.5767, df = 19, p-value = 0.002012
 ## alternative hypothesis: true mean difference is not equal to 0
 ## 95 percent confidence interval:
@@ -2181,7 +2214,14 @@ print(mean_data)</code></pre>
 メーカーを基軸にした単純主効果検定</h3>
 <p>メーカーを基軸にして見る場合，食パンA，B，Cごとのジャム間の差を見ることになる．ジャムはX，Yの2水準しかないので，単純にT検定すればよい．
 個人で対応のあるデータなので，paired＝TRUEをつける必要がある点には注意してほしい．</p>
-<pre class="r"><code># メーカーAの場合
+<p><strong>RのVer.4.3.3まではt.testに(式,
+data)の形でデータ与えた場合でもpairedオプションの設定が出来たが，R
+Ver.4.4.1(2024.10.9に時点でのPosit
+Cloudのバージョンはこちら）においては(式,data)方式でデータを与えた場合にはpairedオプションの設定が出来なくなった．このため，以下のコードはエラーを吐き出す．したがって，R
+Ver.
+4.4.1の場合には，一つしたのコードを使うこと！！(2024.10.9)</strong></p>
+<pre class="r"><code># R 4.3.3ではこちらのコードでも正常に動作するが，R 4.4.1ではこちらだとエラーになる
+# メーカーAの場合
 data_A &lt;- filter(mydata_anova_2way_within, メーカー == &quot;A&quot;)
 t.test(評価~ジャム, data=data_A, paired=TRUE)</code></pre>
 <pre><code>## 
@@ -2216,6 +2256,55 @@ t.test(評価~ジャム, data=data_C, paired=TRUE)</code></pre>
 ##  Paired t-test
 ## 
 ## data:  評価 by ジャム
+## t = -2.8536, df = 19, p-value = 0.01016
+## alternative hypothesis: true mean difference is not equal to 0
+## 95 percent confidence interval:
+##  -1.5601283 -0.2398717
+## sample estimates:
+## mean difference 
+##            -0.9</code></pre>
+<pre class="r"><code># R 4.4.1ではこちらのコード.(R 4.3.3でも動作する)
+# メーカーAの場合
+data_A &lt;- filter(mydata_anova_2way_within, メーカー == &quot;A&quot;)
+data_A_X &lt;- filter(data_A, ジャム==&quot;X&quot;)
+data_A_Y &lt;- filter(data_A, ジャム==&quot;Y&quot;)
+t.test(data_A_X$評価,data_A_Y$評価, paired=TRUE)</code></pre>
+<pre><code>## 
+##  Paired t-test
+## 
+## data:  data_A_X$評価 and data_A_Y$評価
+## t = 3.1066, df = 19, p-value = 0.005809
+## alternative hypothesis: true mean difference is not equal to 0
+## 95 percent confidence interval:
+##  0.2610075 1.3389925
+## sample estimates:
+## mean difference 
+##             0.8</code></pre>
+<pre class="r"><code># メーカーBの場合
+data_B &lt;- filter(mydata_anova_2way_within, メーカー == &quot;B&quot;)
+data_B_X &lt;- filter(data_B, ジャム==&quot;X&quot;)
+data_B_Y &lt;- filter(data_B, ジャム==&quot;Y&quot;)
+t.test(data_B_X$評価,data_B_Y$評価, paired=TRUE)</code></pre>
+<pre><code>## 
+##  Paired t-test
+## 
+## data:  data_B_X$評価 and data_B_Y$評価
+## t = -11.469, df = 19, p-value = 5.543e-10
+## alternative hypothesis: true mean difference is not equal to 0
+## 95 percent confidence interval:
+##  -3.547481 -2.452519
+## sample estimates:
+## mean difference 
+##              -3</code></pre>
+<pre class="r"><code># メーカーCの場合
+data_C &lt;- filter(mydata_anova_2way_within, メーカー == &quot;C&quot;)
+data_C_X &lt;- filter(data_C, ジャム==&quot;X&quot;)
+data_C_Y &lt;- filter(data_C, ジャム==&quot;Y&quot;)
+t.test(data_C_X$評価,data_C_Y$評価, paired=TRUE)</code></pre>
+<pre><code>## 
+##  Paired t-test
+## 
+## data:  data_C_X$評価 and data_C_Y$評価
 ## t = -2.8536, df = 19, p-value = 0.01016
 ## alternative hypothesis: true mean difference is not equal to 0
 ## 95 percent confidence interval:
