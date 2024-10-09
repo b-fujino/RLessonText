@@ -32,4 +32,49 @@ knitr::opts_chunk$set(echo = TRUE)
 ロジスティック回帰分析は，従属変数が二値変数（0または1）である場合に適用される．例えば，ある商品を購入するかどうか（購入する場合は1，しない場合は0）を予測する場合などに用いられる．
 
 :::practice
+[このデータ](./Example_11_Logistic.csv)は，ある店舗のPOSデータからランダムサンプリングした来店者500人分の性別（0:男，1:女），年齢帯（10～70まで10年刻み），来店時間帯（9時～22時まで1時間刻み）と，その人がとある新製品を購入したかどうか（0:購入していない，1:購入した）を記録したデータである．このデータをもとに，性別・年齢帯・来店時間帯から商品を買うか買わないかを予測する式を立てよ．
+
+```{r include=FALSE}
+library(tidyverse)
+set.seed(123)
+Sex <- sample(0:1, 500, replace = TRUE)  
+Age <- sample(10:79, 500, replace = TRUE) %/%10 * 10
+
+# 小さな山（10時台）：平均10, 標準偏差1の正規分布からサンプリング
+base_customers <- sample(9:22, 150, replace = TRUE) 
+morning_customers <- round(rnorm(50, mean = 10, sd = 1),0)
+# 大きな山（17時台）：平均17, 標準偏差1の正規分布からサンプリング
+evening_customers <- round(rnorm(300, mean = 17, sd = 2),0)
+# 両方の分布から生成されたデータを結合
+Time <- c(base_customers, morning_customers, evening_customers)
+# 時間帯を9時から22時の範囲に収めるために四捨五入し、範囲外を9-22に修正
+Time <- ifelse(Time < 9, 9, ifelse(Time >= 22, 22, Time))
+
+# したかどうか
+Buy <- 1/(1+exp(-(0.4*Sex + 0.21*Age + 0.4*Time + 2*rnorm(500, 0, 0.5)))) 
+Buy <- ifelse(Buy > mean(Buy), 1, 0)
+
+data <- data.frame(
+  性別 = Sex,
+  年齢 = Age,
+  時間帯 = Time,
+  購入 = Buy
+)
+
+write.csv(data, file = "Example_11_Logistic.csv", row.names = FALSE)
+```
+
+:::
+
+Rでロジスティック回帰分析を行うためには，`glm`関数を用いる．
+第1引数には，`formula`関数を用いて，`目的変数 ~ 説明変数1 + 説明変数2 + ...`という形式で指定する．
+第2引数には，`data`引数にデータフレームを指定する．
+第3引数には，`family`引数に`binomial`を指定する．
+
+```{r}
+data <- read.csv("Example_11_Logistic.csv")
+model <- glm(購入 ~ 性別 + 年齢 + 時間帯, data = data, family = binomial)
+summary(model)
+```
+
 
