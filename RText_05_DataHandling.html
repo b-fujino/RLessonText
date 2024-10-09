@@ -1321,7 +1321,7 @@ if (window.hljs) {
 
 
 
-<style type="text/css">.tocify-subheader { display: block !important;}.tocify-item {white-space: nowrap;}body{counter-reset: ref_number practice_number work_number;}.float img{ margin: auto;display: block;border-radius: 8px 8px 0 0 ;position: relative;width : 60%;}.float .figcaption {position: relative;font-style: italic;font-size: large;font-weight: bold;color: #666;text-align: center;margin:0% auto 5% auto;border-bottom: solid 1px #666;border-left: solid 1px #666;border-right: solid 1px #666;border-radius:0 0 8px 8px;width : 60%}img {margin: auto;display: block;border: solid 1px #666;border-radius: 8px;position: relative;width : 60%;}.ref {position: relative;margin:5%;padding:5px;background-color: rgba(255, 255, 128, .5);color: #666;}.ref::before{counter-increment: ref_number 1;content: "[参考 " counter(ref_number) "]";font-weight: bold;display: block;margin-bottom: 3px;}h1 {margin-top : 10px;padding-top : 50px;}.practice {position: relative;margin:5%;padding:5px;background-color: rgba(128, 255, 200, .5);color: #666;}.practice::before{counter-increment: practice_number 1;content: "[例題 " counter(practice_number) "]";font-weight: bold;display: block;margin-bottom: 3px;}.work {position: relative;margin:5%;padding:5px;background-color: rgba(128, 200, 255, .2);color: #666;}.work::before{counter-increment: work_number 1;content: "[課題 " counter(work_number) "]";font-weight: bold;display: block;margin-bottom: 3px;}user-select: none;-moz-user-select: none;-webkit-user-select: none;-ms-user-select: none;-khtml-user-select: none;-webkit-touch-callout: none;}***/.res_table {border-collapse: collapse;width: 50%;margin: 0 auto;border-top: 1px solid #666;border-bottom: 1px solid #666;}.res_table th {border-bottom: 1px solid #666;text-align: center;}.res_table td {text-align: right;}.res_table .td_left {text-align: left;}.res_table .tr_topborder {border-top: 1px solid #666;}</style>
+<style type="text/css">.tocify-subheader { display: block !important;}.tocify-item {white-space: nowrap;}body{counter-reset: ref_number practice_number work_number;}.float img{ margin: auto;display: block;padding: 2%;border-radius: 8px 8px 0 0 ;position: relative;width : 60%;}.float .figcaption {position: relative;font-style: italic;font-size: large;font-weight: bold;color: #666;text-align: center;margin:0% auto 5% auto;border-bottom: solid 1px #666;border-left: solid 1px #666;border-right: solid 1px #666;border-radius:0 0 8px 8px;width : 60%}img {margin: auto;display: block;border: solid 1px #666;border-radius: 8px;position: relative;width : 60%;}.ref {position: relative;margin:5%;padding:5px;background-color: rgba(255, 255, 128, .5);color: #666;}.ref::before{counter-increment: ref_number 1;content: "[参考 " counter(ref_number) "]";font-weight: bold;display: block;margin-bottom: 3px;}h1 {margin-top : 10px;padding-top : 50px;}.practice {position: relative;margin:5%;padding:5px;background-color: rgba(128, 255, 200, .5);color: #666;}.practice::before{counter-increment: practice_number 1;content: "[例題 " counter(practice_number) "]";font-weight: bold;display: block;margin-bottom: 3px;}.work {position: relative;margin:5%;padding:5px;background-color: rgba(128, 200, 255, .2);color: #666;}.work::before{counter-increment: work_number 1;content: "[課題 " counter(work_number) "]";font-weight: bold;display: block;margin-bottom: 3px;}user-select: none;-moz-user-select: none;-webkit-user-select: none;-ms-user-select: none;-khtml-user-select: none;-webkit-touch-callout: none;}***/.res_table {border-collapse: collapse;width: 50%;margin: 0 auto;border-top: 1px solid #666;border-bottom: 1px solid #666;}.res_table th {border-bottom: 1px solid #666;text-align: center;}.res_table td {text-align: right;}.res_table .td_left {text-align: left;}.res_table .tr_topborder {border-top: 1px solid #666;}</style>
 
 
 
@@ -1481,7 +1481,7 @@ border-radius: 0px;
 
 <h1 class="title toc-ignore">データハンドリング</h1>
 <h4 class="author">藤野秀則,</h4>
-<h4 class="date">初稿日:2024-06-01 更新日:2024-10-08</h4>
+<h4 class="date">初稿日:2024-05-16 更新日:2024-10-09</h4>
 
 </div>
 
@@ -1590,7 +1590,7 @@ head(data_iris)</code></pre>
 ##                 
 ##                 
 ## </code></pre>
-<pre class="r"><code>res&lt;- filter(data_iris, data_iris$種類==&quot;virginica&quot;)
+<pre class="r"><code>res&lt;- filter(data_iris, 種類==&quot;virginica&quot;)
 summary(res)</code></pre>
 <pre><code>##      がく長          がく幅         花びら長        花びら幅    
 ##  Min.   :4.900   Min.   :2.200   Min.   :4.500   Min.   :1.400  
@@ -1606,7 +1606,7 @@ summary(res)</code></pre>
 ##                 
 ##                 
 ## </code></pre>
-<pre class="r"><code>res &lt;- filter(data_iris, data_iris$がく長&lt;=5)
+<pre class="r"><code>res &lt;- filter(data_iris, がく長&lt;=5)
 summary(res)</code></pre>
 <pre><code>##      がく長          がく幅         花びら長        花びら幅     
 ##  Min.   :4.300   Min.   :2.000   Min.   :1.000   Min.   :0.1000  
@@ -1622,7 +1622,7 @@ summary(res)</code></pre>
 ##                 
 ##                 
 ## </code></pre>
-<pre class="r"><code>res &lt;- filter(data_iris, data_iris$がく長&gt;=6)
+<pre class="r"><code>res &lt;- filter(data_iris, がく長&gt;=6)
 summary(res)</code></pre>
 <pre><code>##      がく長         がく幅         花びら長        花びら幅             種類   
 ##  Min.   :6.00   Min.   :2.200   Min.   :4.000   Min.   :1.000   setosa    : 0  
@@ -1633,7 +1633,7 @@ summary(res)</code></pre>
 ##  Max.   :7.90   Max.   :3.800   Max.   :6.900   Max.   :2.500</code></pre>
 <p>条件は複数並べることもできる。<code>|</code>は複数の条件のいずれかにマッチすれば抽出される。<code>&amp;</code>は複数条件の全てにマッチするものが抽出される。
 それぞれ以下に示す。</p>
-<pre class="r"><code>res &lt;- filter(data_iris, data_iris$がく長&gt;=6 | data_iris$花びら長&gt;1.5)
+<pre class="r"><code>res &lt;- filter(data_iris, がく長&gt;=6 | 花びら長&gt;1.5)
 summary(res)</code></pre>
 <pre><code>##      がく長          がく幅        花びら長        花びら幅             種類   
 ##  Min.   :4.700   Min.   :2.00   Min.   :1.600   Min.   :0.200   setosa    :13  
@@ -1642,7 +1642,7 @@ summary(res)</code></pre>
 ##  Mean   :6.125   Mean   :2.94   Mean   :4.535   Mean   :1.519                  
 ##  3rd Qu.:6.600   3rd Qu.:3.20   3rd Qu.:5.400   3rd Qu.:2.000                  
 ##  Max.   :7.900   Max.   :3.90   Max.   :6.900   Max.   :2.500</code></pre>
-<pre class="r"><code>res &lt;- filter(data_iris, data_iris$がく長&gt;=6 &amp; data_iris$花びら長&gt;1.5)
+<pre class="r"><code>res &lt;- filter(data_iris, がく長&gt;=6 &amp; 花びら長&gt;1.5)
 summary(res)</code></pre>
 <pre><code>##      がく長         がく幅         花びら長        花びら幅             種類   
 ##  Min.   :6.00   Min.   :2.200   Min.   :4.000   Min.   :1.000   setosa    : 0  
@@ -1651,7 +1651,7 @@ summary(res)</code></pre>
 ##  Mean   :6.61   Mean   :2.966   Mean   :5.263   Mean   :1.816                  
 ##  3rd Qu.:6.85   3rd Qu.:3.150   3rd Qu.:5.700   3rd Qu.:2.100                  
 ##  Max.   :7.90   Max.   :3.800   Max.   :6.900   Max.   :2.500</code></pre>
-<pre class="r"><code>res &lt;- filter(data_iris, data_iris$がく長&gt;=5 &amp; data_iris$がく長&lt;6.5) # 5&lt;=がく長&lt;6.5
+<pre class="r"><code>res &lt;- filter(data_iris, がく長&gt;=5 &amp; がく長&lt;6.5) # 5&lt;=がく長&lt;6.5
 summary(res)</code></pre>
 <pre><code>##      がく長          がく幅         花びら長        花びら幅    
 ##  Min.   :5.000   Min.   :2.000   Min.   :1.200   Min.   :0.100  
@@ -1667,7 +1667,7 @@ summary(res)</code></pre>
 ##                 
 ##                 
 ## </code></pre>
-<pre class="r"><code>res &lt;- filter(data_iris, data_iris$がく長&lt;5 | data_iris$がく長&gt;=6.5) # がく長&lt;5, 6.5&lt;=学長
+<pre class="r"><code>res &lt;- filter(data_iris, がく長&lt;5 | がく長&gt;=6.5) # がく長&lt;5, 6.5&lt;=学長
 summary(res)</code></pre>
 <pre><code>##      がく長          がく幅         花びら長        花びら幅    
 ##  Min.   :4.300   Min.   :2.300   Min.   :1.000   Min.   :0.100  
@@ -1684,11 +1684,11 @@ summary(res)</code></pre>
 ##                 
 ## </code></pre>
 <p>抽出したデータのある列だけが必要だという場合には、抽出したデータを収めたオブジェクトにに<code>$</code>や<code>[]</code>をつけて指定すればよい。以下では内容を確認するため、<code>head()</code>関数を使って最初の数行だけを表示させている。</p>
-<pre class="r"><code>res &lt;- filter(data_iris, data_iris$がく長&gt;=6 | data_iris$花びら長&gt;1.5)
+<pre class="r"><code>res &lt;- filter(data_iris, がく長&gt;=6 | 花びら長&gt;1.5)
 res&lt;- res$花びら長
 head(res)</code></pre>
 <pre><code>## [1] 1.7 1.6 1.7 1.7 1.7 1.9</code></pre>
-<pre class="r"><code>res &lt;- filter(data_iris, data_iris$がく長&gt;=6 | data_iris$花びら長&gt;1.5)
+<pre class="r"><code>res &lt;- filter(data_iris, がく長&gt;=6 | 花びら長&gt;1.5)
 res&lt;- res[&quot;花びら長&quot;]
 head(res)</code></pre>
 <pre><code>##   花びら長
@@ -1699,10 +1699,10 @@ head(res)</code></pre>
 ## 5      1.7
 ## 6      1.9</code></pre>
 <pre class="r"><code>#次のように関数に対して直接[]や$を書くこともできる
-res2 &lt;- filter(data_iris, data_iris$がく長&gt;=6 | data_iris$花びら長&gt;1.5)$花びら長
+res2 &lt;- filter(data_iris, がく長&gt;=6 | 花びら長&gt;1.5)$花びら長
 head(res2)</code></pre>
 <pre><code>## [1] 1.7 1.6 1.7 1.7 1.7 1.9</code></pre>
-<pre class="r"><code>res2 &lt;- filter(data_iris, data_iris$がく長&gt;=6 | data_iris$花びら長&gt;1.5)[&quot;花びら長&quot;]
+<pre class="r"><code>res2 &lt;- filter(data_iris, がく長&gt;=6 | 花びら長&gt;1.5)[&quot;花びら長&quot;]
 head(res2)</code></pre>
 <pre><code>##   花びら長
 ## 1      1.7
@@ -1712,7 +1712,7 @@ head(res2)</code></pre>
 ## 5      1.7
 ## 6      1.9</code></pre>
 <pre class="r"><code>#複数の列を取り出す場合には[c()]を使う
-res3 &lt;- filter(data_iris, data_iris$がく長&gt;=6 | data_iris$花びら長&gt;1.5)[c(&quot;花びら長&quot;,&quot;花びら幅&quot;)]
+res3 &lt;- filter(data_iris, がく長&gt;=6 | 花びら長&gt;1.5)[c(&quot;花びら長&quot;,&quot;花びら幅&quot;)]
 head(res3)</code></pre>
 <pre><code>##   花びら長 花びら幅
 ## 1      1.7      0.4
@@ -1726,7 +1726,7 @@ head(res3)</code></pre>
 </div>
 <div id="数値の置換" class="section level1" number="2">
 <h1><span class="header-section-number">2</span> 数値の置換</h1>
-<p>数値の置換には<code>ifelse()</code>関数を応用する。<code>ifelse()</code>関数は、第1引数に条件を記述し（条件の記述方法は検索と同じ）、第2引数には条件にマッチした場合に置き換える値、第3引数にはマッチしなかった場合に置き換える値を記載する。<code>ifelse()</code>関数の実行結果として最終的に返ってくるのは、そうした置き換えが行われたベクトルとなる。あくまでベクトルが返ってくるだけなので、実際に置き換えをデータに反映させるためには、元のデータの元の列に返ってきたベクトルを代入するなり、元のデータに新しい列を作ってベクトルを代入するなりする必要がある。</p>
+<p>数値の置換には<code>ifelse()</code>関数を応用する。<code>ifelse()</code>関数は、第1引数に条件を記述し（条件の記述方法は検索と同じ）、第2引数には条件にマッチした場合に置き換える値、第3引数にはマッチしなかった場合に置き換える値を記載する（Excelの<code>if()</code>関数と同じ引数構造である）。<code>ifelse()</code>関数の実行結果として最終的に返ってくるのは、そうした置き換えが行われたベクトルとなる。あくまでベクトルが返ってくるだけなので、実際に置き換えをデータに反映させるためには、元のデータの元の列に返ってきたベクトルを代入するなり、元のデータに新しい列を作ってベクトルを代入するなりする必要がある。</p>
 <div class="ref">
 <p>「値」と記載しているが、コンピュータの用語として「値」という場合には、数値だけでなく文字列も含められていることは覚えておこう。数値だけをいう場合には「数値」、文字列だけを言う場合には「文字列」とはっきりと言わなければならない。</p>
 </div>

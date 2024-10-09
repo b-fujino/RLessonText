@@ -2,7 +2,7 @@
 title: "データハンドリング"
 author: "藤野秀則,"
 date: 
-  初稿日:2024-06-01
+  初稿日:2024-05-16
   更新日:`r Sys.Date()`
 output:
   html_document: 
@@ -67,49 +67,49 @@ head(data_iris)
 library(tidyverse)
 
 summary(data_iris)
-res<- filter(data_iris, data_iris$種類=="virginica")
+res<- filter(data_iris, 種類=="virginica")
 summary(res)
-res <- filter(data_iris, data_iris$がく長<=5)
+res <- filter(data_iris, がく長<=5)
 summary(res)
-res <- filter(data_iris, data_iris$がく長>=6)
+res <- filter(data_iris, がく長>=6)
 summary(res)
 ```
 
 条件は複数並べることもできる。`|`は複数の条件のいずれかにマッチすれば抽出される。`&`は複数条件の全てにマッチするものが抽出される。
 それぞれ以下に示す。
 ```{r}
-res <- filter(data_iris, data_iris$がく長>=6 | data_iris$花びら長>1.5)
+res <- filter(data_iris, がく長>=6 | 花びら長>1.5)
 summary(res)
-res <- filter(data_iris, data_iris$がく長>=6 & data_iris$花びら長>1.5)
+res <- filter(data_iris, がく長>=6 & 花びら長>1.5)
 summary(res)
-res <- filter(data_iris, data_iris$がく長>=5 & data_iris$がく長<6.5) # 5<=がく長<6.5
+res <- filter(data_iris, がく長>=5 & がく長<6.5) # 5<=がく長<6.5
 summary(res)
-res <- filter(data_iris, data_iris$がく長<5 | data_iris$がく長>=6.5) # がく長<5, 6.5<=学長
+res <- filter(data_iris, がく長<5 | がく長>=6.5) # がく長<5, 6.5<=学長
 summary(res)
 
 ```
 抽出したデータのある列だけが必要だという場合には、抽出したデータを収めたオブジェクトにに`$`や`[]`をつけて指定すればよい。以下では内容を確認するため、`head()`関数を使って最初の数行だけを表示させている。
 
 ```{r}
-res <- filter(data_iris, data_iris$がく長>=6 | data_iris$花びら長>1.5)
+res <- filter(data_iris, がく長>=6 | 花びら長>1.5)
 res<- res$花びら長
 head(res)
 
-res <- filter(data_iris, data_iris$がく長>=6 | data_iris$花びら長>1.5)
+res <- filter(data_iris, がく長>=6 | 花びら長>1.5)
 res<- res["花びら長"]
 head(res)
 
 
 
 #次のように関数に対して直接[]や$を書くこともできる
-res2 <- filter(data_iris, data_iris$がく長>=6 | data_iris$花びら長>1.5)$花びら長
+res2 <- filter(data_iris, がく長>=6 | 花びら長>1.5)$花びら長
 head(res2)
 
-res2 <- filter(data_iris, data_iris$がく長>=6 | data_iris$花びら長>1.5)["花びら長"]
+res2 <- filter(data_iris, がく長>=6 | 花びら長>1.5)["花びら長"]
 head(res2)
 
 #複数の列を取り出す場合には[c()]を使う
-res3 <- filter(data_iris, data_iris$がく長>=6 | data_iris$花びら長>1.5)[c("花びら長","花びら幅")]
+res3 <- filter(data_iris, がく長>=6 | 花びら長>1.5)[c("花びら長","花びら幅")]
 head(res3)
 
 ```
@@ -118,7 +118,7 @@ head(res3)
 <!--以下、2024/5/16　追記 -->
 
 # 数値の置換
-数値の置換には`ifelse()`関数を応用する。`ifelse()`関数は、第1引数に条件を記述し（条件の記述方法は検索と同じ）、第2引数には条件にマッチした場合に置き換える値、第3引数にはマッチしなかった場合に置き換える値を記載する。`ifelse()`関数の実行結果として最終的に返ってくるのは、そうした置き換えが行われたベクトルとなる。あくまでベクトルが返ってくるだけなので、実際に置き換えをデータに反映させるためには、元のデータの元の列に返ってきたベクトルを代入するなり、元のデータに新しい列を作ってベクトルを代入するなりする必要がある。
+数値の置換には`ifelse()`関数を応用する。`ifelse()`関数は、第1引数に条件を記述し（条件の記述方法は検索と同じ）、第2引数には条件にマッチした場合に置き換える値、第3引数にはマッチしなかった場合に置き換える値を記載する（Excelの`if()`関数と同じ引数構造である）。`ifelse()`関数の実行結果として最終的に返ってくるのは、そうした置き換えが行われたベクトルとなる。あくまでベクトルが返ってくるだけなので、実際に置き換えをデータに反映させるためには、元のデータの元の列に返ってきたベクトルを代入するなり、元のデータに新しい列を作ってベクトルを代入するなりする必要がある。
 
 :::ref
 「値」と記載しているが、コンピュータの用語として「値」という場合には、数値だけでなく文字列も含められていることは覚えておこう。数値だけをいう場合には「数値」、文字列だけを言う場合には「文字列」とはっきりと言わなければならない。
