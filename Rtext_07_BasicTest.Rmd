@@ -290,6 +290,88 @@ t.test(mydata_ttest_paired$従来品, mydata_ttest_paired$試作品, paired=TRUE
 
 
 
+## t検定の方法（ロング形式データ）
+
+ロング型のデータの場合のt検定の方法を説明する。ロング形式のデータの場合、t検定を行う場合には、`t.test()`関数の第1引数には測定変数と属性変数を`~`（チルダ）で結んだ「式」を与える。なお、属性変数のデータは要因型である必要がある。第2引数にはそれぞれの変数を含んだデータフレームのオブジェクト名を与える。
+
+以下は例題1のデータをロング形式に変換してt検定を行う例である。
+
+```{r}
+library(tidyverse) # pivot_longer関数を使うにはtidyverseを読み込む必要がある
+
+# ロング形式のデータを作成
+long_data <- pivot_longer(
+  mydata_ttest,
+  cols=colnames(mydata_ttest),
+  names_to = "肥料",
+  values_to= "収穫量" #測定変数に与える列名
+)
+
+# 肥料列を要因型に変換
+long_data$肥料 <- as.factor(long_data$肥料)
+
+# 内容確認
+summary(long_data)
+
+#t検定
+t.test(収穫量~肥料, long_data)
+```
+
+また、ロング型のデータの場合には、[こちら](#グループごとの統計量の算出)で説明した通り、平均や標準偏差は`aggregate()`関数を用いて算出するとよい。以下これらを使って棒グラフを表示させる。
+
+```{r}
+# 平均値の算出
+平均<-aggregate(収穫量~肥料, long_data, mean)
+# 標準偏差の算出
+標準偏差<-aggregate(収穫量~肥料, long_data, sd)
+
+#データフレームの作成
+mydf <- data.frame(
+  条件=平均$肥料,
+  収穫量=平均$収穫量,
+  標準偏差=標準偏差$収穫量
+)
+
+# ggplotで棒グラフを表示
+g<- ggplot(data=mydf)+ 
+  geom_bar(aes(x=条件, y=収穫量, fill=条件), stat="identity")+
+  geom_errorbar(aes(x=条件, ymin=収穫量-標準偏差, ymax=収穫量+標準偏差, width=0.1))+
+  annotate("segment",x=1, xend=1, y=61, yend=64)+
+  annotate("segment",x=1, xend=2, y=64, yend=64)+
+  annotate("segment",x=2, xend=2, y=61, yend=64)+
+  annotate("text",x=1.5, y=66, label="p=0.0002922, ***", size=4)
+plot(g)
+```
+
+(以下，2024.10.9追記)
+注意していただきたい点として，例題2のような「対応あり」データ(paired=TRUEとなるデータ）の場合で，ロング形式のデータとなっている場合に，R 4.4.1（2024.10.9時点の最新，Posit Cloudはこちら）では，上記の例のように`式, data`形式を与える形での分析はできない．対応ありデータの場合には，ワイド形式のデータを用いて分析を行うか，あるいは，以下の例のようにそれぞれのデータを取り出してt.testにかける必要がある．（R 4.3.3であれば(式, data)形式でもpaired=TRUEの設定が可能）．
+
+```{r}
+## ロング形式のデータを作成
+long_data <- pivot_longer(
+  mydata_ttest_paired,
+  cols=colnames(mydata_ttest_paired),
+  names_to = "食パン",
+  values_to= "評価" #測定変数に与える列名
+)
+
+# 確認
+long_data$食パン <- as.factor(long_data$食パン)
+summary(long_data)
+ 
+# ロングデータからの食パンごとのデータを取り出し
+data1 <- filter(long_data, 食パン=="従来品")
+data2 <- filter(long_data, 食パン=="試作品")
+
+
+# t検定
+t.test(data1$評価, data2$評価, paired=TRUE)
+
+
+```
+
+
+
 ## t検定の結果の報告方法
 t検定の結果を報告する際には棒グラフを用いるのが一般的である（平均なので箱ひげ図は用いない）。二つの群の平均と標準偏差を棒グラフで表現したうえで、角傘（ブラケットと呼ぶ）をつけてp値を記載する。
 
@@ -370,56 +452,7 @@ plot(g)
 ```
 
 
-## t検定の方法（ロング形式データ）
 
-最後にロング型のデータの場合のt検定の方法を説明する。ロング形式のデータの場合、t検定を行う場合には、`t.test()`関数の第1引数には測定変数と属性変数を`~`（チルダ）で結んだ「式」を与える。なお、属性変数のデータは要因型である必要がある。第2引数にはそれぞれの変数を含んだデータフレームのオブジェクト名を与える。
-
-```{r}
-library(tidyverse) # pivot_longer関数を使うにはtidyverseを読み込む必要がある
-
-# ロング形式のデータを作成
-long_data <- pivot_longer(
-  mydata_ttest,
-  cols=colnames(mydata_ttest),
-  names_to = "肥料",
-  values_to= "収穫量" #測定変数に与える列名
-)
-
-# 肥料列を要因型に変換
-long_data$肥料 <- as.factor(long_data$肥料)
-
-# 内容確認
-summary(long_data)
-
-#t検定
-t.test(収穫量~肥料, long_data)
-```
-
-また、ロング型のデータの場合には、[こちら](#グループごとの統計量の算出)で説明した通り、平均や標準偏差は`aggregate()`関数を用いて算出するとよい。以下これらを使って棒グラフを表示させる。
-
-```{r}
-# 平均値の算出
-平均<-aggregate(収穫量~肥料, long_data, mean)
-# 標準偏差の算出
-標準偏差<-aggregate(収穫量~肥料, long_data, sd)
-
-#データフレームの作成
-mydf <- data.frame(
-  条件=平均$肥料,
-  収穫量=平均$収穫量,
-  標準偏差=標準偏差$収穫量
-)
-
-# ggplotで棒グラフを表示
-g<- ggplot(data=mydf)+ 
-  geom_bar(aes(x=条件, y=収穫量, fill=条件), stat="identity")+
-  geom_errorbar(aes(x=条件, ymin=収穫量-標準偏差, ymax=収穫量+標準偏差, width=0.1))+
-  annotate("segment",x=1, xend=1, y=61, yend=64)+
-  annotate("segment",x=1, xend=2, y=64, yend=64)+
-  annotate("segment",x=2, xend=2, y=61, yend=64)+
-  annotate("text",x=1.5, y=66, label="p=0.0002922, ***", size=4)
-plot(g)
-```
 
 # 分散の比較
 
