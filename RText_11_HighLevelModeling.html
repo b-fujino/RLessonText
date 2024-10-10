@@ -9,10 +9,10 @@
 <meta http-equiv="X-UA-Compatible" content="IE=EDGE" />
 
 
-<meta name="author" content="福井県立大学経済学部教授　藤野秀則" />
+<meta name="author" content="藤野秀則" />
 
 
-<title>RとRStudio学習教材</title>
+<title>因果関係の高度な分析</title>
 
 <script>// Pandoc 2.9 adds attributes on both header and div. We remove the former (to
 // be compatible with the behavior of Pandoc < 2.8).
@@ -1479,86 +1479,26 @@ border-radius: 0px;
 
 
 
-<h1 class="title toc-ignore">RとRStudio学習教材</h1>
-<h4 class="author">福井県立大学経済学部教授　藤野秀則</h4>
-<h4 class="date">初稿日:2024-05-01 更新日:2024-10-09</h4>
+<h1 class="title toc-ignore">因果関係の高度な分析</h1>
+<h4 class="author">藤野秀則</h4>
+<h4 class="date">初稿日:“2024-10-08” 更新日:2024-10-09</h4>
 
 </div>
 
 
-<div id="r実行環境の整備と基本的な計算" class="section level1" number="1">
+<p>因果関係を検証する分析として，これまでに回帰分析・重回帰分析と分散分析を説明した．ただ，これまで紹介してきた手法は基本ではあるものの，最近の統計学に関する理論研究の進展により，それらの基本的で伝統的（Conventional）な手法にはいくつかの問題が指摘されるようになっており，それらの問題点をクリアできるような分析方法が提案されてきている．</p>
+<p>ここではそれらについての解説とRでの実施方法を説明していく．</p>
+<div id="ダミー変数を用いた回帰分析" class="section level1" number="1">
 <h1><span class="header-section-number">1</span>
-R実行環境の整備と基本的な計算</h1>
-<p><a href="./RText_01_Preparing_REnvironment.html">こちら</a>を参照してください。</p>
+ダミー変数を用いた回帰分析</h1>
 </div>
-<div id="rとrstudioの基本操作-その1" class="section level1" number="2">
+<div id="ロジスティック回帰分析" class="section level1" number="2">
 <h1><span class="header-section-number">2</span>
-RとRStudioの基本操作　その1</h1>
-<p><a href="./RText_02_BasicUsage.html">こちら</a>を参照してください。</p>
+ロジスティック回帰分析</h1>
+<p>ロジスティック回帰分析は，従属変数が二値変数（0または1）である場合に適用される．例えば，ある商品を購入するかどうか（購入する場合は1，しない場合は0）を予測する場合などに用いられる．</p>
+<div class="practice">
+
 </div>
-<div id="rとrstudioの基本操作-その2" class="section level1" number="3">
-<h1><span class="header-section-number">3</span>
-RとRStudioの基本操作　その2</h1>
-<p><a href="./RText_03_BasicUsage2.html">こちら</a>を参照してください。</p>
-</div>
-<div id="記述統計量と推測統計量" class="section level1" number="4">
-<h1><span class="header-section-number">4</span>
-記述統計量と推測統計量</h1>
-<p><a href="./RText_04_DescriptiveStatistics.html">こちら</a>を参照してください。</p>
-</div>
-<div id="データハンドリング" class="section level1" number="5">
-<h1><span class="header-section-number">5</span> データハンドリング</h1>
-<p><a href="./RText_05_DataHandling.html">こちらのページ</a>を参照してください。</p>
-</div>
-<div id="基本的なデータの可視化" class="section level1" number="6">
-<h1><span class="header-section-number">6</span>
-基本的なデータの可視化</h1>
-<p><a href="./RText_06_ggplot2_basicUsage.html">こちらのページ</a>を参照してください</p>
-</div>
-<div id="基本的な統計検定" class="section level1" number="7">
-<h1><span class="header-section-number">7</span> 基本的な統計検定</h1>
-<p><a href="./RText_07_BasicTest.html">こちらのページ</a>を参照してください。</p>
-</div>
-<div id="相関分析" class="section level1" number="8">
-<h1><span class="header-section-number">8</span> 相関分析</h1>
-<p><a href="./RText_09_Correlation.html">こちらのページ</a>を参照してください。</p>
-</div>
-<div id="回帰分析" class="section level1" number="9">
-<h1><span class="header-section-number">9</span> 回帰分析</h1>
-<p><a href="./RText_10_Regression.html">こちらのページ</a>を参照してください。</p>
-</div>
-<div id="分散分析" class="section level1" number="10">
-<h1><span class="header-section-number">10</span> 分散分析</h1>
-<p><a href="./RText_08_Anova.html">こちらのページ</a>を参照してください。</p>
-</div>
-<div id="因果関係の高度な分析" class="section level1" number="11">
-<h1><span class="header-section-number">11</span>
-因果関係の高度な分析</h1>
-<!--   <!----------------------------- 仕切り ----------------------------------->
-<p>–&gt;</p>
-<!-- # 関係性の分析（2） -->
-<!-- ## 一般化線形モデル -->
-<!-- ## 混合モデル -->
-<!--   <!----------------------------- 仕切り ----------------------------------->
-<p>–&gt;</p>
-<!-- # 共分散構造分析 -->
-<!-- ## パス解析 -->
-<!-- ## 構造方程式モデリング -->
-<!--   <!----------------------------- 仕切り ----------------------------------->
-<p>–&gt;</p>
-<!-- # 主成分分析と因子分析 -->
-<!--   <!----------------------------- 仕切り ----------------------------------->
-<p>–&gt;</p>
-<!-- # クラスター分析 -->
-<!--   <!----------------------------- 仕切り ----------------------------------->
-<p>–&gt;</p>
-<!-- # テキストマイニング -->
-<!--   <!----------------------------- 仕切り ----------------------------------->
-<p>–&gt;</p>
-<!-- # R・RStudioのさらなる活用 -->
-<!-- ## プログラムを活用した分析と自作関数の利用 -->
-<!-- ## RmarkdownとHTML出力 -->
-<!-- ## GitHubとPosit Cloudとの連携 -->
 </div>
 
 
