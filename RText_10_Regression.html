@@ -1321,7 +1321,7 @@ if (window.hljs) {
 
 
 
-<style type="text/css">.tocify-subheader { display: block !important;}.tocify-item {white-space: nowrap;}body{counter-reset: ref_number practice_number work_number;}.float img{ margin: auto;display: block;border-radius: 8px 8px 0 0 ;position: relative;width : 60%;}.float .figcaption {position: relative;font-style: italic;font-size: large;font-weight: bold;color: #666;text-align: center;margin:0% auto 5% auto;border-bottom: solid 1px #666;border-left: solid 1px #666;border-right: solid 1px #666;border-radius:0 0 8px 8px;width : 60%}img {margin: auto;display: block;border: solid 1px #666;border-radius: 8px;position: relative;width : 60%;}.ref {position: relative;margin:5%;padding:5px;background-color: rgba(255, 255, 128, .5);color: #666;}.ref::before{counter-increment: ref_number 1;content: "[参考 " counter(ref_number) "]";font-weight: bold;display: block;margin-bottom: 3px;}h1 {margin-top : 10px;padding-top : 50px;}.practice {position: relative;margin:5%;padding:5px;background-color: rgba(128, 255, 200, .5);color: #666;}.practice::before{counter-increment: practice_number 1;content: "[例題 " counter(practice_number) "]";font-weight: bold;display: block;margin-bottom: 3px;}.work {position: relative;margin:5%;padding:5px;background-color: rgba(128, 200, 255, .2);color: #666;}.work::before{counter-increment: work_number 1;content: "[課題 " counter(work_number) "]";font-weight: bold;display: block;margin-bottom: 3px;}.r{ 　user-select: none;-moz-user-select: none;-webkit-user-select: none;-ms-user-select: none;-khtml-user-select: none;-webkit-touch-callout: none;}.res_table {border-collapse: collapse;width: 50%;margin: 0 auto;border-top: 1px solid #666;border-bottom: 1px solid #666;}.res_table th {border-bottom: 1px solid #666;text-align: center;}.res_table td {text-align: right;}.res_table .td_left {text-align: left;}.res_table .tr_topborder {border-top: 1px solid #666;}</style>
+<style type="text/css">.tocify-subheader { display: block !important;}.tocify-item {white-space: nowrap;}body{counter-reset: ref_number practice_number work_number;}.float img{ margin: auto;display: block;padding: 2%;border-radius: 8px 8px 0 0 ;position: relative;width : 60%;}.float .figcaption {position: relative;font-style: italic;font-size: large;font-weight: bold;color: #666;text-align: center;margin:0% auto 5% auto;border-bottom: solid 1px #666;border-left: solid 1px #666;border-right: solid 1px #666;border-radius:0 0 8px 8px;width : 60%}img {margin: auto;display: block;border: solid 1px #666;border-radius: 8px;position: relative;width : 60%;}.ref {position: relative;margin:5%;padding:5px;background-color: rgba(255, 255, 128, .5);color: #666;}.ref::before{counter-increment: ref_number 1;content: "[参考 " counter(ref_number) "]";font-weight: bold;display: block;margin-bottom: 3px;}h1 {margin-top : 10px;padding-top : 50px;}.practice {position: relative;margin:5%;padding:5px;background-color: rgba(128, 255, 200, .5);color: #666;}.practice::before{counter-increment: practice_number 1;content: "[例題 " counter(practice_number) "]";font-weight: bold;display: block;margin-bottom: 3px;}.work {position: relative;margin:5%;padding:5px;background-color: rgba(128, 200, 255, .2);color: #666;}.work::before{counter-increment: work_number 1;content: "[課題 " counter(work_number) "]";font-weight: bold;display: block;margin-bottom: 3px;}user-select: none;-moz-user-select: none;-webkit-user-select: none;-ms-user-select: none;-khtml-user-select: none;-webkit-touch-callout: none;}***/.res_table {border-collapse: collapse;width: 50%;margin: 0 auto;border-top: 1px solid #666;border-bottom: 1px solid #666;}.res_table th {border-bottom: 1px solid #666;text-align: center;}.res_table td {text-align: right;}.res_table .td_left {text-align: left;}.res_table .tr_topborder {border-top: 1px solid #666;}</style>
 
 
 
@@ -1481,15 +1481,16 @@ border-radius: 0px;
 
 <h1 class="title toc-ignore">回帰分析</h1>
 <h4 class="author">藤野秀則,</h4>
-<h4 class="date">初版日:2024-09-30 更新日:2024-10-07</h4>
+<h4 class="date">初版日:2024-09-30 更新日:2024-10-11</h4>
 
 </div>
 
 
-<p>相関分析は２つの変数がどの程度連動しているかを示す指標であった。それに対して、回帰分析・重回帰分析は一方の変数によって他方の変数の値を予測するための予測式を作り出す分析である。人工知能も最も原初的な原理は回帰分析であるなど、非常に重要な分析手法である。また経済学や心理学等において因果関係を検証する際にも一般に回帰分析が用いられるなど，今日の科学技術や社会科学においては欠かせない分析手法である。</p>
+<p>相関分析は２つの変数がどの程度連動しているかを示す指標であった。それに対して、回帰分析(重回帰分析)
+は一方の変数によって他方の変数の値を予測するための予測式を作り出す分析である。人工知能も最も原初的な原理は回帰分析であるなど、非常に重要な分析手法である。また経済学や心理学等において因果関係を検証する際にも一般に回帰分析が用いられるなど，今日の科学技術や社会科学においては欠かせない分析手法である。</p>
 <div id="単回帰分析" class="section level1" number="1">
 <h1><span class="header-section-number">1</span> 単回帰分析</h1>
-<p>もっとも単純なものとして、ある変数<span class="math inline">\(x\)</span>から<span class="math inline">\(y\)</span>を予測する一般式として以下のような式（シンプルな1次関数！！）を仮定し，この式における<span class="math inline">\(a\)</span>と<span class="math inline">\(b\)</span>を<span class="math inline">\(x\)</span>と<span class="math inline">\(y\)</span>の実測データから求めるのが単回帰分析である</p>
+<p>もっとも単純な回帰分析として、ある変数<span class="math inline">\(x\)</span>から<span class="math inline">\(y\)</span>を予測する一般式として以下のような式（シンプルな1次関数！！）を仮定し，この式における<span class="math inline">\(a\)</span>と<span class="math inline">\(b\)</span>を<span class="math inline">\(x\)</span>と<span class="math inline">\(y\)</span>の実測データから求めるのが単回帰分析である</p>
 <p><span class="math display">\[
 y = a + bx
 \]</span></p>
@@ -1928,8 +1929,18 @@ a+bX\)</span>であるならば，EとOの間には因果関係がない」と�
 <p>本来，因果関係の検証には<strong>実験計画法</strong>が最も適しているとされている．実験計画法は，ある要因が原因となって他の要因に影響を与えるかどうかを検証するために，その要因を操作して実験を行う方法である．操作した結果として，有意な結果が得られた場合には，その要因が他の要因に影響を与えるという因果関係があると考えられる．</p>
 </div>
 </div>
-<div id="決定係数と自由度調整済み決定係数" class="section level2" number="2.2">
-<h2><span class="header-section-number">2.2</span>
+<div id="信頼区間" class="section level2" number="2.2">
+<h2><span class="header-section-number">2.2</span> 95%信頼区間</h2>
+<p>回帰係数の<a href="./RText_04_DescriptiveStatistics.html#標本統計量からの母数の推測">95%信頼区間</a>は，<code>confint()</code>関数で簡単に求めることができる．引数には<code>lm()</code>関数で得られた結果を収めたオブジェクトを指定する．</p>
+<pre class="r"><code>confint(fit)</code></pre>
+<pre><code>##                     2.5 %    97.5 %
+## (Intercept)    -0.1482439 0.1482439
+## モチベーション  0.1010174 0.4764882
+## 業務経験年数    0.2697184 0.6451892</code></pre>
+<p>95%信頼区間は，95%の確率で真値がその範囲にある，という区間のことなので，その上限と下限はそれぞれその値より下になる，あるいは上になるのが%</p>
+</div>
+<div id="決定係数と自由度調整済み決定係数" class="section level2" number="2.3">
+<h2><span class="header-section-number">2.3</span>
 決定係数と自由度調整済み決定係数</h2>
 <p>重回帰分析においては，個々の回帰係数の値や有意確率に加えて，決定係数も重要な指標となる．この決定係数は，単回帰分析の際には「目的変数の変動のうち，説明変数によって説明される割合を示す指標」と説明したが，重回帰分析の場合は，目的変数の変動のうち<strong>モデル式全体</strong>によって説明される割合を示す指標となる．言い換えるならば，モデル式全体での目的変数の予測精度を示す指標である．
 値は0から1の間を取り，1に近いほど予測精度が高いことを示す．</p>
@@ -1938,8 +1949,8 @@ a+bX\)</span>であるならば，EとOの間には因果関係がない」と�
 <p>ただし，決定係数は説明変数の数が増えると必ず増加するという特徴がある（たとえ個々の回帰係数が有意でなかったとしても）．このため，説明変数の数に対してペナルティを与えた決定係数として自由度調整済み決定係数（Adjusted
 R-squared）が用いられることのほうが多い．</p>
 </div>
-<div id="結果の報告方法-1" class="section level2" number="2.3">
-<h2><span class="header-section-number">2.3</span> 結果の報告方法</h2>
+<div id="結果の報告方法-1" class="section level2" number="2.4">
+<h2><span class="header-section-number">2.4</span> 結果の報告方法</h2>
 <p>単回帰分析の場合と同様に，重回帰分析の結果を報告する際には表にして報告することが一般的である．以下では特に標準化回帰係数を報告する場合の表の例を示す．</p>
 <table class="res_table">
 <tr>
@@ -2050,8 +2061,8 @@ F(4,95)
 との関連. 心理学研究, 76(6), 534–539.)</p>
 <p>この例では標準化回帰係数と合わせて相関係数も表記している．このように，実際に論文等で報告する際には，それぞれの都合に合わせてカスタマイズしてもよい．</p>
 </div>
-<div id="変数選択" class="section level2" number="2.4">
-<h2><span class="header-section-number">2.4</span> 変数選択</h2>
+<div id="変数選択" class="section level2" number="2.5">
+<h2><span class="header-section-number">2.5</span> 変数選択</h2>
 <p>重回帰分析においては，説明変数が多くなれば多くなるほど予測精度は上がっていくが，その分モデルが複雑になってしまったり，各説明変数が有意でなくなったりする．</p>
 <div class="ref">
 <p>科学においては** オッカムの剃刀（Occam’s
@@ -2375,8 +2386,8 @@ behaviour?. Journal of Animal Ecology, vol.75, pp. 1182-1189. <a href="https://
 Access]</p>
 </div>
 </div>
-<div id="多重共線性という問題" class="section level2" number="2.5">
-<h2><span class="header-section-number">2.5</span>
+<div id="多重共線性という問題" class="section level2" number="2.6">
+<h2><span class="header-section-number">2.6</span>
 多重共線性という問題</h2>
 <p>重回帰分析における大きな問題の一つに多重共線性（Multiple
 Colinerity）という問題がある．
