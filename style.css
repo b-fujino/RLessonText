@@ -133,3 +133,8 @@ h1 {
 .res_table .tr_topborder {
   border-top: 1px solid #666;
 }
+
+.math .display {
+  text-align: center;
+  font-size: small;
+}

@@ -1321,7 +1321,7 @@ if (window.hljs) {
 
 
 
-<style type="text/css">.tocify-subheader { display: block !important;}.tocify-item {white-space: nowrap;}body{counter-reset: ref_number practice_number work_number;}.float img{ margin: auto;display: block;border-radius: 8px 8px 0 0 ;position: relative;width : 60%;}.float .figcaption {position: relative;font-style: italic;font-size: large;font-weight: bold;color: #666;text-align: center;margin:0% auto 5% auto;border-bottom: solid 1px #666;border-left: solid 1px #666;border-right: solid 1px #666;border-radius:0 0 8px 8px;width : 60%}img {margin: auto;display: block;border: solid 1px #666;border-radius: 8px;position: relative;width : 60%;}.ref {position: relative;margin:5%;padding:5px;background-color: rgba(255, 255, 128, .5);color: #666;}.ref::before{counter-increment: ref_number 1;content: "[参考 " counter(ref_number) "]";font-weight: bold;display: block;margin-bottom: 3px;}h1 {margin-top : 10px;padding-top : 50px;}.practice {position: relative;margin:5%;padding:5px;background-color: rgba(128, 255, 200, .5);color: #666;}.practice::before{counter-increment: practice_number 1;content: "[例題 " counter(practice_number) "]";font-weight: bold;display: block;margin-bottom: 3px;}.work {position: relative;margin:5%;padding:5px;background-color: rgba(128, 200, 255, .2);color: #666;}.work::before{counter-increment: work_number 1;content: "[課題 " counter(work_number) "]";font-weight: bold;display: block;margin-bottom: 3px;}user-select: none;-moz-user-select: none;-webkit-user-select: none;-ms-user-select: none;-khtml-user-select: none;-webkit-touch-callout: none;}***/.res_table {border-collapse: collapse;width: 50%;margin: 0 auto;border-top: 1px solid #666;border-bottom: 1px solid #666;}.res_table th {border-bottom: 1px solid #666;text-align: center;}.res_table td {text-align: right;}.res_table .td_left {text-align: left;}.res_table .tr_topborder {border-top: 1px solid #666;}</style>
+<style type="text/css">.tocify-subheader { display: block !important;}.tocify-item {white-space: nowrap;}body{counter-reset: ref_number practice_number work_number;}.float img{ margin: auto;display: block;padding: 2%;border-radius: 8px 8px 0 0 ;position: relative;width : 60%;}.float .figcaption {position: relative;font-style: italic;font-size: large;font-weight: bold;color: #666;text-align: center;margin:0% auto 5% auto;border-bottom: solid 1px #666;border-left: solid 1px #666;border-right: solid 1px #666;border-radius:0 0 8px 8px;width : 60%}img {margin: auto;display: block;border: solid 1px #666;border-radius: 8px;position: relative;width : 60%;}.ref {position: relative;margin:5%;padding:5px;background-color: rgba(255, 255, 128, .5);color: #666;}.ref::before{counter-increment: ref_number 1;content: "[参考 " counter(ref_number) "]";font-weight: bold;display: block;margin-bottom: 3px;}h1 {margin-top : 10px;padding-top : 50px;}.practice {position: relative;margin:5%;padding:5px;background-color: rgba(128, 255, 200, .5);color: #666;}.practice::before{counter-increment: practice_number 1;content: "[例題 " counter(practice_number) "]";font-weight: bold;display: block;margin-bottom: 3px;}.work {position: relative;margin:5%;padding:5px;background-color: rgba(128, 200, 255, .2);color: #666;}.work::before{counter-increment: work_number 1;content: "[課題 " counter(work_number) "]";font-weight: bold;display: block;margin-bottom: 3px;}user-select: none;-moz-user-select: none;-webkit-user-select: none;-ms-user-select: none;-khtml-user-select: none;-webkit-touch-callout: none;}***/.res_table {border-collapse: collapse;width: 50%;margin: 0 auto;border-top: 1px solid #666;border-bottom: 1px solid #666;}.res_table th {border-bottom: 1px solid #666;text-align: center;}.res_table td {text-align: right;}.res_table .td_left {text-align: left;}.res_table .tr_topborder {border-top: 1px solid #666;}.math display {text-align: center;font-size: small;}</style>
 
 
 
@@ -1481,7 +1481,7 @@ border-radius: 0px;
 
 <h1 class="title toc-ignore">相関分析・回帰分析</h1>
 <h4 class="author">藤野秀則,</h4>
-<h4 class="date">初版日:2024-09-30 更新日:2024-10-08</h4>
+<h4 class="date">初版日:2024-09-30 更新日:2024-10-13</h4>
 
 </div>
 
@@ -2022,9 +2022,8 @@ Applied Psychology, 96(4), 863–871. <a href="https://doi.org/10.1037/a0022625"
 <p>相関行列を可視化する方法として，ヒートマップが用いられることがある．ヒートマップは，相関係数の値によって色を変えて表示することで，相関係数の強さを視覚的に把握することができる．</p>
 <p>以下のコードは，先のCSVファイルから算出した相関行列をヒートマップで表示する例である．<span class="math inline">\(-1\)</span>を青，<span class="math inline">\(1\)</span>を赤，<span class="math inline">\(0\)</span>を白に設定し，間の値はそれに合わせてグラデーションしていくような形で表示させている．</p>
 <pre class="r"><code>library(ggplot2)
-library(reshape2)</code></pre>
-<pre><code>## Warning: パッケージ &#39;reshape2&#39; はバージョン 4.3.2 の R の下で造られました</code></pre>
-<pre class="r"><code>data &lt;- read.csv(&quot;./practice/example_09_CorMatrix.csv&quot;)
+library(reshape2)
+data &lt;- read.csv(&quot;./practice/example_09_CorMatrix.csv&quot;)
 cor_matrix &lt;- cor(data)
 melted_cor_matrix &lt;- melt(cor_matrix)
 ggplot(melted_cor_matrix, aes(Var1, Var2, fill = value)) +
@@ -2205,7 +2204,6 @@ R_{cb}}{\sqrt{(1-R_{ca}^2)}\sqrt{(1-R_{cb}^2)}}
 <p>アイスの売上高と海辺での人身事故のデータを用いて、アイスの売上高と海辺での人身事故の間の偏相関を求めよ．</p>
 </div>
 <pre class="r"><code>library(ppcor)</code></pre>
-<pre><code>## Warning: パッケージ &#39;ppcor&#39; はバージョン 4.3.2 の R の下で造られました</code></pre>
 <pre><code>##  要求されたパッケージ MASS をロード中です</code></pre>
 <pre class="r"><code>data &lt;- read.csv(&quot;./practice/example_09_ice_and_accident.csv&quot;)
 head(data)</code></pre>
