@@ -82,7 +82,7 @@ experience_m <- round(runif(n_m, min = 0, max = 40), 0)
 # 平均残業時間
 hours_worked_m <- round(abs(rnorm(n_m, mean=21, sd=10)), 1) 
 # 学歴
-edu_m<- sample(0:2, n_m, replace = TRUE,prob=c(2/10,5/10,3/10) )
+edu_m<- sample(0:2, n_m, replace = TRUE,prob=c(2/10,2/10,6/10) )
 
 #女性データ
 gender_f <- rep(0, n_f)
@@ -92,7 +92,7 @@ experience_f <- round((experience_f - min(experience_f))/(max(experience_f)-min(
 ## 平均残業時間
 hours_worked_f <- round(abs(rnorm(n_f, mean=5, sd=10)), 1)
 ## 学歴
-edu_f<- sample(0:2, n_f, replace = TRUE,prob=c(3/10,6.5/10,0.5/10) )
+edu_f<- sample(0:2, n_f, replace = TRUE,prob=c(2/10,7.5/10,0.5/10) )
 
 
 #男女別データを結合
@@ -130,7 +130,7 @@ data <- data.frame(
 
 #データフレームのCSVへの書き込み
 write.csv(data, file = "./practice/example_11_Dammy2.csv", row.names = FALSE)
-fit <- lm(平均月収 ~ 性別 + (factor(学歴)+残業時間)*就労期間, data = data)
+fit <- lm(平均月収 ~ (性別 + factor(学歴)+残業時間)*就労期間+残業時間:性別:就労期間, data = data)
 summary(fit)
 
 
@@ -260,56 +260,6 @@ aggregate(平均月収 ~ 性別, data = data, mean)
 :::practice
 [このデータ](./practice/example_11_Dammy2.csv)は先ほどの従業員の月収に関するデータに各サンプルの学歴(0:高卒，1:大卒，2:院卒)も加わえたデータである．性別，学歴，就労期間，残業時間を説明変数として，平均月収を予測する式を作れ．
 
-```{r eval=FALSE, include=FALSE}
-set.seed(123)
-
-# サンプルサイズ
-n <- 50
-
-# ダミー変数: 性別 (0=女性, 1=男性)
-gender <- sample(0:1, n, replace = TRUE)
-
-# 連続変数: 就労期間 (0~30年)
-experience <- round(runif(n, min = 0, max = 30), 1)
-
-# 連続変数: 平均残業時間(20~60時間)
-hours_worked <- round(runif(n, min = 20, max = 60), 1)
-
-# 収入 (従属変数): 
-income <- 24 +  experience + 0.4* hours_worked + 6 * gender + 0.8*rnorm(n, mean = 0, sd = 10)
-
-# データフレームを作成
-data <- data.frame(
-  性別 = gender,
-  就労期間 = experience,
-  残業時間 = hours_worked,
-  平均月収 = income
-)
-
-library(tidyverse)
-男性 <- data %>% filter(性別 == 1)
-女性 <- data %>% filter(性別 == 0)
-
-# ダミー変数: 学歴 (0=高卒, 1=大卒, 2=院卒) 
-# 男性は2/3が大卒か院卒，残り1/3が高卒か大卒
-学歴_男 <- sample(0:2, nrow(男性), replace = TRUE,prob=c(1/12,5/12,6/12) )
-# 男性データに学歴を付与
-男性$学歴 <-学歴_男
-
-# 女性は2/3が高卒か大卒，残り1/3が大卒か院卒
-学歴_女 <- sample(0:2, nrow(女性), replace = TRUE, prob=c(1/12,10/12,1/12))
-# 女性データに学歴を付与
-女性$学歴 <- 学歴_女
-
-# 男女を結合
-data <- rbind(男性, 女性)
-
-# 平均月収に院卒・大卒のプレミアムを付与
-data$平均月収 <- data$平均月収 + 7*(data$学歴-1)
-
-#データフレームのCSVへの書き込み
-write.csv(data, file = "./practice/example_11_Dammy2.csv", row.names = FALSE)
-```
 :::
 
 この例のデータの場合には，性別に加えて学歴をダミー変数として導入することになる．学歴は3水準を持つカテゴリカル変数であるため，2つのダミー変数を導入することになる．
@@ -489,7 +439,7 @@ Anova(fit_anova, type = 2)
 ## カテゴリカル変数と連続変数の交互作用
 
 :::practice
-先ほどの[データ](./practice/example_11_Dammy2.csv)において，学歴と就労年数の交互作用が平均月収にどのような影響を与えるかを調べよ．
+先ほどの[学歴を含めた月収データ](./practice/example_11_Dammy2.csv)において，学歴と就労年数の交互作用が平均月収にどのような影響を与えるかを調べよ．
 :::
 
 ```{r}
@@ -498,24 +448,75 @@ data$学歴<- as.factor(data$学歴)
 fit_interaction <- lm(平均月収 ~ 性別 + 学歴 + 就労期間 + 残業時間 + 学歴:就労期間, data = data)
 summary(fit_interaction)
 ```
+結果を見ると，まず学歴の単独の効果として，学歴1と学歴2の回帰係数は有意であることが分かる．これは，学歴が大卒か，あるいは院卒かで平均月収の切片(Intercepts)=就労期間が0の時=初任給が高卒者と有意に異なることが分かる．
 
 
-:::practice
-先ほどの[月収データ](./practice/example_11_Dammy2.csv)において，さらに学歴と残業時間の交互作用が平均月収にどのような影響を与えるかを調べよ．
-:::
+
+
+そのうえで，学歴1と就労期間の交互作用は有意ではない．つまり，学歴1が0か1かで，就労期間が目的変数に与える影響に有意な差はないということである．このことから，高卒だろうと大卒だろうと，就労期間が1年長くなるごとに平均月収は
+$`r round(coef(fit_interaction)[5]*10000,0)`$円
+上がるということが分かる．すなわち，高卒と大卒でこの会社では昇給のスピードは同じになっているということである．
+
+一方，学歴2と就労期間の交互作用は有意である．つまり，院卒者は就労期間が長くなると平均月収がどの程度上がるかは高卒者とは有意に異なるということである．具体的には，院卒者は就労期間が1年長くなるごとに平均月収が
+$`r round(coef(fit_interaction)[5]*10000,0)`+`r round(coef(fit_interaction)[8]*10000,0)`=`r round(coef(fit_interaction)[5]*10000,0)+round(coef(fit_interaction)[8]*10000,0)`$円
+上がる，ということであり，高卒者と比べて院卒者の方が昇給のスピードが速いということである．
+
+:::ref
+<details>
+<summary>交互作用の図示</summary>
+就労期間と月収の関係を学歴ごとに図示してみると以下のようになる．なお，この図での直線は残業時間が平均値である場合を記載している．
 
 ```{r}
+library(ggplot2)
+data$学歴 <- as.factor(data$学歴)
+ggplot(data, aes(x = 就労期間, y = 平均月収, color = 学歴)) + geom_point() + geom_smooth(method = "lm", se = FALSE)
+```
+この図から，まず高卒者，大卒者，院卒者で初任給の時点で差がついていることがわかる．その差は先の結果から大卒者で約4.8万円，院卒者で約7.7万円となっている．
+そのうえで，大卒と院卒の間では直線はほぼ平行となっており，就労期間が上がった時の月収の上昇幅は大体同じであることがわかる．この時の両者の傾きの値は先ほども示したとおり約8200円となっている．一方，これら二つに対して，院卒の場合，やや傾きが急になっているのが見て取れる．つまり，院卒者と大卒・院卒者は就労期間1年あたり約1000円ずつ差が広がっていく形となっている．
+
+
+ぞれの直線を一次関数の数式で表すと以下の通りとなる．
+```{r include=FALSE}
+#桁表記を整えるため
+options(scipen=999)
+```
+
+$$
+\begin{align}
+高卒: & 平均月収 =  `r round(coef(fit_interaction)[1]*10000,0)`円 + 
+  `r round(coef(fit_interaction)[5]*10000,0)` \times 就労期間 \\
+大卒: & 平均月収 =  (`r round(coef(fit_interaction)[1]*10000,0)` + `r round(coef(fit_interaction)[3]*10000,0)`)円+ 
+  `r round(coef(fit_interaction)[5]*10000,0)`円 \times 就労期間 \\
+院卒: & 平均月収 =  (`r round(coef(fit_interaction)[1]*10000,0)` + `r round(coef(fit_interaction)[4]*10000,0)` )円+ 
+  (`r round(coef(fit_interaction)[5]*10000,0)` + `r round(coef(fit_interaction)[8]*10000,0)` )円 \times 就労期間
+\end{align}
+$$
+```{r include=FALSE}
+# 桁表記を元に戻す
+options(scipen=0)
+```
+</details>
+:::
+
+
+:::work
+先ほどの[月収データ](./practice/example_11_Dammy2.csv)において，さらに学歴と残業時間の交互作用が平均月収にどのような影響を与えるかを調べ，その結果に対する解釈をテキストセルに述べよ
+:::
+
+```{r include=FALSE}
 data <- read.csv("./practice/example_11_Dammy2.csv")
 data$学歴<- as.factor(data$学歴)
-fit_interaction <- lm(平均月収 ~ 性別 + 学歴 * (就労期間 + 残業時間), data = data)
+fit_interaction <- lm(平均月収 ~ 性別 +  (学歴 + 残業時間) *就労期間, data = data)
 summary(fit_interaction)
 ```
+
+
 
 ## 連続変数同士の交互作用
 
 
 :::practice
-先ほどの[月収データ](./practice/example_11_Dammy2.csv)において，さらに残業時間と就労期間の交互作用が平均月収にどのような影響を与えるかを調べよ．
+先ほどの[月収データ](./practice/example_11_Dammy2.csv)において，先ほどは学歴と就労期間の交互作用を調べたが，さらに残業時間と就労期間の交互作用が平均月収にどのような影響を与えるかを調べよ．
 :::
 
 ```{r}
@@ -524,6 +525,68 @@ data$学歴<- as.factor(data$学歴)
 fit_interaction <- lm(平均月収 ~ 性別 + 学歴 * (就労期間 + 残業時間) + 就労期間:残業時間 , data = data)
 summary(fit_interaction)
 ```
+
+この結果から，就労期間と残業時間の交互作用は有意であることが分かる．つまり，就労期間が1年長くなるごとに残業代の単価（残業時間が1時間伸びると平均月収がどれくらい上がるか）は約64円ずつ上がっていくことがわかる．
+
+### 単純傾斜分析
+
+分散分析で交互作用が有意であった場合に下位検定として[単純傾斜分析](./RText_08_Anova.html#下位検定（単純主効果検定）)を行っていた．すなわち，一方の要因の水準ごとに，他方の要因の水準間での目的変数の差を検定することを行うことを行った．
+
+これと同様のことを行うのが単純傾斜分析（Simple Slope Analysis）である．回帰分析において連続変数同士の交互作用が有意であった場合に，一方の説明変数を$\pm 1$標準偏差だけ変化させた場合の他方の説明変数の回帰係数が有意になるかどうかを検討する．
+
+単純傾斜分析は`interactions`パッケージを用いることで簡単に行うことができる．
+
+```{r echo=TRUE}
+library(interactions)
+simple_slope_results <- sim_slopes(fit_interaction, pred= 残業時間, modx =就労期間 ,confint = TRUE)
+print(simple_slope_results)
+```
+
+この結果から，就労期間が
+$平均+1標準偏差=`r round(mean(data$就労期間),0)`+ `r round(sd(data$就労期間))`=`r round(mean(data$就労期間))+round(sd(data$就労期間))`$年
+の人の残業代の単価は約3100円，
+逆に就労期間が
+$平均-1標準偏差=`r round(mean(data$就労期間),0)`- `r round(sd(data$就労期間),0)`=`r round(mean(data$就労期間),0)-round(sd(data$就労期間),0)`$年
+の人の残業代の単価は約1600円であり，これらはいずれも就労期間が
+$平均=`r round(mean(data$就労期間),0)`$年の場合の残業代の単価である約2300円と比べて有意に異なっているることがわかる．
+
+`interactions`パッケージには，この様子を図示する`interact_plot()`関数も用意されている．
+
+```{r}
+interact_plot(fit_interaction, pred= 残業時間, modx =就労期間 )
+```
+
+この図から，まず切片で大きくそれぞれ差がついているが，これは就労期間が
+`r round(mean(data$就労期間))+round(sd(data$就労期間))`$年の場合，
+`r round(mean(data$就労期間))`$年の場合，
+`r round(mean(data$就労期間))-round(sd(data$就労期間))`$年の場合のそれぞれの基本月給の差を表している．
+
+そのうえで，就労期間が短い人に比べて就労期間が長い人は傾きが急になっており，残業代の単価が就労期間が長い人ほど高くなっていることが見てとれる．
+
+
+
+
+:::ref
+<details>
+<summary>単純傾斜分析のマニュアル実行</summary>
+単純傾斜分析は`interactions`パッケージを用いずに，`lm()`関数だけで行うこともできる．
+方法としては，標準偏差を動かしたい変数に対して，1を足す，もしくは1を引く処理を行ったデータを用意して，`lm()`に与えればよいだけである．
+```{r eval=FALSE}
+#Sを1標準偏差足す
+data_p <-data
+data_p$S <- data_p$S+1*sd(data$S)
+fit_p<-lm(P ~ S + M + S:M, data_p)
+summary(fit_p)
+
+#Sを1標準偏差引く
+data_m <-data
+data_m$S <- data_m$S-1*sd(data$S)
+fit_m<-lm(P ~ S + M + S:M, data_m)
+summary(fit_m)
+
+```
+
+</details>
 
 ## カテゴリカル変数同士の交互作用
 
@@ -642,42 +705,6 @@ ggplot(data, aes(x = M, y = P)) +
 
 ## 単純傾斜分析
 
-分散分析で交互作用が有意であった場合に下位検定として[単純傾斜分析](./RText_08_Anova.html#下位検定（単純主効果検定）)を行っていた．すなわち，一方の要因の水準ごとに，他方の要因の水準間での目的変数の差を検定することを行うことを行った．
-
-これと同様のことを行うのが単純傾斜分析（Simple Slope Analysis）である．回帰分析において交互作用が有意であった場合に，一方の説明変数を$\pm 1$標準偏差だけ変化させた場合の他方の説明変数の回帰係数が有意になるかどうかを検討するものである．
-
-単純傾斜分析は`interactions`パッケージを用いることで簡単に行うことができる．
-
-```{r echo=TRUE}
-library(interactions)
-simple_slope_results <- sim_slopes(fit_interaction, pred= M, modx = S,confint = TRUE)
-print(simple_slope_results)
-interact_plot(fit_interaction, pred= M, modx = S)
-```
-この結果から，スキルレベルSが1標準偏差上昇した場合，モチベーションMが業績Pに与える影響は有意であることが分かる．逆にスキルレベルSが1標準偏差下降した場合，モチベーションMが業績Pに与える影響は有意であることが分かる．
-
-
-:::ref
-<details>
-<summary>単純傾斜分析のマニュアル実行</summary>
-単純傾斜分析は`interactions`パッケージを用いずに，`lm()`関数だけで行うこともできる．
-方法としては，標準偏差を動かしたい変数に対して，1を足す，もしくは1を引く処理を行ったデータを用意して，`lm()`に与えればよいだけである．
-```{r}
-#Sを1標準偏差足す
-data_p <-data
-data_p$S <- data_p$S+1*sd(data$S)
-fit_p<-lm(P ~ S + M + S:M, data_p)
-summary(fit_p)
-
-#Sを1標準偏差引く
-data_m <-data
-data_m$S <- data_m$S-1*sd(data$S)
-fit_m<-lm(P ~ S + M + S:M, data_m)
-summary(fit_m)
-
-```
-
-</details>
 # カテゴリカル変数を含んだ回帰分析のイメージ
 
 
