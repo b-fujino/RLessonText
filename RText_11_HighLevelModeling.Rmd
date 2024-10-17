@@ -148,15 +148,20 @@ write.csv(data, file = "./practice/example_11_Dammy.csv", row.names = FALSE)
 data <- read.csv("./practice/example_11_Dammy.csv")
 fit_gender <- lm(平均月収 ~ 性別 + 就労期間 + 残業時間, data = data)
 summary(fit_gender)
+
+inter<-coef(fit_gender)
 ```
 
 この結果から，以下のような予測式を立てることができる．
 
 $$
-平均月収= 19.47 + 0.798 \times 性別 + 0.841 \times 就労期間 + 0.282 \times 残業時間
+平均月収= `r round(coef(fit_gender)[1],2)`+ 
+`r round(coef(fit_gender)[2],3)` \times 性別 + 
+`r round(coef(fit_gender)[3],3)` \times 就労期間 + 
+`r round(coef(fit_gender)[4],3)` \times 残業時間
 $$
 
-つまり，性別が1，すなわち男性の場合には平均月収が約8千円高くなる，就労期間が1年長くなると8410円高くなる，残業時間が1時間伸びると2820円高くなる，ということが分かる．
+つまり，性別が1，すなわち男性の場合には平均月収が約8000円高くなる，就労期間が1年長くなると8410円高くなる，残業時間が1時間伸びると2820円高くなる，ということが分かる．
 また，いずれの回帰係数も有意であり，性別，就労期間，残業時間は平均月収に対して有意な影響を与えていることが分かる．
 
 :::ref
@@ -313,7 +318,7 @@ write.csv(data, file = "./practice/example_11_Dammy2.csv", row.names = FALSE)
 `factor`型への変換はデータを読み込んだ際に`as.factor()`関数を用いて予め行っておく．
 
 ```{r}
-#data <- read.csv("./practice/example_11_Dammy2.csv")
+data <- read.csv("./practice/example_11_Dammy2.csv")
 data$学歴<- as.factor(data$学歴)
 fit_edu <- lm(平均月収 ~ 性別 + 学歴 + 就労期間 + 残業時間, data = data)
 summary(fit_edu)
@@ -352,8 +357,9 @@ data$学歴2 <- ifelse(data$学歴 == 2, 1, 0)
 
 $$
 \begin{align}
-平均月収= &16.70 + 3.49 \times 性別 + 2.91\times 学歴1 + 12.29\times 学歴2 + \\
-&\quad 1.08 \times 就労期間 + 0.47 \times 残業時間\\
+平均月収= &`r round(coef(fit_edu)[1],2)`  `r round(coef(fit_edu)[2],3)` \times 性別 + `r round(coef(fit_edu)[3],3)`\times 学歴1 + `r round(coef(fit_edu)[4],3)`\times 学歴2 + \\
+&\quad `r round(coef(fit_edu)[5],3)` \times 就労期間 + 
+`r round(coef(fit_edu)[6],3)` \times 残業時間\\
 \text{ただし} &\quad \{性別:女性\rightarrow 0, 男性\rightarrow 1\}, \\
 &\quad \{学歴1:大卒\rightarrow 1, それ以外\rightarrow 0\},\\ 
 &\quad \{学歴2:院卒\rightarrow 1, それ以外\rightarrow 0\}
@@ -478,6 +484,51 @@ Anova(fit_anova, type = 2)
 
 実施方法は極めて簡単で，分散分析での交互作用と同じように`:`あるいは`*`を用いて，交互作用項を含んだモデル式を作成して，`lm()`関数に投入すればよい．
 
+以下、カテゴリカル変数と連続変数の交互作用、連続変数同士の交互作用、カテゴリカル変数同士の交互作用についてそれぞれ説明する。
+
+## カテゴリカル変数と連続変数の交互作用
+
+:::practice
+先ほどの[データ](./practice/example_11_Dammy2.csv)において，学歴と就労年数の交互作用が平均月収にどのような影響を与えるかを調べよ．
+:::
+
+```{r}
+data <- read.csv("./practice/example_11_Dammy2.csv")
+data$学歴<- as.factor(data$学歴)
+fit_interaction <- lm(平均月収 ~ 性別 + 学歴 + 就労期間 + 残業時間 + 学歴:就労期間, data = data)
+summary(fit_interaction)
+```
+
+
+:::practice
+先ほどの[月収データ](./practice/example_11_Dammy2.csv)において，さらに学歴と残業時間の交互作用が平均月収にどのような影響を与えるかを調べよ．
+:::
+
+```{r}
+data <- read.csv("./practice/example_11_Dammy2.csv")
+data$学歴<- as.factor(data$学歴)
+fit_interaction <- lm(平均月収 ~ 性別 + 学歴 * (就労期間 + 残業時間), data = data)
+summary(fit_interaction)
+```
+
+## 連続変数同士の交互作用
+
+
+:::practice
+先ほどの[月収データ](./practice/example_11_Dammy2.csv)において，さらに残業時間と就労期間の交互作用が平均月収にどのような影響を与えるかを調べよ．
+:::
+
+```{r}
+data <- read.csv("./practice/example_11_Dammy2.csv")
+data$学歴<- as.factor(data$学歴)
+fit_interaction <- lm(平均月収 ~ 性別 + 学歴 * (就労期間 + 残業時間) + 就労期間:残業時間 , data = data)
+summary(fit_interaction)
+```
+
+## カテゴリカル変数同士の交互作用
+
+
+
 
 
 :::practice
@@ -543,7 +594,7 @@ $$
 
 
 では，回帰分析での交互作用とはどういうものだろうか．
-回帰分析での交互作用においては，**一方が持つ説明変数の目的変数に対する影響力が，他方の説明変数によって変わる**という解釈がなされる．
+回帰分析での交互作用においては，**ある説明変数の目的変数に対する影響力が，他の説明変数によって変わる**という解釈がなされる．
 
 先ほどの例で具体的に説明しよう．先ほど示した業績の式は以下のように変形できる．
 
@@ -597,7 +648,7 @@ ggplot(data, aes(x = M, y = P)) +
 
 単純傾斜分析は`interactions`パッケージを用いることで簡単に行うことができる．
 
-```{r}
+```{r echo=TRUE}
 library(interactions)
 simple_slope_results <- sim_slopes(fit_interaction, pred= M, modx = S,confint = TRUE)
 print(simple_slope_results)
