@@ -434,7 +434,24 @@ Anova(fit_anova, type = 2)
 
 実施方法は極めて簡単で，分散分析での交互作用と同じように`:`あるいは`*`を用いて，交互作用項を含んだモデル式を作成して，`lm()`関数に投入すればよい．
 
-以下、カテゴリカル変数と連続変数の交互作用、連続変数同士の交互作用、カテゴリカル変数同士の交互作用についてそれぞれ説明する。
+以下，回帰分析における交互作用のもつ意味について説明したのち，カテゴリカル変数と連続変数の交互作用、連続変数同士の交互作用、カテゴリカル変数同士の交互作用のそれぞれについてその実施方法を説明する。
+
+
+## 回帰分析における交互作用の意味
+
+分散分析での交互作用は，カテゴリカル変数である二つの変数（要因）の相乗効果，すなわち，単純にそれぞれが単独で目的変数に対して持つ影響力の足し合わせでは説明できない，組み合わさった場合にのみ現れる新たに生じてきた影響であると解釈される．
+
+例えば，小麦の収穫量を目的変数として，XとYという効用の異なる二つの肥料を使うケースを考えてみよう．Xだけを使ったときには使わなかったときに比べ$\varDelta X$増え，Yだけを使ったときには同様に$\varDelta Y$増えるのであれば，XとYを両方使えば収穫量は$\varDelta X + \varDelta Y$増えるだろう，と予想するのが単純な影響力の足し合わせである．しかし，実際にはXとYを組み合わせて使うと，単純な足し合わせよりも収穫量が下がってしまうことはよくある．こうした「組み合わせ」によって生じる効果が交互作用である．
+この例では，交互作用として目的変数に対してマイナスに作用する効果が現れる例だが，もちろんプラスに作用する効果もある．
+
+
+
+では，回帰分析での交互作用とはどういうものだろうか．
+回帰分析での交互作用においては，**ある説明変数の目的変数に対する影響力が，他の説明変数によって変わる（調整される）**という解釈がなされる．
+こうしたことから回帰分析における交互作用を**調整効果**と呼ぶこともある．
+
+すでに，
+
 
 ## カテゴリカル変数と連続変数の交互作用
 
@@ -563,38 +580,192 @@ interact_plot(fit_interaction, pred= 残業時間, modx =就労期間 )
 
 そのうえで，就労期間が短い人に比べて就労期間が長い人は傾きが急になっており，残業代の単価が就労期間が長い人ほど高くなっていることが見てとれる．
 
-
-
-
 :::ref
 <details>
 <summary>単純傾斜分析のマニュアル実行</summary>
 単純傾斜分析は`interactions`パッケージを用いずに，`lm()`関数だけで行うこともできる．
-方法としては，標準偏差を動かしたい変数に対して，1を足す，もしくは1を引く処理を行ったデータを用意して，`lm()`に与えればよいだけである．
-```{r eval=FALSE}
+方法としては，標準偏差を動かしたい変数（今回であれば就労期間）に対して，まずは平均を引いたうえで（この処理を中心化と呼ぶ），1標準偏差を足す，もしくは1標準偏差を引く処理を行ったデータを用意して，それぞれに同じモデル式`lm()`に与えればよいだけである．
+注意すべき点としては+1標準偏差するというのは，データを+方向に動かすのではなく，軸を+方向に動かすことを意味している．つまり，これは―1標準偏差の人たちのデータとなる．
+逆に，+1標準偏差するというのは，軸を-方向に動かすことを意味しているので+1標準偏差の人たちのデータとなる．このように処理として行った＋，-と，評価対象として見ている人達がどういう人たちなのかというものが入れ替わることに注意してほしい．
+```{r }
 #Sを1標準偏差足す
 data_p <-data
-data_p$S <- data_p$S+1*sd(data$S)
-fit_p<-lm(P ~ S + M + S:M, data_p)
+data_p$就労期間 <- data$就労期間-mean(data$就労期間)-1*sd(data$就労期間)
+fit_p<-lm(平均月収 ~ 性別 + 学歴 * (就労期間 + 残業時間) + 就労期間:残業時間 , data_p)
 summary(fit_p)
 
 #Sを1標準偏差引く
 data_m <-data
-data_m$S <- data_m$S-1*sd(data$S)
-fit_m<-lm(P ~ S + M + S:M, data_m)
+data_m$就労期間 <- data$就労期間-mean(data$就労期間)+1*sd(data$就労期間)
+fit_m<-lm(平均月収 ~ 性別 + 学歴 * (就労期間 + 残業時間) + 就労期間:残業時間 , data_m)
 summary(fit_m)
 
 ```
+信頼区間もそれぞれ，`confint`関数を用いて求めることができる．
+
+```{r}
+confint(fit_p)
+confint(fit_m)
+```
+さらに，描画についても，`ggplot2`を用いて描くことができる．なお，就労期間が平均となっているケースも描画したいので，$\pm1標準偏差$にしたときと同様に就労期間で中心化し，標準偏差を足し引きはしないデータを用意して`lm()`を実行しておく．
+
+```{r}
+data_c <-data
+data_c$就労期間 <- data$就労期間-mean(data$就労期間)
+fit_c<-lm(平均月収 ~ 性別 + 学歴 * (就労期間 + 残業時間) + 就労期間:残業時間 , data_c)
+
+library(ggplot2)
+ggplot(data, aes(x=残業時間, y=平均月収)) + 
+  geom_abline(
+    aes(
+      intercept = coef(fit_c)[1] , 
+      slope = coef(fit_c)[6], 
+      color = "Mean")
+    ) +  
+  geom_abline(
+    aes(
+      intercept = coef(fit_p)[1] , 
+      slope = coef(fit_p)[6], 
+      color = "+1SD")
+    )+
+  geom_abline(
+    aes(
+      intercept = coef(fit_m)[1] , 
+      slope = coef(fit_m)[6], 
+      color = "-1SD")
+    )+
+  xlim(0, 50) + ylim(20, 60)+
+  scale_color_manual(values = c("+1SD" = "blue", "Mean" = "black", "-1SD" = "red")) +
+  labs(color = "就労期間") 
+
+```
+
+なお，これはあくまで学歴，性別は0の場合，すなわち高卒の女性のみのケースをグラフ化したものである．性別が男性の場合，切片が$`r round(coef(fit_c)[1],2)`$だけ上がり（ただし，この差は有意ではない），学歴が大卒の場合は傾きが$`r round(coef(fit_c)[3],2)`$だけ，院卒の場合は傾きが$`r round(coef(fit_c)[4],2)`$だけ上がる．
+
+以下の図は女性の大卒，院卒も書き加えたものである．
+
+```{r eval=FALSE}
+data_c <-data
+data_c$就労期間 <- data$就労期間-mean(data$就労期間)
+fit_c<-lm(平均月収 ~ 性別 + 学歴 * (就労期間 + 残業時間) + 就労期間:残業時間 , data_c)
+library(ggplot2)
+ggplot(data, aes(x=残業時間, y=平均月収)) + 
+  # 高卒
+  ## 女性
+  geom_abline(aes(intercept = coef(fit_c)[1], slope = coef(fit_c)[6], color = "女性, Mean", linetype = "高卒")) +  
+  geom_abline(aes(intercept = coef(fit_p)[1], slope = coef(fit_p)[6], color = "女性，+1SD", linetype = "高卒")) +
+  geom_abline(aes(intercept = coef(fit_m)[1], slope = coef(fit_m)[6], color = "女性，-1SD", linetype = "高卒")) +
+  # ## 男性
+  # geom_abline(aes(intercept = coef(fit_c)[1] + coef(fit_c)[2], slope = coef(fit_c)[6], color = "男性，Mean", linetype = "高卒")) +  
+  # geom_abline(aes(intercept = coef(fit_p)[1] + coef(fit_p)[2], slope = coef(fit_p)[6], color = "男性，+1SD", linetype = "高卒")) +
+  # geom_abline(aes(intercept = coef(fit_m)[1] + coef(fit_m)[2], slope = coef(fit_m)[6], color = "男性，-1SD", linetype = "高卒")) +
+  # 大卒
+  ## 女性
+  geom_abline(aes(
+    intercept = coef(fit_c)[1]+coef(fit_c)[3], 
+    slope = coef(fit_c)[6]+coef(fit_c)[9], 
+    color = "女性, Mean", linetype = "大卒")) +  
+  geom_abline(aes(
+    intercept = coef(fit_p)[1]+coef(fit_p)[3], 
+    slope = coef(fit_p)[6]+coef(fit_p)[9], 
+    color = "女性，+1SD", linetype = "大卒")) +
+  geom_abline(aes(
+    intercept = coef(fit_m)[1]+coef(fit_m)[3], 
+    slope = coef(fit_m)[6]+coef(fit_m)[9], 
+    color = "女性，-1SD", linetype = "大卒")) +
+  ## 男性
+  # geom_abline(aes(
+  #   intercept = coef(fit_c)[1]+coef(fit_c)[3]+coef(fit_c)[2], 
+  #   slope = coef(fit_c)[6]+coef(fit_c)[9], 
+  #   color = "男性，Mean", linetype = "大卒")) +  
+  # geom_abline(aes(
+  #   intercept = coef(fit_p)[1]+coef(fit_p)[3]+coef(fit_p)[2], 
+  #   slope = coef(fit_p)[6]+coef(fit_p)[9], 
+  #   color = "男性，+1SD", linetype = "大卒")) +
+  # geom_abline(aes(
+  #   intercept = coef(fit_m)[1]+coef(fit_m)[3]+coef(fit_m)[2], 
+  #   slope = coef(fit_m)[6]+coef(fit_m)[9], 
+  #   color = "男性，-1SD", linetype = "大卒")) +
+  # 院卒
+  ## 女性
+  geom_abline(aes(
+    intercept = coef(fit_c)[1]+coef(fit_c)[4], 
+    slope = coef(fit_c)[6]+coef(fit_c)[10], 
+    color = "女性, Mean", linetype = "院卒")) +  
+  geom_abline(aes(
+    intercept = coef(fit_p)[1]+coef(fit_p)[4], 
+    slope = coef(fit_p)[6]+coef(fit_p)[10], 
+    color = "女性，+1SD", linetype = "院卒")) +
+  geom_abline(aes(
+    intercept = coef(fit_m)[1]+coef(fit_m)[4], 
+    slope = coef(fit_m)[6]+coef(fit_m)[10], 
+    color = "女性，-1SD", linetype = "院卒")) +
+  ## 男性
+  # geom_abline(aes(
+  #   intercept = coef(fit_c)[1]+coef(fit_c)[4]+coef(fit_c)[2], 
+  #   slope = coef(fit_c)[6]+coef(fit_c)[10], 
+  #   color = "男性，Mean", linetype = "院卒")) +  
+  # geom_abline(aes(
+  #   intercept = coef(fit_p)[1]+coef(fit_p)[4]+coef(fit_p)[2], 
+  #   slope = coef(fit_p)[6]+coef(fit_p)[10], 
+  #   color = "男性，+1SD", linetype = "院卒")) +
+  # geom_abline(aes(
+  #   intercept = coef(fit_m)[1]+coef(fit_m)[4]+coef(fit_m)[2], 
+  #   slope = coef(fit_m)[6]+coef(fit_m)[10], 
+  #   color = "男性，-1SD", linetype = "院卒")) +
+  xlim(0, 50) + ylim(20, 60) +
+  scale_color_manual(values = c("女性，+1SD" = "blue", "女性，Mean" = "black", "女性，-1SD" = "red")) +
+                                #"男性，+1SD" = "deepskyblue", "男性，Mean" = "dimgrey", "男性，-1SD" = "salmon")) +
+  scale_linetype_manual(values = c("高卒" = "solid", "大卒" = "dashed",  "院卒" = "twodash")) +  # 凡例に実線と破線を追加
+  labs(color = "就労期間", linetype = "学歴")  # 凡例のタイトルを設定
+
+
+
+```
+
 
 </details>
+:::
+
 
 ## カテゴリカル変数同士の交互作用
 
-
-
-
+カテゴリカル変数同士の交互作用の場合は単純な分散分析となるため，`aov()`関数と`Anova()`関数の`type=3`を用いて検定を行うことができが，`aov()`関数の代わりに`lm()`関数を用いることによって，回帰分析と同じ枠組みで実施できるようになる．ただし，注意しなければならない点として，`lm()`関数の結果はあくまで**基準に対する各水準やその組み合わせの差が有意かどうか**を示すものでしかなく，**全体としてその交互作用が有意かどうか**（その交互作用項を含めることが目的変数の予測式の精度を高める上で意味があるのか）を示すものではない．したがって，`lm()`の結果を精査する前に，`Anova()`関数を用いて全体としての交互作用の有意性を示すことが必要である．
 
 :::practice
+先ほどの[月収データ](./practice/example_11_Dammy2.csv)において，これまでに学歴と就労期間，残業時間と就労期間の交互作用を調べてきたが，さらに学歴と性別の交互作用が平均月収にどのような影響を与えるかを調べよ．
+:::
+
+```{r}
+data <- read.csv("./practice/example_11_Dammy2.csv")
+data$学歴<- as.factor(data$学歴)
+data$性別<- as.factor(data$性別)
+fit_interaction <- lm(平均月収 ~ 性別 * 学歴 + 就労期間 + 残業時間 + 就労期間:学歴 + 残業時間:就労期間, data = data)
+summary(fit_interaction)
+```
+
+結果の見方がやや面倒であるが，箇条書きにして整理すると，以下のようになる．
+
+- まず基準は女性（性別=0），高卒（学歴=0）である．
+- 学歴1の係数は$`r round(coef(fit_interaction)[3],1)`$であることから，**女性・大卒**の場合は女性・高卒より月給が$`r round(coef(fit_interaction)[3],1)`$万円だけ高いことがわかる．
+- 学歴2の係数は$`r round(coef(fit_interaction)[4],1)`$であることから，**女性・院卒**の場合は女性・高卒より月給が$`r round(coef(fit_interaction)[4],1)`$万円だけ高いことがわかる．
+- 性別の係数は$`r round(coef(fit_interaction)[2],1)`$であることから，**男性・高卒**の場合は女性・高卒より月給が$`r -round(coef(fit_interaction)[2],1)`$万円だけ低いことがわかる．ただしこの差は有意ではない．
+- 性別1:学歴1の係数は$`r round(coef(fit_interaction)[7],1)`$であることから，**男性・大卒**の場合は月給が$`r round(coef(fit_interaction)[2],1)`+`r round(coef(fit_interaction)[3],1)` +`r round(coef(fit_interaction)[7],1)`$万円だけ高いことがわかる．
+- 性別1:学歴2の係数は$`r round(coef(fit_interaction)[8],1)`$であることから，**男性・院卒**の場合は月給が$`r round(coef(fit_interaction)[2],1)`+`r round(coef(fit_interaction)[4],1)` +`r round(coef(fit_interaction)[8],1)`$万円だけ高いことがわかる．
+
+ただし，冒頭で述べている通り，**このような交互作用の内容に関しての詳細な検討は，あくまで全体としての交互作用の有意性を確認してからすべきことである**．
+そこで，`Anova()`関数を用いて全体としての交互作用の有意性を確認する．
+
+```{r}
+library(car)
+Anova(fit_interaction, type = 3)
+```
+
+この結果から，学歴と性別の交互作用は有意ではないことがわかる．
+したがって，先に箇条書きで述べたような個別の水準ごとの解釈は不要であった，ということである．
+今回はあくまで例題であるため，上記のような解釈を行ったが，本来は必ず解釈に先立って全体としての交互作用の有意性を確認することが重要である．
+
+:::work
 [このデータ](./practice/example_11_Interaction.csv)は，ある会社での従業員のモチベーション（M），スキルレベル（S），業績（P）をそれぞれ評価したものである．モチベーションとスキルレベルが業績にどのような影響力持っているかを調べよ．
 
 ```{r include=FALSE}
@@ -623,89 +794,7 @@ summary(data)
 ```
 :::
 
-<!-- 今回は単純な予測式を立てることが目的ではなく，影響力を評価することが目的であるため，[標準化](./RText_10_Regression.html#標準化回帰係数)を行ったうえで回帰分析を行う． -->
 
-```{r}
-data <- read.csv("./practice/example_11_Interaction.csv")
-# 標準化．
-# data.scaled <- scale(data) 
-# #scale()関数の出力は名前付き行列であってdata.frameではないのでdata.frameに変換
-# data.scaled <- as.data.frame(data.scaled)
-#標準化重回帰分析
-fit_interaction <- lm(P ~ S + M  + S:M, data)
-summary(fit_interaction)
-
-```
-この結果から，モチベーション，スキルのそれぞれが主効果として業績に有意な影響を与えるとともに，これらの交互作用も有意であることが分かる．
-
-式に表すと，以下の通りとなる．
-$$
-P =  32.10+0.21 \times S + 2.86 \times M  -0.031  \times S \times M 
-$$
-この結果から，スキルの評価が1点上がるごとに業績は0.21点上がり，モチベーションが1点上がるごとに業績は2.86点上がる．
-
-では，さらに，スキルとモチベーションの交互作用項はどのように解釈すればよいだろか．
-
-
-## 回帰分析における交互作用の意味
-
-分散分析での交互作用は，カテゴリカル変数である二つの変数（要因）の相乗効果，すなわち，単純にそれぞれが単独で目的変数に対して持つ影響力の足し合わせでは説明できない，組み合わさった場合にのみ現れる新たに生じてきた影響であると解釈される．
-
-例えば，小麦の収穫量を目的変数として，XとYという効用の異なる二つの肥料を使うケースを考えてみよう．Xだけを使ったときには使わなかったときに比べ$\varDelta X$増え，Yだけを使ったときには同様に$\varDelta Y$増えるのであれば，XとYを両方使えば収穫量は$\varDelta X + \varDelta Y$増えるだろう，と予想するのが単純な影響力の足し合わせである．しかし，実際にはXとYを組み合わせて使うと，単純な足し合わせよりも収穫量が下がってしまうことはよくある．こうした「組み合わせ」によって生じる効果が交互作用である．
-この例では，交互作用として目的変数に対してマイナスに作用する効果が現れる例だが，もちろんプラスに作用する効果もある．
-
-
-
-では，回帰分析での交互作用とはどういうものだろうか．
-回帰分析での交互作用においては，**ある説明変数の目的変数に対する影響力が，他の説明変数によって変わる**という解釈がなされる．
-
-先ほどの例で具体的に説明しよう．先ほど示した業績の式は以下のように変形できる．
-
-$$
-\begin{align}
-P &= 32.10+0.21 \times S + 2.86 \times M  -0.031  \times S \times M \\
-&= 32.10+0.21 \times S + (2.86   -0.031  \times S) \times M \\
-\end{align}
-$$
-このように式変形すると，Mの係数がSの値によって変わることがわかる．すなわち，スキルレベルSが1点上がるごとにモチベーションMの係数が0.031だけ下がる．逆にスキルレベルSが1点下がるごとにモチベーションMの係数が0.031だけ上がる．
-
-具体的に，Mをx軸，Pをy軸として，Sを1標準偏差上げた場合と1標準偏差下げた場合のグラフを書いてみると以下の通りとなる．
-
-```{r}
-library(ggplot2)
-m_S <- mean(data$S)
-sd_S <- sd(data$S)
-ggplot(data, aes(x = M, y = P)) + 
-  geom_abline(aes(
-    intercept = coef(fit_interaction)["(Intercept)"]+coef(fit_interaction)["S"]*(m_S),
-    slope = coef(fit_interaction)["M"]+coef(fit_interaction)["S:M"]*(m_S), 
-    color = "S:Mean")) +
-  geom_abline(aes(
-    intercept = coef(fit_interaction)["(Intercept)"]+coef(fit_interaction)["S"]*(m_S+sd_S),
-    slope = coef(fit_interaction)["M"]+coef(fit_interaction)["S:M"]*(m_S+sd_S), 
-    color = "S:+1SD")) +
-  geom_abline(aes(
-    intercept = coef(fit_interaction)["(Intercept)"]+coef(fit_interaction)["S"]*(m_S-sd_S),
-    slope = coef(fit_interaction)["M"]+coef(fit_interaction)["S:M"]*(m_S-sd_S), 
-    color = "S:-1SD")) +
-  scale_x_continuous(limits = c(1, 7)) +
-  scale_y_continuous(limits = c(40, 60)) +
-  scale_color_manual(values = c("S:Mean" = "black","S:+1SD" = "blue", "S:-1SD" = "red")) +
-  labs(color = "凡例")   # 凡例のタイトル
-
-  
-
-```
-
-
-
-このグラフから，スキルレベルが高い人たちの場合，モチベーションは業績にそれほど強く影響を与えない（傾きが小さい）が，スキルレベルが低い人たちの場合，モチベーションは業績に強く影響を与える（傾きが大きい），ということが分かる．
-
-このように，回帰分析における交互作用は，一方の説明変数が持つ影響力が他方の説明変数によって変わるという解釈がなされる．
-
-## 単純傾斜分析
-
-# カテゴリカル変数を含んだ回帰分析のイメージ
 
 
 # 回帰分析でカテゴリカル変数を扱うメリット
