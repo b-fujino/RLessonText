@@ -1321,7 +1321,7 @@ if (window.hljs) {
 
 
 
-<style type="text/css">.tocify-subheader { display: block !important;}.tocify-item {white-space: nowrap;}body{counter-reset: ref_number practice_number work_number;}.float img{ margin: auto;display: block;border-radius: 8px 8px 0 0 ;position: relative;width : 60%;}.float .figcaption {position: relative;font-style: italic;font-size: large;font-weight: bold;color: #666;text-align: center;margin:0% auto 5% auto;border-bottom: solid 1px #666;border-left: solid 1px #666;border-right: solid 1px #666;border-radius:0 0 8px 8px;width : 60%}img {margin: auto;display: block;border: solid 1px #666;border-radius: 8px;position: relative;width : 60%;}.ref {position: relative;margin:5%;padding:5px;background-color: rgba(255, 255, 128, .5);color: #666;}.ref::before{counter-increment: ref_number 1;content: "[参考 " counter(ref_number) "]";font-weight: bold;display: block;margin-bottom: 3px;}h1 {margin-top : 10px;padding-top : 50px;}.practice {position: relative;margin:5%;padding:5px;background-color: rgba(128, 255, 200, .5);color: #666;}.practice::before{counter-increment: practice_number 1;content: "[例題 " counter(practice_number) "]";font-weight: bold;display: block;margin-bottom: 3px;}.work {position: relative;margin:5%;padding:5px;background-color: rgba(128, 200, 255, .2);color: #666;}.work::before{counter-increment: work_number 1;content: "[課題 " counter(work_number) "]";font-weight: bold;display: block;margin-bottom: 3px;}user-select: none;-moz-user-select: none;-webkit-user-select: none;-ms-user-select: none;-khtml-user-select: none;-webkit-touch-callout: none;}***/.res_table {border-collapse: collapse;width: 50%;margin: 0 auto;border-top: 1px solid #666;border-bottom: 1px solid #666;}.res_table th {border-bottom: 1px solid #666;text-align: center;}.res_table td {text-align: right;}.res_table .td_left {text-align: left;}.res_table .tr_topborder {border-top: 1px solid #666;}</style>
+<style type="text/css">.tocify-subheader { display: block !important;}.tocify-item {white-space: nowrap;}body{counter-reset: ref_number practice_number work_number;}.float img{ margin: auto;display: block;padding: 2%;border-radius: 8px 8px 0 0 ;position: relative;width : 60%;}.float .figcaption {position: relative;font-style: italic;font-size: large;font-weight: bold;color: #666;text-align: center;margin:0% auto 5% auto;border-bottom: solid 1px #666;border-left: solid 1px #666;border-right: solid 1px #666;border-radius:0 0 8px 8px;width : 60%}img {margin: auto;display: block;border: solid 1px #666;border-radius: 8px;position: relative;width : 60%;}.ref {position: relative;margin:5%;padding:5px;background-color: rgba(255, 255, 128, .5);color: #666;}.ref::before{counter-increment: ref_number 1;content: "[参考 " counter(ref_number) "]";font-weight: bold;display: block;margin-bottom: 3px;}h1 {margin-top : 10px;padding-top : 50px;}.practice {position: relative;margin:5%;padding:5px;background-color: rgba(128, 255, 200, .5);color: #666;}.practice::before{counter-increment: practice_number 1;content: "[例題 " counter(practice_number) "]";font-weight: bold;display: block;margin-bottom: 3px;}.work {position: relative;margin:5%;padding:5px;background-color: rgba(128, 200, 255, .2);color: #666;}.work::before{counter-increment: work_number 1;content: "[課題 " counter(work_number) "]";font-weight: bold;display: block;margin-bottom: 3px;}user-select: none;-moz-user-select: none;-webkit-user-select: none;-ms-user-select: none;-khtml-user-select: none;-webkit-touch-callout: none;}***/.res_table {border-collapse: collapse;width: 50%;margin: 0 auto;border-top: 1px solid #666;border-bottom: 1px solid #666;}.res_table th {border-bottom: 1px solid #666;text-align: center;}.res_table td {text-align: right;}.res_table .td_left {text-align: left;}.res_table .tr_topborder {border-top: 1px solid #666;}.math .display {text-align: center;font-size: small;}</style>
 
 
 
@@ -1481,12 +1481,12 @@ border-radius: 0px;
 
 <h1 class="title toc-ignore">RとRStuidoの基本操作</h1>
 <h4 class="author">藤野秀則,</h4>
-<h4 class="date">初稿日:2024-05-02 更新日:2024-10-08</h4>
+<h4 class="date">初稿日:2024-05-02 更新日:2024-10-21</h4>
 
 </div>
 
 
-<p>前回まででRMarkdownファイルの作り方を学習しているので，これ以降はRMarkdownファイルにRのコードを書いていくこと．</p>
+<p>前回までで<a href="./RText_02_BasicUsage.html#RMakrdown">RMarkdownファイルの作り方</a>を学習しているので，これ以降はRMarkdownファイルにRのコードを書いていくこと．</p>
 <div id="ベクトル" class="section level1" number="1">
 <h1><span class="header-section-number">1</span> ベクトル</h1>
 <div id="ベクトルの作成" class="section level2" number="1.1">
@@ -1543,7 +1543,7 @@ print(hoge) #Scoreのデータが文字列型として出力される。</code><
 <div id="名前付きベクトル" class="section level3" number="1.1.1">
 <h3><span class="header-section-number">1.1.1</span>
 名前付きベクトル</h3>
-<p>先ほど作成した<code>Score</code>は単に数値だけが並ぶベクトルであるが、以下のように各数値に「名前」を付けることができる。このようなベクトルを名前付きベクトルと呼ぶ。
+<p>先ほど作成した<code>Score</code>は単に数値だけが並ぶベクトルであるが、以下のように各数値に「名前」を付けることができる。このようなベクトルを<strong>名前付きベクトル</strong>と呼ぶ。
 なお、通常の文字列の扱いでは<code>&quot;&quot;</code>で括らなければならないが、名前に対しては<code>&quot;&quot;</code>で括らずにそのまま書いてもよいし、<code>&quot;&quot;</code>で括ってもよい。</p>
 <pre class="r"><code>NamedScore &lt;-  c(赤木=7,  桜木=4, 三井=10, 宮城=7, 流川=9)
 print(NamedScore)</code></pre>
@@ -1558,7 +1558,7 @@ print(NamedScore)</code></pre>
 </div>
 <div id="ベクトルの型" class="section level2" number="1.2">
 <h2><span class="header-section-number">1.2</span> ベクトルの型</h2>
-<p>ベクトルオブジェクトの型はそのベクトルが内部に持つデータの型によって決まる。</p>
+<p>ベクトルオブジェクトの型はそのベクトルが内部に持つデータの型によって決まる。冒頭で作成した<code>Starting</code>と<code>Score</code>の型を調べると以下の通りとなる．</p>
 <pre class="r"><code>class(Starting)</code></pre>
 <pre><code>## [1] &quot;character&quot;</code></pre>
 <pre class="r"><code>class(Score)</code></pre>
@@ -1808,7 +1808,7 @@ print(Full)</code></pre>
 </tr>
 </tbody>
 </table>
-<p>このような表としてのデータを一まとめにして扱うのがデータフレームという型のオブジェクトである。</p>
+<p>このような表としてのデータを一まとめにして扱うのが<strong>データフレーム</strong>という型のオブジェクトである。</p>
 <div id="データフレームの作成" class="section level2" number="2.1">
 <h2><span class="header-section-number">2.1</span>
 データフレームの作成</h2>
@@ -2356,16 +2356,18 @@ CSVデータの読み込み</h2>
 三井, 14,10
 宮城, 7, 7
 流川, 11, 9</code></pre>
-<p>このようなファイル形式をRで読み込む場合には、<code>read.csv()</code>関数を使う。1つ目のオプションダブルクォーテーションで括った上で読み込むファイル（既にPosit
+<p>このようなファイル形式をRで読み込む場合には、<code>read.csv()</code>関数を使う。1つ目のオプションではダブルクォーテーションで括った上で読み込むファイル（既にPosit
 Cloudにアップロードしてある前提）を指定する。2つ目のオプションでは、最初の行をヘッダー、つまり各列の名前として読み込むのか、最初の行をデータとして読み込むのかの指定である。<code>TRUE</code>だとヘッダーとして読み込み、<code>FALSE</code>だとデータとして読み込む。以下の例では、test.csvというファイルを読み込み、その内容を<code>myData</code>というオブジェクトに格納している。</p>
-<pre class="r"><code>myData &lt;- read.csv(&quot;test.csv&quot;, header = TRUE, fileEncoding = &quot;UTF8&quot;)</code></pre>
-<pre><code>## Warning in read.table(file = file, header = header, sep = sep, quote = quote, :
-## 入力コネクション &#39;test.csv&#39; に不正な入力がありました</code></pre>
-<pre><code>## Error in read.table(file = file, header = header, sep = sep, quote = quote, :  入力中には利用可能な行がありません</code></pre>
-<pre class="r"><code>myData</code></pre>
-<pre><code>## Error in eval(expr, envir, enclos):  オブジェクト &#39;myData&#39; がありません</code></pre>
+<pre class="r"><code>myData &lt;- read.csv(&quot;test.csv&quot;, header = TRUE, fileEncoding = &quot;UTF8&quot;)
+myData</code></pre>
+<pre><code>##   名前 背番号 点数
+## 1 赤木      4    7
+## 2 桜木     10    4
+## 3 三井     14   10
+## 4 宮城      7    7
+## 5 流川     11    9</code></pre>
 <p><code>header=FALSE</code>だと以下の通りとなる。</p>
-<pre class="r"><code>myData &lt;- read.csv(&quot;test.csv&quot;, header = FALSE, fileEncoding = &quot;Shift-JIS&quot;) 
+<pre class="r"><code>myData &lt;- read.csv(&quot;test.csv&quot;, header = FALSE, fileEncoding = &quot;UTF8&quot;) 
 myData</code></pre>
 <pre><code>##     V1     V2   V3
 ## 1 名前 背番号 点数
@@ -2379,15 +2381,26 @@ myData</code></pre>
 <code>背番号</code>,
 <code>点数</code>がデータの1行目に含められてしまっているのがわかる。</p>
 <p>1行目をヘッダとして読むのか、データとして読むのかは読み込みたいファイルの中身に合わせて設定する。また、1行目をデータとして読み込んだ際には、自分で分かりやすい名前を<code>colnames()</code>関数を使って設定すること。</p>
-<p>なお、ExcelでCSVファイルを作った場合には、上記のコマンドではうまく読まない場合がある。その場合には3つ目のfileEncodingのオプションを以下の通りに指定する。（上のコマンドでうまく行っている場合には、逆に以下のコマンドだとエラーとなる）</p>
-<pre class="r"><code>myData &lt;- read.csv(&quot;test.csv&quot;, header = TRUE, fileEncoding = &quot;SJIS&quot;) 
-myData</code></pre>
-<pre><code>##   名前 背番号 点数
-## 1 赤木      4    7
-## 2 桜木     10    4
-## 3 三井     14   10
-## 4 宮城      7    7
-## 5 流川     11    9</code></pre>
+<p>なお、ExcelでCSVファイルを作った場合には、上記のコマンドではうまく読まない場合がある。その場合には3つ目のfileEncodingのオプションを以下の通りに”SJIS”と指定する。（上のコマンドでうまく行っている場合には、逆に以下のコマンドだとエラーとなる）</p>
+<pre class="r"><code>myData &lt;- read.csv(&quot;test.csv&quot;, header = TRUE, fileEncoding = &quot;SJIS&quot;) </code></pre>
+<pre><code>## Warning in read.table(file = file, header = header, sep = sep, quote = quote, :
+## 入力コネクション &#39;test.csv&#39; に不正な入力がありました</code></pre>
+<pre><code>## Warning in read.table(file = file, header = header, sep = sep, quote = quote, :
+## incomplete final line found by readTableHeader on &#39;test.csv&#39;</code></pre>
+<pre class="r"><code>myData</code></pre>
+<pre><code>##   蜷榊燕 閭檎分蜿ｷ 轤ｹ謨ｰ
+## 1 襍､譛ｨ         4      7
+## 2 譯懈惠        10      4
+## 3  荳我ｺ        NA     NA</code></pre>
+<div class="ref">
+<details>
+<summary>
+読み込むファイルの場所について
+</summary>
+<p>Homeフォルダに別のフォルダを置いて，その中に読み込みたいファイルを置いている場合には，以下のように，フォルダ名を含めたファイル名を指定する．例えば<code>Home</code>の下に<code>Practice</code>というフォルダを置き，その中に<code>test.csv</code>を置いている場合には以下のように入力する．</p>
+<pre class="r"><code>myData &lt;- read.csv(&quot;./Practice/test.csv&quot;, header = TRUE, fileEncoding = &quot;UTF8&quot;)</code></pre>
+</details>
+</div>
 </div>
 <div id="excelデータの読み込み" class="section level2" number="3.3">
 <h2><span class="header-section-number">3.3</span>
@@ -2462,12 +2475,10 @@ Database -&gt;From Excelを選択する。</p>
 </div>
 <p>また、以下のようにConcoleに<code>myData</code>と入力すると、console中にmyDataの中身が表示される。</p>
 <pre class="r"><code>myData  # print(myData)でも可</code></pre>
-<pre><code>##   名前 背番号 点数
-## 1 赤木      4    7
-## 2 桜木     10    4
-## 3 三井     14   10
-## 4 宮城      7    7
-## 5 流川     11    9</code></pre>
+<pre><code>##   蜷榊燕 閭檎分蜿ｷ 轤ｹ謨ｰ
+## 1 襍､譛ｨ         4      7
+## 2 譯懈惠        10      4
+## 3  荳我ｺ        NA     NA</code></pre>
 <div id="スクリプトでexcelファイルを読み込む" class="section level3" number="3.3.1">
 <h3><span class="header-section-number">3.3.1</span>
 スクリプトでExcelファイルを読み込む</h3>
@@ -2488,7 +2499,7 @@ Previewに反映されるので，それをコピーすると良いだろう．<
 <h2><span class="header-section-number">3.4</span>
 データのアクセス、加工</h2>
 <p>読み込んだデータはデータフレーム型となるため、<a href="#データフレーム">データフレーム</a>の中で説明した方法で、以下のようにして各列にアクセスしたり、データを書き換えたり、列を追加したりできる。</p>
-<pre class="r"><code>myData &lt;- read.csv(&quot;test.csv&quot;, header = TRUE, fileEncoding = &quot;Shift-JIS&quot;) 
+<pre class="r"><code>myData &lt;- read.csv(&quot;test.csv&quot;, header = TRUE, fileEncoding = &quot;UTF8&quot;) 
 myData$名前</code></pre>
 <pre><code>## [1] &quot;赤木&quot; &quot;桜木&quot; &quot;三井&quot; &quot;宮城&quot; &quot;流川&quot;</code></pre>
 <pre class="r"><code>myData[1, &quot;名前&quot;] &lt;- &quot;Akagi&quot;
@@ -2515,6 +2526,11 @@ myData</code></pre>
 ## 3 三井     14   10   みつい
 ## 4 宮城      7    7   みやぎ
 ## 5 流川     11    9   るかわ</code></pre>
+<div class="work">
+<p>次の<a href="./practice/example_03_readcsv.csv">ファイル</a>をダウンロードし，Posit
+Cloudに読み込ませたうえで，その読み込ませた内容を表示させよ．なお，読み込ませる際のオブジェクト名は任意のオブジェクト名として構わない．</p>
+<p>また，読み込ませたデータのうち，<code>ポジション</code>が<code>DF</code>の選手の<code>名前</code>と<code>背番号</code>を取り出して<code>print()</code>で表示させよ．</p>
+</div>
 </div>
 </div>
 <div id="ここまでで用いられていたr関数" class="section level1" number="4">
