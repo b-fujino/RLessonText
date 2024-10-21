@@ -612,7 +612,7 @@ Shohoku
 
 実際の調査結果のデータを扱うときには、data.frameを毎度自分でちまちま作ってなんていられないので、表計算ソフトで作成されたデータファイルを読み込むことになる。
 以下では
-[【test.csv】](./test.csv)と[【test.xlsx】](./test.xlsx)を用いるので、それぞれファイル名をクリックしてダウンロードしておくこと。
+[【test.csv】](./test.csv)を用いるので、ファイル名をクリックしてダウンロードしておくこと。
 
 ## データのアップロード
 
@@ -696,11 +696,13 @@ myData <- read.csv("./Practice/test.csv", header = TRUE, fileEncoding = "UTF8")
 </details>
 :::
 
-## Excelデータの読み込み
+:::ref
+<details>
+<summary>Excelデータの読み込み</summary>
 
 Excelファイルを直接読み込みたい場合には、Posit
 Cloudに読み込みたいExcelファイルをアップロードしたうえで、RStudioのFileメニュー-\>Import
-Database -\>From Excelを選択する。
+Database -\>From Excelを選択する。今回は[【test.xlsx】](./test.xlsx)を用いて実際にやってみる。
 
 ![Excelファイルの読み込み](./Img/2024_5_2_ExcelRead.png)
 
@@ -738,8 +740,13 @@ Database -\>From Excelを選択する。
 ```{r}
 myData  # print(myData)でも可
 ```
+</details>
+:::
 
-### スクリプトでExcelファイルを読み込む
+
+:::ref
+<details>
+<summary>スクリプトでExcelファイルを読み込む</summary>
 以上の処理は、GUIを使ってExcelデータを読み込む方法であったが，この方法の場合，Rを立ち上げ直したり，プロジェクトを再読み込みしたりすると，毎回GUIを使ってExcelファイルを読み込む必要がある．
 
 スクリプトにExcelファイルを読みこむコードを記述しておけば，そのスクリプトを実行するだけで，Excelファイルを読み込むことができる．
@@ -757,6 +764,8 @@ View(myData)
 このスクリプトを実行することで，Excelファイルを読み込むことができる．
 
 読み込むシートを変更したり，読み込む範囲を限定したり，あるいは先頭行をヘッダとして読み込むかどうかなどの設定は，`read_excel()`関数のオプションで指定することもできるが，このあたりはExcelファイルの読み込み画面のGUI上で設定しておくと，その設定がCode Previewに反映されるので，それをコピーすると良いだろう．
+</details>
+:::
 
 
 ## データのアクセス、加工
@@ -822,7 +831,7 @@ write.csv(data, "./practice/example_03_readcsv.csv", row.names = FALSE)
   - 説明：連続する整数のシーケンスを生成する。
   - 引数：開始値と終了値。
 
-- -
+- \-
   - 説明：ベクトルから要素を削除するために使用する。
   - 引数：削除したい要素のインデックス番号。
 
