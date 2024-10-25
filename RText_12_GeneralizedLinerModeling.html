@@ -1481,17 +1481,18 @@ border-radius: 0px;
 
 <h1 class="title toc-ignore">回帰モデルの発展：一般化線形モデル</h1>
 <h4 class="author">藤野秀則</h4>
-<h4 class="date">初稿日:“2024-10-15” 更新日:2024-10-15</h4>
+<h4 class="date">初稿日:“2024-10-15” 更新日:2024-10-24</h4>
 
 </div>
 
 
 <p>これまでの回帰分析では，<strong>目的変数は連続変数であり，かつ，誤差項（=目的変数の予測値と実測値の差）は正規分布に従っている</strong>という仮定のもとで回帰分析を行ってきた．しかし，目的変数が連続変数であるとは限らず，また，目的変数の誤差が正規分布に従っているとも限らない場合もある．このような場合には，<strong>一般化線形モデル（Generalized
 Linear Model: GLM）</strong>を用いることが適している．</p>
+<p>GLMは文字通り，様々な目的変数や誤差項の分布に対応できるモデルであり，そのバリエーションは非常に多い．ここでは，その中でも比較的よく用いられる<strong>ロジスティック回帰分析</strong>，<strong>プロビット回帰分析</strong>，<strong>ポアソン回帰分析</strong>について解説する．</p>
 <div id="ロジスティック回帰分析" class="section level1" number="1">
 <h1><span class="header-section-number">1</span>
 ロジスティック回帰分析</h1>
-<p>ロジスティック回帰分析は，従属変数が二値変数（0または1）である場合に適用される．例えば，ある商品を購入するかどうか（購入する場合は1，しない場合は0）を予測する場合などに用いられる．</p>
+<p>ロジスティック回帰分析は，目的変数が二値変数（0または1）である場合に適用される．例えば，ある商品を購入するかどうか（購入する場合は1，しない場合は0）を予測する場合などに用いられる．</p>
 <div class="ref">
 <details>
 <summary>
@@ -1515,7 +1516,7 @@ P_{y=1} = \frac{1}{1+\exp{(-(a+\boldsymbol{b}\times \boldsymbol{x})}}\\
 この関数の形状は以下のようになる．</p>
 <p><img role="img" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAABgAAAAPACAMAAADE4EJKAAAAulBMVEUAAAAAADoAAGYAOjoAOmYAOpAAZrY6AAA6OgA6Ojo6OmY6ZmY6ZpA6ZrY6kLY6kNtmAABmOgBmOjpmZjpmZmZmZpBmkLZmkNtmtttmtv+QOgCQZjqQZmaQkLaQtraQttuQtv+Q2/+2ZgC2Zjq2kDq2kGa2tpC2tra2ttu227a229u22/+2///bkDrbkGbbtmbbtpDbtrbb25Db27bb29vb2//b////tmb/25D/27b/29v//7b//9v///9lt0xOAAAACXBIWXMAAB2HAAAdhwGP5fFlAAAgAElEQVR4nO3df38T17Xo4VEKOGk5F2hdGkxvuCElyoVQ4OJgHKT3/7auZGMQ/iFrS6OZvfZ6nj8O4E8QOtM162uPxnI3ByClbuwnAMA4BAAgKQEASEoAAJISAICkBAAgKQEASEoAAJISAICkBAAgKQEASEoAAJISAICkBAAgKQEASEoAAJISAICkBAAgKQEASEoAAJISAICkBAAgKQEASEoAAJISAICkBAAgKQEASEoAAJISAICkBAAgKQEASEoAAJISAICkBAAgKQEASEoAAJISAICkBAAgKQEASEoAAJISAICkBAAgKQEASEoAAJISAICkBAAgKQEASEoAAJISAICkBAAgKQEASEoAAJISAICkBAAgKQEASEoAAJISAICkBAAgKQEASEoAAJISAICkBAAgKQEASEoAAJISAICkBAAgKQEASEoAAJISAICkBAAgKQEASEoAAJISAICkBAAgKQEASEoAAJISAICkBAAgKQEASEoAAJISAICkBAAgKQEASEoAAJISAICkBAAgKQEASEoAAJISAICkBAAgKQEASEoAAJISAICkBAAgKQEASEoAAJISAICkBAAgKQEASEoAAJISAICkBAAgKQEASEoAAJISAICkBAAgKQEASEoAAJISAICkBAAgKQEASEoAAJISAICkBAAgKQEASEoAAJISAICkBAAgKQEASEoAAJISAICkBAAgKQEASEoAAJISAICkBAAgKQEASEoAAJISAICkBAAgKQEASEoAAJISAICkBAAgKQEASEoAAJISAICkBAAgKQEASEoAAJISAICkBAAgKQEASEoAAJISAICkBAAgKQEASEoAAJISAICkBAAgKQEASEoAAJIS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" width="768" /></p>
 <p>つまり，<span class="math inline">\(x=0\)</span>を境に<span class="math inline">\(x\)</span>が増加すればするほど，<span class="math inline">\(P\)</span>は1に近づく．つまり，目的変数<span class="math inline">\(y\)</span>は1である確率が高まる(=<span class="math inline">\(y\)</span>が0である確率が低まる）．逆に<span class="math inline">\(x\)</span>が減少すればするほど，<span class="math inline">\(P\)</span>は0に近づく．つまり，目的変数<span class="math inline">\(y\)</span>は1である確率が低まる（=<span class="math inline">\(y\)</span>が0である確率が高まる）．</p>
-<p>こうしたことから，ロジスティック関数を当てはめることによって，ある<span class="math inline">\(x\)</span>が充てられたときに，目的変数が0か1のいずれの値を取る可能性が高のかを予測することができるようになる．</p>
+<p>こうしたことから，ロジスティック関数を当てはめることによって，ある<span class="math inline">\(x\)</span>が与えられたときに，目的変数が0か1のいずれの値を取る可能性が高のかを予測できるようになる．</p>
 なお，普通の回帰分析では目的変数<span class="math inline">\(y\)</span>は連続変数であるということに加えて，<span class="math inline">\(y\)</span>の実測値と予測値の差の分布は正規分布で表現される）という仮定を置いている．一方，ロジスティック回帰分析では目的変数<span class="math inline">\(y\)</span>は0，1の2値変数であるため，<span class="math inline">\(y\)</span>が0,1のいずれの値になるか（つまり<span class="math inline">\(y\)</span>の確率分布）は<strong>二項分布</strong>に従っているという仮定が置かれる．
 </details>
 </div>
@@ -1608,41 +1609,23 @@ exp(coef(fit))</code></pre>
 confint(fit)</code></pre>
 <pre><code>## Waiting for profiling to be done...</code></pre>
 <pre><code>## Warning: glm.fit: 数値的に 0 か 1 である確率が生じました
-
 ## Warning: glm.fit: 数値的に 0 か 1 である確率が生じました
-
 ## Warning: glm.fit: 数値的に 0 か 1 である確率が生じました
-
 ## Warning: glm.fit: 数値的に 0 か 1 である確率が生じました
-
 ## Warning: glm.fit: 数値的に 0 か 1 である確率が生じました
-
 ## Warning: glm.fit: 数値的に 0 か 1 である確率が生じました
-
 ## Warning: glm.fit: 数値的に 0 か 1 である確率が生じました
-
 ## Warning: glm.fit: 数値的に 0 か 1 である確率が生じました
-
 ## Warning: glm.fit: 数値的に 0 か 1 である確率が生じました
-
 ## Warning: glm.fit: 数値的に 0 か 1 である確率が生じました
-
 ## Warning: glm.fit: 数値的に 0 か 1 である確率が生じました
-
 ## Warning: glm.fit: 数値的に 0 か 1 である確率が生じました
-
 ## Warning: glm.fit: 数値的に 0 か 1 である確率が生じました
-
 ## Warning: glm.fit: 数値的に 0 か 1 である確率が生じました
-
 ## Warning: glm.fit: 数値的に 0 か 1 である確率が生じました
-
 ## Warning: glm.fit: 数値的に 0 か 1 である確率が生じました
-
 ## Warning: glm.fit: 数値的に 0 か 1 である確率が生じました
-
 ## Warning: glm.fit: 数値的に 0 か 1 である確率が生じました
-
 ## Warning: glm.fit: 数値的に 0 か 1 である確率が生じました</code></pre>
 <pre><code>##                   2.5 %      97.5 %
 ## (Intercept) -20.5908781 -10.3848768
@@ -1653,41 +1636,23 @@ confint(fit)</code></pre>
 exp(confint(fit))</code></pre>
 <pre><code>## Waiting for profiling to be done...</code></pre>
 <pre><code>## Warning: glm.fit: 数値的に 0 か 1 である確率が生じました
-
 ## Warning: glm.fit: 数値的に 0 か 1 である確率が生じました
-
 ## Warning: glm.fit: 数値的に 0 か 1 である確率が生じました
-
 ## Warning: glm.fit: 数値的に 0 か 1 である確率が生じました
-
 ## Warning: glm.fit: 数値的に 0 か 1 である確率が生じました
-
 ## Warning: glm.fit: 数値的に 0 か 1 である確率が生じました
-
 ## Warning: glm.fit: 数値的に 0 か 1 である確率が生じました
-
 ## Warning: glm.fit: 数値的に 0 か 1 である確率が生じました
-
 ## Warning: glm.fit: 数値的に 0 か 1 である確率が生じました
-
 ## Warning: glm.fit: 数値的に 0 か 1 である確率が生じました
-
 ## Warning: glm.fit: 数値的に 0 か 1 である確率が生じました
-
 ## Warning: glm.fit: 数値的に 0 か 1 である確率が生じました
-
 ## Warning: glm.fit: 数値的に 0 か 1 である確率が生じました
-
 ## Warning: glm.fit: 数値的に 0 か 1 である確率が生じました
-
 ## Warning: glm.fit: 数値的に 0 か 1 である確率が生じました
-
 ## Warning: glm.fit: 数値的に 0 か 1 である確率が生じました
-
 ## Warning: glm.fit: 数値的に 0 か 1 である確率が生じました
-
 ## Warning: glm.fit: 数値的に 0 か 1 である確率が生じました
-
 ## Warning: glm.fit: 数値的に 0 か 1 である確率が生じました</code></pre>
 <pre><code>##                    2.5 %       97.5 %
 ## (Intercept) 1.141551e-09 3.089622e-05
@@ -2017,43 +1982,24 @@ exp(coef(fit_scaled))</code></pre>
 exp(confint(fit_scaled))</code></pre>
 <pre><code>## Waiting for profiling to be done...</code></pre>
 <pre><code>## Warning: glm.fit: 数値的に 0 か 1 である確率が生じました
-
 ## Warning: glm.fit: 数値的に 0 か 1 である確率が生じました
-
 ## Warning: glm.fit: 数値的に 0 か 1 である確率が生じました
-
 ## Warning: glm.fit: 数値的に 0 か 1 である確率が生じました
-
 ## Warning: glm.fit: 数値的に 0 か 1 である確率が生じました
-
 ## Warning: glm.fit: 数値的に 0 か 1 である確率が生じました
-
 ## Warning: glm.fit: 数値的に 0 か 1 である確率が生じました
-
 ## Warning: glm.fit: 数値的に 0 か 1 である確率が生じました
-
 ## Warning: glm.fit: 数値的に 0 か 1 である確率が生じました
-
 ## Warning: glm.fit: 数値的に 0 か 1 である確率が生じました
-
 ## Warning: glm.fit: 数値的に 0 か 1 である確率が生じました
-
 ## Warning: glm.fit: 数値的に 0 か 1 である確率が生じました
-
 ## Warning: glm.fit: 数値的に 0 か 1 である確率が生じました
-
 ## Warning: glm.fit: 数値的に 0 か 1 である確率が生じました
-
 ## Warning: glm.fit: 数値的に 0 か 1 である確率が生じました
-
 ## Warning: glm.fit: 数値的に 0 か 1 である確率が生じました
-
 ## Warning: glm.fit: 数値的に 0 か 1 である確率が生じました
-
 ## Warning: glm.fit: 数値的に 0 か 1 である確率が生じました
-
 ## Warning: glm.fit: 数値的に 0 か 1 である確率が生じました
-
 ## Warning: glm.fit: 数値的に 0 か 1 である確率が生じました</code></pre>
 <pre><code>##                      2.5 %       97.5 %
 ## (Intercept)   3083.6046614 7.612233e+06
@@ -2215,6 +2161,55 @@ summary(marginal_effects)</code></pre>
 </div>
 <div id="ポアソン回帰分析" class="section level1" number="3">
 <h1><span class="header-section-number">3</span> ポアソン回帰分析</h1>
+<p>ポアソン回帰分析は，目的変数がカウントデータ，すなわち<strong>非負の整数</strong>である場合に適用される分析手法である．例えば，1日の来店者数や1日の売上数などがカウントデータである．</p>
+<div class="ref">
+<details>
+<summary>
+ポアソン回帰分析とは
+</summary>
+<p>ポアソン回帰分析は，目的変数がカウントデータであるため，目的変数の確率分布はポアソン分布を仮定する．
+ポアソン分布の確率密度関数<span class="math inline">\(P\)</span>は平均が<span class="math inline">\(\lambda\)</span>であるとき以下のように表される．<span class="math inline">\(P(y|\lambda)\)</span>は単位時間内にある事象が平均<span class="math inline">\(\lambda\)</span>回発生するというときに，その事象が<span class="math inline">\(y\)</span>回発生する確率を示す．</p>
+<p><span class="math display">\[
+P(y|\lambda) = \frac{\lambda^ye^{-\lambda}}{y!}
+\]</span></p>
+<p>ポアソン回帰分析は，このポアソン分布におけるモデルの決定変数である<span class="math inline">\(\lambda\)</span>を説明変数を用いて以下のように表現し，発生確率を予測しようとするものである．</p>
+<p><span class="math display">\[
+\lambda = e^{\beta_0 + \beta_1x_1 + \beta_2x_2 + \cdots}
+\]</span> あるいは対数表現を用いて <span class="math display">\[
+\log(\lambda) = \beta_0 + \beta_1x_1 + \beta_2x_2 + \cdots
+\]</span></p>
+</details>
+</div>
+<div class="practice">
+<p>この<a href="./practice/example_12_poisson.csv">データ</a>はある化学薬品の製造ラインでの1か月間毎日の欠陥品の数と，その日の最高気温と最低気温，湿度のデータである．このデータを用いて，最高気温，最低気温，湿度が欠陥品の数にどのような影響を与えるかをポアソン回帰分析を用いて調査せよ．</p>
+</div>
+<p>Rでポアソン回帰分析を行う場合には，<code>glm</code>関数の<code>family</code>引数に<code>poisson</code>を指定する．</p>
+<pre class="r"><code>fit_poisson &lt;- glm(欠陥品数 ~ 最高気温 + 最低気温 + 湿度, data = data, family = poisson)
+summary(fit_poisson)</code></pre>
+<pre><code>## 
+## Call:
+## glm(formula = 欠陥品数 ~ 最高気温 + 最低気温 + 湿度, 
+##     family = poisson, data = data)
+## 
+## Coefficients:
+##              Estimate Std. Error z value Pr(&gt;|z|)   
+## (Intercept)  1.892474   0.634302   2.984  0.00285 **
+## 最高気温    -0.005245   0.015389  -0.341  0.73326   
+## 最低気温     0.019633   0.015431   1.272  0.20326   
+## 湿度        -0.007982   0.008320  -0.959  0.33736   
+## ---
+## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1
+## 
+## (Dispersion parameter for poisson family taken to be 1)
+## 
+##     Null deviance: 30.126  on 29  degrees of freedom
+## Residual deviance: 27.197  on 26  degrees of freedom
+## AIC: 138.79
+## 
+## Number of Fisher Scoring iterations: 4</code></pre>
+<div id="結果の報告-2" class="section level2" number="3.1">
+<h2><span class="header-section-number">3.1</span> 結果の報告</h2>
+</div>
 </div>
 
 
