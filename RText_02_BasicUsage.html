@@ -1481,14 +1481,14 @@ border-radius: 0px;
 
 <h1 class="title toc-ignore">RとRStuidoの基本操作</h1>
 <h4 class="author">藤野秀則,</h4>
-<h4 class="date">初版日:2024-05-02 更新日:2024-10-21</h4>
+<h4 class="date">初版日:2024-05-02 更新日:2024-10-25</h4>
 
 </div>
 
 
 <div id="オブジェクト" class="section level1" number="1">
 <h1><span class="header-section-number">1</span> オブジェクト</h1>
-<p>Rでは<strong>オブジェクト</strong>と呼ばれる箱に計算結果の数値や読み込んだデータ（後で説明する）を格納することができる．オブジェクトに格納しておくと，後からそれらの値やデータを再度利用したくなったときに，いちいち再度計算式を入力したり，データの読み込みをすることなく，オブジェクトを呼び出すだけで，それらの値やデータを呼び出すことができる．</p>
+<p>Rでは<strong>オブジェクト（あるいは変数）</strong>と呼ばれる「箱」に計算結果の数値や読み込んだデータ（後で説明する）を格納することができる．オブジェクトに格納しておくと，後からそれらの値やデータを再度利用したくなったときに，いちいち再度計算式を入力したり，データの読み込みをすることなく，オブジェクトを呼び出すだけで，それらの値やデータを呼び出すことができる．</p>
 <p>以下の例では<code>5－3</code>の結果を<code>Res</code>という名前のオブジェクトに格納し，さらに<code>Res</code>というオブジェクト名を使ってその中身（計算結果）を呼び出している．</p>
 <pre class="r"><code>Res &lt;- 5-3
 Res</code></pre>
@@ -1526,7 +1526,7 @@ print(Res)</code></pre>
 my_res.power &lt;- my_res ^3</code></pre>
 <p>なお，間違えた名前で呼び出すと，もしその名前のオブジェクトが他にないのであれば以下のようなエラーが帰ってくる．</p>
 <pre class="r"><code>RES</code></pre>
-<pre><code>## Error in eval(expr, envir, enclos):  オブジェクト &#39;RES&#39; がありません</code></pre>
+<pre><code>## Error: オブジェクト &#39;RES&#39; がありません</code></pre>
 <p>「オブジェクトが見つかりません」ということで，このエラーが帰ってきたら，オブジェクト名が間違えているかを確認してほしい．</p>
 <p>ただし，オブジェクト名を間違えていた時に，間違えた名前と同一の名前のオブジェクトが別に存在していた場合には，このようなエラーは帰って来ずに，そのまま間違えたオブジェクトを使って続く処理が実行されていくので，その場合には自分で間違いに気づきにくくなる．RStduioではすでに使われているオブジェクト名であれば，最初の数文字を入力するとリスト表示してくれる入力支援機能があるので，オブジェクトが増えてきたときにはそれを是非利用して入力するとよい．</p>
 </div>
@@ -1578,8 +1578,11 @@ ls()</code></pre>
 <p><code>b</code>と<code>c</code>が除かれたのが確認できる．</p>
 <p>なお，<code>rm()</code>を<a href="#スクリプト">スクリプト</a>（後程説明）に書き入れても構わないが，スクリプトに書き入れると，そのスクリプトを実行する度にオブジェクトの削除が行われることになるので，必要に応じてConsoleで実行するのが良いだろう．</p>
 <div class="ref">
-<p><strong>予約語</strong></p>
-<p>Rでは，予約語と呼ばれる特定の単語は変数名として使うことができない．予約語は以下の通りである．</p>
+<details>
+<summary>
+オブジェクト名に使ってはいけない語
+</summary>
+<p>Rでは，予約語と呼ばれる特定の単語はオブジェクト名として使うことができない．予約語は以下の通りである．</p>
 <table>
 <thead>
 <tr class="header">
@@ -1680,7 +1683,7 @@ ls()</code></pre>
 </table>
 <p>これらの予約語を単独でオブジェクト名にして値を代入しようとしてもエラーが帰ってくる．</p>
 <pre class="r"><code>if &lt;- 5</code></pre>
-<pre><code>## Error: &lt;text&gt;:1:4:  想定外の付値です 
+<pre><code>## Error in parse(text = input): &lt;text&gt;:1:4: 想定外の付値です
 ## 1: if &lt;-
 ##        ^</code></pre>
 <p>さらに，以下のものは定数として予め数値が定義されている．</p>
@@ -1739,6 +1742,7 @@ print(pi)</code></pre>
 <pre class="r"><code>rm(pi)
 print(pi)</code></pre>
 <pre><code>## [1] 3.141593</code></pre>
+</details>
 </div>
 <div class="work">
 <p>前回の課題について，各式の計算結果をオブジェクトに出力させるとともに，print()関数を用いてその内容を出力させないさい．なお，それぞれのオブジェクト名は好きな名前をつけて構わない．</p>
@@ -1767,15 +1771,13 @@ myName</code></pre>
 <h2><span class="header-section-number">3.1</span> データの型</h2>
 <p>オブジェクトにどのようなデータが収められているかによって，そのオブジェクトには「型」と呼ばれる属性が付与される．数値が収められていれば，そのオブジェクトは数値型（<code>Numeric</code>）となるし，文字列が収められていれば文字列型(<code>Character</code>)となる．ほかにも論理型(<code>Logical</code>)や日付型(<code>Date</code>)などいろいろな型がある．</p>
 <div class="ref">
-<P>
 <p>厳密には，オブジェクトに入れていない数値や文字列そのものも，それぞれ数値型や文字列型のデータである．つまり型とはデータそのものに付随する属性であり，<code>オブジェクトの型＝その中見のデータの型</code>である．</p>
-</p>
 </div>
 <p>基本的に型が異なる者同士を計算させることはできない．</p>
 <pre class="r"><code>a &lt;- 5
 b &lt;- &quot;2&quot;
 a-b</code></pre>
-<pre><code>## Error in a - b:  二項演算子の引数が数値ではありません</code></pre>
+<pre><code>## Error in a - b: 二項演算子の引数が数値ではありません</code></pre>
 <p>この例では，bには<code>2</code>ではなく<code>&quot;2&quot;</code>という文字列が格納されている．このため<code>数値‐文字列</code>という形で方の異なるもの同士を計算しようとしたので，エラーとなった．</p>
 <p>ただし，関数の場合には，数値でもそのまま文字列をとして扱ってくれるものもある．</p>
 <pre class="r"><code>a &lt;- 12345
@@ -1803,7 +1805,7 @@ class(a)</code></pre>
 <pre class="r"><code>a &lt;- 12345
 b &lt;- &quot;12345&quot;
 a+b #　これはエラー</code></pre>
-<pre><code>## Error in a + b:  二項演算子の引数が数値ではありません</code></pre>
+<pre><code>## Error in a + b: 二項演算子の引数が数値ではありません</code></pre>
 <pre class="r"><code>a + as.numeric(b) </code></pre>
 <pre><code>## [1] 24690</code></pre>
 <div class="work">
@@ -2054,9 +2056,14 @@ output:
 <p>この部分の記法はYAMLと呼ばれるもので，この部分はRMarkdownファイルのメタデータとして扱われる．
 記法そのものを覚えておくのは面倒なので，上記のヘッダーを毎回コピペして，例文のヘッダーを上書きするとよいだろう．</p>
 <div class="ref">
-<p>もともとYAMLは”Yet Another Markup
+<details>
+<summary>
+YAMLとは
+</summary>
+もともとYAMLは”Yet Another Markup
 Langage”（一応まだもう一つのマークアップ言語）という意味だったが，その後「マークアップ言語ではない」という意味の”YAML
-Ain’t Markup Language”という意味に変更された．</p>
+Ain’t Markup Language”という意味に変更された．
+</details>
 </div>
 <p>ここを弄ることで他にも色々と文書の体裁を変えることもできる（例えば，この資料のように見出し番号を付与する等）が，それはかなり応用になるので，この場では省略する．興味のある人は以下のリンクを見てみるとよいだろう．</p>
 <p><a href="https://kazutan.github.io/kazutanR/Rmd_intro.html#yaml%E3%83%98%E3%83%83%E3%83%80%E3%81%AE%E5%9F%BA%E6%9C%AC">https://kazutan.github.io/kazutanR/Rmd_intro.html#yamlヘッダの基本</a></p>
