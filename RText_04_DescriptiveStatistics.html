@@ -1508,15 +1508,20 @@ Shohoku</code></pre>
 ## 11 佐々岡     13     5
 ## 12   桑田     15     4</code></pre>
 <div class="ref">
-<p>なお，ダウンロードしたcsvファイルは<strong><em>UTF-8</em></strong>という形式で保存したファイルであり，そのまま読み込めば問題なくRで読み込めるが，このファイルをExcelで開いた場合には，文字化けが起こることがある．
+<details>
+<summary>
+CSVファイルの文字コード（fileEncording）について
+</summary>
+なお，ダウンロードしたcsvファイルは<strong><em>UTF-8</em></strong>という形式で保存したファイルであり，そのまま読み込めば問題なくRで読み込めるが，このファイルをExcelで開いた場合には，文字化けが起こることがある．
 このファイルをExcelで開きたい場合には，一旦このファイルを右クリックメニューからメモ帳で開き，「名前を付けて保存」で「文字コード」を「ANSI」に変更して保存し直すことで，Excelで開いても文字化けが起こらないようになる．
-ただし，今度はRで読み込んだ場合に文字化けが起こる可能性がある．その場合には，Rで読み込む際に<code>fileEncoding=&quot;SJIS&quot;</code>というオプションを追加して読み込むことで文字化けを防ぐことができる．</p>
+ただし，今度はRで読み込んだ場合に文字化けが起こる可能性がある．その場合には，Rで読み込む際に<code>fileEncoding=&quot;SJIS&quot;</code>というオプションを追加して読み込むことで文字化けを防ぐことができる．
+</details>
 <!-- ```{r} -->
 <!-- Shohoku <- read.csv("practice/03_example_Shohoku.csv", header = TRUE, fileEncoding="SJIS") -->
 <!-- Shohoku -->
 <!-- ``` -->
 </div>
-<p><strong>以降は、前回紹介した<a href="./RText_03_BasicUsage2.html#RMakrdown">RMarkdown</a>を作成し、上記の内容を含めて自分で入力・実行して出力結果を確認しながら進めていくこと。</strong></p>
+<p><strong>以降は、前々回紹介した<a href="./RText_03_BasicUsage2.html#RMakrdown">RMarkdown</a>を作成し、上記の内容を含めて自分で入力・実行して出力結果を確認しながら進めていくこと。</strong></p>
 <div id="代表値平均中央値最頻値" class="section level2" number="1.1">
 <h2><span class="header-section-number">1.1</span>
 代表値（平均、中央値、最頻値）</h2>
@@ -1763,8 +1768,8 @@ print(Q)</code></pre>
 <p>インストールが完了すれば、<code>library()</code>関数を使って<code>psych</code>パッケージを読み込み、<code>describe()</code>関数を実行すると、以下のような結果が表示される。</p>
 <pre class="r"><code>library(psych)</code></pre>
 <pre><code>## 
-##  次のパッケージを付け加えます: &#39;psych&#39;</code></pre>
-<pre><code>##  以下のオブジェクトは &#39;package:ggplot2&#39; からマスクされています:
+## 次のパッケージを付け加えます: &#39;psych&#39;</code></pre>
+<pre><code>## 以下のオブジェクトは &#39;package:ggplot2&#39; からマスクされています:
 ## 
 ##     %+%, alpha</code></pre>
 <pre class="r"><code>describe(Shohoku)</code></pre>
@@ -1996,8 +2001,8 @@ c(Band_Lower, Band_Upper)</code></pre>
 <p>Rで分散の信頼区間を算出する方法も2つある。1つは<code>EnvStats</code>パッケージに含まれている<code>varTest()</code>関数を使う方法である。使うには<code>EnvStats</code>パッケージをインストールしたうえで、<code>library()</code>関数を実行する必要がある（<a href="#PackagesInstall">こちら参照</a>)。</p>
 <pre class="r"><code>library(EnvStats)</code></pre>
 <pre><code>## 
-##  次のパッケージを付け加えます: &#39;EnvStats&#39;</code></pre>
-<pre><code>##  以下のオブジェクトは &#39;package:stats&#39; からマスクされています:
+## 次のパッケージを付け加えます: &#39;EnvStats&#39;</code></pre>
+<pre><code>## 以下のオブジェクトは &#39;package:stats&#39; からマスクされています:
 ## 
 ##     predict, predict.lm</code></pre>
 <pre class="r"><code>res&lt;-varTest(Shohoku$score)

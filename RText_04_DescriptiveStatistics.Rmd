@@ -38,19 +38,19 @@ Shohoku
 
 
 :::ref
+<details>
+<summary>CSVファイルの文字コード（fileEncording）について</summary>
 なお，ダウンロードしたcsvファイルは***UTF-8***という形式で保存したファイルであり，そのまま読み込めば問題なくRで読み込めるが，このファイルをExcelで開いた場合には，文字化けが起こることがある．
 このファイルをExcelで開きたい場合には，一旦このファイルを右クリックメニューからメモ帳で開き，「名前を付けて保存」で「文字コード」を「ANSI」に変更して保存し直すことで，Excelで開いても文字化けが起こらないようになる．
 ただし，今度はRで読み込んだ場合に文字化けが起こる可能性がある．その場合には，Rで読み込む際に`fileEncoding="SJIS"`というオプションを追加して読み込むことで文字化けを防ぐことができる．
-
-
+</details>
 <!-- ```{r} -->
 <!-- Shohoku <- read.csv("practice/03_example_Shohoku.csv", header = TRUE, fileEncoding="SJIS") -->
 <!-- Shohoku -->
 <!-- ``` -->
-
 :::
 
-**以降は、前回紹介した[RMarkdown](./RText_03_BasicUsage2.html#RMakrdown)を作成し、上記の内容を含めて自分で入力・実行して出力結果を確認しながら進めていくこと。**
+**以降は、前々回紹介した[RMarkdown](./RText_03_BasicUsage2.html#RMakrdown)を作成し、上記の内容を含めて自分で入力・実行して出力結果を確認しながら進めていくこと。**
 
 ## 代表値（平均、中央値、最頻値）
 
