@@ -28,7 +28,7 @@ knitr::opts_chunk$set(echo = TRUE)
 
 あるデータセットの特徴を把握するときに用いられる統計量。元のデータから算出される。なお、ここではデータとは数値のみで構成されているものとする。
 
-以下では実際に次のデータ[【03_example.csv】](./practice/03_example_Shohoku.csv)を使って例を示していく。このデータを右クリックメニューからダウンロードしたうえで，自分自身のPosit CloudのProjectに[前回の要領](./RText_03_BasicUsage2.html#データの読み込み)でアップロードしておくこと．
+以下では実際に次のデータ[【04_example.csv】](./practice/04_example_Shohoku.csv)を使って例を示していく。このデータを右クリックメニューからダウンロードしたうえで，自分自身のPosit CloudのProjectに[前回の要領](./RText_03_BasicUsage2.html#データの読み込み)でアップロードしておくこと．
 
 
 ```{r}
