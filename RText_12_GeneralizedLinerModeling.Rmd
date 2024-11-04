@@ -198,7 +198,8 @@ BIC(fit)
 :::ref
 <details>
 <summary>対数尤度，AIC，BICの詳細な説明</summary>
-対数尤度，AIC，BICはいずれも尤度（likelihood）を基に算出される指標である．
+対数尤度，AIC，BICはいずれも
+<a name="likelihood">尤度（likelihood）</a>を基に算出される指標である．
 では，尤度とはどういうものだろうか．
 
 尤度とは，手許にあるデータから目的変数を予測するモデル式を立てた時に，その予測式のモデルと目的変数の確率分布の下で実際に観測されたデータが得られる確率を表す．
@@ -529,23 +530,28 @@ summary(marginal_effects)
 <details>
 <summary>ポアソン回帰分析とは</summary>
 ポアソン回帰分析は，目的変数がカウントデータであるため，目的変数の確率分布はポアソン分布を仮定する．
-ポアソン分布の確率密度関数$P$は平均が$\lambda$であるとき以下のように表される．$P(y|\lambda)$は単位時間内にある事象が平均$\lambda$回発生するというときに，その事象が$y$回発生する確率を示す．
+ポアソン分布の確率密度関数$P$は<a name ="lambda">平均が$\lambda$である</a>とき以下のように表される．$P(y|\lambda)$は単位時間内にある事象が平均$\lambda$回発生するというときに，その事象が$y$回発生する確率を示す．
 
 $$
 P(y|\lambda) = \frac{\lambda^ye^{-\lambda}}{y!}
 $$
 
-ポアソン回帰分析は，このポアソン分布におけるモデルの決定変数である$\lambda$を説明変数を用いて以下のように表現し，発生確率を予測しようとするものである．
+ポアソン回帰分析は，目的変数を$y$，説明変数を$x_{1}, x_{2},\cdots$，として，目的変数がポアソン分布に従っていると仮定されている時，実際に観測されたサンプル$S_i=(y_i, x_{i1}, x_{i2}, \cdots)$がどの程度の確率で得られる値であったのかを以下のように予測する．
 
 $$
-\lambda = e^{\beta_0 + \beta_1x_1 + \beta_2x_2 + \cdots}
+P_i = \frac{\lambda_i^{y_i}e^{-\lambda_i}}{y_i!}
 $$
-あるいは対数表現を用いて
+ただし，$\lambda_i$は以下のように表される．
+
 $$
-\log(\lambda) = \beta_0 + \beta_1x_1 + \beta_2x_2 + \cdots
+\begin{align*}
+&\lambda_i = e^{\beta_0 + \beta_1x_{i1} + \beta_2x_{i2} + \cdots}\\
+&あるいは \\
+&\ln(\lambda_i) = \beta_0 + \beta_1x_{i1} + \beta_2x_{i2} + \cdots
+\end{align*}
 $$
 
-
+このような確率$P$をデータセット全体で算出し，それらを互いに掛け合わせたもの（すなわち[尤度](#likelihood)）が最大となるような$\beta_0, \beta_1, \beta_2, \cdots$を求めるのがポアソン回帰分析である．
 
 </details>
 :::
@@ -558,11 +564,15 @@ set.seed(34)
 
 # データ作成
 data <- data.frame(
-  欠陥品数 = rpois(30, 5),
-  最高気温 = rnorm(30, 25, 5),
-  最低気温 = rnorm(30, 15, 5),
-  湿度 = rnorm(30, 50, 10)
+  最高気温 = round(rnorm(30, 25, 5),1),
+  最低気温 = round(rnorm(30, 15, 5),1),
+  湿度 = round(rnorm(30, 50, 10),0)
+
 )
+
+  欠陥品数 = rpois(30,0.3*data$湿度)+rpois(30, 5)
+
+data <- cbind(data, 欠陥品数)
 
 # データの保存
 write.csv(data, "example_12_poisson.csv", row.names = FALSE)
@@ -578,5 +588,19 @@ Rでポアソン回帰分析を行う場合には，`glm`関数の`family`引数
 fit_poisson <- glm(欠陥品数 ~ 最高気温 + 最低気温 + 湿度, data = data, family = poisson)
 summary(fit_poisson)
 ```
+この結果から，$\lambda$は以下のような式によって表現されることがわかる．
+
+$$
+\ln(\lambda) = `r round(coef(fit_poisson)[1],3)` + 
+`r round(coef(fit_poisson)[2],3)`\times\text{最高気温}  
+`r round(coef(fit_poisson)[3],3)`\times\text{最低気温} + 
+`r round(coef(fit_poisson)[4],3)`\times\text{湿度}
+$$
+
+
+また，欠陥品の発生確率に有意な影響を与えているのは，湿度のみであることがわかる．またこの回帰係数から，湿度が1%上昇すると**$\lambda$の対数**が`r round(coef(fit_poisson)[4],3)`だけ上昇する，すわなち湿度が1%上昇すると$\lambda$が$\exp(`r round(coef(fit_poisson)[4],3)`)$=`r round(exp(coef(fit_poisson)[4]),3)`倍になることがわかる．
+
+$\lambda$とは[参考](#lambda)で述べている通りポアソン分布におけるカウントデータの平均であり，その時の説明変数の値の下での目的変数の期待値でもあることから，上記の結果は要するに，湿度が1%上昇すると欠陥品の期待値が`r round(exp(coef(fit_poisson)[4]),3)`倍になることを示す．
+
 
 ## 結果の報告
