@@ -1,0 +1,31 @@
+---
+title: "Untitled"
+author: "藤野秀則"
+date: "2024-11-08"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## R Markdown
+
+```{r}
+hana<-read.csv("./practice/04_work_basicStatistics2.csv")
+## 花びらの長さの平均
+
+res.mean<-aggregate(花びらの長さ~種類, hana,mean)
+print(res.mean)
+
+```
+
+```{r}
+
+## 花びらの長さの標準偏差
+
+res.sd<-aggregate(花びらの長さ~種類, hana, sd)
+print(res.sd)
+
+```
+
