@@ -1486,11 +1486,11 @@ border-radius: 0px;
 </div>
 
 
-<p>以下では具体的な例を示すためにRに最初から入っているデモ用データの<code>iris</code>を用いる。
-irisデータはアイリス（菖蒲）のがく(Sepal)と花びら(Petal)の長さ(length)と幅(width)の実測データが3つの種類（<code>Setosa</code>,
+<p>以下では具体的な例を示すためにRに最初から入っているデモ用データの<code>iris</code>を用いる．
+irisデータはアイリス（菖蒲）のがく(Sepal)と花びら(Petal)の長さ(length)と幅(width)の実測データが3つのアイリスの種類（<code>Setosa</code>,
 <code>vergicolor</code>,
-<code>virginica</code>）ごとに50点ずつ格納されている。
-内容を確認するために、<code>summary()</code>関数と<code>head()</code>関数（データフレームの冒頭データを出力させる関数)を実行してみた。</p>
+<code>virginica</code>）ごとに50点ずつ格納されている．
+内容を確認するために，<code>summary()</code>関数と<code>head()</code>関数（データフレームの冒頭データを出力させる関数)を実行してみた．</p>
 <pre class="r"><code>data_iris &lt;- iris #irisデータを呼び出してdというオブジェクトに格納
 summary(data_iris)</code></pre>
 <pre><code>##   Sepal.Length    Sepal.Width     Petal.Length    Petal.Width   
@@ -1515,7 +1515,7 @@ summary(data_iris)</code></pre>
 ## 4          4.6         3.1          1.5         0.2  setosa
 ## 5          5.0         3.6          1.4         0.2  setosa
 ## 6          5.4         3.9          1.7         0.4  setosa</code></pre>
-<p>列名が英語のままだと分かりにくいので、日本語に翻訳した名前に置き換える(-&gt;<a href="./RText_03_BasicUsage2.html#列名へのアクセスと変更">参考</a>)。以下はそのためのコード。</p>
+<p>列名が英語のままだと分かりにくいので，日本語に翻訳した名前に置き換える(-&gt;<a href="./RText_03_BasicUsage2.html#列名へのアクセスと変更">参考</a>)．以下はそのためのコード．</p>
 <pre class="r"><code>colnames(data_iris) &lt;-  c(&quot;がく長&quot;,&quot;がく幅&quot;,&quot;花びら長&quot;,&quot;花びら幅&quot;,&quot;種類&quot;)
 head(data_iris)</code></pre>
 <pre><code>##   がく長 がく幅 花びら長 花びら幅   種類
@@ -1527,9 +1527,9 @@ head(data_iris)</code></pre>
 ## 6    5.4    3.9      1.7      0.4 setosa</code></pre>
 <div id="抽出" class="section level1" number="1">
 <h1><span class="header-section-number">1</span> 抽出</h1>
-<p>グループ分け変数を持ったデータを処理するときに、ある特定のグループのデータだけを抜き出したいということはよくある。
-そうした「データの抽出」を行うための関数として<code>tidyverse</code>パッケージに<code>filter()</code>関数が設けられている。利用するためにはTools-&gt;install.packagesで<code>tidyverse</code>パッケージをインストールしたうえで、スクリプト上で<code>library(tidyverse)</code>と入力してパッケージを読み込む必要がある。</p>
-<p><code>filter()</code>関数の利用法は、第1引数に元のデータを与え、第2引数に検索条件を与える。検索条件の書式のパターンは以下の通り。</p>
+<p>グループ分け変数を持ったデータを処理するときに，ある特定のグループのデータだけを抜き出したいということはよくある．
+そうした「データの抽出」を行うための関数として<code>tidyverse</code>パッケージに<code>filter()</code>関数が設けられている．利用するためにはTools-&gt;install.packagesで<code>tidyverse</code>パッケージをインストールしたうえで，スクリプト上で<code>library(tidyverse)</code>と入力してパッケージを読み込む必要がある．</p>
+<p><code>filter()</code>関数の利用法は，第1引数に元のデータを与え，第2引数に検索条件を与える．検索条件の書式のパターンは以下の通り．</p>
 <table>
 <colgroup>
 <col width="21%" />
@@ -1544,7 +1544,7 @@ head(data_iris)</code></pre>
 <tbody>
 <tr class="odd">
 <td align="left">元データ$列名==Key</td>
-<td align="left">列名で指定した列の値がKeyと一致しているものを抽出。「=」を重ねる点がポイント。</td>
+<td align="left">列名で指定した列の値がKeyと一致しているものを抽出．「=」を重ねる点がポイント．</td>
 </tr>
 <tr class="even">
 <td align="left">元データ$列名&gt;Key</td>
@@ -1568,8 +1568,8 @@ head(data_iris)</code></pre>
 <pre><code>## ── Attaching core tidyverse packages ──────────────────────── tidyverse 2.0.0 ──
 ## ✔ dplyr     1.1.4     ✔ readr     2.1.5
 ## ✔ forcats   1.0.0     ✔ stringr   1.5.1
-## ✔ ggplot2   3.5.1     ✔ tibble    3.2.1
-## ✔ lubridate 1.9.3     ✔ tidyr     1.3.1
+## ✔ ggplot2   3.5.0     ✔ tibble    3.2.1
+## ✔ lubridate 1.9.3     ✔ tidyr     1.3.0
 ## ✔ purrr     1.0.2     
 ## ── Conflicts ────────────────────────────────────────── tidyverse_conflicts() ──
 ## ✖ dplyr::filter() masks stats::filter()
@@ -1631,9 +1631,9 @@ summary(res)</code></pre>
 ##  Mean   :6.61   Mean   :2.966   Mean   :5.263   Mean   :1.816                  
 ##  3rd Qu.:6.85   3rd Qu.:3.150   3rd Qu.:5.700   3rd Qu.:2.100                  
 ##  Max.   :7.90   Max.   :3.800   Max.   :6.900   Max.   :2.500</code></pre>
-<p>条件は複数並べることもできる。<code>|</code>は複数の条件のいずれかにマッチすれば抽出される。<code>&amp;</code>は複数条件の全てにマッチするものが抽出される。
-それぞれ以下に示す。</p>
-<pre class="r"><code>res &lt;- filter(data_iris, がく長&gt;=6 | 花びら長&gt;1.5)
+<p>条件は複数並べることもできる．<code>|</code>は複数の条件のいずれかにマッチすれば抽出される．<code>&amp;</code>は複数条件の全てにマッチするものが抽出される．
+それぞれ以下に示す．</p>
+<pre class="r"><code>res &lt;- filter(data_iris, がく長&gt;=6 | 花びら長&gt;1.5) # がく長が6以上「または」花びら長が1.5より大きいもの
 summary(res)</code></pre>
 <pre><code>##      がく長          がく幅        花びら長        花びら幅             種類   
 ##  Min.   :4.700   Min.   :2.00   Min.   :1.600   Min.   :0.200   setosa    :13  
@@ -1642,7 +1642,7 @@ summary(res)</code></pre>
 ##  Mean   :6.125   Mean   :2.94   Mean   :4.535   Mean   :1.519                  
 ##  3rd Qu.:6.600   3rd Qu.:3.20   3rd Qu.:5.400   3rd Qu.:2.000                  
 ##  Max.   :7.900   Max.   :3.90   Max.   :6.900   Max.   :2.500</code></pre>
-<pre class="r"><code>res &lt;- filter(data_iris, がく長&gt;=6 &amp; 花びら長&gt;1.5)
+<pre class="r"><code>res &lt;- filter(data_iris, がく長&gt;=6 &amp; 花びら長&gt;1.5) # がく長が6以上「かつ」花びら長が1.5より大きいもの
 summary(res)</code></pre>
 <pre><code>##      がく長         がく幅         花びら長        花びら幅             種類   
 ##  Min.   :6.00   Min.   :2.200   Min.   :4.000   Min.   :1.000   setosa    : 0  
@@ -1683,7 +1683,7 @@ summary(res)</code></pre>
 ##                 
 ##                 
 ## </code></pre>
-<p>抽出したデータのある列だけが必要だという場合には、抽出したデータを収めたオブジェクトにに<code>$</code>や<code>[]</code>をつけて指定すればよい。以下では内容を確認するため、<code>head()</code>関数を使って最初の数行だけを表示させている。</p>
+<p>抽出したデータのある列だけが必要だという場合には，抽出したデータを収めたオブジェクトにに<code>$</code>や<code>[]</code>をつけて指定すればよい．以下では内容を確認するため，<code>head()</code>関数を使って最初の数行だけを表示させている．</p>
 <pre class="r"><code>res &lt;- filter(data_iris, がく長&gt;=6 | 花びら長&gt;1.5)
 res&lt;- res$花びら長
 head(res)</code></pre>
@@ -1721,33 +1721,25 @@ head(res3)</code></pre>
 ## 4      1.7      0.2
 ## 5      1.7      0.5
 ## 6      1.9      0.2</code></pre>
-<p><code>$</code>と<code>[]</code>とで出力が違うのは<a href="./RText_03_BasicUsage2.html#列へのアクセス">こちら</a>で説明したように、<code>$</code>は指定した列をベクトルとして取り出すのに対して、<code>[]</code>は指定した列だけで構成されるデータフレームとして取り出されるためである。</p>
-<!--以下、2024/5/16　追記 -->
+<p><code>$</code>と<code>[]</code>とで出力が違うのは<a href="./RText_03_BasicUsage2.html#列へのアクセス">こちら</a>で説明したように，<code>$</code>は指定した列をベクトルとして取り出すのに対して，<code>[]</code>は指定した列だけで構成されるデータフレームとして取り出されるためである．</p>
+<!--以下，2024/5/16　追記 -->
 </div>
 <div id="数値の置換" class="section level1" number="2">
 <h1><span class="header-section-number">2</span> 数値の置換</h1>
-<p>数値の置換には<code>ifelse()</code>関数を応用する。<code>ifelse()</code>関数は、第1引数に条件を記述し（条件の記述方法は検索と同じ）、第2引数には条件にマッチした場合に置き換える値、第3引数にはマッチしなかった場合に置き換える値を記載する（Excelの<code>if()</code>関数と同じ引数構造である）。<code>ifelse()</code>関数の実行結果として最終的に返ってくるのは、そうした置き換えが行われたベクトルとなる。あくまでベクトルが返ってくるだけなので、実際に置き換えをデータに反映させるためには、元のデータの元の列に返ってきたベクトルを代入するなり、元のデータに新しい列を作ってベクトルを代入するなりする必要がある。</p>
+<p>数値の置換には<code>ifelse()</code>関数を応用する．<code>ifelse()</code>関数は，第1引数に条件を記述し（条件の記述方法は検索と同じ），第2引数には条件にマッチした場合に置き換える値，第3引数にはマッチしなかった場合に置き換える値を記載する（Excelの<code>if()</code>関数と同じ引数構造である）．<code>ifelse()</code>関数の実行結果として最終的に返ってくるのは，そうした置き換えが行われたベクトルとなる．あくまでベクトルが返ってくるだけなので，実際に置き換えをデータに反映させるためには，元のデータの元の列に返ってきたベクトルを代入するなり，元のデータに新しい列を作ってベクトルを代入するなりする必要がある．</p>
 <div class="ref">
-<p>「値」と記載しているが、コンピュータの用語として「値」という場合には、数値だけでなく文字列も含められていることは覚えておこう。数値だけをいう場合には「数値」、文字列だけを言う場合には「文字列」とはっきりと言わなければならない。</p>
+<p>「値」と記載しているが，コンピュータの用語として「値」という場合には，数値だけでなく文字列も含められていることは覚えておこう．数値だけをいう場合には「数値」，文字列だけを言う場合には「文字列」とはっきりと言わなければならない．</p>
 </div>
-<p>以下の例ではがく長が平均値より上か下かで平均以上なら1、未満なら0を割り当てる変数を作っている。</p>
+<p>以下の例ではがく長が平均以上なら1，未満なら0を割り当てた新しい変数<code>bがく長</code>を作成している．</p>
 <pre class="r"><code>data_iris2 &lt;- data_iris 
 data_iris2$bがく長 &lt;- ifelse(data_iris2$がく長 &gt;= mean(data_iris2$がく長), 1, 0)
-summary(data_iris2)</code></pre>
-<pre><code>##      がく長          がく幅         花びら長        花びら幅    
-##  Min.   :4.300   Min.   :2.000   Min.   :1.000   Min.   :0.100  
-##  1st Qu.:5.100   1st Qu.:2.800   1st Qu.:1.600   1st Qu.:0.300  
-##  Median :5.800   Median :3.000   Median :4.350   Median :1.300  
-##  Mean   :5.843   Mean   :3.057   Mean   :3.758   Mean   :1.199  
-##  3rd Qu.:6.400   3rd Qu.:3.300   3rd Qu.:5.100   3rd Qu.:1.800  
-##  Max.   :7.900   Max.   :4.400   Max.   :6.900   Max.   :2.500  
-##          種類       bがく長      
-##  setosa    :50   Min.   :0.0000  
-##  versicolor:50   1st Qu.:0.0000  
-##  virginica :50   Median :0.0000  
-##                  Mean   :0.4667  
-##                  3rd Qu.:1.0000  
-##                  Max.   :1.0000</code></pre>
+print(data_iris2$bがく長)</code></pre>
+<pre><code>##   [1] 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
+##  [38] 0 0 0 0 0 0 0 0 0 0 0 0 0 1 1 1 0 1 0 1 0 1 0 0 1 1 1 0 1 0 0 1 0 1 1 1 1
+##  [75] 1 1 1 1 1 0 0 0 0 1 0 1 1 1 0 0 0 1 0 0 0 0 0 1 0 0 1 0 1 1 1 1 0 1 1 1 1
+## [112] 1 1 0 0 1 1 1 1 1 1 0 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 0 1 1 1 1 1
+## [149] 1 1</code></pre>
+<p>ついでに<code>as.factor()</code>を用いて要因型に変換をしてみた．</p>
 <pre class="r"><code>data_iris2$bがく長 &lt;- as.factor(data_iris2$bがく長)
 summary(data_iris2)</code></pre>
 <pre><code>##      がく長          がく幅         花びら長        花びら幅    
@@ -1766,7 +1758,12 @@ summary(data_iris2)</code></pre>
 ## </code></pre>
 <div id="ifelseの入れ子" class="section level2" number="2.1">
 <h2><span class="header-section-number">2.1</span> ifelse()の入れ子</h2>
-<p><code>ifelse()</code>関数は入れ子にすることもできる。以下の例では、がく長を以下のように4段階に分けている．</p>
+<p><code>ifelse()</code>関数は入れ子にすることもできる．すなわち，</p>
+<pre><code>ifelse(&lt;&lt;条件&gt;&gt;, &lt;&lt;条件が真の場合の処理&gt;&gt;, 
+    ifelse(&lt;&lt;条件2&gt;&gt;, &lt;&lt;条件2が真の場合の処理&gt;&gt;, &lt;&lt;条件2が偽の場合の処理)
+    )</code></pre>
+<p>という書き方ができる．</p>
+<p>以下の例では，入れ子を用いてがく長を以下の4段階に分けてたものを<code>bがく長</code>に格納している．</p>
 <ul>
 <li>平均-標準偏差未満には0</li>
 <li>平均-標準偏差以上，平均未満ならば1</li>
@@ -1774,14 +1771,20 @@ summary(data_iris2)</code></pre>
 <li>平均＋標準偏差以上ならば3</li>
 </ul>
 <pre class="r"><code>data_iris2 &lt;- data_iris
-がく_mean &lt;- mean(data_iris2$がく長)
-がく_sd &lt;-sd(data_iris2$がく長)
-data_iris2$bがく長 &lt;- ifelse(data_iris2$がく長 &lt; がく_mean-がく_sd,0,
-                          ifelse(data_iris2$花びら長 &lt;がく_mean,1,
-                                 ifelse(data_iris2$花びら長 &lt; がく_mean+がく_sd,2,3)
+M &lt;- mean(data_iris2$がく長)
+SD &lt;-sd(data_iris2$がく長)
+data_iris2$bがく長 &lt;- ifelse(data_iris2$がく長 &lt; M-SD,0,
+                          ifelse(data_iris2$花びら長 &lt;M,1,
+                                 ifelse(data_iris2$花びら長 &lt; M+SD,2,3)
                                 )
                           )
-data_iris2$bがく長 &lt;- as.factor(data_iris2$bがく長)
+print(data_iris2$bがく長)</code></pre>
+<pre><code>##   [1] 1 0 0 0 0 1 0 0 0 0 1 0 0 0 1 1 1 1 1 1 1 1 0 1 0 0 0 1 1 0 0 1 1 1 0 0 1
+##  [38] 0 0 1 0 0 0 0 1 0 1 0 1 0 1 1 1 1 1 1 1 0 1 1 0 1 1 1 1 1 1 1 1 1 1 1 1 1
+##  [75] 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 0 1 1 1 1 1 1 2 1 2 1 1 2 0 2 1 2 1
+## [112] 1 1 1 1 1 1 3 3 1 1 1 3 1 1 2 1 1 1 1 2 2 1 1 1 2 1 1 1 1 1 1 1 2 1 1 1 1
+## [149] 1 1</code></pre>
+<pre class="r"><code>data_iris2$bがく長 &lt;- as.factor(data_iris2$bがく長)
 summary(data_iris2)</code></pre>
 <pre><code>##      がく長          がく幅         花びら長        花びら幅    
 ##  Min.   :4.300   Min.   :2.000   Min.   :1.000   Min.   :0.100  
@@ -1797,22 +1800,118 @@ summary(data_iris2)</code></pre>
 ##                  3:  3  
 ##                         
 ## </code></pre>
+<p>なお，上記では分かりやすさのため，入れ子となっている箇所で改行をしているが，別に改行しなくてもよい．以下は改行せずに書いた例．上記と同じ結果を返す．</p>
+<pre class="r"><code>data_iris2$bがく長 &lt;- ifelse(data_iris2$がく長&lt;M-SD, 0, ifelse(data_iris2$花びら長&lt;M, 1, ifelse(data_iris2$花びら長&lt;M+SD, 2, 3)))
+print(data_iris2$bがく長)</code></pre>
+<pre><code>##   [1] 1 0 0 0 0 1 0 0 0 0 1 0 0 0 1 1 1 1 1 1 1 1 0 1 0 0 0 1 1 0 0 1 1 1 0 0 1
+##  [38] 0 0 1 0 0 0 0 1 0 1 0 1 0 1 1 1 1 1 1 1 0 1 1 0 1 1 1 1 1 1 1 1 1 1 1 1 1
+##  [75] 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 0 1 1 1 1 1 1 2 1 2 1 1 2 0 2 1 2 1
+## [112] 1 1 1 1 1 1 3 3 1 1 1 3 1 1 2 1 1 1 1 2 2 1 1 1 2 1 1 1 1 1 1 1 2 1 1 1 1
+## [149] 1 1</code></pre>
+<pre class="r"><code>data_iris2$bがく長 &lt;- as.factor(data_iris2$bがく長)
+summary(data_iris2)</code></pre>
+<pre><code>##      がく長          がく幅         花びら長        花びら幅    
+##  Min.   :4.300   Min.   :2.000   Min.   :1.000   Min.   :0.100  
+##  1st Qu.:5.100   1st Qu.:2.800   1st Qu.:1.600   1st Qu.:0.300  
+##  Median :5.800   Median :3.000   Median :4.350   Median :1.300  
+##  Mean   :5.843   Mean   :3.057   Mean   :3.758   Mean   :1.199  
+##  3rd Qu.:6.400   3rd Qu.:3.300   3rd Qu.:5.100   3rd Qu.:1.800  
+##  Max.   :7.900   Max.   :4.400   Max.   :6.900   Max.   :2.500  
+##          種類    bがく長
+##  setosa    :50   0: 32  
+##  versicolor:50   1:105  
+##  virginica :50   2: 10  
+##                  3:  3  
+##                         
+## </code></pre>
+<div class="ref">
+<details>
+<summary>
+ifelse()関数の第2，第3引数
+</summary>
+<p>ifelse()関数は第2，第3引数はそれぞれ第1引数で指定した条件が真であった場合に返す値，偽であった場合に返す値を設定しているが，この部分に式や関数を指定しても良い．先のifelse()の入れ子はまさに関数の1つとしてのifelse()を実行している例だが，例えば，以下のようにすることもできる．</p>
+<pre class="r"><code>M&lt;-mean(data_iris2$がく長)
+SD&lt;-sd(data_iris2$がく長)
+data_iris2$がく長r &lt;- ifelse(data_iris2$がく長&lt;M-SD, M-SD, ifelse(data_iris2$花びら長&gt;=M+SD, M+SD, M))
+print(data_iris2$がく長r)</code></pre>
+<pre><code>##   [1] 5.843333 5.015267 5.015267 5.015267 5.015267 5.843333 5.015267 5.015267
+##   [9] 5.015267 5.015267 5.843333 5.015267 5.015267 5.015267 5.843333 5.843333
+##  [17] 5.843333 5.843333 5.843333 5.843333 5.843333 5.843333 5.015267 5.843333
+##  [25] 5.015267 5.015267 5.015267 5.843333 5.843333 5.015267 5.015267 5.843333
+##  [33] 5.843333 5.843333 5.015267 5.015267 5.843333 5.015267 5.015267 5.843333
+##  [41] 5.015267 5.015267 5.015267 5.015267 5.843333 5.015267 5.843333 5.015267
+##  [49] 5.843333 5.015267 5.843333 5.843333 5.843333 5.843333 5.843333 5.843333
+##  [57] 5.843333 5.015267 5.843333 5.843333 5.015267 5.843333 5.843333 5.843333
+##  [65] 5.843333 5.843333 5.843333 5.843333 5.843333 5.843333 5.843333 5.843333
+##  [73] 5.843333 5.843333 5.843333 5.843333 5.843333 5.843333 5.843333 5.843333
+##  [81] 5.843333 5.843333 5.843333 5.843333 5.843333 5.843333 5.843333 5.843333
+##  [89] 5.843333 5.843333 5.843333 5.843333 5.843333 5.015267 5.843333 5.843333
+##  [97] 5.843333 5.843333 5.843333 5.843333 5.843333 5.843333 5.843333 5.843333
+## [105] 5.843333 5.843333 5.015267 5.843333 5.843333 5.843333 5.843333 5.843333
+## [113] 5.843333 5.843333 5.843333 5.843333 5.843333 6.671399 6.671399 5.843333
+## [121] 5.843333 5.843333 6.671399 5.843333 5.843333 5.843333 5.843333 5.843333
+## [129] 5.843333 5.843333 5.843333 5.843333 5.843333 5.843333 5.843333 5.843333
+## [137] 5.843333 5.843333 5.843333 5.843333 5.843333 5.843333 5.843333 5.843333
+## [145] 5.843333 5.843333 5.843333 5.843333 5.843333 5.843333</code></pre>
+<p>この例では，がく長が平均-標準偏差未満のものは，すべて平均-標準偏差=5.0152672に，平均+標準偏差以上のものは，すべて平均+標準偏差=6.6713995に，平均-標準偏差から平均+標準偏差の間にあるものは全て平均=5.8433333に置き換えられる</p>
+</details>
+</div>
 </div>
 </div>
 <div id="文字列の置換" class="section level1" number="3">
 <h1><span class="header-section-number">3</span> 文字列の置換</h1>
-<p>文字列型の列や要因型の列を置換したい場合には<code>ifelse()</code>関数を使うよりも、<code>recorde()</code>関数を使うほうが簡単である。変換したいものの対応を第2引数以降に以下の例の通りに与えればよい。変換式が指定されていないものは元の値が維持される。</p>
+<p>文字列型の列や要因型の列を置換したい場合には<code>ifelse()</code>関数を使うよりも，<code>recorde()</code>関数を使うほうが簡単である．</p>
+<p>第1引数には，変換したいベクトル，第2引数以降には，置換内容を記述していく．置換内容が指定されていないものは元の値が維持される．以下の例では，<code>setosa</code>を<code>セトサ</code>に，<code>versicolor</code>を<code>バーシカラー</code>に置換している．</p>
 <pre class="r"><code>data_iris2 &lt;- data_iris 
 data_iris2$種類 &lt;- recode(data_iris2$種類, &quot;setosa&quot;=&quot;セトサ&quot;, &quot;versicolor&quot;=&quot;バーシカラー&quot;)
-summary(data_iris2$種類)</code></pre>
-<pre><code>##       セトサ バーシカラー    virginica 
-##           50           50           50</code></pre>
+print(data_iris2$種類)</code></pre>
+<pre><code>##   [1] セトサ       セトサ       セトサ       セトサ       セトサ      
+##   [6] セトサ       セトサ       セトサ       セトサ       セトサ      
+##  [11] セトサ       セトサ       セトサ       セトサ       セトサ      
+##  [16] セトサ       セトサ       セトサ       セトサ       セトサ      
+##  [21] セトサ       セトサ       セトサ       セトサ       セトサ      
+##  [26] セトサ       セトサ       セトサ       セトサ       セトサ      
+##  [31] セトサ       セトサ       セトサ       セトサ       セトサ      
+##  [36] セトサ       セトサ       セトサ       セトサ       セトサ      
+##  [41] セトサ       セトサ       セトサ       セトサ       セトサ      
+##  [46] セトサ       セトサ       セトサ       セトサ       セトサ      
+##  [51] バーシカラー バーシカラー バーシカラー バーシカラー バーシカラー
+##  [56] バーシカラー バーシカラー バーシカラー バーシカラー バーシカラー
+##  [61] バーシカラー バーシカラー バーシカラー バーシカラー バーシカラー
+##  [66] バーシカラー バーシカラー バーシカラー バーシカラー バーシカラー
+##  [71] バーシカラー バーシカラー バーシカラー バーシカラー バーシカラー
+##  [76] バーシカラー バーシカラー バーシカラー バーシカラー バーシカラー
+##  [81] バーシカラー バーシカラー バーシカラー バーシカラー バーシカラー
+##  [86] バーシカラー バーシカラー バーシカラー バーシカラー バーシカラー
+##  [91] バーシカラー バーシカラー バーシカラー バーシカラー バーシカラー
+##  [96] バーシカラー バーシカラー バーシカラー バーシカラー バーシカラー
+## [101] virginica    virginica    virginica    virginica    virginica   
+## [106] virginica    virginica    virginica    virginica    virginica   
+## [111] virginica    virginica    virginica    virginica    virginica   
+## [116] virginica    virginica    virginica    virginica    virginica   
+## [121] virginica    virginica    virginica    virginica    virginica   
+## [126] virginica    virginica    virginica    virginica    virginica   
+## [131] virginica    virginica    virginica    virginica    virginica   
+## [136] virginica    virginica    virginica    virginica    virginica   
+## [141] virginica    virginica    virginica    virginica    virginica   
+## [146] virginica    virginica    virginica    virginica    virginica   
+## Levels: セトサ バーシカラー virginica</code></pre>
+<p>上記の例では文字列を文字列で置換しているので，<code>=</code>の前後はすべて<code>&quot;&quot;</code>で括っているが，数値に置換する場合には当然ながら<code>&quot;&quot;</code>は不要である．ただし，この場合，置換内容が指定されていなかったものは<code>NA</code>として処理されるので注意が必要である．</p>
+<pre class="r"><code>data_iris2 &lt;- data_iris 
+data_iris2$種類 &lt;- recode(data_iris2$種類, &quot;setosa&quot;=1, &quot;versicolor&quot;=2) # virginicaは置換されないのでNAになる
+print(data_iris2$種類)</code></pre>
+<pre><code>##   [1]  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1
+##  [26]  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1  1
+##  [51]  2  2  2  2  2  2  2  2  2  2  2  2  2  2  2  2  2  2  2  2  2  2  2  2  2
+##  [76]  2  2  2  2  2  2  2  2  2  2  2  2  2  2  2  2  2  2  2  2  2  2  2  2  2
+## [101] NA NA NA NA NA NA NA NA NA NA NA NA NA NA NA NA NA NA NA NA NA NA NA NA NA
+## [126] NA NA NA NA NA NA NA NA NA NA NA NA NA NA NA NA NA NA NA NA NA NA NA NA NA</code></pre>
 <div class="ref">
 <details>
 <summary>
 <code>ifelse()</code>を使った文字列置換
 </summary>
-<p><code>ifelse()</code>関数を使うこともできるが、列が要因型の場合には、一旦文字列型に変換してからでないと、思ったような結果とならない場合がある。例えば、以下の例では<code>setosa</code>だけを<code>セトサ</code>に置き換えたいと思って実行したのにもかかわらず、列が要因型ではなく勝手に文字列型にされ、さらに、他のもの種類名も勝手に<code>2</code>や<code>3</code>に設定されてしまっているのがわかる。</p>
+<p>文字列の変換に<code>ifelse()</code>関数を使うこともできるが，列が要因型の場合には，一旦文字列型に変換してからでないと，思ったような結果とならない場合がある．例えば，以下の例では<code>setosa</code>だけを<code>セトサ</code>に置き換えたいと思って実行したのにもかかわらず，列が要因型ではなく勝手に文字列型にされ，さらに，他のもの種類名も勝手に<code>2</code>や<code>3</code>に設定されてしまっているのがわかる．</p>
 <pre class="r"><code>data_iris2 &lt;- data_iris
 data_iris2$種類 &lt;- ifelse(data_iris2$種類==&quot;setosa&quot;, &quot;セトサ&quot;, data_iris2$種類 )
 summary(data_iris2$種類) #サマリー表示 classがCharacter（文字列型）となっている
@@ -1838,7 +1937,7 @@ data_iris2$種類 #中身を確認してみる</code></pre>
 ## [129] &quot;3&quot;      &quot;3&quot;      &quot;3&quot;      &quot;3&quot;      &quot;3&quot;      &quot;3&quot;      &quot;3&quot;      &quot;3&quot;     
 ## [137] &quot;3&quot;      &quot;3&quot;      &quot;3&quot;      &quot;3&quot;      &quot;3&quot;      &quot;3&quot;      &quot;3&quot;      &quot;3&quot;     
 ## [145] &quot;3&quot;      &quot;3&quot;      &quot;3&quot;      &quot;3&quot;      &quot;3&quot;      &quot;3&quot;</code></pre>
-<p>意図した通りのことをしたいならば、以下のようになる。つまり，一旦，文字列型に戻した後に，<code>ifelse()</code>で置換を行ない，再度要因型に変換している．</p>
+<p>意図した通りのことをしたいならば，以下のようになる．つまり，一旦，文字列型に戻した後に，<code>ifelse()</code>で置換を行ない，再度要因型に変換している．</p>
 <pre class="r"><code>data_iris2 &lt;- data_iris
 data_iris2$種類 &lt;- as.character(data_iris2$種類) #要因型から文字列型に変換
 data_iris2$種類 &lt;- ifelse(data_iris2$種類==&quot;setosa&quot;, &quot;セトサ&quot;, data_iris2$種類 )
@@ -1885,11 +1984,11 @@ summary(data_iris2$種類) #サマリー表示　要因型に変換したので�
 </div>
 <div id="欠損データの除外" class="section level1" number="4">
 <h1><span class="header-section-number">4</span> 欠損データの除外</h1>
-<p>実験や調査を行った際にデータの一部が欠損しているケースは多々ある。Rでは欠損データはデータフレーム上で<code>NA</code>（Not
-Available：利用不可能の意味）と表記されている。</p>
-<p>関数によっては欠損データを含んでいるデータを受け付けないケースがある。例えばすでに<a href="#平均値">平均値</a>で紹介したように<code>mean()</code>関数は、そのままでは欠損値を含んだデータは受け付けない。</p>
-<p><code>mean()</code>関数では、関数の引数で<code>na.rm = T</code>を設定しておくと関数処理の中で<code>NA</code>を除いて処理してくれるが、そもそも与えるデータそのもので<code>NA</code>を除いておくほうが望ましい。</p>
-<p>例えば、次のようなデータを処理するケースを考えよう。これはAからFまでの6人に対して10問セットの2種類のクイズを解いてもらった時のスコアである。ただ、1つめのデータセットではDさんのデータが、2つめのデータではEさんのデータが欠損してしまっている。このスコアをもとに、どちらのデータセットが難しいデータだったのかを比べたい。そこで、それぞれの平均や標準偏差を求めてみた。欠損データを含んでいるので<code>na.rm=T</code>を設定した。さて、このやり方は正しいだろうか。</p>
+<p>実験や調査を行った際にデータの一部が欠損しているケースは多々ある．Rでは欠損データはデータフレーム上で<code>NA</code>（Not
+Available：利用不可能の意味）と表記されている．</p>
+<p>関数によっては欠損データを含んでいるデータを受け付けないケースがある．例えばすでに<a href="#平均値">平均値</a>で紹介したように<code>mean()</code>関数は，そのままでは欠損値を含んだデータは受け付けない．</p>
+<p><code>mean()</code>関数では，関数の引数で<code>na.rm = T</code>を設定しておくと関数処理の中で<code>NA</code>を除いて処理してくれるが，そもそも与えるデータそのもので<code>NA</code>を除いておくほうが望ましい．</p>
+<p>例えば，次のようなデータを処理するケースを考えよう．これはAからFまでの6人に対して10問セットの2種類のクイズを解いてもらった時のスコアである．ただ，1つめのデータセットではDさんのデータが，2つめのデータではEさんのデータが欠損してしまっている．このスコアをもとに，どちらのデータセットが難しいデータだったのかを比べたい．そこで，それぞれの平均や標準偏差を求めてみた．欠損データを含んでいるので<code>na.rm=T</code>を設定した．さて，このやり方は正しいだろうか．</p>
 <pre class="r"><code>data_iris3 &lt;- data.frame(
   name = c(&quot;A&quot;, &quot;B&quot;, &quot;C&quot;, &quot;D&quot;, &quot;E&quot;, &quot;F&quot;),
   score1 = c(9,8,9,NA,6,7),
@@ -1904,9 +2003,9 @@ mean(data_iris3$score1, na.rm=T)</code></pre>
 <pre><code>## [1] 8</code></pre>
 <pre class="r"><code>sd(data_iris3$score2, na.rm=T)</code></pre>
 <pre><code>## [1] 1.224745</code></pre>
-<p>このデータの場合、平均や標準偏差を単純比較してはまずい。理由として<code>score1</code>ではD以外のデータが使われているのに対して、<code>score2</code>ではE以外のデータが使われているからである。すなわち、それぞれを計算するときに使われたデータが異なっているからである。もしDさんがクイズがすごく得意な人であったならば、Dさんのデータが入っていない<code>score1</code>の方は、不当に低くくなってしまっているであろうし、逆にEさんがクイズが苦手な人であったならば、Eさんのデータが入っていない<code>score2</code>の方は不当に高くなっている可能性がある。</p>
-<p>データを比較するときには、比較しようとしている項目以外で結果に影響を与えると考えられる項目（条件）は同一条件となっている、ということが大前提である。したがって、上記のようなデータを比較するときには、2種類のクイズのデータが両方ともそろっているA,B,C,Fの4人のデータだけで比較するべきである。</p>
-<p>このように、データの一部に欠損値を含んでいるよな観測をすべて除外して、すべての変数でデータがそろっているものだけを残すには、<code>na.omit()</code>関数を用いる。</p>
+<p>このデータの場合，平均や標準偏差を単純比較してはまずい．理由として<code>score1</code>ではD以外のデータが使われているのに対して，<code>score2</code>ではE以外のデータが使われているからである．すなわち，それぞれを計算するときに使われたデータが異なっているからである．もしDさんがクイズがすごく得意な人であったならば，Dさんのデータが入っていない<code>score1</code>の方は，不当に低くくなってしまっているであろうし，逆にEさんがクイズが苦手な人であったならば，Eさんのデータが入っていない<code>score2</code>の方は不当に高くなっている可能性がある．</p>
+<p>データを比較するときには，比較しようとしている項目以外で結果に影響を与えると考えられる項目（条件）は同一条件となっている，ということが大前提である．したがって，上記のようなデータを比較するときには，2種類のクイズのデータが両方ともそろっているA,B,C,Fの4人のデータだけで比較するべきである．</p>
+<p>このように，データの一部に欠損値を含んでいるよな観測をすべて除外して，すべての変数でデータがそろっているものだけを残すには，<code>na.omit()</code>関数を用いる．</p>
 <pre class="r"><code>data_iris3.naomit &lt;- na.omit(data_iris3)
 data_iris3.naomit</code></pre>
 <pre><code>##   name score1 score2
@@ -1922,13 +2021,13 @@ data_iris3.naomit</code></pre>
 <pre><code>## [1] 7.5</code></pre>
 <pre class="r"><code>sd(data_iris3.naomit$score2)</code></pre>
 <pre><code>## [1] 0.5773503</code></pre>
-<p>こうした欠損値は特に任意回答の項目を入れているアンケート調査では間違いなく含まれてくるし、紙でとったアンケート調査においては無回答であったり、択一回答の質問なのに勝手に2つ以上の選ぶなど不正回答をしてくるケースも多々ある。そういう場合にはデータ上は<code>NA</code>として処理すべきデータとなる。そのような形で<code>NA</code>を含んだデータではデータを読み込んだ時点で上記の通りに<code>na.omit()</code>を実施しておくとよい。</p>
+<p>こうした欠損値は特に任意回答の項目を入れているアンケート調査では間違いなく含まれてくるし，紙でとったアンケート調査においては無回答であったり，択一回答の質問なのに勝手に2つ以上の選ぶなど不正回答をしてくるケースも多々ある．そういう場合にはデータ上は<code>NA</code>として処理すべきデータとなる．そのような形で<code>NA</code>を含んだデータではデータを読み込んだ時点で上記の通りに<code>na.omit()</code>を実施しておくとよい．</p>
 </div>
 <div id="データの整理方法ワイド形式とロング形式" class="section level1" number="5">
 <h1><span class="header-section-number">5</span>
 データの整理方法（ワイド形式とロング形式）</h1>
-<p>例えば、ある中学校のあるクラス(25人)での1年間の定期テストでの数学の得点をデータとして扱う事例を考えてみよう。</p>
-<p>人がそのようなデータを扱うときには以下のような表を作るだろう。</p>
+<p>例えば，ある中学校のあるクラス(25人)での1年間の定期テストでの数学の得点をデータとして扱う事例を考えてみよう．</p>
+<p>人がそのようなデータを扱うときには以下のような表を作るだろう．</p>
 <table>
 <colgroup>
 <col width="20%" />
@@ -2023,8 +2122,8 @@ data_iris3.naomit</code></pre>
 <!-- | 21         | 69            | 91          | 90             | 75           | -->
 <!-- | 22         | 84            | 73          | 68             | 81           | -->
 <!-- | 23         | 70            | 65          | 78             | 94           | -->
-<p>このようなデータの並べ方を<strong>「ワイド形式」</strong>と呼ぶ。ワイド形式は一般に人がみてわかりやすい表形式となる。
-それに対して、Rで扱う表は以下のような並べ方のデータを並べている方が扱いやすい。このような並べ方を<strong>「ロング形式」</strong>と呼ぶ。</p>
+<p>このようなデータの並べ方を<strong>「ワイド形式」</strong>と呼ぶ．ワイド形式は一般に人がみてわかりやすい表形式となる．
+それに対して，Rで扱う表は以下のような並べ方のデータを並べている方が扱いやすい．このような並べ方を<strong>「ロング形式」</strong>と呼ぶ．</p>
 <table>
 <thead>
 <tr class="header">
@@ -2175,14 +2274,14 @@ data_iris3.naomit</code></pre>
 </tr>
 </tbody>
 </table>
-<p>ワイド形式では列は測定された変数の「属性」を並べるのに対して、ロング形式では「属性」は一つの変数として個別に列立てされて並べる点が異なる。</p>
-<p>また、ワイド形式の場合、例えば、数学の得点を並べた表とは国語の得点を並べた表ば別個に作成する必要がある。
-一方で、ロング形式の場合、数学の得点の列、国語の得点の列、というように並べて行けばよい。</p>
-<p>データ処理という点では、人の目からはわかりづらいがロング形式のデータにしておく習慣を持っておこう。</p>
+<p>ワイド形式では列は測定された属性変数を<strong>属性値ごとに横に並べる</strong>のに対して，ロング形式では属性変数はあくまで<strong>一つの変数として1つの列にまとめられ縦方向に各属性値が記述されていく</strong>が異なる．</p>
+<p>また，ワイド形式の場合，例えば，数学の得点を並べた表とは国語の得点を並べた表ば別個に作成する必要がある．
+一方で，ロング形式の場合，数学の得点の列，国語の得点の列，というように並べて行けばよい．</p>
+<p>データ処理という点では，人の目からはわかりづらいがロング形式のデータの方が，<strong>何が変数なのか</strong>が明確に分かるため，ロング形式のデータを作る習慣を持っておこう．</p>
 <div id="ワイド形式からロング形式への変換" class="section level2" number="5.1">
 <h2><span class="header-section-number">5.1</span>
 ワイド形式からロング形式への変換</h2>
-<p><code>tidyverse</code>パッケージ（正確には<code>tidyr</code>パッケージ）ではワイド形式のデータをロング形式のデータに変換する<code>pivot_longer()</code>関数が存在している。もし提供されたデータがワイド形式であった場合には、<code>pivot_longer()</code>関数を用いればよい（もちろん、Excelで手作業で並べ変えを行っても構わない）。</p>
+<p><code>tidyverse</code>パッケージ（正確には<code>tidyr</code>パッケージ）ではワイド形式のデータをロング形式のデータに変換する<code>pivot_longer()</code>関数が存在している．もし提供されたデータがワイド形式であった場合には，<code>pivot_longer()</code>関数を用いればよい（もちろん，Excelで手作業で並べ変えを行っても構わない）．</p>
 <p>pivot_longer()関数の引数は以下のとおりである．</p>
 <ul>
 <li>第1引数：変換対象となっているワイド形式のデータフレーム</li>
@@ -2190,7 +2289,7 @@ data_iris3.naomit</code></pre>
 <li>第3引数：<code>names_to=</code>で第2引数で指定した属性名を収めた列に与える属兵変数の名を与える．</li>
 <li>第4引数：<code>values_to=</code>でワイド形式での各値そのものの変数名を与える．</li>
 </ul>
-<p>以下に例を示す。</p>
+<p>以下に例を示す．</p>
 <pre class="r"><code># ワイド形式のデータフレームを作成
 wide_data &lt;- data.frame(
   id = 1:4,
@@ -2232,15 +2331,22 @@ print(long_data)</code></pre>
 ## 10     4 女性  time1    40
 ## 11     4 女性  time2    80
 ## 12     4 女性  time3   120</code></pre>
-<p>この例の「性別」列のように，<code>pivot_longer()</code>関数実行時に特に何の指定もしなかったものについては，属性変数として，その列名がそのまま使われるとともに，各列に対して自動で適切な値が付与される．</p>
-<p>ちなみに、<code>pivot_longer()</code>の出力結果は<code>data.frame</code>形式ではなく<code>tibble</code>形式となっている。<code>tibble</code>形式は<code>data.frame</code>形式の上位互換のデータ形式である。いくつかの違いがあるが、わかりやすい点としては<code>print()</code>させたときに、列名に各列の型が表示される点である。基本的な使い方は<code>data.frame</code>形式と変わらないが、もし<code>data.frame</code>形式にしたければ、<code>as.data.frmae()</code>関数を利用すればよい。</p>
+<p>この例の「性別」列のように，<code>pivot_longer()</code>関数実行時に特に何の指定もしなかった変数については，属性変数として，その列名がそのまま使われるとともに，各列に対して自動で適切な値が付与される．</p>
+<div class="ref">
+<details>
+<summary>
+pivot_longer()の出力の型
+</summary>
+<p><code>pivot_longer()</code>の出力結果は<code>data.frame</code>型ではなく<code>tibble</code>型となっている．<code>tibble</code>は<code>data.frame</code>の上位互換のデータ型である．いくつかの違いがあるが，わかりやすい点としては<code>print()</code>させたときに，列名に各列の型が表示される点が異なっている．基本的な使い方は<code>data.frame</code>と変わらないが，もし<code>data.frame</code>にしたければ，<code>as.data.frmae()</code>関数を利用すればよい．</p>
 <pre class="r"><code>class(long_data)</code></pre>
 <pre><code>## [1] &quot;tbl_df&quot;     &quot;tbl&quot;        &quot;data.frame&quot;</code></pre>
 <pre class="r"><code>long_data &lt;- as.data.frame(long_data)
 class(long_data)</code></pre>
 <pre><code>## [1] &quot;data.frame&quot;</code></pre>
+</details>
+</div>
 <div class="work">
-<p>次の<a href="./practice/05_work_1.csv">データ</a>を読み込み、以下の処理を行え．</p>
+<p>次の<a href="./practice/05_work_1.csv">データ</a>を読み込み，以下の処理を行え．</p>
 <ol style="list-style-type: decimal">
 <li>summay()関数によって，このデータの内容がどのようなものかを確認せよ．</li>
 <li>性別と血液型をそれぞれ要因型にし，再度sumary()関数を実施し，先の結果との違いを確認せよ．</li>
@@ -2261,6 +2367,48 @@ Cを試食し，風味の良さを10段階で回答してもらったデータ�
 </ol>
 </div>
 </div>
+</div>
+<div id="まとめ" class="section level1" number="6">
+<h1><span class="header-section-number">6</span> まとめ</h1>
+<p>今回用いた関数は以下の通りである．</p>
+<ul>
+<li><code>colnames()</code>：データフレームの列名を取得する関数.これを左辺に<code>&lt;-</code>で新しい列名を収めたベクトルを与えることによって列名（変数名）を置換できる．
+<ul>
+<li>第1引数：データフレーム</li>
+</ul></li>
+<li><code>head()</code>：データフレームの先頭から指定した行数だけを表示する関数
+<ul>
+<li>第1引数：データフレーム</li>
+<li>第2引数：表示する行数(デフォルトは6)</li>
+</ul></li>
+<li><code>filter()</code>：デーソースの行を抽出する関数
+<ul>
+<li>第1引数：データフレーム</li>
+<li>第2引数：フィルタの条件式．=, &lt;, &gt;, |,
+&amp;を組み合わせて作る</li>
+</ul></li>
+<li><code>ifelse()</code>：条件分岐を行う関数 　- 第1引数：条件式
+<ul>
+<li>第2引数：条件式が<code>TRUE</code>の場合の値もしくは式</li>
+<li>第3引数：条件式が<code>FALSE</code>の場合の値もしくは式</li>
+</ul></li>
+<li><code>recode()</code>：文字列や要因型の列を置換する関数
+<ul>
+<li>第1引数：置換対象のベクトル</li>
+<li>第2引数以降：置換内容（<code>&quot;置換前&quot;=&quot;置換後&quot;</code>）を<code>,</code>で区切りながら順に記述する．</li>
+</ul></li>
+<li><code>na.omit()</code>：欠損データを除外する関数
+<ul>
+<li>第1引数：データフレーム</li>
+</ul></li>
+<li><code>pivot_longer()</code>：ワイド形式のデータをロング形式に変換する関数
+<ul>
+<li>第1引数：データフレーム</li>
+<li>第2引数：<code>cols=</code>でワイド形式で列名になっている属性値を与える．</li>
+<li>第3引数：<code>names_to=</code>で第2引数で指定した属性値を収めた列に与える属性変数の名を与える．</li>
+<li>第4引数：<code>values_to=</code>でワイド形式での各値そのものの変数名を与える．</li>
+</ul></li>
+</ul>
 </div>
 
 
