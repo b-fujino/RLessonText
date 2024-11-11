@@ -47,7 +47,7 @@ head(data_iris)
 # 抽出
 
 
-グループ分け変数を持ったデータを処理するときには、ある特定のグループのデータだけを抜き出したいということはよくある。
+グループ分け変数を持ったデータを処理するときに、ある特定のグループのデータだけを抜き出したいということはよくある。
 そうした「データの抽出」を行うための関数として`tidyverse`パッケージに`filter()`関数が設けられている。利用するためにはTools-\>install.packagesで`tidyverse`パッケージをインストールしたうえで、スクリプト上で`library(tidyverse)`と入力してパッケージを読み込む必要がある。
 
 `filter()`関数の利用法は、第1引数に元のデータを与え、第2引数に検索条件を与える。検索条件の書式のパターンは以下の通り。
@@ -134,23 +134,47 @@ data_iris2$bがく長 <- as.factor(data_iris2$bがく長)
 summary(data_iris2)
 ```
 
+## ifelse()の入れ子
+`ifelse()`関数は入れ子にすることもできる。以下の例では、がく長を以下のように4段階に分けている．
+
+- 平均-標準偏差未満には0
+- 平均-標準偏差以上，平均未満ならば1
+- 平均以上，平均＋標準偏差未満ならば2
+- 平均＋標準偏差以上ならば3
+
+
+```{R}
+data_iris2 <- data_iris
+がく_mean <- mean(data_iris2$がく長)
+がく_sd <-sd(data_iris2$がく長)
+data_iris2$bがく長 <- ifelse(data_iris2$がく長 < がく_mean-がく_sd,0,
+                          ifelse(data_iris2$花びら長 <がく_mean,1,
+                                 ifelse(data_iris2$花びら長 < がく_mean+がく_sd,2,3)
+                                )
+                          )
+data_iris2$bがく長 <- as.factor(data_iris2$bがく長)
+summary(data_iris2)
+```
 # 文字列の置換
 
-文字列型の列や要因型の列を置換したい場合には`ifelse()`関数を使うよりも、`recorde()`関数を使うほうが簡単である。変換したいものの対応を第2引数に以下の例の通りに与えればよい。変換式が指定されていないものは元の値が維持される。
+文字列型の列や要因型の列を置換したい場合には`ifelse()`関数を使うよりも、`recorde()`関数を使うほうが簡単である。変換したいものの対応を第2引数以降に以下の例の通りに与えればよい。変換式が指定されていないものは元の値が維持される。
 ```{R}
 data_iris2 <- data_iris 
 data_iris2$種類 <- recode(data_iris2$種類, "setosa"="セトサ", "versicolor"="バーシカラー")
 summary(data_iris2$種類)
 ```
 
-もちろん`ifelse()`関数を使うこともできるが、列が要因型の場合には、一旦文字列型に変換してからでないと、思ったような結果とならない場合がある。例えば、以下の例では`setosa`だけを`セトサ`に置き換えたいと思って実行したのにもかかわらず、列が要因型ではなく勝手に文字列型にされ、さらに、他のもの種類名も勝手に`2`や`3`に設定されてしまっているのがわかる。
+:::ref
+<details>
+<summary>`ifelse()`を使った文字列置換</summary>
+`ifelse()`関数を使うこともできるが、列が要因型の場合には、一旦文字列型に変換してからでないと、思ったような結果とならない場合がある。例えば、以下の例では`setosa`だけを`セトサ`に置き換えたいと思って実行したのにもかかわらず、列が要因型ではなく勝手に文字列型にされ、さらに、他のもの種類名も勝手に`2`や`3`に設定されてしまっているのがわかる。
 ```{r results='hold'}
 data_iris2 <- data_iris
 data_iris2$種類 <- ifelse(data_iris2$種類=="setosa", "セトサ", data_iris2$種類 )
 summary(data_iris2$種類) #サマリー表示 classがCharacter（文字列型）となっている
 data_iris2$種類 #中身を確認してみる
 ```
-意図した通りのことをしたいならば、以下のようになる。
+意図した通りのことをしたいならば、以下のようになる。つまり，一旦，文字列型に戻した後に，`ifelse()`で置換を行ない，再度要因型に変換している．
 ```{r results='hold'}
 data_iris2 <- data_iris
 data_iris2$種類 <- as.character(data_iris2$種類) #要因型から文字列型に変換
@@ -160,6 +184,8 @@ summary(data_iris2$種類) #サマリー表示
 data_iris2$種類 <- as.factor(data_iris2$種類) #文字列型から要因型に変換
 summary(data_iris2$種類) #サマリー表示　要因型に変換したので表示が変わる
 ```
+</details>
+:::
 
 # 欠損データの除外
 
@@ -275,15 +301,26 @@ sd(data_iris3.naomit$score2)
 
 データ処理という点では、人の目からはわかりづらいがロング形式のデータにしておく習慣を持っておこう。
 
-なお、`tidyverse`パッケージ（正確には`tidyr`パッケージ）ではワイド形式のデータをロング形式のデータに変換する`pivot_longer()`関数が存在している。もし外部から提供されたデータがワイド形式であった場合には、`pivot_longer()`関数を用いればよい（もちろん、Excelで手作業で並べ変えを行っても構わない）。
+## ワイド形式からロング形式への変換
+`tidyverse`パッケージ（正確には`tidyr`パッケージ）ではワイド形式のデータをロング形式のデータに変換する`pivot_longer()`関数が存在している。もし提供されたデータがワイド形式であった場合には、`pivot_longer()`関数を用いればよい（もちろん、Excelで手作業で並べ変えを行っても構わない）。
+
+pivot_longer()関数の引数は以下のとおりである．
+
+- 第1引数：変換対象となっているワイド形式のデータフレーム
+- 第2引数：`cols=`の形でワイド形式で列名になっている属性名を与える．
+- 第3引数：`names_to=`で第2引数で指定した属性名を収めた列に与える属兵変数の名を与える．
+- 第4引数：`values_to=`でワイド形式での各値そのものの変数名を与える．
+
+以下に例を示す。
 
 ```{R}
 # ワイド形式のデータフレームを作成
 wide_data <- data.frame(
-  id = 1:3,
-  time1 = c(10, 20, 30),
-  time2 = c(40, 50, 60),
-  time3 = c(70, 80, 90)
+  id = 1:4,
+  性別=c("男性","女性","男性","女性"),
+  time1 = c(10, 20, 30, 40),
+  time2 = c(50, 60, 70, 80),
+  time3 = c(90, 100, 110,120)
 )
 
 # ワイド形式のデータを表示
@@ -292,14 +329,16 @@ print(wide_data)
 # ロング形式に変換
 long_data <- pivot_longer(
   wide_data,
-  cols=colnames(wide_data)[c(2:4)], #cols=c("time1","time2","time3")でも可
-  names_to = "time", #属性変数に与える列名（変数名）
-  values_to= "値" #測定変数に与える列名
+  cols=c("time1","time2","time3"),# cols=colnames(wide_data)[c(3:5)]でも可
+  names_to = "時期", #属性変数に与える列名（変数名）
+  values_to= "得点" #測定変数に与える列名
 )
 
 #ロング形式のデータを表示
 print(long_data)
 ```
+
+この例の「性別」列のように，`pivot_longer()`関数実行時に特に何の指定もしなかったものについては，属性変数として，その列名がそのまま使われるとともに，各列に対して自動で適切な値が付与される．
 
 ちなみに、`pivot_longer()`の出力結果は`data.frame`形式ではなく`tibble`形式となっている。`tibble`形式は`data.frame`形式の上位互換のデータ形式である。いくつかの違いがあるが、わかりやすい点としては`print()`させたときに、列名に各列の型が表示される点である。基本的な使い方は`data.frame`形式と変わらないが、もし`data.frame`形式にしたければ、`as.data.frmae()`関数を利用すればよい。
 
@@ -309,3 +348,124 @@ long_data <- as.data.frame(long_data)
 class(long_data)
 ```
 
+
+
+
+:::work
+次の[データ](./practice/05_work_1.csv)を読み込み、以下の処理を行え．
+
+1. summay()関数によって，このデータの内容がどのようなものかを確認せよ．
+1. 性別と血液型をそれぞれ要因型にし，再度sumary()関数を実施し，先の結果との違いを確認せよ．
+1. 性別の`M`を「男性」，`F`を「女性」に置換し，再度sumary()関数を実施し，先の結果との違いを確認せよ．
+1. 男性のみのデータを抽出し，そのデータの`身長`の平均値と標準偏差，ならびに平均の95\%信頼区間を求めよ.
+1. 女性でかつ`身長`が170㎝以上の人の数が何人か求めよ．
+1. BMIが25以上には「過体重」，18.5以上で25未満には「標準」，18.5未満には「低体重」というルールでラベルを付け，新たな列「体重ラベル」としてデータに追加し，その列を要因型に変換して，summary()関数で各ラベルがついた人数を確認せよ．
+:::    
+
+    
+:::work
+次の[データ](./practice/05_work_2.csv)は，調査協力者40名（男性19名，女性21名）に対して，食パンA, B, Cを試食し，風味の良さを10段階で回答してもらったデータである．以下の課題を行え．
+
+1. head()関数によって，このデータの内容がどのようなものかを確認せよ．
+1. ワイド形式のデータをロング形式に変換し，同様にhead()関数で内容を確認せよ．
+1. ロング形式に変換したデータを用いて，男性の食パンAの平均点と女性の食パンAの平均点をそれぞれ算出せよ．
+:::
+
+```{r include=FALSE}
+set.seed(44)
+# 男性データ
+m_height <- round(rnorm(100, 171.5, 6.7),1)#https://www.e-stat.go.jp/dbview?sid=0003224177 を基に平均・標準偏差を算出
+m_BMI <- round(rnorm(100, 22.90, 4.1),1)  # https://www.e-stat.go.jp/dbview?sid=0003224178
+m_weight <- round(m_BMI * (m_height/100)^2,1)
+
+# 女性データ
+f_height <- round(rnorm(100, 157.5, 5.5),1)
+f_BMI <- round(rnorm(100, 21.00, 2.9),1)
+f_weight <- round(f_BMI * (f_height/100)^2,1)
+
+# 血液型
+blood <- sample(c("A", "B", "O", "AB"), 200, replace = TRUE)
+
+# データフレームの作成
+gender <- c(rep("M", 100), rep("F", 100))
+height <- c(m_height, f_height)
+weight <- c(m_weight, f_weight)
+bmi <- c(m_BMI, f_BMI)
+
+data <- data.frame(
+  性別=gender,
+  血液型=blood,
+  身長=height,
+  体重=weight,
+  BMI=bmi
+)
+write.csv(data, file = "./practice/05_work_1.csv", row.names = FALSE)
+```
+
+```{r include=FALSE}
+#課題1．1
+summary(data)
+#　課題2
+data$性別 <- as.factor(data$性別)
+data$血液型 <- as.factor(data$血液型)
+summary(data)
+# 課題3
+data$性別 <- recode(data$性別, "M"="男性", "F"="女性")
+summary(data)
+#課題4
+res <- filter(data, 性別=="男性")
+mean_height <- mean(res$身長)
+sd_height <- sd(res$身長)
+height_ci <- t.test(res$身長)$conf.int
+print(mean_height)
+print(sd_height)
+print(height_ci)
+
+
+# 課題5
+res<- filter(data, 性別=="女性" & 身長>=170)
+nrow(res)
+
+#課題6
+data$体重ラベル <- ifelse(data$BMI<18.5, "低体重", ifelse(data$BMI<25, "標準", "過体重"))
+data$体重ラベル <- as.factor(data$体重ラベル)
+summary(data$体重ラベル)
+
+```
+
+
+```{r include=FALSE}
+set.seed(33)
+library(truncnorm)
+
+A <- round(rtruncnorm(40, a=1, b= 10, mean=7, sd = 1.2),0)
+B <- round(rtruncnorm(40, a=1, b= 10, mean=5, sd = 1.5),0)
+C <- round(rtruncnorm(40, a=1, b= 10, mean=6, sd = 1.3),0)
+gender <- sample(c("男性","女性"),40, replace = TRUE)
+No <- 1:40
+
+data <- data.frame(
+  協力者番号= No,
+  性別=gender,
+  食パンA=A,
+  食パンB=B,
+  食パンC=C
+)
+
+write.csv(data, file = "./practice/05_work_2.csv", row.names = FALSE)
+```
+
+```{r include=FALSE}
+# 課題2．1
+data <- read.csv("./practice/05_work_2.csv")
+head(data)
+data_long<-pivot_longer(data, cols=c("食パンA","食パンB","食パンC"), names_to="食パン", values_to="風味")
+data_long$性別 <- as.factor(data_long$性別)
+head(data_long)
+
+res_m_A <- filter(data_long, 性別=="男性" & 食パン=="食パンA")
+res_f_A <- filter(data_long, 性別=="女性" & 食パン=="食パンA")
+mean(res_m_A$風味)
+mean(res_f_A$風味)
+
+```

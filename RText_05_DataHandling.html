@@ -1321,7 +1321,7 @@ if (window.hljs) {
 
 
 
-<style type="text/css">.tocify-subheader { display: block !important;}.tocify-item {white-space: nowrap;}body{counter-reset: ref_number practice_number work_number;}.float img{ margin: auto;display: block;padding: 2%;border-radius: 8px 8px 0 0 ;position: relative;width : 60%;}.float .figcaption {position: relative;font-style: italic;font-size: large;font-weight: bold;color: #666;text-align: center;margin:0% auto 5% auto;border-bottom: solid 1px #666;border-left: solid 1px #666;border-right: solid 1px #666;border-radius:0 0 8px 8px;width : 60%}img {margin: auto;display: block;border: solid 1px #666;border-radius: 8px;position: relative;width : 60%;}.ref {position: relative;margin:5%;padding:5px;background-color: rgba(255, 255, 128, .5);color: #666;}.ref::before{counter-increment: ref_number 1;content: "[参考 " counter(ref_number) "]";font-weight: bold;display: block;margin-bottom: 3px;}h1 {margin-top : 10px;padding-top : 50px;}.practice {position: relative;margin:5%;padding:5px;background-color: rgba(128, 255, 200, .5);color: #666;}.practice::before{counter-increment: practice_number 1;content: "[例題 " counter(practice_number) "]";font-weight: bold;display: block;margin-bottom: 3px;}.work {position: relative;margin:5%;padding:5px;background-color: rgba(128, 200, 255, .2);color: #666;}.work::before{counter-increment: work_number 1;content: "[課題 " counter(work_number) "]";font-weight: bold;display: block;margin-bottom: 3px;}user-select: none;-moz-user-select: none;-webkit-user-select: none;-ms-user-select: none;-khtml-user-select: none;-webkit-touch-callout: none;}***/.res_table {border-collapse: collapse;width: 50%;margin: 0 auto;border-top: 1px solid #666;border-bottom: 1px solid #666;}.res_table th {border-bottom: 1px solid #666;text-align: center;}.res_table td {text-align: right;}.res_table .td_left {text-align: left;}.res_table .tr_topborder {border-top: 1px solid #666;}</style>
+<style type="text/css">.tocify-subheader { display: block !important;}.tocify-item {white-space: nowrap;}body{counter-reset: ref_number practice_number work_number;}.float img{ margin: auto;display: block;padding: 2%;border-radius: 8px 8px 0 0 ;position: relative;width : 60%;}.float .figcaption {position: relative;font-style: italic;font-size: large;font-weight: bold;color: #666;text-align: center;margin:0% auto 5% auto;border-bottom: solid 1px #666;border-left: solid 1px #666;border-right: solid 1px #666;border-radius:0 0 8px 8px;width : 60%}img {margin: auto;display: block;border: solid 1px #666;border-radius: 8px;position: relative;width : 60%;}.ref {position: relative;margin:5%;padding:5px;background-color: rgba(255, 255, 128, .5);color: #666;}.ref::before{counter-increment: ref_number 1;content: "[参考 " counter(ref_number) "]";font-weight: bold;display: block;margin-bottom: 3px;}h1 {margin-top : 10px;padding-top : 50px;}.practice {position: relative;margin:5%;padding:5px;background-color: rgba(128, 255, 200, .5);color: #666;}.practice::before{counter-increment: practice_number 1;content: "[例題 " counter(practice_number) "]";font-weight: bold;display: block;margin-bottom: 3px;}.work {position: relative;margin:5%;padding:5px;background-color: rgba(128, 200, 255, .2);color: #666;}.work::before{counter-increment: work_number 1;content: "[課題 " counter(work_number) "]";font-weight: bold;display: block;margin-bottom: 3px;}user-select: none;-moz-user-select: none;-webkit-user-select: none;-ms-user-select: none;-khtml-user-select: none;-webkit-touch-callout: none;}***/.res_table {border-collapse: collapse;width: 50%;margin: 0 auto;border-top: 1px solid #666;border-bottom: 1px solid #666;}.res_table th {border-bottom: 1px solid #666;text-align: center;}.res_table td {text-align: right;}.res_table .td_left {text-align: left;}.res_table .tr_topborder {border-top: 1px solid #666;}.math .display {text-align: center;font-size: small;}</style>
 
 
 
@@ -1481,7 +1481,7 @@ border-radius: 0px;
 
 <h1 class="title toc-ignore">データハンドリング</h1>
 <h4 class="author">藤野秀則,</h4>
-<h4 class="date">初稿日:2024-05-16 更新日:2024-10-09</h4>
+<h4 class="date">初稿日:2024-05-16 更新日:2024-11-11</h4>
 
 </div>
 
@@ -1527,7 +1527,7 @@ head(data_iris)</code></pre>
 ## 6    5.4    3.9      1.7      0.4 setosa</code></pre>
 <div id="抽出" class="section level1" number="1">
 <h1><span class="header-section-number">1</span> 抽出</h1>
-<p>グループ分け変数を持ったデータを処理するときには、ある特定のグループのデータだけを抜き出したいということはよくある。
+<p>グループ分け変数を持ったデータを処理するときに、ある特定のグループのデータだけを抜き出したいということはよくある。
 そうした「データの抽出」を行うための関数として<code>tidyverse</code>パッケージに<code>filter()</code>関数が設けられている。利用するためにはTools-&gt;install.packagesで<code>tidyverse</code>パッケージをインストールしたうえで、スクリプト上で<code>library(tidyverse)</code>と入力してパッケージを読み込む必要がある。</p>
 <p><code>filter()</code>関数の利用法は、第1引数に元のデータを与え、第2引数に検索条件を与える。検索条件の書式のパターンは以下の通り。</p>
 <table>
@@ -1568,8 +1568,8 @@ head(data_iris)</code></pre>
 <pre><code>## ── Attaching core tidyverse packages ──────────────────────── tidyverse 2.0.0 ──
 ## ✔ dplyr     1.1.4     ✔ readr     2.1.5
 ## ✔ forcats   1.0.0     ✔ stringr   1.5.1
-## ✔ ggplot2   3.5.0     ✔ tibble    3.2.1
-## ✔ lubridate 1.9.3     ✔ tidyr     1.3.0
+## ✔ ggplot2   3.5.1     ✔ tibble    3.2.1
+## ✔ lubridate 1.9.3     ✔ tidyr     1.3.1
 ## ✔ purrr     1.0.2     
 ## ── Conflicts ────────────────────────────────────────── tidyverse_conflicts() ──
 ## ✖ dplyr::filter() masks stats::filter()
@@ -1764,16 +1764,55 @@ summary(data_iris2)</code></pre>
 ##                         
 ##                         
 ## </code></pre>
+<div id="ifelseの入れ子" class="section level2" number="2.1">
+<h2><span class="header-section-number">2.1</span> ifelse()の入れ子</h2>
+<p><code>ifelse()</code>関数は入れ子にすることもできる。以下の例では、がく長を以下のように4段階に分けている．</p>
+<ul>
+<li>平均-標準偏差未満には0</li>
+<li>平均-標準偏差以上，平均未満ならば1</li>
+<li>平均以上，平均＋標準偏差未満ならば2</li>
+<li>平均＋標準偏差以上ならば3</li>
+</ul>
+<pre class="r"><code>data_iris2 &lt;- data_iris
+がく_mean &lt;- mean(data_iris2$がく長)
+がく_sd &lt;-sd(data_iris2$がく長)
+data_iris2$bがく長 &lt;- ifelse(data_iris2$がく長 &lt; がく_mean-がく_sd,0,
+                          ifelse(data_iris2$花びら長 &lt;がく_mean,1,
+                                 ifelse(data_iris2$花びら長 &lt; がく_mean+がく_sd,2,3)
+                                )
+                          )
+data_iris2$bがく長 &lt;- as.factor(data_iris2$bがく長)
+summary(data_iris2)</code></pre>
+<pre><code>##      がく長          がく幅         花びら長        花びら幅    
+##  Min.   :4.300   Min.   :2.000   Min.   :1.000   Min.   :0.100  
+##  1st Qu.:5.100   1st Qu.:2.800   1st Qu.:1.600   1st Qu.:0.300  
+##  Median :5.800   Median :3.000   Median :4.350   Median :1.300  
+##  Mean   :5.843   Mean   :3.057   Mean   :3.758   Mean   :1.199  
+##  3rd Qu.:6.400   3rd Qu.:3.300   3rd Qu.:5.100   3rd Qu.:1.800  
+##  Max.   :7.900   Max.   :4.400   Max.   :6.900   Max.   :2.500  
+##          種類    bがく長
+##  setosa    :50   0: 32  
+##  versicolor:50   1:105  
+##  virginica :50   2: 10  
+##                  3:  3  
+##                         
+## </code></pre>
+</div>
 </div>
 <div id="文字列の置換" class="section level1" number="3">
 <h1><span class="header-section-number">3</span> 文字列の置換</h1>
-<p>文字列型の列や要因型の列を置換したい場合には<code>ifelse()</code>関数を使うよりも、<code>recorde()</code>関数を使うほうが簡単である。変換したいものの対応を第2引数に以下の例の通りに与えればよい。変換式が指定されていないものは元の値が維持される。</p>
+<p>文字列型の列や要因型の列を置換したい場合には<code>ifelse()</code>関数を使うよりも、<code>recorde()</code>関数を使うほうが簡単である。変換したいものの対応を第2引数以降に以下の例の通りに与えればよい。変換式が指定されていないものは元の値が維持される。</p>
 <pre class="r"><code>data_iris2 &lt;- data_iris 
 data_iris2$種類 &lt;- recode(data_iris2$種類, &quot;setosa&quot;=&quot;セトサ&quot;, &quot;versicolor&quot;=&quot;バーシカラー&quot;)
 summary(data_iris2$種類)</code></pre>
 <pre><code>##       セトサ バーシカラー    virginica 
 ##           50           50           50</code></pre>
-<p>もちろん<code>ifelse()</code>関数を使うこともできるが、列が要因型の場合には、一旦文字列型に変換してからでないと、思ったような結果とならない場合がある。例えば、以下の例では<code>setosa</code>だけを<code>セトサ</code>に置き換えたいと思って実行したのにもかかわらず、列が要因型ではなく勝手に文字列型にされ、さらに、他のもの種類名も勝手に<code>2</code>や<code>3</code>に設定されてしまっているのがわかる。</p>
+<div class="ref">
+<details>
+<summary>
+<code>ifelse()</code>を使った文字列置換
+</summary>
+<p><code>ifelse()</code>関数を使うこともできるが、列が要因型の場合には、一旦文字列型に変換してからでないと、思ったような結果とならない場合がある。例えば、以下の例では<code>setosa</code>だけを<code>セトサ</code>に置き換えたいと思って実行したのにもかかわらず、列が要因型ではなく勝手に文字列型にされ、さらに、他のもの種類名も勝手に<code>2</code>や<code>3</code>に設定されてしまっているのがわかる。</p>
 <pre class="r"><code>data_iris2 &lt;- data_iris
 data_iris2$種類 &lt;- ifelse(data_iris2$種類==&quot;setosa&quot;, &quot;セトサ&quot;, data_iris2$種類 )
 summary(data_iris2$種類) #サマリー表示 classがCharacter（文字列型）となっている
@@ -1799,7 +1838,7 @@ data_iris2$種類 #中身を確認してみる</code></pre>
 ## [129] &quot;3&quot;      &quot;3&quot;      &quot;3&quot;      &quot;3&quot;      &quot;3&quot;      &quot;3&quot;      &quot;3&quot;      &quot;3&quot;     
 ## [137] &quot;3&quot;      &quot;3&quot;      &quot;3&quot;      &quot;3&quot;      &quot;3&quot;      &quot;3&quot;      &quot;3&quot;      &quot;3&quot;     
 ## [145] &quot;3&quot;      &quot;3&quot;      &quot;3&quot;      &quot;3&quot;      &quot;3&quot;      &quot;3&quot;</code></pre>
-<p>意図した通りのことをしたいならば、以下のようになる。</p>
+<p>意図した通りのことをしたいならば、以下のようになる。つまり，一旦，文字列型に戻した後に，<code>ifelse()</code>で置換を行ない，再度要因型に変換している．</p>
 <pre class="r"><code>data_iris2 &lt;- data_iris
 data_iris2$種類 &lt;- as.character(data_iris2$種類) #要因型から文字列型に変換
 data_iris2$種類 &lt;- ifelse(data_iris2$種類==&quot;setosa&quot;, &quot;セトサ&quot;, data_iris2$種類 )
@@ -1841,6 +1880,8 @@ summary(data_iris2$種類) #サマリー表示　要因型に変換したので�
 ##       150 character character 
 ## versicolor  virginica     セトサ 
 ##         50         50         50</code></pre>
+</details>
+</div>
 </div>
 <div id="欠損データの除外" class="section level1" number="4">
 <h1><span class="header-section-number">4</span> 欠損データの除外</h1>
@@ -2138,49 +2179,88 @@ data_iris3.naomit</code></pre>
 <p>また、ワイド形式の場合、例えば、数学の得点を並べた表とは国語の得点を並べた表ば別個に作成する必要がある。
 一方で、ロング形式の場合、数学の得点の列、国語の得点の列、というように並べて行けばよい。</p>
 <p>データ処理という点では、人の目からはわかりづらいがロング形式のデータにしておく習慣を持っておこう。</p>
-<p>なお、<code>tidyverse</code>パッケージ（正確には<code>tidyr</code>パッケージ）ではワイド形式のデータをロング形式のデータに変換する<code>pivot_longer()</code>関数が存在している。もし外部から提供されたデータがワイド形式であった場合には、<code>pivot_longer()</code>関数を用いればよい（もちろん、Excelで手作業で並べ変えを行っても構わない）。</p>
+<div id="ワイド形式からロング形式への変換" class="section level2" number="5.1">
+<h2><span class="header-section-number">5.1</span>
+ワイド形式からロング形式への変換</h2>
+<p><code>tidyverse</code>パッケージ（正確には<code>tidyr</code>パッケージ）ではワイド形式のデータをロング形式のデータに変換する<code>pivot_longer()</code>関数が存在している。もし提供されたデータがワイド形式であった場合には、<code>pivot_longer()</code>関数を用いればよい（もちろん、Excelで手作業で並べ変えを行っても構わない）。</p>
+<p>pivot_longer()関数の引数は以下のとおりである．</p>
+<ul>
+<li>第1引数：変換対象となっているワイド形式のデータフレーム</li>
+<li>第2引数：<code>cols=</code>の形でワイド形式で列名になっている属性名を与える．</li>
+<li>第3引数：<code>names_to=</code>で第2引数で指定した属性名を収めた列に与える属兵変数の名を与える．</li>
+<li>第4引数：<code>values_to=</code>でワイド形式での各値そのものの変数名を与える．</li>
+</ul>
+<p>以下に例を示す。</p>
 <pre class="r"><code># ワイド形式のデータフレームを作成
 wide_data &lt;- data.frame(
-  id = 1:3,
-  time1 = c(10, 20, 30),
-  time2 = c(40, 50, 60),
-  time3 = c(70, 80, 90)
+  id = 1:4,
+  性別=c(&quot;男性&quot;,&quot;女性&quot;,&quot;男性&quot;,&quot;女性&quot;),
+  time1 = c(10, 20, 30, 40),
+  time2 = c(50, 60, 70, 80),
+  time3 = c(90, 100, 110,120)
 )
 
 # ワイド形式のデータを表示
 print(wide_data)</code></pre>
-<pre><code>##   id time1 time2 time3
-## 1  1    10    40    70
-## 2  2    20    50    80
-## 3  3    30    60    90</code></pre>
+<pre><code>##   id 性別 time1 time2 time3
+## 1  1 男性    10    50    90
+## 2  2 女性    20    60   100
+## 3  3 男性    30    70   110
+## 4  4 女性    40    80   120</code></pre>
 <pre class="r"><code># ロング形式に変換
 long_data &lt;- pivot_longer(
   wide_data,
-  cols=colnames(wide_data)[c(2:4)], #cols=c(&quot;time1&quot;,&quot;time2&quot;,&quot;time3&quot;)でも可
-  names_to = &quot;time&quot;, #属性変数に与える列名（変数名）
-  values_to= &quot;値&quot; #測定変数に与える列名
+  cols=c(&quot;time1&quot;,&quot;time2&quot;,&quot;time3&quot;),# cols=colnames(wide_data)[c(3:5)]でも可
+  names_to = &quot;時期&quot;, #属性変数に与える列名（変数名）
+  values_to= &quot;得点&quot; #測定変数に与える列名
 )
 
 #ロング形式のデータを表示
 print(long_data)</code></pre>
-<pre><code>## # A tibble: 9 × 3
-##      id time     値
-##   &lt;int&gt; &lt;chr&gt; &lt;dbl&gt;
-## 1     1 time1    10
-## 2     1 time2    40
-## 3     1 time3    70
-## 4     2 time1    20
-## 5     2 time2    50
-## 6     2 time3    80
-## 7     3 time1    30
-## 8     3 time2    60
-## 9     3 time3    90</code></pre>
+<pre><code>## # A tibble: 12 × 4
+##       id 性別  時期   得点
+##    &lt;int&gt; &lt;chr&gt; &lt;chr&gt; &lt;dbl&gt;
+##  1     1 男性  time1    10
+##  2     1 男性  time2    50
+##  3     1 男性  time3    90
+##  4     2 女性  time1    20
+##  5     2 女性  time2    60
+##  6     2 女性  time3   100
+##  7     3 男性  time1    30
+##  8     3 男性  time2    70
+##  9     3 男性  time3   110
+## 10     4 女性  time1    40
+## 11     4 女性  time2    80
+## 12     4 女性  time3   120</code></pre>
+<p>この例の「性別」列のように，<code>pivot_longer()</code>関数実行時に特に何の指定もしなかったものについては，属性変数として，その列名がそのまま使われるとともに，各列に対して自動で適切な値が付与される．</p>
 <p>ちなみに、<code>pivot_longer()</code>の出力結果は<code>data.frame</code>形式ではなく<code>tibble</code>形式となっている。<code>tibble</code>形式は<code>data.frame</code>形式の上位互換のデータ形式である。いくつかの違いがあるが、わかりやすい点としては<code>print()</code>させたときに、列名に各列の型が表示される点である。基本的な使い方は<code>data.frame</code>形式と変わらないが、もし<code>data.frame</code>形式にしたければ、<code>as.data.frmae()</code>関数を利用すればよい。</p>
 <pre class="r"><code>class(long_data)</code></pre>
 <pre><code>## [1] &quot;tbl_df&quot;     &quot;tbl&quot;        &quot;data.frame&quot;</code></pre>
 <pre class="r"><code>long_data &lt;- as.data.frame(long_data)
 class(long_data)</code></pre>
 <pre><code>## [1] &quot;data.frame&quot;</code></pre>
+<div class="work">
+<p>次の<a href="./practice/05_work_1.csv">データ</a>を読み込み、以下の処理を行え．</p>
+<ol style="list-style-type: decimal">
+<li>summay()関数によって，このデータの内容がどのようなものかを確認せよ．</li>
+<li>性別と血液型をそれぞれ要因型にし，再度sumary()関数を実施し，先の結果との違いを確認せよ．</li>
+<li>性別の<code>M</code>を「男性」，<code>F</code>を「女性」に置換し，再度sumary()関数を実施し，先の結果との違いを確認せよ．</li>
+<li>男性のみのデータを抽出し，そのデータの<code>身長</code>の平均値と標準偏差，ならびに平均の95%信頼区間を求めよ.</li>
+<li>女性でかつ<code>身長</code>が170㎝以上の人の数が何人か求めよ．</li>
+<li>BMIが25以上には「過体重」，18.5以上で25未満には「標準」，18.5未満には「低体重」というルールでラベルを付け，新たな列「体重ラベル」としてデータに追加し，その列を要因型に変換して，summary()関数で各ラベルがついた人数を確認せよ．</li>
+</ol>
+</div>
+<div class="work">
+<p>次の<a href="./practice/05_work_2.csv">データ</a>は，調査協力者40名（男性19名，女性21名）に対して，食パンA,
+B,
+Cを試食し，風味の良さを10段階で回答してもらったデータである．以下の課題を行え．</p>
+<ol style="list-style-type: decimal">
+<li>head()関数によって，このデータの内容がどのようなものかを確認せよ．</li>
+<li>ワイド形式のデータをロング形式に変換し，同様にhead()関数で内容を確認せよ．</li>
+<li>ロング形式に変換したデータを用いて，男性の食パンAの平均点と女性の食パンAの平均点をそれぞれ算出せよ．</li>
+</ol>
+</div>
+</div>
 </div>
 
 
