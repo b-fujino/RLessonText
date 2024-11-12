@@ -1860,7 +1860,7 @@ print(data_iris2$がく長r)</code></pre>
 </div>
 <div id="文字列の置換" class="section level1" number="3">
 <h1><span class="header-section-number">3</span> 文字列の置換</h1>
-<p>文字列型の列や要因型の列を置換したい場合には<code>ifelse()</code>関数を使うよりも，<code>recorde()</code>関数を使うほうが簡単である．</p>
+<p>文字列型の列や要因型の列を置換したい場合には<code>ifelse()</code>関数を使うよりも，<code>recode()</code>関数を使うほうが簡単である．</p>
 <p>第1引数には，変換したいベクトル，第2引数以降には，置換内容を記述していく．置換内容が指定されていないものは元の値が維持される．以下の例では，<code>setosa</code>を<code>セトサ</code>に，<code>versicolor</code>を<code>バーシカラー</code>に置換している．</p>
 <pre class="r"><code>data_iris2 &lt;- data_iris 
 data_iris2$種類 &lt;- recode(data_iris2$種類, &quot;setosa&quot;=&quot;セトサ&quot;, &quot;versicolor&quot;=&quot;バーシカラー&quot;)
