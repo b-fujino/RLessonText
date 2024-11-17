@@ -485,6 +485,10 @@ g <- ggplot(data_iris)+
 plot(g)
 ```
 
+
+
+
+
 # 書式や凡例を弄る
 
 ## 軸のタイトルを消したり書き換えたり
@@ -572,7 +576,8 @@ plot(g)
 ```
 
 :::ref
-themeの設定項目
+<details>
+<summary>themeの設定項目</summary>
 
 themeは細かくいろいろ設定できる．設定できるものは以下の通り．
 
@@ -607,10 +612,12 @@ themeは細かくいろいろ設定できる．設定できるものは以下の
 |line|すべての線要素|element_line()|
 
 引用（順序は改変しました）：https://knknkn.hatenablog.com/entry/2019/02/23/181311
+</details>
 :::
 
 :::ref
-element_text()の設定項目
+<details>
+<summary>element_text()の設定項目</summary>
 
 設定項目|element_text()の引数
 :--|:--
@@ -623,11 +630,12 @@ element_text()の設定項目
 フォントファミリー|	family
 
 参考：http://mukkujohn.hatenablog.com/entry/2016/10/11/220722
+</details>
 :::
 
 :::ref
-
-element_xxxのその他の項目
+<details>
+<summary>element_xxxのその他の項目</summary>
 `element_rect(fill, color, size, linetype, inherit.blank)` — 長方形
 
 |項目|内容|
@@ -641,6 +649,7 @@ color| 枠の色
 消したい要素にはこれを指定する
 
 参考：https://heavywatal.github.io/rstats/ggplot2.html
+</details>
 :::
 
 ## 目盛ラベルを変える
