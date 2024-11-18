@@ -453,7 +453,7 @@ print(d2)
  
  g <- ggplot(d2)+
   geom_bar(aes(x=種類,y=平均,fill=種類),stat="identity")+
-  geom_errorbar(aes(x=種類,y=平均,ymin=平均-標準偏差, ymax=平均+標準偏差,width=0.15))
+  geom_errorbar(aes(x=種類,y=平均,ymin=平均-標準偏差, ymax=平均+標準偏差),width=0.15)
 plot(g)
 ```
 
@@ -575,20 +575,23 @@ plot(g)
 
 **方法1 データを端からバラバラにして3つのグラフを別々に描く**
 
-この場合には，データを`filter()`関数(->[参考](./RText_05_DataHandling.html#抽出))を用いて種類ごとに分け，それぞれを描画する．ただし，この場合，`coord_cartesian(xlim =)`関数を使ってx軸の変域を設定しないと，3つのグラフのx軸の変域がバラバラになってしまう．
+この場合には，データを`filter()`関数(->[参考](./RText_05_DataHandling.html#抽出))を用いて種類ごとに分け，それぞれを描画する．ただし，この場合，~`coord_cartesian(xlim =)`~ `xlim()`や`ylim()`関数を使ってx軸の変域を設定しないと，3つのグラフのx軸，y軸の変域がバラバラになってしまう．なので，以下の例のように，`xlim()`や`ylim()`を使ってx軸，y軸の変域を設定する．
 
 ```{r}
 g <- ggplot(filter(data_iris,種類=="setosa"))+
   geom_histogram(aes(x=がく長),color="white", binwidth = 0.1)+
-  coord_cartesian(xlim = c(4, 8))
+  xlim(4,8)+ylim(0,30)
+  #coord_cartesian(xlim = c(4, 8))
 plot(g)
 g <- ggplot(filter(data_iris,種類=="versicolor"))+
   geom_histogram(aes(x=がく長),color="white", binwidth = 0.1)+
-  coord_cartesian(xlim = c(4, 8))
+  xlim(4,8)+ylim(0,30)
+  #coord_cartesian(xlim = c(4, 8))
 plot(g)
 g <- ggplot(filter(data_iris,種類=="virginica") )+
   geom_histogram(aes(x=がく長),color="white", binwidth = 0.1)+
-  coord_cartesian(xlim = c(4, 8))
+  xlim(4,8)+ylim(0,30)
+  #coord_cartesian(xlim = c(4, 8))
 plot(g)
 
 ```
@@ -927,7 +930,7 @@ color| 枠の色
 消したい要素にはこれを指定する
 
 参考：https://heavywatal.github.io/rstats/ggplot2.html
-<details>
+</details>
 :::
 
 ## 目盛ラベルを変える
@@ -976,11 +979,12 @@ plot(g)
 ```
 
 :::ref
-ggplot2で描画するときにエラーが出るケースとして，**行末の「＋」の付け忘れや消し忘れ**がある．もし思い通りにグラフが描画されない場合には，この点を確認してみるとよい．の絵が 
+ggplot2で描画するときにエラーが出るケースとして，**行末の「＋」の付け忘れや消し忘れ**がある．もし思い通りにグラフが描画されない場合には，この点を確認してみるとよい． 
 :::
 
 :::ref
-<details><summary>色</summary>
+<details>
+<summary>色</summary>
 ggplot2で色の指定をする際に設定できる色のリストは以下の通りである．
 
 ![色のリスト](https://pythondatascience.plavox.info/wp-content/uploads/2016/06/colorpalette.png)
