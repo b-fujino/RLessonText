@@ -208,7 +208,7 @@ write.csv(mydata,"./practice/06_work.csv",row.names=F)
 1. 数学IAについて地域別の箱ひげ図を作成せよ.
 1. 各科目の箱ひげ図を描画せよ．
 
-```{R eval=FALSE, include=FALSE}
+```{R eval=T, include=F}
 library(tidyverse)
 mydata<- read.csv("./practice/06_work.csv")
 mydata$地域<- as.factor(mydata$地域)
@@ -370,7 +370,7 @@ plot(g)
 1. 各科目の箱ひげ図に個々の得点のjitterプロットを重ねて描画せよ．箱ひげ図は色付けはせず，Jitterプロットは色付けすること．
 1. 数学IAについて地域ごとの箱ひげ図に，地域ごとの個々の得点のjtterプロット重ねて描画せよ．箱ひげ図は色付けはせず，Jitterプロットは色付けすること．
 
-```{r eval=FALSE, include=FALSE}
+```{r eval=T, include=F}
 mydata<- read.csv("./practice/06_work.csv")
 mydata$地域<- as.factor(mydata$地域)
 head(mydata)
@@ -519,6 +519,47 @@ plot(g)
 また，それぞれの平均の値も棒グラフに重ねて記述すること．
 
 :::
+
+```{r include=FALSE}
+mydata<- read.csv("./practice/06_work.csv")
+mydata$地域<- as.factor(mydata$地域)
+head(mydata)
+
+数学IA.m <- mean(mydata$数学IA)
+数学IA.sd <- sd(mydata$数学IA)
+数学IIB.m <- mean(mydata$数学IIB)
+数学IIB.sd <- sd(mydata$数学IIB)
+国語.m <- mean(mydata$国語)
+国語.sd <- sd(mydata$国語)
+
+d <- data.frame(
+  科目 = c("数学IA","数学IIB","国語"),
+  平均 = c(数学IA.m,数学IIB.m,国語.m),
+  標準偏差 = c(数学IA.sd,数学IIB.sd,国語.sd)
+)
+
+g <- ggplot(d)+
+  geom_bar(aes(x=科目,y=平均,fill=科目),stat="identity")+
+  geom_errorbar(aes(x=科目,y=平均,ymin=平均-標準偏差, ymax=平均+標準偏差),width=0.15)+
+  geom_text(aes(x=科目,y=平均,label=round(平均,1)),vjust=5)
+
+plot(g)
+
+d.mean <- aggregate(数学IA~地域,mydata, mean)
+d.sd <- aggregate(数学IA~地域,mydata, sd)
+
+d2 <- data.frame(
+  地域 = d.mean$地域,
+  平均 = d.mean$数学IA,
+  標準偏差= d.sd$数学IA
+)
+
+g<-ggplot(d2)+
+  geom_bar(aes(x=地域,y=平均,fill=地域),stat="identity")+
+  geom_errorbar(aes(x=地域,y=平均,ymin=平均-標準偏差, ymax=平均+標準偏差),width=0.15)+
+  geom_text(aes(x=地域,y=平均,label=round(平均,1)),vjust=5)
+plot(g)
+```
 
 
 ## ヒストグラム
@@ -696,6 +737,32 @@ plot(g)
 1. 数学IA，数学IIB，国語の3科目についてのヒストグラムをそれぞれ別のグラフとして描画せよ．区間幅は5点刻みとする．
 1. 数学IAについて地域別のヒストグラムを1枚のグラフとしてまとめたものをfacet_wrap()関数を用いて作成せよ．区間幅は5点刻みとする．
 :::
+
+```{r include=FALSE}
+mydata<- read.csv("./practice/06_work.csv")
+mydata$地域<- as.factor(mydata$地域)
+head(mydata)
+
+g <- ggplot(mydata)+
+  geom_histogram(aes(x=数学IA),color="white", binwidth = 5)
+plot(g)
+
+g <- ggplot(mydata)+
+  geom_histogram(aes(x=数学IIB),color="white", binwidth = 5)
+plot(g)
+
+g <- ggplot(mydata)+
+  geom_histogram(aes(x=国語),color="white", binwidth = 5)
+plot(g)
+
+
+g <- ggplot(mydata)+
+  geom_histogram(aes(x=数学IA),color="white", binwidth = 5)+
+  facet_wrap(~地域)
+plot(g)
+
+```
+
 
 ## 散布図
 2つのデータの関係性を可視化するグラフの代表格は散布図である．散布図は[点プロット](#点プロット)で紹介した`geom_point()`を用いて以下のようにして描く．
