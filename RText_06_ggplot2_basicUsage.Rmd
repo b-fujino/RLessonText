@@ -133,6 +133,83 @@ g <- ggplot(data_iris) + geom_boxplot(aes(x=種類, y=がく長, fill=種類),wi
 plot(g)
 ```
 
+<<<<<<< HEAD
+=======
+
+
+### 複数の変数の箱ひげ図
+今までは「がく長」のみを描画してきたが，「がく幅」や「花びら長」なども同時に描画させたい場合には，以下のようにgeom_boxplotを各変数に対して設ける．`x=`で記載されるものはあくまでラベルとなるため，ダブルコーテーション("")が必要となる．
+
+```{r}
+g <- ggplot(data_iris) + 
+  geom_boxplot(aes(x="がく長",y=がく長))+
+  geom_boxplot(aes(x="がく幅", y=がく幅))+
+  geom_boxplot(aes(x="花びら長", y=花びら長))
+
+plot(g)
+```
+
+なお，このようにした場合には，種類ごとに分けることはできなくなる（x軸が変数に対応する形になるので，種類に対応させる軸がなくなる）．
+
+
+#### 変数ごとに塗り分ける
+塗色をしたい場合には，`fill`や`color`の設定を与える．以下では`fill`を設定している．この例のように，`fill`に変数名を設定すると，その変数名に従って色分けされる．
+
+```{r}
+g <- ggplot(data_iris) + 
+  geom_boxplot(aes(x="がく長",y=がく長, fill="がく長"))+
+  geom_boxplot(aes(x="がく幅", y=がく幅, fill="がく幅"))+
+  geom_boxplot(aes(x="花びら長", y=花びら長, fill="花びら幅"))
+
+plot(g)
+```
+
+colorを設定した場合．
+
+```{r}
+g <- ggplot(data_iris) + 
+  geom_boxplot(aes(x="がく長",y=がく長, color="がく長"))+
+  geom_boxplot(aes(x="がく幅", y=がく幅, color="がく幅"))+
+  geom_boxplot(aes(x="花びら長", y=花びら長, color="花びら幅"))
+
+plot(g)
+```
+
+
+:::work
+この[データ](./practice/06_work.csv)は，ある地域Aとある地域Bの高校生をランダムに500人ずつ抽出し，それぞれの大学入試共通テストの数学IA，数学IIB，国語をデータ化したものである．このデータを使って,以下の問に答えよ
+
+```{r, include=FALSE}
+mydata<- read.csv("./practice/04_work_basicStatistics.csv")
+mydata<- data.frame(地域 = c(rep("A",500),rep("B",500)), mydata[c("数学IA","数学IIB","国語")])
+write.csv(mydata,"./practice/06_work.csv",row.names=F)
+```
+
+1. このデータをhead()関数とsummary()関数を使って確認せよ．なお，地域については要因型に変換しておくこと．
+1. 数学IAについて地域別の箱ひげ図を作成せよ.
+1. 各科目の箱ひげ図を描画せよ．
+
+```{R eval=T, include=F}
+library(tidyverse)
+mydata<- read.csv("./practice/06_work.csv")
+mydata$地域<- as.factor(mydata$地域)
+head(mydata)
+summary(mydata)
+
+g <- ggplot(mydata) + geom_boxplot(aes(x=地域, y=数学IA, fill=地域))
+plot(g)
+
+g <- ggplot(mydata) + 
+  geom_boxplot(aes(x="数学IA",y=数学IA, fill="数学IA"))+
+  geom_boxplot(aes(x="数学IIB", y=数学IIB, fill="数学IIB"))+
+  geom_boxplot(aes(x="国語", y=国語, fill="国語"))
+plot(g)
+
+```
+
+:::
+
+>>>>>>> bbc62a0b56019eaceb2e6242ea27afcae80f69eb
 ## 点プロット
 
 `geom_jitter()`を使う．引数として`aes()`を使って同じようにx，yを設定する．
@@ -244,7 +321,81 @@ plot(g)
 
 ## 棒グラフ
 
+<<<<<<< HEAD
 平均を棒グラフとして，さらに標準偏差や標準誤差をエラーバーとして描く方法としては，あらかじめ算出した平均，標準偏差の値を使って描く方法と，データそのものを使って描く方法（ggplotの内部で平均や標準偏差を自動的に計算させる方法）の2つの方法がある．
+=======
+:::work
+先ほど読み込んだ[大学入試共通テストの得点データ（数学IA，数学IIB，国語）](./practice/06_work.csv)を使って以下の問に答えよ．
+
+1. 各科目の箱ひげ図に個々の得点のjitterプロットを重ねて描画せよ．箱ひげ図は色付けはせず，Jitterプロットは色付けすること．
+1. 数学IAについて地域ごとの箱ひげ図に，地域ごとの個々の得点のjtterプロット重ねて描画せよ．箱ひげ図は色付けはせず，Jitterプロットは色付けすること．
+
+```{r eval=T, include=F}
+mydata<- read.csv("./practice/06_work.csv")
+mydata$地域<- as.factor(mydata$地域)
+head(mydata)
+summary(mydata)
+
+g<-ggplot(mydata)+
+  geom_boxplot(aes(x="数学IA", y=数学IA))+
+  geom_jitter(aes(x="数学IA", y=数学IA, color="数学IA"))+
+  geom_boxplot(aes(x="数学IIB", y=数学IIB))+
+  geom_jitter(aes(x="数学IIB", y=数学IIB, color="数学IIB"))+
+  geom_boxplot(aes(x="国語", y=国語))+
+  geom_jitter(aes(x="国語", y=国語, color="国語"))
+plot(g)
+
+g<-ggplot(mydata)+geom_boxplot(aes(x=地域,y=数学IA))+
+  geom_jitter(aes(x=地域, y=数学IA, color=地域))
+plot(g)
+```
+
+:::
+
+
+## 棒グラフとエラーバー
+
+平均を棒グラフとして，さらに標準偏差や信頼区間をエラーバーとして描く，というケースは非常に多い．そこで以下ではそういう棒グラフの作成方法を説明する．
+
+### 棒グラフの基本
+
+流れとしては平均と標準偏差の求め，それを元のデータとは別のデータフレームに格納し，そのデータフレームを用いて描画する，という流れとなる．
+
+用いるggplot2の関数は`geom_bar()`と`geom_errorbar()`である．
+
+`geom_bar()`は棒グラフを描く関数である．第1引数として`aes()`関数を与え，x軸とy軸を設定する．第2引数には`stat="identity"`を与える．これは「与えたデータをそのまま使う」という意味である．第3引数にはwidthを与える．これは棒の幅を設定する．ただ，第3引数は省略することもできる．
+
+`geom_errorbar()`はエラーバーを描く関数である．第1引数として`aes()`関数を与え，x軸，y軸，ymin，ymaxを設定する．x軸,y軸は`geom_bar()`に与えたものと同じもの与える．yminはエラーバーの下限，ymaxはエラーバーの上限を示す．一般的には平均$\pm$標準偏差もしくは信頼区間の上限・下限が与えられる．widthはエラーバーの幅を設定する．widthを省略すると，上限・下限を示す水平方向の線分が描かれなくなる．
+
+```{r}
+#データの準備
+平均 <- mean(data_iris$がく長)
+標準偏差 <- sd(data_iris$がく長)
+
+d <- data.frame( # それぞれ1つずつの値しか格納されていないが，あくまでデータフレームである
+  平均 = 平均,
+  標準偏差 = 標準偏差
+)
+
+g<-ggplot(d)+
+  geom_bar(aes(x="全体",y=平均), stat="identity",width = 0.5)+
+  geom_errorbar(aes(x="全体",y=平均,ymin=平均-標準偏差, ymax=平均+標準偏差),width=0.15)
+plot(g)
+```
+
+
+
+
+
+
+
+
+
+
+
+### 種類ごとに分けた棒グラフにしたい
+[aggregate()関数](./RText_04_DescriptiveStatistics.html#グループごとの統計量の算出)グループごとのデータを用意した上で，以下のようにする．
+>>>>>>> bbc62a0b56019eaceb2e6242ea27afcae80f69eb
 
 ### 予め算出した平均と標準偏差を使って描く方法
 平均や標準偏差が得られているなら棒グラフとしてそれらを描きたい．その場合には，まずは平均と標準偏差のグループごとのデータを用意した上で，以下のようにする．
@@ -317,6 +468,63 @@ g <- ggplot(data_iris, aes(x=種類,y=がく長,fill=種類))+
 plot(g)
 ```
 
+<<<<<<< HEAD
+=======
+</details>
+:::
+
+
+:::work
+先ほど読み込んだ[大学入試共通テストの得点データ（数学IA，数学IIB，国語）](./practice/06_work.csv)を使って以下の問に答えよ．
+
+1. 各科目について平均値と標準偏差を求め，それを棒グラフとエラーバーで描画せよ．エラーバーは標準偏差を用いること．また，それぞれの平均の値も棒グラフに重ねて記述すること．
+1. 数学IAについて，地域ごとの平均と標準偏差を求め，それを棒グラフとエラーバーで描画せよ．エラーバーは標準偏差を用いること．
+また，それぞれの平均の値も棒グラフに重ねて記述すること．
+
+:::
+
+```{r include=FALSE}
+mydata<- read.csv("./practice/06_work.csv")
+mydata$地域<- as.factor(mydata$地域)
+head(mydata)
+
+数学IA.m <- mean(mydata$数学IA)
+数学IA.sd <- sd(mydata$数学IA)
+数学IIB.m <- mean(mydata$数学IIB)
+数学IIB.sd <- sd(mydata$数学IIB)
+国語.m <- mean(mydata$国語)
+国語.sd <- sd(mydata$国語)
+
+d <- data.frame(
+  科目 = c("数学IA","数学IIB","国語"),
+  平均 = c(数学IA.m,数学IIB.m,国語.m),
+  標準偏差 = c(数学IA.sd,数学IIB.sd,国語.sd)
+)
+
+g <- ggplot(d)+
+  geom_bar(aes(x=科目,y=平均,fill=科目),stat="identity")+
+  geom_errorbar(aes(x=科目,y=平均,ymin=平均-標準偏差, ymax=平均+標準偏差),width=0.15)+
+  geom_text(aes(x=科目,y=平均,label=round(平均,1)),vjust=5)
+
+plot(g)
+
+d.mean <- aggregate(数学IA~地域,mydata, mean)
+d.sd <- aggregate(数学IA~地域,mydata, sd)
+
+d2 <- data.frame(
+  地域 = d.mean$地域,
+  平均 = d.mean$数学IA,
+  標準偏差= d.sd$数学IA
+)
+
+g<-ggplot(d2)+
+  geom_bar(aes(x=地域,y=平均,fill=地域),stat="identity")+
+  geom_errorbar(aes(x=地域,y=平均,ymin=平均-標準偏差, ymax=平均+標準偏差),width=0.15)+
+  geom_text(aes(x=地域,y=平均,label=round(平均,1)),vjust=5)
+plot(g)
+```
+
+>>>>>>> bbc62a0b56019eaceb2e6242ea27afcae80f69eb
 
 ## ヒストグラム
 
@@ -423,6 +631,32 @@ plot(g)
 
 
 
+
+
+```{r include=FALSE}
+mydata<- read.csv("./practice/06_work.csv")
+mydata$地域<- as.factor(mydata$地域)
+head(mydata)
+
+g <- ggplot(mydata)+
+  geom_histogram(aes(x=数学IA),color="white", binwidth = 5)
+plot(g)
+
+g <- ggplot(mydata)+
+  geom_histogram(aes(x=数学IIB),color="white", binwidth = 5)
+plot(g)
+
+g <- ggplot(mydata)+
+  geom_histogram(aes(x=国語),color="white", binwidth = 5)
+plot(g)
+
+
+g <- ggplot(mydata)+
+  geom_histogram(aes(x=数学IA),color="white", binwidth = 5)+
+  facet_wrap(~地域)
+plot(g)
+
+```
 
 
 ## 散布図

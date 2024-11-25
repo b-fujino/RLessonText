@@ -13,6 +13,7 @@ knitr::opts_chunk$set(echo = TRUE)
 
 ```{r}
 hana<-read.csv("./practice/04_work_basicStatistics2.csv")
+head(hana)
 ## 花びらの長さの平均
 
 res.mean<-aggregate(花びらの長さ~種類, hana,mean)
@@ -24,8 +25,34 @@ print(res.mean)
 
 ## 花びらの長さの標準偏差
 
-res.sd<-aggregate(花びらの長さ~種類, hana, sd)
+res.sd<-aggregate(花びらの幅~種類, hana, mean)
 print(res.sd)
 
 ```
 
+
+```{r}
+library(EnvStats)
+
+test_data <- read.csv("./practice/04_work_basicStatistics.csv")
+
+calc_stats <-function(data){
+  mean_value <- mean(data, na.rm = TRUE)
+  var_value <- var(data, na.rm = TRUE)
+  mean_ci<-t.test(data)$conf.int
+  var_ci <-varTest(data)$conf.int
+  
+  list(
+    mean =mean_value,
+    var = var_value,
+    mean_ci_lower = mean_ci[1],
+    mean_ci_upper = mean_ci[2],
+    var_ci_lower = var_ci[1],
+    var_ci_upper = var_ci[2]
+  )
+}
+
+res <- lapply(test_data, calc_stats)
+print(res)
+
+```
