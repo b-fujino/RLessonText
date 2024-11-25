@@ -248,10 +248,10 @@ t.test(data1$評価, data2$評価, paired=TRUE)
 ## t検定の結果の報告方法
 t検定の結果を報告する際には棒グラフを用いるのが一般的である（平均なので箱ひげ図は用いない）．二つの群の平均と標準偏差を棒グラフで表現したうえで，角傘（ブラケットと呼ぶ）をつけてp値を記載する．
 
-:::ref
-<a id="推測統計量></a>
+<a name="推測統計量"/>
 
-t検定は，あくまでそのデータの違いを見ているのではなく，そのデータから推定される母集団に違いがあるかを検証するものである．このため，t検定の結果を報告する際に用いる統計量は，推測統計量となる．このことはt検定だけに限らず，あらゆる分析にあてはまる．今後解説していくあらゆる分析は得られているデータを基に推定される母集団の比較をしたり，母集団間の関係性を分析したりするものである．このため，今後出てくる平均や標準偏差は全て基本的に推測統計量となる．
+:::ref
+t検定は，あくまでそのデータの違いを見ているのではなく，そのデータから推定される母集団に違いがあるかを検証するものである．このため，t検定の結果を報告する際に用いる統計量は，推測統計量となる．このことはt検定だけに限らず，あらゆる分析にあてはまる．今後解説していくあらゆる分析は得られているデータを基に推定される母集団の比較をしたり，母集団間の関係性を分析したりするものである．このため，**今後の分析の中で出てくる平均や標準偏差は全て基本的に推測統計量となる**．
 :::
 
 
@@ -298,7 +298,7 @@ g <- g+annotate("text",x=1.5, y=66, label="p=0.0002922, ***", size=3)
 plot(g)
 ```
 
-p値にはアスタリスクをつけるのが一般的である．アスタリスクの数はp値の大小に応じて変わる．p値が0.05未満であれば1つ，0.01未満であれば2つ，0.001未満であれば3つとする．
+p値にはアスタリスクをつけるのが一般的である．アスタリスク（\*）の数はp値の大小に応じて変わる．**p値が0.05未満であれば1つ，0.01未満であれば2つ，0.001未満であれば3つとする**．
 
 逆に有意でなかった場合には，P値を表記するだけで何も記載しないか，あるいは，`n.s.`と記載する．これは`not significant`の略であり，「有意でない」という意味である（さらに[多重比較](#多重比較)を行うケースでは有意でないものについてはブラケットも含め何も表記しないのが一般的である）．
 
@@ -361,15 +361,144 @@ plot(g)
 
 
 :::work
-ある自治体の高校生を対象に朝食摂取と成績の関係を明らかにするために調査を行った．この調査では，調査日（抜き打ち実施）に朝食を食べているかどうかと，4限目の授業で実施した数学のテストの得点がデータとして取得されている．このデータについて，以下の課題を実施せよ．
-
-[データ](./work/example_ttest_work)
+ある自治体の高校生を対象に朝食摂取と成績の関係を明らかにするために調査をおこない，このような[データ](./practice/07_work_1.csv)を取得した．この調査では，調査日（抜き打ち実施）に朝食を食べているかどうかと，4限目の授業で実施した数学のテストの得点がデータとして取得されている．このデータについて，以下の課題を実施せよ．
 
 1. このデータの冒頭6行分をhead()を用いて確認し，このデータがワイド形式かロング形式か確認せよ．
-1. 摂取群と欠食群のそれぞれの平均と標準偏差（[こちら](#推測統計量)で述べている通り推測統計量でよい）を算出するとともに，それらを棒グラフで示せ．
+1. 摂取群と欠食群のそれぞれの平均と標準偏差（[こちら](#推測統計量)で述べている通り推測統計量でよい）を算出するとともに，それらを棒グラフで示せ．棒グラフにはエラーバーも付与すること．
 1. 朝食を食べている人と食べていない人とで数学のテストの得点に有意な差があるかどうかを検証せよ．
 1. 先に描いた棒グラフ上にt検定の結果を示すブラケットを書き入れよ．
 
+```{r include =F}
+set.seed(42)
+
+# データの個数
+num_samples <- 4000
+result <- sample(c("摂取", "欠食"), num_samples, replace = TRUE, prob = c(0.72, 0.38))
+score <- round(rnorm(num_samples, mean = 50, sd = 10),0)
+
+library(tidyverse)
+weight <- ifelse(result == "摂取", 3, 0)
+data <- tibble(
+  朝食 = result,
+  得点 = score+weight
+)
+
+write.csv(data, "./practice/07_work_1.csv")
+```
+
+
+```{r include=FALSE}
+mydata_work1 <- read.csv(
+  "./practice/07_work_1.csv", 
+  header=T, 
+  fileEncoding="UTF8"
+) # データ読み込み
+
+# 1. データの確認
+head(mydata_work1)
+
+# 2. 平均と標準偏差の算出
+平均<-aggregate(得点~朝食, mydata_work1, mean)
+標準偏差<-aggregate(得点~朝食, mydata_work1, sd)
+
+#データフレームの作成
+mydf <- data.frame(
+  条件=平均$朝食,
+  得点=平均$得点,
+  標準偏差=標準偏差$得点
+)
+
+# ggplotで棒グラフを表示
+g<- ggplot(data=mydf)+
+  geom_bar(aes(x=条件, y=得点, fill=条件), stat="identity")+
+  geom_errorbar(aes(x=条件, ymin=得点-標準偏差, ymax=得点+標準偏差, width=0.1))
+plot(g)
+
+# 3. t検定
+t.test(得点~朝食, mydata_work1)
+
+# 4. ブラケットの追加
+g<- ggplot(data=mydf)+
+  geom_bar(aes(x=条件, y=得点, fill=条件), stat="identity")+
+  geom_errorbar(aes(x=条件, ymin=得点-標準偏差, ymax=得点+標準偏差, width=0.1))+
+  annotate("segment",x=1, xend=1, y=68, yend=70)+
+  annotate("segment",x=1, xend=2, y=70, yend=70)+
+  annotate("segment",x=2, xend=2, y=70, yend=68)+
+  annotate("text",x=1.5, y=73, label="p=2.2*10^-16, ***", size=4)
+plot(g)
+```
+
+:::
+
+:::work
+あるショコラティエで，新しいチョコレートの試作に取り組んでいる．同じチョコレートでも，どのような形に成形するかで，味の評価が変わるのではないかと考え，店に来店したお客さん50人にそれぞれを食べてもらい，おいしさを10段階で評価してもらい，次のような[データ](./practice/07_work_2.csv)を取得した．このデータについて，以下の課題を実施せよ．
+
+1. このデータの冒頭6行分をhead()を用いて確認し，このデータがワイド形式かロング形式か確認せよ．
+1. 形状Aと形状Bのそれぞれの平均と標準偏差を算出するとともに，それらを棒グラフで示せ．棒グラフにはエラーバーも付与すること．
+1. 形状Aと形状Bとでおいしさに有意な差があるかどうかを検証せよ．
+1. 先に描いた棒グラフ上にt検定の結果を示すブラケットとt検定の結果えられた有意確率を書き入れよ．
+
+```{r include =F}
+set.seed(23)
+
+# データの個数
+library(truncnorm)
+num_samples <- 50
+score_A <- round(rtruncnorm(num_samples, a=0, b=10, mean = 6, sd = 1.5),0)
+score_B <- round(rtruncnorm(num_samples, a=0, b=10, mean = 7, sd = 2.5),0)
+
+data <- tibble(
+  No. = 1:num_samples,
+  形状A = score_A,
+  形状B = score_B
+)
+
+write.csv(data, "./practice/07_work_2.csv")
+```
+
+```{r include=FALSE}
+mydata_work2 <- read.csv(
+  "./practice/07_work_2.csv", 
+  header=T, 
+  fileEncoding="UTF8"
+) # データ読み込み
+
+# 1. データの確認
+head(mydata_work2)
+
+# 2. 平均と標準偏差の算出
+平均<-c(mean(mydata_work2$形状A), mean(mydata_work2$形状B))
+標準偏差<-c(sd(mydata_work2$形状A), sd(mydata_work2$形状B))
+
+#データフレームの作成
+mydf <- data.frame(
+  条件=c("形状A", "形状B"),
+  おいしさ=平均,
+  標準偏差=標準偏差
+)
+print(mydf)
+
+#グラフ
+g<-ggplot(mydf)+
+  geom_bar(aes(x=条件, y=おいしさ, fill=条件), stat="identity")+
+  geom_errorbar(aes(x=条件, ymin=おいしさ-標準偏差, ymax=おいしさ+標準偏差, width=0.1))
+plot(g)
+
+# t検定
+A <- mydata_work2$形状A
+B <- mydata_work2$形状B
+t.test(A, B, paired=TRUE)
+
+# ブラケットの追加
+g<-ggplot(mydf)+
+  geom_bar(aes(x=条件, y=おいしさ, fill=条件), stat="identity")+
+  geom_errorbar(aes(x=条件, ymin=おいしさ-標準偏差, ymax=おいしさ+標準偏差, width=0.1))+
+  annotate("segment",x=1, xend=1, y=9, yend=9.5)+
+  annotate("segment",x=1, xend=2, y=9.5, yend=9.5)+
+  annotate("segment",x=2, xend=2, y=9, yend=9.5)+
+  annotate("text",x=1.5, y=9.7, label="p=0.02258, *", size=4)
+plot(g)
+```
 :::
 
 
@@ -380,7 +509,12 @@ plot(g)
 分散の場合には「差」をとるのではなく，「比率」（すなわち割り算をする）をとることになる．すなわち，2つのグループの分散の比率を求め，それが1（すなわち等しい）かどうかを検定することになる．この検定方法はF検定と呼ばれる．
 
 
-## F検定の方法（ワイド形式データ）
+:::ref
+分散の比較においては，「対応のあるデータ」についての検定は行わない．その理由として，対応のあるデータでは，「群の分散」よりも「それぞれのペアごとの差の平均」が重要（差の平均の母数が0となるか）であるためであり，各群を別個に捉えて分散を比較することに意味はないからである．
+:::
+
+
+## F検定の方法（基本）
 F検定は，Rの`var.test()`関数を用いて行う．この関数は，第1引数と第2引数に比較したい2つのグループのデータを与える．この関数は，t検定と同様に「2つのグループは同じ母集団から抽出されたサンプルである」という仮説の元で，2つのグループの分散の比率が1であるかどうかを検定する．
 
 :::practice
@@ -410,16 +544,18 @@ mydata_vartest <- read.csv(
   fileEncoding="UTF8"
 ) # データ読み込み
 
-var.test(mydata_vartest$工程変更前, mydata_vartest$工程変更後)
+変更前 <- mydata_vartest$工程変更前
+変更後 <- mydata_vartest$工程変更後
+var.test(変更前, 変更後)
 
 ```
 
 この結果から，P値が0.02となっており，5％の有意水準を下回っているため，工程変更によって製品の重量のばらつきに有意な変化が生じたと結論づけることができる．
 
 
-## F検定の方法（ロング形式のデータ）
+## ロング形式のデータでのF検定
 
-上記の例はワイド形式のデータであるが，ｔ検定の時と同様に，ロング形式のデータの場合にでも検定を行うことができる．以下にその例を示す．
+，ｔ検定の時と同様に，ロング形式のデータの場合には`測定変数~要因変数, データ`の形でも検定を行うことができる．以下にその例を示す．
 
 ```{r}
 #ワイド形式からロング形式に変換
@@ -442,8 +578,70 @@ F検定の結果を報告する際には，一般には棒グラフを用いる�
 
 例えば，上の例題の場合には，「工程変更前と工程変更後の製品の重量の分散に有意な違いがあることが示された（F(19, 19)=4.5, P=0.02）．」と記載する．
 
+:::work
+ある製品メーカでは，製品の歩留まり率（検品の際に不良品として弾かれ**なかった**製品の割合）の向上を狙って，製造工程を変更した．この工程変更によって，製品の品質のバラツキが抑えられたかどうかを検証するために，変更前の製造された製品の品質検査（100点満点）と変更後の製品の品質検査の結果をランダムに200個ずつ取り出してきた．この[データ](./practice/07_work_3.csv)から工程変更による品質のバラツキに変化があるのかを検証するために，以下のことを行え．
 
-# 比率の比較
+1. このデータの冒頭6行分をhead()を用いて確認し，このデータの形式か確認せよ．
+1. 変更前と変更後のそれぞれの平均と標準偏差を算出するとともに，それらを棒グラフで示せ．棒グラフにはエラーバーも付与すること．
+1. 変更前と変更後とで品質検査の点数そのものに有意な差があるかどうかを検証せよ．
+1. 変更前と変更後とで品質検査の点数のバラツキに有意な差があるかどうかを検証せよ．
+:::
+
+```{r include =F}
+set.seed(42)
+
+# データの個数
+num_samples <- 200
+before_change <- round(truncnorm::rtruncnorm(num_samples, a=0, b=100, mean = 70, sd = 10),0)
+after_change <- round(truncnorm::rtruncnorm(num_samples, a=0, b=100, mean = 70, sd = 5),0)
+
+data <- tibble(
+  変更前 = before_change,
+  変更後 = after_change
+)
+
+write.csv(data, "./practice/07_work_3.csv")
+```
+
+```{r include=FALSE}
+mydata_work3 <- read.csv(
+  "./practice/07_work_3.csv", 
+  header=T, 
+  fileEncoding="UTF8"
+) # データ読み込み
+
+# 平均と標準偏差
+平均<-c(mean(mydata_work3$変更前), mean(mydata_work3$変更後))
+標準偏差<-c(sd(mydata_work3$変更前), sd(mydata_work3$変更後))
+
+#データフレームの作成
+mydf <- data.frame(
+  条件=c("変更前", "変更後"),
+  品質検査=平均,
+  標準偏差=標準偏差
+)
+print(mydf)
+
+#グラフ
+g<-ggplot(mydf)+
+  geom_bar(aes(x=条件, y=品質検査, fill=条件), stat="identity")+
+  geom_errorbar(aes(x=条件, ymin=品質検査-標準偏差, ymax=品質検査+標準偏差, width=0.1))
+plot(g)
+
+# t検定
+t.test(mydata_work3$変更前, mydata_work3$変更後)
+
+# F検定
+var.test(mydata_work3$変更前, mydata_work3$変更後)
+
+```
+
+
+:::
+
+
+
+# 比率の比較(独立性の検定)
 続いて比率の比較を行う方法を説明する．比率の検定とは，例えば以下の表のような「クロス集計表」が作られている時に，列方向に並べた属性変数Aと行方向に並べた属性変数Bが互いに独立しているのか，何等かの関係性があるのかを検定する方法である．**帰無仮説は「互いに独立している」**であり，それが否定することによって「関係性がある」，さらに言えば「$B:\bar{B}$の比が$A$と$\bar{A}$の間で有意に違っている」と結論づける統計方法である．
 
 |  | Bあり | Bなし | 合計 |
@@ -454,7 +652,7 @@ F検定の結果を報告する際には，一般には棒グラフを用いる�
 
 ## 「独立」とは？
 
-ここで，独立とは，たとえば上記の表の場合，条件Aが「あり」の場合での条件Bの「あり」と「なし」の比率は1:2であるが，条件Aが「なし」の場合での条件Bの「あり」と「なし」の比率も1:2である．すなわち，条件Aが「あり」か「なし」かによって，条件Bの「あり」か「なし」かのなり易さ（生起確率）に違いはない．このような場合には，条件Aと条件Bが互いに独立していると呼ぶ．
+ここで，独立とは，たとえば上記の表の場合，条件Aが「あり」の場合での条件Bの「あり」と「なし」の比率は1:2であるが，条件Aが「なし」の場合での条件Bの「あり」と「なし」の比率も1:2である．すなわち，条件Aが「あり」か「なし」かによって，条件Bの「あり」か「なし」かのなり易さ（生起確率）に違いはない．このような場合には，**条件Aと条件Bが互いに独立している**と呼ぶ．
 
 逆に以下の表のような場合，条件Aが「あり」の場合での条件Bの「あり」と「なし」の比率は1:2であるが，条件Aが「なし」の場合での条件Bの「あり」と「なし」の比率は1:6である．すなわち，条件Aが「あり」か「なし」かによって，条件Bの「あり」か「なし」かの生起確率が異なっている．このような場合には，条件Aと条件Bが互いに独立していないと呼ぶ．
 
@@ -467,10 +665,17 @@ F検定の結果を報告する際には，一般には棒グラフを用いる�
 ## フィッシャーの正確確率検定
 
 
-比率の検定では一般にカイ2乗($\chi^2$)検定というものを用いる．ただし，カイ2乗検定はクロス集計した際のいずれかのセルが5未満の値の場合には正確な値は返してこない場合がある．そこでそうしたケースでも対応できるような方法としてFisherの正確確率検定というものがある．以下では，カイ2乗検定とFisherの正確確率検定の両方の方法について説明する．
+比率の検定では一般にカイ2乗($\chi^2$)検定というものを用いる．ただし，カイ2乗検定はクロス集計した際の**いずれかのセルが5未満の値の場合には正確な値は返してこない場合がある**．そこでそうしたケースでも対応できるような方法としてFisherの正確確率検定というものがある．以下では，カイ2乗検定とFisherの正確確率検定の両方の方法について説明する．
 
 ##カイ2乗検定の方法
-カイ2乗検定は，Rの`chisq.test()`関数を用いて行う．この関数は，引数に比較したい2つのグループのデータを与える．
+カイ2乗検定は，Rの`chisq.test()`関数を用いて行う．この関数は，以下の2通りの方法で実行可能である．
+
+1. 1つは，第1引数に要因Aについてのベクトルデータ，第2引数に要因Bについてのベクトルデータを与える
+1. クロス集計したテーブルデータを引数とする．
+
+通常，比率の検定を行う際にはその前段でクロス集計を行うのが一般的なので，後者の場合だとその結果をそのままつかうことができる．
+
+クロス集計表の作成は，Rの`table()`関数を用いて行う．この関数は，第1引数に要因Aについてのベクトルデータ，第2引数に要因Bについてのベクトルデータを与えると，クロス集計表を作成してくれる．なお，要因Aと要因Bは当然ながら対応あるデータであることが前提である．また，**要因A，要因Bにそれぞれ与えるベクトルデータは要因型**である必要がある．
 
 :::practice
 ある試験を受験した100人の受験者について，性別(0:男性, 1:女性）と合否（0:不合格, 1:合格）のデータ（[リンク](./practice/example_chisq.csv)）がある．このデータから，クロス集計表を作成するとともに，性別と合否の間に関連性があるのかどうかを検証せよ．
@@ -499,8 +704,12 @@ mydata_chisq <- read.csv(
   fileEncoding="UTF8"
 ) # データ読み込み
 
+# 要因型に変換
 mydata_chisq$合否 <- as.factor(mydata_chisq$合否)
 mydata_chisq$性別 <- as.factor(mydata_chisq$性別)
+
+# データの確認
+head(mydata_chisq)
 summary(mydata_chisq)
 
 #クロス集計表の作成
@@ -508,13 +717,14 @@ cross_table <- table(mydata_chisq$性別, mydata_chisq$合否)
 cross_table
 
 #カイ二乗検定
+chisq.test(mydata_chisq$性別, mydata_chisq$合否)
 chisq.test(cross_table)
 ```
 この結果から，P値が0.6284となっており，5%の有意水準を下回っていないため，性別と合否の間に有意な関連性があるとは言えない．すなわち，性別は入試の合否に対して「独立である」（影響を与えていない）という可能性が否定出来ないという結果となった．
 
 
 ## Fisherの正確確率検定の方法
-Fisherの正確確率検定は，Rの`Fisher.test()`関数を用いて行う．この関数は，引数に比較したい2つのグループのデータを与える．
+Fisherの正確確率検定は，Rの`Fisher.test()`関数を用いて行う．引数の与え方は`chisq.test`と同様に2通りの方法が可能である．
 
 :::practice
 ある喫茶店でコーヒーを注文したかどうか（0:注文しなかった，1:注文した）と，スイーツを注文したかどうか（0:注文しなかった，1：注文した）のデータ（[リンク](./practice/example_fisher.csv)）がある．このデータから，クロス集計表を作成するとともに，コーヒーを注文するかどうかとスイーツを注文するかどうかの間に関連性があるのかどうかを検証せよ．
@@ -551,13 +761,114 @@ summary(mydata_fisher)
 cross_table <- table(mydata_fisher$珈琲, mydata_fisher$甘味)
 cross_table
 
+```
+この結果から，スイーツもコーヒーも注文していない人が3人しかいないためカイ2乗検定では対応できないデータとなっている．
+このため，フィッシャーの正確確率検定を行う．
+
+```{r}
 #Fisherの正確確率検定
+fisher.test(mydata_fisher$珈琲, mydata_fisher$甘味)
 fisher.test(cross_table)
 ```
-この結果から，P値が0.0049となっており，1%の有意水準を下回っているため，コーヒーを注文するかしないかとスイーツを注文するかしないかの間に有意な関連性があると結論づけることができる．
+
+
+P値が0.0049となっており，1%の有意水準を下回っているため，コーヒーを注文するかしないかとスイーツを注文するかしないかの間に有意な関連性があると結論づけることができる．
 
 ## 結果の報告方法
-クロス集計表の結果を報告する際には，まずはクロス集計表をしめす．その上で，カイ2乗検定を使った場合，「カイ2乗検定の結果2つの群の間に有意な関連性があることが確認された（$\chi^2$(`df`)=`X-squared`, P=`p-value`）」と記載する．`df`は自由度を示し，`X-squared`はカイ2乗値を，`p-value`はP値を示す．一方，フィッシャーの正確確率検定の場合には，「フィッシャーの正確確率検定の結果2つの群の間に有意な関連性があることが確認された（P=`p-value`）」と記載する．
+クロス集計表の結果を報告する際には，まずはクロス集計表をしめす．その上で，カイ2乗検定を使った場合，「カイ2乗検定の結果2つの群の間に有意な関連性があることが確認された（$\chi^2$(`df`)=`X-squared`, P=`p-value`）」と文章の中で記載する．`df`は自由度を示し，`X-squared`はカイ2乗値を，`p-value`はP値を示す．一方，フィッシャーの正確確率検定の場合には，「フィッシャーの正確確率検定の結果2つの群の間に有意な関連性があることが確認された（P=`p-value`）」と記載する．
+
+
+:::work
+ある大学3年生の学生が，最近後輩たちが使っているメッセンジャーアプリに違いが出てきているように感じている．具体的には，自分達はLINEを主なメッセンジャーツールとして使っているが，最近の後輩はInstagramのDMを主なツールとして使っているようだ．そこで実際に自分達の世代と後輩世代と使っているメッセンジャーアプリに違いがあるのかをゼミ研究として調査をしてみることにした．
+
+調査は，大学1から4年生の学生約2000人に対して，LINEとInstagramのどちらを主なメッセンジャーツールとして使っているかを尋ねるアンケートをメールで送付した．結果，次のようなデータ（[リンク](./practice/07_work_4.csv)）が得られた．このデータから，先輩群(3，4年生）と後輩群(1，2年生）の間で使っているメッセンジャーアプリに違いがあるのかを検証せよ．
+:::
+
+```{r include=FALSE}
+#./practice/07_work_4.csvの作成
+set.seed(42)
+num_samples_Elder <- 321
+num_samples_Younger <- 535
+
+SNS_Elder <- sample(c("LINE", "Instagram"), num_samples_Elder, replace = TRUE, prob=c(0.7, 0.3))
+SNS_Younger <- sample(c("LINE", "Instagram"), num_samples_Younger, replace = TRUE, prob=c(0.4, 0.6))
+
+data <- tibble(
+  年代 = c(rep("先輩", num_samples_Elder), rep("後輩", num_samples_Younger)),
+  SNS = c(SNS_Elder, SNS_Younger)
+)
+
+shuffled_df <- data[sample(nrow(data)), ]
+
+write.csv(shuffled_df, "./practice/07_work_4.csv")
+```
+
+```{r include=FALSE}
+mydata_work4 <- read.csv(
+  "./practice/07_work_4.csv", 
+  header=T, 
+  fileEncoding="UTF8"
+) # データ読み込み
+
+mydata_work4$年代 <- as.factor(mydata_work4$年代)
+mydata_work4$SNS <- as.factor(mydata_work4$SNS)
+summary(mydata_work4)
+
+#クロス集計表の作成
+cross_table <- table(mydata_work4$年代, mydata_work4$SNS)
+cross_table
+
+# Fisherの正確確率検定
+chisq.test(cross_table)
+
+```
+
+:::work
+ある大学のあるゼミの学生が，ふと「政治学のゼミにいる学生はそのほかのゼミの学生より．選挙に行く人が多いのだろうか」という疑問を抱いた．これを検証するために，実際に最近あった衆議院選挙に投票に行ったかどうかを尋ねるアンケートを行った．その結果，次のようなデータ（[リンク](./practice/07_work_5.csv)）が得られた．このデータから，政治学ゼミの学生とその他のゼミの学生の間で投票に行く人の割合に違いがあるのかを検証せよ．
+:::
+
+```{r include=FALSE}
+set.seed(32)
+num_samples_Political <- 15
+num_samples_Other <- 180
+
+Voting_Political <- sample(c("Yes", "No"), num_samples_Political, replace = TRUE, prob=c(0.75, 0.25))
+Voting_Other <- sample(c("Yes", "No"), num_samples_Other, replace = TRUE, prob=c(0.45, 0.55))
+
+data <- tibble(
+  ゼミ = c(rep("政治学", num_samples_Political), rep("その他", num_samples_Other)),
+  投票 = c(Voting_Political, Voting_Other)
+)
+
+#シャッフル
+shuffled_df <- data[sample(nrow(data)), ]
+
+write.csv(shuffled_df, "./practice/07_work_5.csv")
+
+```
+
+```{r include=FALSE}
+mydata_work5 <- read.csv(
+  "./practice/07_work_5.csv", 
+  header=T, 
+  fileEncoding="UTF8"
+) # データ読み込み
+
+mydata_work5$ゼミ <- as.factor(mydata_work5$ゼミ)
+mydata_work5$投票 <- as.factor(mydata_work5$投票)
+summary(mydata_work5)
+
+#クロス集計表の作成
+cross_table <- table(mydata_work5$ゼミ, mydata_work5$投票)
+cross_table
+
+# Fisherの正確確率検定
+fisher.test(cross_table)
+
+```
+
+
+
 
 # 多重比較
 
@@ -752,7 +1063,16 @@ p.adjust(c(p_ab$p.value, p_bc$p.value, p_ca$p.value), method = "none")
 ```
 
 ## 比率の多重比較
-比率の多重比較を行う場合にも，基本的な考え方は平均や分散の多重比較と同様である．1対1の組み合わせを作り，それらのP値を補正して評価する，というものである．比率の多重比較に関しては，カイ2乗検定を行う場合には`pairwise.prop.test()`関数を用いることで簡単に多重比較を行うことができる．
+比率の多重比較を行う場合にも，基本的な考え方は平均や分散の多重比較と同様である．1対1の組み合わせを作り，それらのP値を補正して評価する，というものである．比率の多重比較に関しては，分散の多重比較の時と同じく，個別の組み合わせで比較を行った後，p.adjust()関数を用いて補正を行うことで多重比較を行うことができるが，カイ2乗検定を行う場合には`pairwise.prop.test()`関数を用いる．
+
+`pairwise.prop.test()`では，以下の引数をとる．
+
+- 第1引数x = : 比較対象のデータの成功数のベクトル
+- 第2引数n = : 比較対象のデータの試行数のベクトル
+- p.adjust.method = : 補正方法
+
+以下で例を示す．
+
 
 :::practice
 ある製造工程において，製品の不良品率を測定したするためにランダムに1000個のサンプルを取り出し，不良品かどうかを調べた（0：不良品ではない，1：不良品である）．その結果，以下のようなデータが得られた．このデータをもとに，各工程間の不良品率に有意な差があるかどうかを検証せよ（[リンク](./practice/example_multcomp_prop.csv)）．
@@ -760,9 +1080,9 @@ p.adjust(c(p_ab$p.value, p_bc$p.value, p_ca$p.value), method = "none")
 #./practice/example_multcomp_prop.csvの作成
 set.seed(42)
 num_samples <- 1000
-工程A <- rbinom(num_samples, 1, 0.05)
-工程B <- rbinom(num_samples, 1, 0.1)
-工程C <- rbinom(num_samples, 1, 0.12)
+工程A <- sample(c("良", "不良"), num_samples, replace=T, prob=c(1-0.05, 0.05))
+工程B <- sample(c("良", "不良"), num_samples, replace=T, prob=c(1-0.1, 0.1))
+工程C <- sample(c("良", "不良"), num_samples, replace=T, prob=c(1-0.12, 0.12))
 
 data <- tibble(
   工程A = 工程A,
@@ -783,32 +1103,22 @@ mydata_multcomp_prop <- read.csv(
   fileEncoding="UTF8"
 ) # データ読み込み
 
-#集計
-正常 <- c(
-  sum(mydata_multcomp_prop$工程A==0), 
-  sum(mydata_multcomp_prop$工程B==0), 
-  sum(mydata_multcomp_prop$工程C==0)
-)
+mydata_multcomp_prop$工程A <- as.factor(mydata_multcomp_prop$工程A)
+mydata_multcomp_prop$工程B <- as.factor(mydata_multcomp_prop$工程B)
+mydata_multcomp_prop$工程C <- as.factor(mydata_multcomp_prop$工程C)
+summary(mydata_multcomp_prop)
 
-不良 <- c(
-  sum(mydata_multcomp_prop$工程A==1), 
-  sum(mydata_multcomp_prop$工程B==1), 
-  sum(mydata_multcomp_prop$工程C==1)
-)
+#良品数と総数を計算
+不良品 <- c( nrow(filter(mydata_multcomp_prop, 工程A=="不良")), 
+          nrow(filter(mydata_multcomp_prop,工程B=="不良")), 
+          nrow(filter(mydata_multcomp_prop, 工程C=="不良"))
+          )
 
-# 集計データを作成
-data_prop <- data.frame(
-  正常=正常,
-  不良=不良
-) 
-colnames(data_prop) <- c("正常", "不良")
-rownames(data_prop) <- c("工程A", "工程B", "工程C")
+総数 <- c(nrow(mydata_multcomp_prop), nrow(mydata_multcomp_prop), nrow(mydata_multcomp_prop))
 
-#集計データを行列型（Matrix型）に変換
-data_prop <- as.matrix(data_prop)
 
 #多重比較
-pairwise.prop.test(data_prop, p.adjust.method = "holm")
+pairwise.prop.test(不良品, 総数, p.adjust.method = "holm")
 
 ```
 この結果から，工程Aと工程B，Cの間には不良率に有意な差があると結論づけることができる．一方で，工程Bと工程Cの間には有意な差がないといえる．
