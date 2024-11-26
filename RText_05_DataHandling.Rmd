@@ -545,8 +545,8 @@ head(data_long)
 
 res_m_A <- filter(data_long, 性別=="男性" & 食パン=="食パンA")
 res_f_A <- filter(data_long, 性別=="女性" & 食パン=="食パンA")
-mean(res_m_A$風味)
-mean(res_f_A$風味)
+mean(res_m_A$風味, na.rm = T)
+mean(res_f_A$風味, na.rm = T)
 
 ```
 
