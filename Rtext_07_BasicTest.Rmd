@@ -406,8 +406,8 @@ F検定の結果を報告する際には、一般には棒グラフを用いる�
 例えば、上の例題の場合には、「工程変更前と工程変更後の製品の重量の分散に有意な違いがあることが示された（F(19, 19)=4.5, P=0.02）。」と記載する。
 
 
-# 比率の比較
-続いて比率の比較を行う方法を説明する。比率の検定とは、例えば以下の表のような「クロス集計表」が作られている時に、列方向に並べた属性変数Aと行方向に並べた属性変数Bが互いに独立しているのか、何等かの関係性があるのかを検定する方法である。**帰無仮説は「互いに独立している」**であり、それが否定することによって「関係性がある」、さらに言えば「$B:\bar{B}$の比が$A$と$\bar{A}$の間で有意に違っている」と結論づける統計方法である。
+# 独立性の検定
+独立性の検定とは、例えば以下の表のような「クロス集計表」が作られている時に、列方向に並べた属性変数Aと行方向に並べた属性変数Bが互いに独立しているのか、何等かの関係性があるのかを検定する方法である。**帰無仮説は「互いに独立している」**であり、それが否定することによって「関係性がある」、さらに言えば「$B:\bar{B}$の比が$A$と$\bar{A}$の間で有意に違っている」と結論づける統計方法である。
 
 |  | Bあり | Bなし | 合計 |
 |---|---|---|---|
@@ -427,10 +427,11 @@ F検定の結果を報告する際には、一般には棒グラフを用いる�
 | Aなし | 10 | 60 | 70 |
 | 合計 | 20 | 80 | 100 |
 
-## フィッシャーの正確確率検定
+実際には，誤差が入り込むので，完全に比率が等しくなるということはほとんどなく，「独立」とみなされる範囲には幅がある．では，実際に何らかのクロス集計表がえられたときに，比率にどの程度以上の差があれば「独立していない＝関連性がある」とみなすのか？その検定を行うのが独立性の検定である．
 
+## カイ2乗検定とフィッシャーの正確確率検定
 
-比率の検定では一般にカイ2乗($\chi^2$)検定というものを用いる。ただし、カイ2乗検定はクロス集計した際のいずれかのセルが5未満の値の場合には正確な値は返してこない場合がある。そこでそうしたケースでも対応できるような方法としてFisherの正確確率検定というものがある。以下では、カイ2乗検定とFisherの正確確率検定の両方の方法について説明する。
+独立性の検定では一般にカイ2乗($\chi^2$)検定というものを用いる。ただし、カイ2乗検定はクロス集計した際のいずれかのセルが5未満の値の場合には正確な値は返してこない場合がある。そこでそうしたケースでも対応できるような方法としてFisherの正確確率検定というものがある。以下では、カイ2乗検定とFisherの正確確率検定の両方の方法について説明する。
 
 ##カイ2乗検定の方法
 カイ2乗検定は、Rの`chisq.test()`関数を用いて行う。この関数は、引数に比較したい2つのグループのデータを与える。
@@ -466,8 +467,10 @@ mydata_chisq$合否 <- as.factor(mydata_chisq$合否)
 mydata_chisq$性別 <- as.factor(mydata_chisq$性別)
 summary(mydata_chisq)
 
-#クロス集計表の作成
-cross_table <- table(mydata_chisq$性別, mydata_chisq$合否)
+#クロス集計表の作成 
+# クロス集計表にはtable()関数を用いる.引数には行，列に割り振りたい要因を与える．
+# 以下のように引数に名前を与えることもできる．
+cross_table <- table("性別"=mydata_chisq$性別, "合否"=mydata_chisq$合否)
 cross_table
 
 #カイ二乗検定
@@ -511,7 +514,7 @@ mydata_fisher$甘味 <- as.factor(mydata_fisher$甘味)
 summary(mydata_fisher)
 
 #クロス集計表の作成
-cross_table <- table(mydata_fisher$珈琲, mydata_fisher$甘味)
+cross_table <- table("珈琲"=mydata_fisher$珈琲, "甘味"=mydata_fisher$甘味)
 cross_table
 
 #Fisherの正確確率検定
@@ -521,6 +524,70 @@ fisher.test(cross_table)
 
 ## 結果の報告方法
 クロス集計表の結果を報告する際には、まずはクロス集計表をしめす。その上で、カイ2乗検定を使った場合、「カイ2乗検定の結果2つの群の間に有意な関連性があることが確認された（$\chi^2$(`df`)=`X-squared`, P=`p-value`）」と記載する。`df`は自由度を示し、`X-squared`はカイ2乗値を、`p-value`はP値を示す。一方、フィッシャーの正確確率検定の場合には、「フィッシャーの正確確率検定の結果2つの群の間に有意な関連性があることが確認された（P=`p-value`）」と記載する。
+
+
+
+# 比率の差の検定
+独立性の検定と類似したものとして「比率の差の検定」というものもある．独立性の検定が要因Aと要因Bのクロス集計表から，**AとBの間に関連性があるかどうか**を検証するのに対して，比率の差の検定は，要因Aの2つの水準（例えば，男性と女性）の間で要因Bの成功率（例えば，合格率）の差が有意であるかどうかを検証するものである．この場合にはZ検定を用いる
+
+## Z検定の方法
+
+RでZ検定を行う場合には`prop.test()`関数を用いて行う．
+この関数は，第1引数に，比較したい2つのグループの成功数，第2引数に，比較したい2つのグループの試行総数を与る．
+
+先ほどの合否の例で男女での合格率に差があるかを検証してみよう．第1引数には，今回だと男女それぞれの合格者数をベクトルで与え，第2引数には，男女それぞれの受験者数をベクトルで与えることになる．
+
+このためまずは男女別の合格者数，受験者数を求める必要がある．
+
+
+```{r}
+mydata_chisq <- read.csv(
+  "./practice/example_chisq.csv", 
+  header=T, 
+  fileEncoding="UTF8"
+) # データ読み込み
+
+mydata_chisq$合否 <- as.factor(mydata_chisq$合否)
+mydata_chisq$性別 <- as.factor(mydata_chisq$性別)
+summary(mydata_chisq)
+
+#男性0の合格1の数
+# sum関数は条件に合うデータの数を返す関数
+mx<-sum(mydata_chisq$性別==0 & mydata_chisq$合否==1)
+# 他のも以下の書き方をしてもよい．
+# d_m_s<- filter(mydata_chisq, 性別==0 & 合否==1) 
+# mx<- nrow(d_m_s)
+
+#男性0の総数
+mn<-sum(mydata_chisq$性別==0)
+# d_m<- filter(mydata_chisq, 性別==0)
+# mn<- nrow(d_m)
+
+
+#女性1の合格1の数
+fx<-sum(mydata_chisq$性別==1 & mydata_chisq$合否==1)
+#女性1の総数
+fn<-sum(mydata_chisq$性別==1)
+```
+
+以上のようにして男女別の合格者数がmx, fx, 受験者数がmn, fnとして求まったので，これらを使ってprop.test()関数を実行する．
+
+```{r}
+# それぞれの成功数と試行数をベクトルにする わかりやすさのため名前付きベクトルにしておく
+success <- c(男性合格者=mx, 女性合格者=fx) 
+total <- c(男性受験者=mn, 女性受験者=fn)
+# 確認のためそれぞれの合格率を算出
+print(success/total)
+
+prop.test(success,total)
+```
+
+結果として，男性と女性で合格率には有意な差はない，という結果となった．
+なお有意確率を見ると，実は先の独立性の検定でのchisq.testの出力結果と同じ値となっている．
+これは，特に今回のように$2\times 2$のクロス集計が可能である場合，比率の差に有意な差があるかないかと，要因間の関連性があるかどうかという検定が，数学的には同じであるためである．
+
+ただ，$3\times 2$以上のクロス集計となる場合には，独立性の検定においてはは3つの水準すべてを考慮したうえで，要因Aと要因Bの独立性（関連性）を検定することになる一方，比率の差の検定の場合は，3つの水準のどれとどれを比較するのか，という話や以下で述べる多重比較の話となり，まったく議論の方向性が異なってくる．
+
 
 # 多重比較
 
@@ -625,18 +692,236 @@ Bが正しい確率：95%
 |5回の場合|99% × 99% × 99% × 99% × 99%＝95.10%|
 |6回の場合|99.16% × 99.16% × 99.16% × 99.16% × 99.16% × 99.16%＝95.06%|
 
-このような、多重検定を行う際に、行う検定の数で有意水準を割った値を個々の有意性評価の基準とする方法をボンフェローニ（Bonferroni）補正と呼ぶ。
+このような、多重検定を行う際に、行う検定の数で有意水準を割った値を個々の有意性評価の基準とする方法をボンフェローニ（Bonferroni）補正と呼ぶ。実際には有意水準を補正するのではなく，有意確率の方を補正し，補正された有意確率が5\%を上回るか下回るかで評価することが多い．すなわち，
+
+- 2回の検定であれば，一対比較時のP値を2倍する
+- 3回の検定であれば，一対比較時のP値を3倍する
+- 4回の検定であれば，一対比較時のP値を4倍する
+- 5回の検定であれば，一対比較時のP値を5倍する
+
+・・・
+
+ということである
+
 
 補正方法には他にもいくつかの方法があるが、ボンフェローニ補正は最もシンプルで直感的な方法であるため、手計算を行う際にはよく使われる。
 
 ただ、ボンフェローニ補正は、検定の数が増えるにつれて有意水準が厳しくなるという性質があるため、検定の数が多い場合には、ホルム法やシダック法、ダンスカー法などの補正方法を用いることもある。
 
 
+## 多重比較時のP値の補正方法
 
-## 平均の多重比較を行う方法
-さて、先ほどの例題について考えてみよう。考え方としては、A-B、B-C、C-Aの3つの組み合わせでそれぞれの平均値の差を検定を行った後、そのP値を補正する、というものとなるが、Rでは`pairwise.t.test()`関数を用いることで、簡単に多重比較を行うことができる。第1引数には比較をしたい変数、第2引数にグループ分けに用いる属性変数を与える。
+Rでは，`p.adjust()`という関数を用いて，上記のようなP値の補正を行うことができる．
+第1引数には，多重比較時の個々の一対比較の結果のP値をまとめたものベクトルで与え，第2引数には，補正方法を指定する．
 
-注意しなければならない点として、多重比較を行う場合にはデータはロング形式でなければならない。そのため、以下ではワイド形式のデータをロング形式に変換している。
+### 平均（T検定）の多重比較
+
+先の例題では以下のようになる．
+
+```{r}
+mydata_multcomp <- read.csv(
+  "./practice/example_multcomp.csv", 
+  header=T, 
+  fileEncoding="UTF8"
+) # データ読み込み
+
+# データの確認
+head(mydata_multcomp)
+
+# AとBの比較
+res_A_B<-t.test(mydata_multcomp$A, mydata_multcomp$B)
+print(res_A_B)
+
+# BとCの比較
+res_B_C<-t.test(mydata_multcomp$B, mydata_multcomp$C)
+print(res_B_C)
+
+# CとAの比較
+res_C_A<-t.test(mydata_multcomp$C, mydata_multcomp$A)
+print(res_C_A)
+
+# 各P値をベクトルにまとめる．
+# それぞれのP値は$p.valueで取得できる
+# わかりやすさのため，名前付きベクトルにしている．
+P_values <- c(
+  AとB=res_A_B$p.value, 
+  BとC=res_B_C$p.value, 
+  CとA=res_C_A$p.value
+  )
+
+print(P_values)
+
+# 多重比較のP値の補正
+p.adjust(P_values, method="bonferroni")
+
+
+```
+
+これらの出力結果から，今回の場合だと補正後でも，いずれの組み合わせでも有意な差があることが分かった．
+
+このp.adjust()を用いた補正方法は，平均の比較，分散の比較，比率の比較いずれの比較においても用いることができる．
+
+### 分散（F検定）の多重比較
+
+分散の多重比較の例を示す．
+
+:::practice
+ある製造工程において、製品の重量を測定した結果、以下のようなデータが得られた。このデータをもとに、各工程間の重量のばらつきに有意な差があるかどうかを検証せよ（[リンク](./practice/example_multcomp_var.csv)）。
+```{r include=FALSE}
+#./practice/example_multcomp_var.csvの作成
+set.seed(42)
+num_samples <- 20
+工程A <- rnorm(num_samples, mean = 100, sd = 5)
+工程B <- rnorm(num_samples, mean = 110, sd = 5)
+工程C <- rnorm(num_samples, mean = 105, sd = 5)
+
+data <- tibble(
+  工程A = 工程A,
+  工程B = 工程B,
+  工程C = 工程C
+)
+write_csv(data, "./practice/example_multcomp_var.csv")
+```
+:::
+
+この場合，A-B，B-C，C-Aでそれぞれ分散の一対比較を行った後，そのP値を補正することになる．
+
+
+```{r}
+mydata_multcomp_var <- read.csv(
+  "./practice/example_multcomp_var.csv",
+  header=T,
+  fileEncoding="UTF8"
+) # データ読み込み
+
+# データの確認
+head(mydata_multcomp_var)
+
+#分散の一対比較
+res_AB <- var.test(mydata_multcomp_var$工程A, mydata_multcomp_var$工程B)
+res_BC <- var.test(mydata_multcomp_var$工程B, mydata_multcomp_var$工程C)
+res_CA <- var.test(mydata_multcomp_var$工程C, mydata_multcomp_var$工程A)
+
+#P値をベクトルにまとめる
+P_values_var <- c(
+  AとB=res_AB$p.value, 
+  BとC=res_BC$p.value, 
+  CとA=res_CA$p.value
+)
+print(P_values_var) #P値の確認
+
+#P値の補正
+p.adjust(P_values_var, method = "holm")
+
+# 参考：補正前のP値
+p.adjust(P_values_var, method = "none")
+```
+
+この結果から、補正を行った結果、全ての組み合わせでP値が0.05を上回っていることが分かる。
+なお，この例ではholm補正を行っているため，単純にP値を3倍しているわけではない．
+
+
+
+
+### 比率（の多重比較
+
+比率の多重比較の例を示す．
+
+
+:::practice
+ある製造工程A，B, Cにおいて、製品の不良品率を測定したするためにランダムに1000個のサンプルを取り出し、不良品かどうかを調べた（良・不良）。その結果、以下のようなデータが得られた。このデータをもとに、各工程間の不良品率に有意な差があるかどうかを検証せよ（[リンク](./practice/example_multcomp_prop.csv)）。
+```{r include=FALSE}
+#./practice/example_multcomp_prop.csvの作成
+set.seed(42)
+num_samples <- 1000
+工程A <- rbinom(num_samples, 1, 0.05)
+工程B <- rbinom(num_samples, 1, 0.1)
+工程C <- rbinom(num_samples, 1, 0.12)
+
+工程A <- recode(工程A, `0`="良", `1`="不良")
+工程B <- recode(工程B, `0`="良", `1`="不良")
+工程C <- recode(工程C, `0`="良", `1`="不良")
+
+data <- tibble(
+  工程A = 工程A,
+  工程B = 工程B,
+  工程C = 工程C
+)
+
+write_csv(data, "./practice/example_multcomp_prop.csv")
+```
+:::
+
+この場合もこれまでの多重比較と同様に，A-B，B-C，C-Aでそれぞれ比率の検定を一対比較で行った後，そのP値を補正することになる．
+
+```{r}
+mydata_multcomp_prop <- read.csv(
+  "./practice/example_multcomp_prop.csv",
+  header=T,
+  fileEncoding="UTF8"
+) # データ読み込み
+
+# データの確認
+mydata_multcomp_prop$工程A <- as.factor(mydata_multcomp_prop$工程A)
+mydata_multcomp_prop$工程B <- as.factor(mydata_multcomp_prop$工程B)
+mydata_multcomp_prop$工程C <- as.factor(mydata_multcomp_prop$工程C)
+head(mydata_multcomp_prop)
+
+#各工程の不良品数の取得
+N_A_bad <- sum(mydata_multcomp_prop$工程A=="不良")
+# 他にも以下のような書き方もある．
+# その1
+# res_A <- table(mydata_multcomp_prop$工程A)
+# A_bad <- res_A["不良"]
+# その2
+# A_bad <- filter(mydata_multcomp_prop, 工程A=="不良")
+# N_A <- nrow(A_bad)
+
+N_B_bad <- sum(mydata_multcomp_prop$工程B=="不良")
+N_C_bad <- sum(mydata_multcomp_prop$工程C=="不良")
+
+#各工程の総数の取得 今回の場合最初から
+#それぞれ1000件であることはわかっているが
+#Rのコードで取得する
+# 与えているのがベクトルデータなのでnrowではなくlegnth関数をつかう
+N_A <- length(mydata_multcomp_prop$工程A)
+N_B <- length(mydata_multcomp_prop$工程B)
+N_C <- length(mydata_multcomp_prop$工程C)
+
+#比率の検定
+res_AB <- prop.test(c(N_A_bad, N_B_bad), c(N_A, N_B))
+res_BC <- prop.test(c(N_B_bad, N_C_bad), c(N_B, N_C))
+res_CA <- prop.test(c(N_C_bad, N_A_bad), c(N_C, N_A))
+
+#P値をベクトルにまとめる
+P_values_prop <- c(
+  AとB=res_AB$p.value, 
+  BとC=res_BC$p.value, 
+  CとA=res_CA$p.value
+)
+print(P_values_prop) #P値の確認
+
+#P値の多重比較のための補正
+p.adjust(P_values_prop, method = "holm")
+```
+
+結果として，BとCの間には有意な差はないが，AとB，CとAの間には不良品率に有意な差がある，という結果となった．
+
+
+
+
+
+
+
+
+
+
+
+## 平均の多重比較を行う別の方法
+さて、先ほどの例では、A-B、B-C、C-Aの3つの組み合わせでそれぞれの平均値の差を検定を行った後、そのP値を補正する、という方法をとったが、Rでは`pairwise.t.test()`関数を用いることで、個別の検定を行うことなしに平均の多重比較を行うことができる．
+第1引数には比較をしたい変数、第2引数にグループ分けに用いる属性変数を与える。
+
+注意しなければならない点として、多重比較を行う場合にはデータはロング形式でなければならない。今回の例題のデータはワイド形式になっているので，以下の例ではまずはロング形式に変換している。
 
 ```{r}
 mydata_multcomp <- read.csv(
@@ -672,111 +957,70 @@ pairwise.t.test(mydata_multcomp_long$クリック率, mydata_multcomp_long$広�
 ### 対応ありデータでの多重比較
 対応ありデータでの多重比較を行う場合には、`pairwise.t.test()`関数の引数に`paired=TRUE`を指定することで行うことができる。
 
-## 分散の多重比較
-分散についての多重比較を行う場合も、基本的な考え方は1対1の組み合わせを作り、それらのP値を補正して評価する、というものである。ただし、平均の多重比較での`pairwise.t.test()`関数のような1度ですべてを行ってくれる関数は存在しないため、個別に1：1の比較を行ってP値を求めたうえで、得られたP値を`p.adjust()`関数を用いて補正を行うという方法をとる必要がある。
 
-:::practice
-ある製造工程において、製品の重量を測定した結果、以下のようなデータが得られた。このデータをもとに、各工程間の重量のばらつきに有意な差があるかどうかを検証せよ（[リンク](./practice/example_multcomp_var.csv)）。
-```{r include=FALSE}
-#./practice/example_multcomp_var.csvの作成
-set.seed(42)
-num_samples <- 20
-工程A <- rnorm(num_samples, mean = 100, sd = 5)
-工程B <- rnorm(num_samples, mean = 110, sd = 5)
-工程C <- rnorm(num_samples, mean = 105, sd = 5)
+<!-- ## 比率の多重比較 -->
+<!-- 比率の多重比較を行う場合にも、基本的な考え方は平均や分散の多重比較と同様である。1対1の組み合わせを作り、それらのP値を補正して評価する、というものである。比率の多重比較に関しては、カイ2乗検定を行う場合には`pairwise.prop.test()`関数を用いることで簡単に多重比較を行うことができる。 -->
 
-data <- tibble(
-  工程A = 工程A,
-  工程B = 工程B,
-  工程C = 工程C
-)
-write_csv(data, "./practice/example_multcomp_var.csv")
-```
-:::
+<!-- :::practice -->
+<!-- ある製造工程において、製品の不良品率を測定したするためにランダムに1000個のサンプルを取り出し、不良品かどうかを調べた（0：不良品ではない、1：不良品である）。その結果、以下のようなデータが得られた。このデータをもとに、各工程間の不良品率に有意な差があるかどうかを検証せよ（[リンク](./practice/example_multcomp_prop.csv)）。 -->
+<!-- ```{r include=FALSE} -->
+<!-- #./practice/example_multcomp_prop.csvの作成 -->
+<!-- set.seed(42) -->
+<!-- num_samples <- 1000 -->
+<!-- 工程A <- rbinom(num_samples, 1, 0.05) -->
+<!-- 工程B <- rbinom(num_samples, 1, 0.1) -->
+<!-- 工程C <- rbinom(num_samples, 1, 0.12) -->
 
+<!-- data <- tibble( -->
+<!--   工程A = 工程A, -->
+<!--   工程B = 工程B, -->
+<!--   工程C = 工程C -->
+<!-- ) -->
 
-```{r}
-mydata_multcomp_var <- read.csv(
-  "./practice/example_multcomp_var.csv",
-  header=T,
-  fileEncoding="UTF8"
-) # データ読み込み
+<!-- write_csv(data, "./practice/example_multcomp_prop.csv") -->
+<!-- ``` -->
+<!-- ::: -->
 
-#分散の一対比較
-p_ab <- var.test(mydata_multcomp_var$工程A, mydata_multcomp_var$工程B)
-p_bc <- var.test(mydata_multcomp_var$工程B, mydata_multcomp_var$工程C)
-p_ca <- var.test(mydata_multcomp_var$工程C, mydata_multcomp_var$工程A)
+<!-- このような例題の場合は以下のようになる。 -->
 
-#P値の補正
-p.adjust(c(p_ab$p.value, p_bc$p.value, p_ca$p.value), method = "holm")
+<!-- ```{r} -->
+<!-- mydata_multcomp_prop <- read.csv( -->
+<!--   "./practice/example_multcomp_prop.csv", -->
+<!--   header=T, -->
+<!--   fileEncoding="UTF8" -->
+<!-- ) # データ読み込み -->
 
-# 参考：補正前のP値
-p.adjust(c(p_ab$p.value, p_bc$p.value, p_ca$p.value), method = "none")
-```
+<!-- #集計 -->
+<!-- 正常 <- c( -->
+<!--   sum(mydata_multcomp_prop$工程A==0),  -->
+<!--   sum(mydata_multcomp_prop$工程B==0),  -->
+<!--   sum(mydata_multcomp_prop$工程C==0) -->
+<!-- ) -->
 
-## 比率の多重比較
-比率の多重比較を行う場合にも、基本的な考え方は平均や分散の多重比較と同様である。1対1の組み合わせを作り、それらのP値を補正して評価する、というものである。比率の多重比較に関しては、カイ2乗検定を行う場合には`pairwise.prop.test()`関数を用いることで簡単に多重比較を行うことができる。
+<!-- 不良 <- c( -->
+<!--   sum(mydata_multcomp_prop$工程A==1),  -->
+<!--   sum(mydata_multcomp_prop$工程B==1),  -->
+<!--   sum(mydata_multcomp_prop$工程C==1) -->
+<!-- ) -->
 
-:::practice
-ある製造工程において、製品の不良品率を測定したするためにランダムに1000個のサンプルを取り出し、不良品かどうかを調べた（0：不良品ではない、1：不良品である）。その結果、以下のようなデータが得られた。このデータをもとに、各工程間の不良品率に有意な差があるかどうかを検証せよ（[リンク](./practice/example_multcomp_prop.csv)）。
-```{r include=FALSE}
-#./practice/example_multcomp_prop.csvの作成
-set.seed(42)
-num_samples <- 1000
-工程A <- rbinom(num_samples, 1, 0.05)
-工程B <- rbinom(num_samples, 1, 0.1)
-工程C <- rbinom(num_samples, 1, 0.12)
+<!-- # 集計データを作成 -->
+<!-- data_prop <- data.frame( -->
+<!--   正常=正常, -->
+<!--   不良=不良 -->
+<!-- )  -->
+<!-- colnames(data_prop) <- c("正常", "不良") -->
+<!-- rownames(data_prop) <- c("工程A", "工程B", "工程C") -->
 
-data <- tibble(
-  工程A = 工程A,
-  工程B = 工程B,
-  工程C = 工程C
-)
+<!-- #集計データを行列型（Matrix型）に変換 -->
+<!-- data_prop <- as.matrix(data_prop) -->
 
-write_csv(data, "./practice/example_multcomp_prop.csv")
-```
-:::
+<!-- #多重比較 -->
+<!-- pairwise.prop.test(data_prop, p.adjust.method = "holm") -->
 
-このような例題の場合は以下のようになる。
+<!-- ``` -->
+<!-- この結果から、工程Aと工程B、Cの間には不良率に有意な差があると結論づけることができる。一方で、工程Bと工程Cの間には有意な差がないといえる。 -->
 
-```{r}
-mydata_multcomp_prop <- read.csv(
-  "./practice/example_multcomp_prop.csv",
-  header=T,
-  fileEncoding="UTF8"
-) # データ読み込み
-
-#集計
-正常 <- c(
-  sum(mydata_multcomp_prop$工程A==0), 
-  sum(mydata_multcomp_prop$工程B==0), 
-  sum(mydata_multcomp_prop$工程C==0)
-)
-
-不良 <- c(
-  sum(mydata_multcomp_prop$工程A==1), 
-  sum(mydata_multcomp_prop$工程B==1), 
-  sum(mydata_multcomp_prop$工程C==1)
-)
-
-# 集計データを作成
-data_prop <- data.frame(
-  正常=正常,
-  不良=不良
-) 
-colnames(data_prop) <- c("正常", "不良")
-rownames(data_prop) <- c("工程A", "工程B", "工程C")
-
-#集計データを行列型（Matrix型）に変換
-data_prop <- as.matrix(data_prop)
-
-#多重比較
-pairwise.prop.test(data_prop, p.adjust.method = "holm")
-
-```
-この結果から、工程Aと工程B、Cの間には不良率に有意な差があると結論づけることができる。一方で、工程Bと工程Cの間には有意な差がないといえる。
-
-注意点として、`pairwise.prop.test()`関数が受け付けるデータはdata.frame型ではなくmatrix型（行列型）と呼ばれる形式となる。そのため、データを`as.matrix()`関数を用いてmatrix型に変換する必要がある
+<!-- 注意点として、`pairwise.prop.test()`関数が受け付けるデータはdata.frame型ではなくmatrix型（行列型）と呼ばれる形式となる。そのため、データを`as.matrix()`関数を用いてmatrix型に変換する必要がある -->
 
 
-  <!----------------------------- 仕切り ----------------------------------->
+<!--   <!----------------------------- 仕切り -----------------------------------> -->
