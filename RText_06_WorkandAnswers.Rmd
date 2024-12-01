@@ -1,0 +1,206 @@
+---
+title: "第6章の課題と模範解答"
+author: "藤野秀則,"
+date: "`r Sys.Date()`"
+output:
+  html_document: 
+    toc: true
+    toc_depth: 4
+    toc_float: true
+    number_section: true
+    fig_width: 8
+    css: style.css
+  # html_notebook:
+  #   toc: true
+  #   toc_depth: 3
+  #   toc_float: true
+  #   number_section: true
+editor_options:
+  markdown:
+    wrap: 72
+---
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+# 課題1
+
+:::work
+この[データ](./practice/06_work.csv)は，ある地域Aとある地域Bの高校生をランダムに500人ずつ抽出し，それぞれの大学入試共通テストの数学IA，数学IIB，国語をデータ化したものである．このデータを使って,以下の問に答えよ
+
+1. このデータをhead()関数とsummary()関数を使って確認せよ．なお，地域については要因型に変換しておくこと．
+1. 数学IAについて地域別の箱ひげ図を作成せよ.
+1. 各科目の箱ひげ図を描画せよ．
+
+
+:::
+
+```{R eval=T, include=T}
+library(tidyverse)
+mydata<- read.csv("./practice/06_work.csv")
+mydata$地域<- as.factor(mydata$地域)
+head(mydata)
+summary(mydata)
+
+g <- ggplot(mydata) + geom_boxplot(aes(x=地域, y=数学IA, fill=地域))
+plot(g)
+
+g <- ggplot(mydata) + 
+  geom_boxplot(aes(x="数学IA",y=数学IA, fill="数学IA"))+
+  geom_boxplot(aes(x="数学IIB", y=数学IIB, fill="数学IIB"))+
+  geom_boxplot(aes(x="国語", y=国語, fill="国語"))
+plot(g)
+
+```
+
+
+
+# 課題2
+:::work
+先ほど読み込んだ[大学入試共通テストの得点データ（数学IA，数学IIB，国語）](./practice/06_work.csv)を使って以下の問に答えよ．
+
+1. 各科目の箱ひげ図に個々の得点のjitterプロットを重ねて描画せよ．箱ひげ図は色付けはせず，Jitterプロットは色付けすること．
+1. 数学IAについて地域ごとの箱ひげ図に，地域ごとの個々の得点のjtterプロット重ねて描画せよ．箱ひげ図は色付けはせず，Jitterプロットは色付けすること．
+
+:::
+
+```{r eval=T, include=T}
+mydata<- read.csv("./practice/06_work.csv")
+mydata$地域<- as.factor(mydata$地域)
+head(mydata)
+summary(mydata)
+
+g<-ggplot(mydata)+
+  geom_boxplot(aes(x="数学IA", y=数学IA))+
+  geom_jitter(aes(x="数学IA", y=数学IA, color="数学IA"))+
+  geom_boxplot(aes(x="数学IIB", y=数学IIB))+
+  geom_jitter(aes(x="数学IIB", y=数学IIB, color="数学IIB"))+
+  geom_boxplot(aes(x="国語", y=国語))+
+  geom_jitter(aes(x="国語", y=国語, color="国語"))
+plot(g)
+
+g<-ggplot(mydata)+geom_boxplot(aes(x=地域,y=数学IA))+
+  geom_jitter(aes(x=地域, y=数学IA, color=地域))
+plot(g)
+```
+
+
+
+
+# 課題3
+:::work
+先ほど読み込んだ[大学入試共通テストの得点データ（数学IA，数学IIB，国語）](./practice/06_work.csv)を使って以下の問に答えよ．
+
+1. 各科目について平均値と標準偏差を求め，それを棒グラフとエラーバーで描画せよ．エラーバーは標準偏差を用いること．また，それぞれの平均の値も棒グラフに重ねて記述すること．
+1. 数学IAについて，地域ごとの平均と標準偏差を求め，それを棒グラフとエラーバーで描画せよ．エラーバーは標準偏差を用いること．
+また，それぞれの平均の値も棒グラフに重ねて記述すること．
+
+:::
+
+```{r include=T}
+mydata<- read.csv("./practice/06_work.csv")
+mydata$地域<- as.factor(mydata$地域)
+head(mydata)
+
+数学IA.m <- mean(mydata$数学IA)
+数学IA.sd <- sd(mydata$数学IA)
+数学IIB.m <- mean(mydata$数学IIB)
+数学IIB.sd <- sd(mydata$数学IIB)
+国語.m <- mean(mydata$国語)
+国語.sd <- sd(mydata$国語)
+
+d <- data.frame(
+  科目 = c("数学IA","数学IIB","国語"),
+  平均 = c(数学IA.m,数学IIB.m,国語.m),
+  標準偏差 = c(数学IA.sd,数学IIB.sd,国語.sd)
+)
+
+g <- ggplot(d)+
+  geom_bar(aes(x=科目,y=平均,fill=科目),stat="identity")+
+  geom_errorbar(aes(x=科目,y=平均,ymin=平均-標準偏差, ymax=平均+標準偏差),width=0.15)+
+  geom_text(aes(x=科目,y=平均,label=round(平均,1)),vjust=5)
+
+plot(g)
+
+d.mean <- aggregate(数学IA~地域,mydata, mean)
+d.sd <- aggregate(数学IA~地域,mydata, sd)
+
+myd2 <- data.frame(
+  地域 = d.mean$地域,
+  平均 = d.mean$数学IA,
+  標準偏差= d.sd$数学IA
+)
+
+g<-ggplot(myd2)+
+  geom_bar(aes(x=地域,y=平均,fill=地域),stat="identity")+
+  geom_errorbar(aes(x=地域,y=平均,ymin=平均-標準偏差, ymax=平均+標準偏差),width=0.15)+
+  geom_text(aes(x=地域,y=平均,label=round(平均,1)),vjust=5)
+plot(g)
+```
+
+
+# 課題4
+:::work
+先ほど読み込んだ[大学入試共通テストの得点データ（数学IA，数学IIB，国語）](./practice/06_work.csv)を使って以下の問に答えよ．
+
+1. 数学IA，数学IIB，国語の3科目についてのヒストグラムをそれぞれ別のグラフとして描画せよ．区間幅は5点刻みとする．
+1. 数学IAについて地域別のヒストグラムを1枚のグラフとしてまとめたものをfacet_wrap()関数を用いて作成せよ．区間幅は5点刻みとする．
+:::
+
+```{r include=T}
+mydata<- read.csv("./practice/06_work.csv")
+mydata$地域<- as.factor(mydata$地域)
+head(mydata)
+
+g <- ggplot(mydata)+
+  geom_histogram(aes(x=数学IA),color="white", binwidth = 5)
+plot(g)
+
+g <- ggplot(mydata)+
+  geom_histogram(aes(x=数学IIB),color="white", binwidth = 5)
+plot(g)
+
+g <- ggplot(mydata)+
+  geom_histogram(aes(x=国語),color="white", binwidth = 5)
+plot(g)
+
+
+g <- ggplot(mydata)+
+  geom_histogram(aes(x=数学IA),color="white", binwidth = 5)+
+  facet_wrap(~地域)
+plot(g)
+
+```
+
+# 課題5
+
+:::work
+先ほど読み込んだ[大学入試共通テストの得点データ（数学IA，数学IIB，国語）](./practice/06_work.csv)を使って以下の問に答えよ．
+
+1. 数学IAをx軸，国語をy軸とする散布図を作成せよ．
+1. 上で作成した散布図について，地域別の色分けを行え．
+1. 上で作成した散布図に対して，annotationの`segment`を用いて，数学の平均点を示すY軸に平行な線分と国語の平均点を示すx軸に並行な線分を引け.
+1. 上で作成した線分の入った散布図に対して，線分をx軸，y軸と見立てて，annotationの`text`を用いて，「第1象限」から「第4象限」までを，それぞれ該当する象限の中の任意の位置に記述せよ．
+:::
+
+```{r}
+g<-ggplot(mydata) +
+   geom_point(aes(x=数学IA, y=国語, color=地域))
+plot(g)
+
+数学IA.m <- mean(mydata$数学IA)
+国語.m <- mean(mydata$国語)
+
+g<-ggplot(mydata) +
+   geom_point(aes(x=数学IA, y=国語, color=地域))+
+   geom_segment(aes(x=数学IA.m, y=0, xend=数学IA.m, yend=100))+
+   geom_segment(aes(x=0, y=国語.m, xend=100, yend=国語.m))
+plot(g)
+
+g<-g+annotate("text", x=20, y=20, label="第1象限")+
+  annotate("text", x=20, y=80, label="第2象限")+
+  annotate("text", x=80, y=80, label="第3象限")+
+  annotate("text", x=80, y=20, label="第4象限")
+plot(g)
+```
+

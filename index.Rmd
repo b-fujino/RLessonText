@@ -45,7 +45,8 @@ knitr::opts_chunk$set(echo = TRUE)
 [こちらのページ](./RText_05_DataHandling.html)を参照してください。
 
 # 基本的なデータの可視化
-[こちらのページ](./RText_06_ggplot2_basicUsage.html)を参照してください
+[こちらのページ](./RText_06_ggplot2_basicUsage.html)を参照してください．
+課題の正答例は[こちら](./RText_06_WorkandAnswers.html)を参照してください．
 
 
 # 基本的な統計検定
