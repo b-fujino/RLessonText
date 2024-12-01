@@ -548,13 +548,13 @@ plot(g)
 d.mean <- aggregate(数学IA~地域,mydata, mean)
 d.sd <- aggregate(数学IA~地域,mydata, sd)
 
-d2 <- data.frame(
+myd2 <- data.frame(
   地域 = d.mean$地域,
   平均 = d.mean$数学IA,
   標準偏差= d.sd$数学IA
 )
 
-g<-ggplot(d2)+
+g<-ggplot(myd2)+
   geom_bar(aes(x=地域,y=平均,fill=地域),stat="identity")+
   geom_errorbar(aes(x=地域,y=平均,ymin=平均-標準偏差, ymax=平均+標準偏差),width=0.15)+
   geom_text(aes(x=地域,y=平均,label=round(平均,1)),vjust=5)
