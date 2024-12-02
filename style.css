@@ -134,11 +134,15 @@ h1 {
   border-top: 1px solid #666;
 }
 
+
+/**数式**/
 .math .display {
   text-align: center;
   font-size: small;
 }
 
+
+/**カスタムテーブルの設定．すべての罫線が明記される**/
 .custom-table {
   border: 2px solid #000;
   border-collapse: collapse;
@@ -155,4 +159,11 @@ h1 {
 }
 .custom-table th {
   background-color: #f0f8ff;
+}
+
+
+/** リンクの書式 **/
+a {
+  text-decoration: underline;
+  font-weight: bold;
 }

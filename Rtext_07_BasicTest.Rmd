@@ -88,7 +88,7 @@ data <- tibble(
 )
 
 # CSVファイルにデータを保存
-write_csv(data, "./practice/example_ttest.csv")
+write_csv(data, "./practice/example_07_ttest.csv")
 
 ```
 
@@ -173,7 +173,7 @@ data <- tibble(
 )
 
 # CSVファイルにデータを保存
-write_csv(data, "./practice/example_ttest_paired.csv")
+write_csv(data, "./practice/example_07_ttest_paired.csv")
 ```
 
 この例題の場合，**同じ人に対してデータを取っているため，二つのベクトルの間には対応関係が存在する**．このため，`paired`の設定が必要になる．は以下の通りとなる．
@@ -397,7 +397,7 @@ data <- tibble(
   得点 = score+weight
 )
 
-write.csv(data, "./practice/07_work_1.csv")
+write.csv(data, "./practice/07_work_1.csv",row.names=FALSE)
 ```
 
 
@@ -426,7 +426,7 @@ data <- tibble(
   形状B = score_B
 )
 
-write.csv(data, "./practice/07_work_2.csv")
+write.csv(data, "./practice/07_work_2.csv",row.names=FALSE)
 ```
 
 :::
@@ -469,7 +469,7 @@ data <- tibble(
   工程変更後 = after_change
 )
 
-write_csv(data, "./practice/example_vartest.csv")
+write_csv(data, "./practice/example_07_vartest.csv")
 ```
 
 Rのスクリプトは以下の通りとなる．
@@ -516,7 +516,9 @@ F検定の結果を報告する際には，一般には棒グラフを用いる�
 例えば，上の例題の場合には，「工程変更前と工程変更後の製品の重量の分散に有意な違いがあることが示された（F(19, 19)=4.5, P=0.02）．」と記載する．
 
 :::work
-ある製品メーカでは，製品の歩留まり率（検品の際に不良品として弾かれ**なかった**製品の割合）の向上を狙って，製造工程を変更した．この工程変更によって，製品の品質のバラツキが抑えられたかどうかを検証するために，変更前の製造された製品の品質検査（100点満点）と変更後の製品の品質検査の結果をランダムに200個ずつ取り出してきた．この[データ](./practice/07_work_3.csv)から工程変更による品質のバラツキに変化があるのかを検証するために，以下のことを行え．
+ある製品メーカでは公称重量70gの金属部品を製造しているが，製造工程の中でどうしても多少のばらつきが発生してしまうため，69.950g～70.049gまでを許容範囲とし，この範囲を超えるものについては不良品といて品質検査時に弾くことになっている．
+
+今，製品の歩留まり率（検品の際に不良品として弾かれ**なかった**製品の割合）の向上を狙って，製造工程を変更を計画している．この工程変更によって，製品の品質のバラツキが抑えられるかどうかを検証するために，変更前の製造された製品と，試験的に導入した新工程での製品をランダムに200個ずつ取り出してきた[データ](./practice/07_work_3.csv)．このデータを用いて，以下のことを行え．
 
 1. このデータの冒頭6行分をhead()を用いて確認し，このデータの形式か確認せよ．
 1. 変更前と変更後のそれぞれの平均と標準偏差を算出するとともに，それらを棒グラフで示せ．棒グラフにはエラーバーも付与すること．
@@ -529,15 +531,15 @@ set.seed(42)
 
 # データの個数
 num_samples <- 200
-before_change <- round(truncnorm::rtruncnorm(num_samples, a=0, b=100, mean = 70, sd = 10),0)
-after_change <- round(truncnorm::rtruncnorm(num_samples, a=0, b=100, mean = 70, sd = 5),0)
+before_change <- round(truncnorm::rtruncnorm(num_samples, a=0, b=100, mean = 70, sd = 0.06),3)
+after_change <- round(truncnorm::rtruncnorm(num_samples, a=0, b=100, mean = 70, sd = 0.03),3)
 
 data <- tibble(
   変更前 = before_change,
   変更後 = after_change
 )
 
-write.csv(data, "./practice/07_work_3.csv")
+write.csv(data, "./practice/07_work_3.csv",row.names=FALSE)
 ```
 :::
 
@@ -612,7 +614,7 @@ data <- tibble(
   性別 = 性別,
   合否 = 合否,
 )
-write_csv(data, "./practice/example_chisq.csv")
+write_csv(data, "./practice/example_07_chisq.csv")
 
 ```
 
@@ -666,7 +668,7 @@ data <- tibble(
   珈琲 = 珈琲,
   甘味 = 甘味,
 )
-write_csv(data, "./practice/example_fisher.csv")
+write_csv(data, "./practice/example_07_fisher.csv")
 
 ```
 
@@ -735,7 +737,7 @@ data <- tibble(
 
 data<- data[sample(nrow(data)),]
 
-write.csv(data, "./practice/example_Restaurant.csv")
+write.csv(data, "./practice/example_07_Restaurant.csv",row.names=FALSE)
 ```
 
 ```{r error=T}
@@ -800,7 +802,7 @@ data <- tibble(
 
 shuffled_df <- data[sample(nrow(data)), ]
 
-write.csv(shuffled_df, "./practice/07_work_4.csv")
+write.csv(shuffled_df, "./practice/07_work_4.csv",row.names=FALSE)
 ```
 :::
 
@@ -824,7 +826,7 @@ data <- tibble(
 #シャッフル
 shuffled_df <- data[sample(nrow(data)), ]
 
-write.csv(shuffled_df, "./practice/07_work_5.csv")
+write.csv(shuffled_df, "./practice/07_work_5.csv",row.names=FALSE)
 
 ```
 :::
@@ -950,7 +952,7 @@ data <- tibble(
   B = B,
   C = C
 )
-write_csv(data, "./practice/example_multcomp.csv")
+write_csv(data, "./practice/example_07_multcomp.csv")
 
 ```
 :::
@@ -1031,7 +1033,7 @@ Bが正しい確率：95%
 |5回の場合|99% × 99% × 99% × 99% × 99%＝95.10%|
 |6回の場合|99.16% × 99.16% × 99.16% × 99.16% × 99.16% × 99.16%＝95.06%|
 
-多重検定を行う際に、このように行う検定の数で有意水準を割った値を個々の有意性評価の基準とする方法をボンフェローニ（Bonferroni）補正と呼ぶ。
+多重検定を行う際に、このように行う検定の数で有意水準を割った値を個々の有意性評価の基準とする方法をボンフェローニ（Bonferroni）補正と呼ぶ．
 
 実際には有意水準を補正するのではなく，有意確率の方を補正し，補正された有意確率が5\%を上回るか下回るかで評価することが多い．すなわち，
 
@@ -1052,9 +1054,10 @@ Bが正しい確率：95%
 
 ## 多重比較時のP値の補正方法
 
-<<<<<<< HEAD
-Rでは，`p.adjust()`という関数を用いて，上記のようなP値の補正を行うことができる．
-第1引数には，多重比較時の個々の一対比較の結果のP値をまとめたものベクトルで与え，第2引数には，補正方法を指定する．
+Rでは，`p.adjust()`という関数を用いて，上記のようなP値の補正を行うことができる．引数は以下の通りである．
+
+- 第1引数：多重比較時の個々の一対比較の結果のP値をまとめたものベクトルで与える．
+- 第2引数（省略可）：補正方法を指定する．デフォルトではholm補正を行うように設定されており，省略した場合にはholm補正となる．上記のボンフェローニ補正を行う場合には，`method="bonferroni"`と指定する．
 
 ### 平均（T検定）の多重比較
 
@@ -1108,7 +1111,7 @@ p.adjust(P_values, method="bonferroni")
 分散の多重比較の例を示す．
 
 :::practice
-ある製造工程において、製品の重量を測定した結果、以下のようなデータが得られた。このデータをもとに、各工程間の重量のばらつきに有意な差があるかどうかを検証せよ（[リンク](./practice/example_multcomp_var.csv)）。
+ある製造工程において、製品の重量を測定した結果、以下のようなデータが得られた．このデータをもとに、各工程間の重量のばらつきに有意な差があるかどうかを検証せよ（[リンク](./practice/example_multcomp_var.csv)）．
 ```{r include=FALSE}
 #./practice/example_multcomp_var.csvの作成
 set.seed(42)
@@ -1122,7 +1125,7 @@ data <- tibble(
   工程B = 工程B,
   工程C = 工程C
 )
-write_csv(data, "./practice/example_multcomp_var.csv")
+write_csv(data, "./practice/example_07_multcomp_var.csv")
 ```
 :::
 
@@ -1159,19 +1162,16 @@ p.adjust(P_values_var, method = "holm")
 p.adjust(P_values_var, method = "none")
 ```
 
-この結果から、補正を行った結果、全ての組み合わせでP値が0.05を上回っていることが分かる。
+この結果から、補正を行った結果、全ての組み合わせでP値が0.05を上回っていることが分かる．
 なお，この例ではholm補正を行っているため，単純にP値を3倍しているわけではない．
-
-
 
 
 ### 比率（Z検定）の多重比較
 
 比率の多重比較の例を示す．
 
-
 :::practice
-ある製造工程A，B, Cにおいて、製品の不良品率を測定したするためにランダムに1000個のサンプルを取り出し、不良品かどうかを調べた（良・不良）。その結果、以下のようなデータが得られた。このデータをもとに、各工程間の不良品率に有意な差があるかどうかを検証せよ（[リンク](./practice/example_multcomp_prop.csv)）。
+ある製造工程A，B, Cにおいて、製品の不良品率を測定したするためにランダムに1000個のサンプルを取り出し、不良品かどうかを調べた（良・不良）．その結果、以下のようなデータが得られた．このデータをもとに、各工程間の不良品率に有意な差があるかどうかを検証せよ（[リンク](./practice/example_multcomp_prop.csv)）．
 ```{r include=FALSE}
 #./practice/example_multcomp_prop.csvの作成
 set.seed(42)
@@ -1190,7 +1190,7 @@ data <- tibble(
   工程C = 工程C
 )
 
-write_csv(data, "./practice/example_multcomp_prop.csv")
+write_csv(data, "./practice/example_07_multcomp_prop.csv")
 ```
 :::
 
@@ -1252,18 +1252,15 @@ p.adjust(P_values_prop, method = "holm")
 
 
 
-
-
-
-
-
-
-
 ## 平均の多重比較を行う別の方法
-さて、先ほどの例では、A-B、B-C、C-Aの3つの組み合わせでそれぞれの平均値の差を検定を行った後、そのP値を補正する、という方法をとったが、Rでは`pairwise.t.test()`関数を用いることで、個別の検定を行うことなしに平均の多重比較を行うことができる．
-第1引数には比較をしたい変数、第2引数にグループ分けに用いる属性変数を与える。
+さて、[先ほどの例](#平均（T検定）の多重比較)では、A-B、B-C、C-Aの3つの組み合わせでそれぞれの平均値の差を検定を行った後、p.adjust()関数を用いてそのP値を補正する、という方法をとったが，Rでは平均の多重比較に関しては`pairwise.t.test()`関数を用いることで、個別の検定を行うことなしに多重比較を行うことができる．
 
-注意しなければならない点として、多重比較を行う場合にはデータはロング形式でなければならない。今回の例題のデータはワイド形式になっているので，以下の例ではまずはロング形式に変換している。
+pairwise.t.test()関数の引数は以下の通りである．
+
+- 第1引数:比較をしたい変数
+- 第2引数にグループ分けに用いる属性変数を与える．
+
+ただし，注意しなければならない点として、pairwise.t.test()で多重比較を行う場合には**データはロング形式でなければならない**．今回の例題のデータはワイド形式になっているので，以下の例ではまずはロング形式に変換している．
 
 
 ```{r}
@@ -1300,3 +1297,186 @@ pairwise.t.test(mydata_multcomp_long$クリック率, mydata_multcomp_long$広�
 ### 対応ありデータでの多重比較
 対応ありデータでの多重比較を行う場合には，`pairwise.t.test()`関数の引数に`paired=TRUE`を指定することで行うことができる．
 
+:::practice
+あるパンメーカでは新しい食パンの開発に取り組んでおり，小麦粉の種類や使うバターの量などを変えた4種類のパンが市販化の最終候補として残った．そこで，この4つのパンのいずれが消費者に好まれるのかを調査するため，20人の消費者にモニターとして集まってもらい，それぞれのパンを試食してもらい，風味，食感，味わい，色味の4つの項目にそれぞれ5段階評価で得点をつけてもらった（[データ](./practice/example_multcomp_paired.csv)）．その合計点から，いずれの食パンが最も好まれるのかを検証せよ．
+
+
+```{r include=FALSE}
+#./practice/example_multcomp_paired.csvの作成
+library(truncnorm)
+set.seed(42)
+num_samples <- 20
+パンA.風味 <- round(rtruncnorm(num_samples, mean = 3.5, sd = 0.5), 0)
+パンA.味わい <- round(rtruncnorm(num_samples, mean = 3.5, sd = 0.5), 0)
+パンA.食感 <- round(rtruncnorm(num_samples, mean = 3.5, sd = 0.5), 0)
+パンA.色味 <- round(rtruncnorm(num_samples, mean = 3.5, sd = 0.5), 0)
+パンA <- パンA.風味 + パンA.味わい + パンA.食感 + パンA.色味
+
+パンB.風味 <- round(rtruncnorm(num_samples, mean = 3.3, sd = 0.5), 0)
+パンB.味わい <- round(rtruncnorm(num_samples, mean = 3.6, sd = 0.5), 0)
+パンB.食感 <- round(rtruncnorm(num_samples, mean = 3.6, sd = 0.5), 0)
+パンB.色味 <- round(rtruncnorm(num_samples, mean = 3.1, sd = 0.5), 0)
+パンB <- パンB.風味 + パンB.味わい + パンB.食感 + パンB.色味
+
+パンC.風味 <- round(rtruncnorm(num_samples, mean = 4.0, sd = 0.5), 0)
+パンC.味わい <- round(rtruncnorm(num_samples, mean = 3.7, sd = 0.5), 0)
+パンC.食感 <- round(rtruncnorm(num_samples, mean = 3.8, sd = 0.5), 0)
+パンC.色味 <- round(rtruncnorm(num_samples, mean = 3.9, sd = 0.5), 0)
+パンC <- パンC.風味 + パンC.味わい + パンC.食感 + パンC.色味
+
+パンD.風味 <- round(rtruncnorm(num_samples, mean = 2.9, sd = 0.5), 0)
+パンD.味わい <- round(rtruncnorm(num_samples, mean = 3.1, sd = 0.5), 0)
+パンD.食感 <- round(rtruncnorm(num_samples, mean = 3.5, sd = 0.5), 0)
+パンD.色味 <- round(rtruncnorm(num_samples, mean = 3.2, sd = 0.5), 0)
+パンD <- パンD.風味 + パンD.味わい + パンD.食感 + パンD.色味
+
+data <- tibble(
+  協力者No. = rep(1:num_samples, 4),
+  パン = rep(c("パンA", "パンB", "パンC", "パンD"), each=num_samples),
+  風味 = c(パンA.風味, パンB.風味, パンC.風味, パンD.風味),
+  味わい = c(パンA.味わい, パンB.味わい, パンC.味わい, パンD.味わい),
+  食感 = c(パンA.食感, パンB.食感, パンC.食感, パンD.食感),
+  色味 = c(パンA.色味, パンB.色味, パンC.色味, パンD.色味)
+)
+
+data<- data[order(data$協力者No.),] # ソート
+
+write.csv(data, "./practice/example_07_multcomp_paired.csv",row.names=FALSE)
+```
+:::
+
+```{r}
+mydata_multcomp_paired <- read.csv(
+  "./practice/example_multcomp_paired.csv",
+  header=T,
+  fileEncoding="UTF8"
+) # データ読み込み
+
+# データの確認
+head(mydata_multcomp_paired)
+
+# 総合評価の算出
+mydata_multcomp_paired$総合評価 <- mydata_multcomp_paired$風味 + 
+  mydata_multcomp_paired$味わい + 
+  mydata_multcomp_paired$食感 + 
+  mydata_multcomp_paired$色味
+
+# 平均と標準偏差の確認
+平均=aggregate(総合評価~パン, mydata_multcomp_paired, mean)
+標準偏差=aggregate(総合評価~パン, mydata_multcomp_paired, sd)
+
+df <- data.frame(
+  パン=平均$パン,
+  平均=平均$総合評価, 
+  標準偏差=標準偏差$総合評価)
+
+print(df)
+
+
+#多重比較の実施
+pairwise.t.test( mydata_multcomp_paired$総合評価,mydata_multcomp_paired$パン, paired=TRUE)
+
+# グラフ表示
+g <- ggplot(df, aes(x=パン, y=平均, fill=パン)) +
+  geom_bar(stat="identity") +
+  geom_errorbar(aes(ymin=平均-標準偏差, ymax=平均+標準偏差), width=.1) +
+  coord_cartesian(ylim = c(0, 22)) +
+  labs(title="各パンの総合評価", x="パン", y="総合評価") +
+  annotate("segment", x = 1, xend = 1, y = 17, yend = 20) +
+  annotate("segment", x = 1, xend = 3, y = 20, yend = 20) +
+  annotate("segment", x = 3, xend = 3, y = 20, yend = 17) +
+  annotate("segment", x = 2, xend = 2, y = 17, yend = 19.5) +
+  annotate("segment", x = 2, xend = 2.9, y = 19.5, yend = 19.5) +
+  annotate("segment", x = 2.9, xend = 2.9, y = 19.5, yend = 17) +
+  annotate("segment", x = 4, xend = 4, y = 17, yend = 20) +
+  annotate("segment", x = 4, xend = 3.1, y = 20, yend = 20) +
+  annotate("segment", x = 3.1, xend = 3.1, y = 20, yend = 17) 
+
+
+print(g)
+
+```
+
+:::ref
+<details>
+<summary>行ごとの和や平均の算出</summary>
+データフレームに含まれている複数の変数について，サンプルごとの合計や平均を算出する場合には，もっとも簡単なのはそれぞれの変数を`$`で指定して足し合わせる方法である．
+ただ，この方法だと変数が多い場合には手間もかかるし，コードも長くなってしまう．
+
+そこで，より短いコードで簡潔に書けるコードとして以下のような書き方がある．
+
+1. `rowSums`, `rowMeans`関数を用いる方法
+1. `apply`関数を用いる方法
+1. `dplyr`パッケージ（`tidyverse`にふくまれている）の`mutate()`関数を用いる方法．
+
+
+それぞれ以下で例を示すが，結論としては`mutate`関数を用いる方法が最も簡潔でわかりやすいのでおすすめである．
+
+**`rowSums`, `rowMeans`関数を用いる方法**
+計算させたい列を指定する際には，`c(3:6)`のように列番号を指定するか，`c("風味","味わい","食感","色味")`のように列名を指定する．
+
+```{r}
+mydata_multcomp_paired$総合評価_和 <- rowSums(mydata_multcomp_paired[c(3:6)]) # 合計
+head(mydata_multcomp_paired)
+
+mydata_multcomp_paired$総合評価_平均 <- rowSums(mydata_multcomp_paired[c("風味","味わい","食感","色味")]) # 合計
+head(mydata_multcomp_paired)
+
+mydata_multcomp_paired$総合評価_和 <- rowMeans(mydata_multcomp_paired[c(3:6)]) # 平均
+head(mydata_multcomp_paired)
+
+mydata_multcomp_paired$総合評価_平均 <- rowMeans(mydata_multcomp_paired[c("風味","味わい","食感","色味")]) # 平均
+head(mydata_multcomp_paired)
+```
+
+**`apply`関数を用いる方法**
+`apply`関数は，行列やデータフレームの各行や各列に対して指定した関数を適用するための関数である．引数は以下の通り3つある．
+
+- 第1引数：処理対象の行列やデータフレーム
+- 第2引数：処理を行う方向（1:行方向，2:列方向）
+- 第3引数：適用する関数．例えば平均であればmean, 合計であればsum，標準偏差であればsdなど．
+
+今回は行ごとに算出させたいので，第2引数は1となる．第1引数に与えるデータは`rowMeans`や`rowSums`と同様に，列番号を指定するか，列名を指定するかで指定する．
+
+```{r}
+mydata_multcomp_paired$総合評価_和 <- apply(mydata_multcomp_paired[c("風味","味わい","食感","色味")], 1, sum) # 合計
+head(mydata_multcomp_paired)
+
+mydata_multcomp_paired$総合評価_平均 <- apply(mydata_multcomp_paired[c("風味","味わい","食感","色味")], 1, mean) # 平均
+head(mydata_multcomp_paired)
+```
+
+
+
+**`dplyr`パッケージの`mutate()`関数を用いる方法**
+
+`mutate()`関数は，データフレームに含まれている変数を使って，新しい列を元のデータフレームに追加する関数である．引数は以下の通り．
+
+- 第1引数：データフレーム
+- 第2引数以降：新しく追加する列名と，その値をデータフレームに含まれる変数を使って算出する式．複数の列を一度に追加することも可能であり，その場合，同じ要領で順に第3引数，第4引数，第5引数...というように追加していく．
+
+返り値は，元のデータフレームに新しい列が追加されたデータフレームである．したがって，その返り値を受けるオブジェクトは，`rowMeans`や`rowSums`，`apply`のように`$`を用いて特定の列を指定するのではなく，あくまでデータフレームでなければならない
+
+以下の例では，`総合評価_和`と`総合評価_平均`という2つの列を一度に追加している．
+
+
+なお，`dplyr`パッケージは`tidyverse`にふくまれているので`tidyverse`を読み込んでいるならば，改めてインストールしたり読み込んだりする必要はない．
+
+
+```{r}
+library(tidyverse)
+mydata_multcomp_paired <- mutate(mydata_multcomp_paired, 
+                                 総合評価_和 = 風味 + 味わい + 食感 + 色味,
+                                 総合評価_平均= (風味 + 味わい + 食感 + 色味)/4
+                                 )
+head(mydata_multcomp_paired)
+```
+
+`rowSums`や`rowMeans`はその名の通り，行毎に和や平均を算出する関数であり，最もシンプルである．ただ，あくまで和と平均しか算出できない．
+
+`apply`関数の場合，所定の組み込み関数（`mean`や`sum`，`sd`など）だけでなく，自分で定義した関数を適用することも可能であるため，汎用性という点では`apply`関数が最も優れているだろう．ただ，もともと`apply`関数は行方向にも列方向にも適用できる関数であり，いずれの方向の計算をさせるかを第2引数で指定する（行方向:1，列方向:2）必要があるため，使い方が少し複雑である．また，自分で関数を定義するのは単純に統計分析に用いるよりも1段上のプログラミングの知識が必要になる．
+
+`mutate()`関数は，applyに比べて直感的でわかりやすく，かつ複数の変数を一度に作ることもできるため，使いやすさの面で`apply`よりも優れているので，データフレームの操作においては`mutate()`関数を使うことが多い．
+
+</details>
+:::

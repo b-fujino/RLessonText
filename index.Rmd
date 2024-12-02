@@ -51,7 +51,7 @@ knitr::opts_chunk$set(echo = TRUE)
 
 # 基本的な統計検定
 [こちらのページ](./RText_07_BasicTest.html)を参照してください。
-  
+課題の正答例は[こちら](./RText_07_WorkandAnswers.html)を参照してください．
 
 # 相関分析
 

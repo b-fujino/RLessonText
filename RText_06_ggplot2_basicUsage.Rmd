@@ -616,23 +616,27 @@ plot(g)
 
 **方法1 データを端からバラバラにして3つのグラフを別々に描く**
 
-この場合には，データを`filter()`関数(->[参考](./RText_05_DataHandling.html#抽出))を用いて種類ごとに分け，それぞれを描画する．ただし，この場合，~`coord_cartesian(xlim =)`~ `xlim()`や`ylim()`関数を使ってx軸の変域を設定しないと，3つのグラフのx軸，y軸の変域がバラバラになってしまう．なので，以下の例のように，`xlim()`や`ylim()`を使ってx軸，y軸の変域を設定する．
+この場合には，データを`filter()`関数(->[参考](./RText_05_DataHandling.html#抽出))を用いて種類ごとに分け，それぞれを描画する．ただし，この場合，`coord_cartesian()` 関数を使ってx軸の変域を設定しないと，3つのグラフのx軸，y軸の変域がバラバラになってしまう．なので，以下の例のように，`coord_cartesian()`を使ってx軸，y軸の変域を設定する．
+
+なお，`coord_cartesian()`と類似の働きをするものとしては，`xlim()`や`ylim()`があるが，`xlim()`や`ylim()`はデータそのものからこれらで指定した範囲外のものを除外する（結果として表示も指定範囲に限定される）のに対して，`coord_cartesian()`はデータを除外しているわけではなく，単に表示する範囲を指定するだけである．
+
+単に表示を変えたいだけならば，`coord_cartesian()`を使うべきである．
 
 ```{r}
 g <- ggplot(filter(data_iris,種類=="setosa"))+
   geom_histogram(aes(x=がく長),color="white", binwidth = 0.1)+
-  xlim(4,8)+ylim(0,30)
-  #coord_cartesian(xlim = c(4, 8))
+  #xlim(4,8)+ylim(0,30)
+  coord_cartesian(xlim = c(4, 8), ylim=c(0,30))
 plot(g)
 g <- ggplot(filter(data_iris,種類=="versicolor"))+
   geom_histogram(aes(x=がく長),color="white", binwidth = 0.1)+
-  xlim(4,8)+ylim(0,30)
-  #coord_cartesian(xlim = c(4, 8))
+  #xlim(4,8)+ylim(0,30)
+  coord_cartesian(xlim = c(4, 8), ylim=c(0,30))
 plot(g)
 g <- ggplot(filter(data_iris,種類=="virginica") )+
   geom_histogram(aes(x=がく長),color="white", binwidth = 0.1)+
-  xlim(4,8)+ylim(0,30)
-  #coord_cartesian(xlim = c(4, 8))
+  #xlim(4,8)+ylim(0,30)
+  coord_cartesian(xlim = c(4, 8), ylim=c(0,30))
 plot(g)
 
 ```
@@ -1000,6 +1004,16 @@ color| 枠の色
 </details>
 :::
 
+## 表示範囲（x軸，y軸の変域）を変える
+
+すでに[こちら](#種類別のヒストグラム作成)で説明したとおり，グラフの表示範囲を限定したい場合には，`coord_cartesian()`を使う．代表的な引数は以下の2つである．
+
+- xlim : x軸の表示範囲のベクトルデータ．c(最小値,最大値)で指定する．
+- ylim : y軸の表示範囲のベクトルデータ．c(最小値,最大値)で指定する．
+
+
+
+
 ## 目盛ラベルを変える
 目盛ラベルを変えるには，`scale_x_****`や`scale_y_***`を使う．
 以下は，x軸の目盛りをsetosa, versicolor, virgnicaから，a, b, cに変え，y軸を普通の目盛から対数目盛に変えた例である．
@@ -1031,6 +1045,7 @@ breaks|連続変数の目盛のうち指定したものだけを表示させる
 limits|連続変数の表示範囲を指定したものにする.xlim,ylimと同じ効果．
 name | 変数の軸ラベルを変える．xlab,ylabと同じ効果．
 
+ちなみに，`xlim`や`ylim`は内部では`scale_x_continuous(limits=...)`や`scale_y_continuous(limits=)`を使っている．このため，これらはデータそのものを除外しており，結果として表示範囲も変わるという仕組みになっている．単に表示範囲を変えたいだけであれば，`coord_cartesian()`を使う方がよい．
 
 結局，軸タイトルを変える方法って，色々あるということである．
 xlabでもよいし，labs(x=)dでもよいし，scale_x_***(name=)でも変えれる．
