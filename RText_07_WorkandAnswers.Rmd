@@ -243,16 +243,137 @@ fisher.test(cross_table)
 # 課題6
 
 :::work
-ある学部の就職支援担当の教員は，今年度の卒業予定者の9月末時点での内定率が例年より高いように感じた．今年度は卒業予定者153人中，内定を得ている学生は141名である．一方，過去10年間の状況を通算すると同時点に内定を得ていたのはのべ1732名中，1492名であった．単純に比較するならば，今年度は約92%の内定率であるのに対し，過去10年間の平均内定率は約86%である．この内定率の差は有意であるかどうかを検証せよ．
+ある学部の就職支援担当の教員は，今年度の卒業予定者の9月末時点での内定率が例年より高いように感じた．今年度は卒業予定者153人中，内定を得ている学生は141名である．一方，過去10年間の状況を通算すると同時点に内定を得ていたのはのべ1732名中，1492名であった．単純に比較するならば，今年度は約92%の内定率であるのに対し，過去10年間の平均内定率は約86%である．この内定率の差は有意であるかどうかを検証せよ（ヒント：この場合はすでに成功数と試行総数が端的に文章に与えられている！）．
 :::
 
 ```{r}
 # データの設定
 n1 <- 153
-x1 <- 141
+s1 <- 141
 n2 <- 1732
-x2 <- 1492
+s2 <- 1492
 # 検定
-prop.test(c(x1, x2), c(n1, n2))
+prop.test(c(s1, s2), c(n1, n2))
 
 ```
+
+
+# 課題7
+
+:::work
+全国チェーンのあるスーパーが，割引クーポン、ポイント還元、限定セールのいずれが売り上げ向上に効果的かを検証するための社会実験を行いました．市場規模や顧客特性がほぼ同程度の3つの地域（A，B，C）の店舗を対象に，3日間限定で，A地域では割引クーポン、B地域ではポイント還元、C地域では限定セールを行った．それぞれの割引・還元率は同じとなってる．この3日間の各地域の各店舗の[売上データ](./practice/07_work_6.csv)（各地域の店舗別の売り上げデータ）を用いて，以下の課題を実行せよ．
+
+1. head()とsummary()を用いて与データがどういうデータかの確認を行え（地域と店舗は要因型データであることに注意すること）．
+1. それぞれの地域ごとの売上の平均値と標準偏差を算出せよ．
+1. A-B，B-C，C-Aの3つの組み合わせの**それぞれについて**，一対比較の結果を示せ．
+1. 一対比較の結果を用いて，p.adjust()関数を用いて補正を行い，各組み合わせのP値を示せ（補正方法はholm補正でよい）．
+1. pairwise.t.test()を用いた多重比較を行い，上の課題の結果と一致することを確認せよ（補正方法はholm補正でよい）．
+1. この調査結果から導かれる結論を述べよ．
+
+:::
+
+```{r}
+mydata_work6 <- read.csv(
+  "./practice/07_work_6.csv", 
+  header=T, 
+  fileEncoding="UTF8"
+) # データ読み込み
+
+# 1. データの確認
+mydata_work6$地域<-as.factor(mydata_work6$地域)
+mydata_work6$店舗<-as.factor(mydata_work6$店舗)
+
+head(mydata_work6)
+summary(mydata_work6)
+
+# 2. 平均と標準偏差の算出
+aggregate(売上~地域, mydata_work6, mean)
+aggregate(売上~地域, mydata_work6, sd)
+
+# 3. 一対比較
+data_A <- filter(mydata_work6, 地域=="A")
+data_B <- filter(mydata_work6, 地域=="B")
+data_C <- filter(mydata_work6, 地域=="C")
+
+res_AB<-t.test(data_A$売上, data_B$売上)
+res_BC<-t.test(data_B$売上, data_C$売上)
+res_CA<-t.test(data_C$売上, data_A$売上)
+
+print(res_AB)
+print(res_BC)
+print(res_CA)
+
+# 4. p値の補正
+p_values <- c(
+  res_AB$p.value,
+  res_BC$p.value,
+  res_CA$p.value
+)
+
+p.adjust(p_values)
+
+# 5. 多重比較
+pairwise.t.test(mydata_work6$売上, mydata_work6$地域)
+```
+
+# 課題8
+
+:::work
+ある学生が卒業研究で，オンライン講義動画を視聴するときの視聴速度と内容の定着率に有意な差があるのかを調べたいと考えた．このことを検証するために，実験協力者36名に対して，1倍速， 1.5倍速, 2倍速の3つの速度で講義を視聴してもらい，それぞれ講義の内容に関するクイズに回答してもらってその成績で比較をする方法を取った．この実験の結果を示すデータが[こちら](./practice/07_work_7.csv)である．このデータを用いて，以下の課題を実行せよ．
+
+
+1. head()とsummary()を用いて与データがどういうデータかの確認を行え．データには要因型の変数が含まれていることに注意すること．
+1. 1倍速，1.5倍速，2倍速のそれぞれの視聴速度でのクイズの成績の平均値と標準偏差を算出せよ．
+1. A-B，B-C，C-Aの3つの組み合わせの**それぞれについて**，一対比較の結果を示せ．
+1. 一対比較の結果を用いて，p.adjust()関数を用いて補正を行い，各組み合わせのP値を示せ（補正方法はbonferroni補正を用いること）．
+1. pairwise.t.test()を用いた多重比較を行い，上の課題の結果と一致することを確認せよ（補正方法は補正方法はbonferroni補正を用いること）．
+1. この調査結果から導かれる結論を述べよ．
+
+:::
+
+```{r}
+mydata_work7 <- read.csv(
+  "./practice/07_work_7.csv", 
+  header=T, 
+  fileEncoding="UTF8"
+) # データ読み込み
+
+# 1. データの確認
+mydata_work7$速度<-as.factor(mydata_work7$速度)
+mydata_work7$視聴動画<-as.factor(mydata_work7$視聴動画)
+mydata_work7$視聴順序<-as.factor(mydata_work7$視聴順序)
+
+head(mydata_work7)
+summary(mydata_work7)
+
+# 2. 平均と標準偏差の算出
+aggregate(成績~速度, mydata_work7, mean)
+aggregate(成績~速度, mydata_work7, sd)
+
+# 3. 一対比較
+data_A <- filter(mydata_work7, 速度=="1倍")
+data_B <- filter(mydata_work7, 速度=="1.5倍")
+data_C <- filter(mydata_work7, 速度=="2倍")
+
+res_AB<-t.test(data_A$成績, data_B$成績, paired=TRUE)
+res_BC<-t.test(data_B$成績, data_C$成績, paired=TRUE)
+res_CA<-t.test(data_C$成績, data_A$成績, paired=TRUE)
+
+print(res_AB)
+print(res_BC)
+print(res_CA)
+
+# 4. p値の補正
+p_values <- c(
+  res_AB$p.value,
+  res_BC$p.value,
+  res_CA$p.value
+)
+
+p.adjust(p_values, method="bonferroni")
+
+# 5. 多重比較
+pairwise.t.test(mydata_work7$成績, mydata_work7$速度, p.adjust.method="bonferroni", paired=TRUE)
+
+```
+

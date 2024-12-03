@@ -11,7 +11,7 @@
 
 <meta name="author" content="藤野秀則," />
 
-<meta name="date" content="2024-12-02" />
+<meta name="date" content="2024-12-03" />
 
 <title>第7章の課題と模範解答</title>
 
@@ -1482,7 +1482,7 @@ border-radius: 0px;
 
 <h1 class="title toc-ignore">第7章の課題と模範解答</h1>
 <h4 class="author">藤野秀則,</h4>
-<h4 class="date">2024-12-02</h4>
+<h4 class="date">2024-12-03</h4>
 
 </div>
 
@@ -1768,19 +1768,19 @@ fisher.test(cross_table)</code></pre>
 <div id="課題6" class="section level1" number="6">
 <h1><span class="header-section-number">6</span> 課題6</h1>
 <div class="work">
-<p>ある学部の就職支援担当の教員は，今年度の卒業予定者の9月末時点での内定率が例年より高いように感じた．今年度は卒業予定者153人中，内定を得ている学生は141名である．一方，過去10年間の状況を通算すると同時点に内定を得ていたのはのべ1732名中，1492名であった．単純に比較するならば，今年度は約92%の内定率であるのに対し，過去10年間の平均内定率は約86%である．この内定率の差は有意であるかどうかを検証せよ．</p>
+<p>ある学部の就職支援担当の教員は，今年度の卒業予定者の9月末時点での内定率が例年より高いように感じた．今年度は卒業予定者153人中，内定を得ている学生は141名である．一方，過去10年間の状況を通算すると同時点に内定を得ていたのはのべ1732名中，1492名であった．単純に比較するならば，今年度は約92%の内定率であるのに対し，過去10年間の平均内定率は約86%である．この内定率の差は有意であるかどうかを検証せよ（ヒント：この場合はすでに成功数と試行総数が端的に文章に与えられている！）．</p>
 </div>
 <pre class="r"><code># データの設定
 n1 &lt;- 153
-x1 &lt;- 141
+s1 &lt;- 141
 n2 &lt;- 1732
-x2 &lt;- 1492
+s2 &lt;- 1492
 # 検定
-prop.test(c(x1, x2), c(n1, n2))</code></pre>
+prop.test(c(s1, s2), c(n1, n2))</code></pre>
 <pre><code>## 
 ##  2-sample test for equality of proportions with continuity correction
 ## 
-## data:  c(x1, x2) out of c(n1, n2)
+## data:  c(s1, s2) out of c(n1, n2)
 ## X-squared = 3.8859, df = 1, p-value = 0.04869
 ## alternative hypothesis: two.sided
 ## 95 percent confidence interval:
@@ -1788,6 +1788,244 @@ prop.test(c(x1, x2), c(n1, n2))</code></pre>
 ## sample estimates:
 ##    prop 1    prop 2 
 ## 0.9215686 0.8614319</code></pre>
+</div>
+<div id="課題7" class="section level1" number="7">
+<h1><span class="header-section-number">7</span> 課題7</h1>
+<div class="work">
+<p>全国チェーンのあるスーパーが，割引クーポン、ポイント還元、限定セールのいずれが売り上げ向上に効果的かを検証するための社会実験を行いました．市場規模や顧客特性がほぼ同程度の3つの地域（A，B，C）の店舗を対象に，3日間限定で，A地域では割引クーポン、B地域ではポイント還元、C地域では限定セールを行った．それぞれの割引・還元率は同じとなってる．この3日間の各地域の各店舗の<a href="./practice/07_work_6.csv">売上データ</a>（各地域の店舗別の売り上げデータ）を用いて，以下の課題を実行せよ．</p>
+<ol style="list-style-type: decimal">
+<li>head()とsummary()を用いて与データがどういうデータかの確認を行え（地域と店舗は要因型データであることに注意すること）．</li>
+<li>それぞれの地域ごとの売上の平均値と標準偏差を算出せよ．</li>
+<li>A-B，B-C，C-Aの3つの組み合わせの<strong>それぞれについて</strong>，一対比較の結果を示せ．</li>
+<li>一対比較の結果を用いて，p.adjust()関数を用いて補正を行い，各組み合わせのP値を示せ（補正方法はholm補正でよい）．</li>
+<li>pairwise.t.test()を用いた多重比較を行い，上の課題の結果と一致することを確認せよ（補正方法はholm補正でよい）．</li>
+<li>この調査結果から導かれる結論を述べよ．</li>
+</ol>
+</div>
+<pre class="r"><code>mydata_work6 &lt;- read.csv(
+  &quot;./practice/07_work_6.csv&quot;, 
+  header=T, 
+  fileEncoding=&quot;UTF8&quot;
+) # データ読み込み
+
+# 1. データの確認
+mydata_work6$地域&lt;-as.factor(mydata_work6$地域)
+mydata_work6$店舗&lt;-as.factor(mydata_work6$店舗)
+
+head(mydata_work6)</code></pre>
+<pre><code>##   地域 店舗    売上
+## 1    A    1 3946493
+## 2    A    2 4098830
+## 3    A    3 4136322
+## 4    A    4 4106744
+## 5    A    5 4080132
+## 6    A    6 4035787</code></pre>
+<pre class="r"><code>summary(mydata_work6)</code></pre>
+<pre><code>##  地域        店舗         売上        
+##  A:12   1      : 3   Min.   :3818564  
+##  B:15   2      : 3   1st Qu.:3958210  
+##  C:16   3      : 3   Median :4048737  
+##         4      : 3   Mean   :4043251  
+##         5      : 3   3rd Qu.:4107222  
+##         6      : 3   Max.   :4367986  
+##         (Other):25</code></pre>
+<pre class="r"><code># 2. 平均と標準偏差の算出
+aggregate(売上~地域, mydata_work6, mean)</code></pre>
+<pre><code>##   地域    売上
+## 1    A 4038255
+## 2    B 3963262
+## 3    C 4121987</code></pre>
+<pre class="r"><code>aggregate(売上~地域, mydata_work6, sd)</code></pre>
+<pre><code>##   地域      売上
+## 1    A  78375.42
+## 2    B 106892.24
+## 3    C 108014.64</code></pre>
+<pre class="r"><code># 3. 一対比較
+data_A &lt;- filter(mydata_work6, 地域==&quot;A&quot;)
+data_B &lt;- filter(mydata_work6, 地域==&quot;B&quot;)
+data_C &lt;- filter(mydata_work6, 地域==&quot;C&quot;)
+
+res_AB&lt;-t.test(data_A$売上, data_B$売上)
+res_BC&lt;-t.test(data_B$売上, data_C$売上)
+res_CA&lt;-t.test(data_C$売上, data_A$売上)
+
+print(res_AB)</code></pre>
+<pre><code>## 
+##  Welch Two Sample t-test
+## 
+## data:  data_A$売上 and data_B$売上
+## t = 2.1014, df = 24.854, p-value = 0.04592
+## alternative hypothesis: true difference in means is not equal to 0
+## 95 percent confidence interval:
+##    1470.433 148515.300
+## sample estimates:
+## mean of x mean of y 
+##   4038255   3963262</code></pre>
+<pre class="r"><code>print(res_BC)</code></pre>
+<pre><code>## 
+##  Welch Two Sample t-test
+## 
+## data:  data_B$売上 and data_C$売上
+## t = -4.1107, df = 28.908, p-value = 0.0002974
+## alternative hypothesis: true difference in means is not equal to 0
+## 95 percent confidence interval:
+##  -237706.7  -79741.9
+## sample estimates:
+## mean of x mean of y 
+##   3963262   4121987</code></pre>
+<pre class="r"><code>print(res_CA)</code></pre>
+<pre><code>## 
+##  Welch Two Sample t-test
+## 
+## data:  data_C$売上 and data_A$売上
+## t = 2.3768, df = 25.988, p-value = 0.02512
+## alternative hypothesis: true difference in means is not equal to 0
+## 95 percent confidence interval:
+##   11315.32 156147.51
+## sample estimates:
+## mean of x mean of y 
+##   4121987   4038255</code></pre>
+<pre class="r"><code># 4. p値の補正
+p_values &lt;- c(
+  res_AB$p.value,
+  res_BC$p.value,
+  res_CA$p.value
+)
+
+p.adjust(p_values)</code></pre>
+<pre><code>## [1] 0.050231388 0.000892136 0.050231388</code></pre>
+<pre class="r"><code># 5. 多重比較
+pairwise.t.test(mydata_work6$売上, mydata_work6$地域)</code></pre>
+<pre><code>## 
+##  Pairwise comparisons using t tests with pooled SD 
+## 
+## data:  mydata_work6$売上 and mydata_work6$地域 
+## 
+##   A       B      
+## B 0.06951 -      
+## C 0.06951 0.00023
+## 
+## P value adjustment method: holm</code></pre>
+</div>
+<div id="課題8" class="section level1" number="8">
+<h1><span class="header-section-number">8</span> 課題8</h1>
+<div class="work">
+<p>ある学生が卒業研究で，オンライン講義動画を視聴するときの視聴速度と内容の定着率に有意な差があるのかを調べたいと考えた．このことを検証するために，実験協力者36名に対して，1倍速，
+1.5倍速,
+2倍速の3つの速度で講義を視聴してもらい，それぞれ講義の内容に関するクイズに回答してもらってその成績で比較をする方法を取った．この実験の結果を示すデータが<a href="./practice/07_work_7.csv">こちら</a>である．このデータを用いて，以下の課題を実行せよ．</p>
+<ol style="list-style-type: decimal">
+<li>head()とsummary()を用いて与データがどういうデータかの確認を行え．データには要因型の変数が含まれていることに注意すること．</li>
+<li>1倍速，1.5倍速，2倍速のそれぞれの視聴速度でのクイズの成績の平均値と標準偏差を算出せよ．</li>
+<li>A-B，B-C，C-Aの3つの組み合わせの<strong>それぞれについて</strong>，一対比較の結果を示せ．</li>
+<li>一対比較の結果を用いて，p.adjust()関数を用いて補正を行い，各組み合わせのP値を示せ（補正方法はbonferroni補正を用いること）．</li>
+<li>pairwise.t.test()を用いた多重比較を行い，上の課題の結果と一致することを確認せよ（補正方法は補正方法はbonferroni補正を用いること）．</li>
+<li>この調査結果から導かれる結論を述べよ．</li>
+</ol>
+</div>
+<pre class="r"><code>mydata_work7 &lt;- read.csv(
+  &quot;./practice/07_work_7.csv&quot;, 
+  header=T, 
+  fileEncoding=&quot;UTF8&quot;
+) # データ読み込み
+
+# 1. データの確認
+mydata_work7$速度&lt;-as.factor(mydata_work7$速度)
+mydata_work7$視聴動画&lt;-as.factor(mydata_work7$視聴動画)
+mydata_work7$視聴順序&lt;-as.factor(mydata_work7$視聴順序)
+
+head(mydata_work7)</code></pre>
+<pre><code>##   被験者No. 速度 視聴順序 視聴動画 成績
+## 1         1  1倍    1回目        A    4
+## 2         2  1倍    1回目        A    9
+## 3         3  1倍    1回目        B   10
+## 4         4  1倍    1回目        B    9
+## 5         5  1倍    1回目        C    8
+## 6         6  1倍    1回目        C    7</code></pre>
+<pre class="r"><code>summary(mydata_work7)</code></pre>
+<pre><code>##    被験者No.        速度     視聴順序  視聴動画      成績       
+##  Min.   : 1.00   1.5倍:36   1回目:36   A:36     Min.   : 0.000  
+##  1st Qu.: 9.75   1倍  :36   2回目:36   B:36     1st Qu.: 3.750  
+##  Median :18.50   2倍  :36   3回目:36   C:36     Median : 6.000  
+##  Mean   :18.50                                  Mean   : 5.685  
+##  3rd Qu.:27.25                                  3rd Qu.: 8.000  
+##  Max.   :36.00                                  Max.   :10.000</code></pre>
+<pre class="r"><code># 2. 平均と標準偏差の算出
+aggregate(成績~速度, mydata_work7, mean)</code></pre>
+<pre><code>##    速度     成績
+## 1 1.5倍 5.916667
+## 2   1倍 6.694444
+## 3   2倍 4.444444</code></pre>
+<pre class="r"><code>aggregate(成績~速度, mydata_work7, sd)</code></pre>
+<pre><code>##    速度     成績
+## 1 1.5倍 2.442189
+## 2   1倍 2.108750
+## 3   2倍 2.512192</code></pre>
+<pre class="r"><code># 3. 一対比較
+data_A &lt;- filter(mydata_work7, 速度==&quot;1倍&quot;)
+data_B &lt;- filter(mydata_work7, 速度==&quot;1.5倍&quot;)
+data_C &lt;- filter(mydata_work7, 速度==&quot;2倍&quot;)
+
+res_AB&lt;-t.test(data_A$成績, data_B$成績, paired=TRUE)
+res_BC&lt;-t.test(data_B$成績, data_C$成績, paired=TRUE)
+res_CA&lt;-t.test(data_C$成績, data_A$成績, paired=TRUE)
+
+print(res_AB)</code></pre>
+<pre><code>## 
+##  Paired t-test
+## 
+## data:  data_A$成績 and data_B$成績
+## t = 1.3766, df = 35, p-value = 0.1774
+## alternative hypothesis: true mean difference is not equal to 0
+## 95 percent confidence interval:
+##  -0.3692314  1.9247869
+## sample estimates:
+## mean difference 
+##       0.7777778</code></pre>
+<pre class="r"><code>print(res_BC)</code></pre>
+<pre><code>## 
+##  Paired t-test
+## 
+## data:  data_B$成績 and data_C$成績
+## t = 2.4608, df = 35, p-value = 0.01894
+## alternative hypothesis: true mean difference is not equal to 0
+## 95 percent confidence interval:
+##  0.2576908 2.6867536
+## sample estimates:
+## mean difference 
+##        1.472222</code></pre>
+<pre class="r"><code>print(res_CA)</code></pre>
+<pre><code>## 
+##  Paired t-test
+## 
+## data:  data_C$成績 and data_A$成績
+## t = -4.1038, df = 35, p-value = 0.0002309
+## alternative hypothesis: true mean difference is not equal to 0
+## 95 percent confidence interval:
+##  -3.363038 -1.136962
+## sample estimates:
+## mean difference 
+##           -2.25</code></pre>
+<pre class="r"><code># 4. p値の補正
+p_values &lt;- c(
+  res_AB$p.value,
+  res_BC$p.value,
+  res_CA$p.value
+)
+
+p.adjust(p_values, method=&quot;bonferroni&quot;)</code></pre>
+<pre><code>## [1] 0.5321370426 0.0568137003 0.0006928113</code></pre>
+<pre class="r"><code># 5. 多重比較
+pairwise.t.test(mydata_work7$成績, mydata_work7$速度, p.adjust.method=&quot;bonferroni&quot;, paired=TRUE)</code></pre>
+<pre><code>## 
+##  Pairwise comparisons using paired t tests 
+## 
+## data:  mydata_work7$成績 and mydata_work7$速度 
+## 
+##     1.5倍   1倍    
+## 1倍 0.53214 -      
+## 2倍 0.05681 0.00069
+## 
+## P value adjustment method: bonferroni</code></pre>
 </div>
 
 
