@@ -1,0 +1,116 @@
+---
+title: "第8章相関係数の課題と正答例"
+author: "藤野秀則,"
+date: "`r Sys.Date()`"
+output:
+  html_document: 
+    toc: true
+    toc_depth: 4
+    toc_float: true
+    number_section: true
+    fig_width: 8
+    css: style.css
+  # html_notebook:
+  #   toc: true
+  #   toc_depth: 3
+  #   toc_float: true
+  #   number_section: true
+editor_options:
+  markdown:
+    wrap: 72
+---
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+library(tidyverse)
+```
+
+# 課題1
+
+:::work
+NHK受信料支払率とコロナ感染者数,高齢化率についてのデータ[こちら](./practice/example_09_Corona_NHK.csv)について，以下の課題を行え
+
+1. head()とsummary()を使ってデータの概要を確認せよ
+1. NHK受信料とコロナ患者数
+1. 高齢化率とNHK受信料
+1. 高齢化率とコロナ患者数
+:::
+
+```{r}
+data <- read.csv("./practice/example_09_Corona_NHK.csv")
+
+# 1. 
+head(data)
+summary(data)
+
+# 2. NHK受信料とコロナ感染者数
+cor(data$NHK支払率, data$コロナ患者数)
+
+#3. 高齢化率とNHK受信料
+cor(data$高齢化率, data$NHK支払率)
+
+#4. 高齢化率とコロナ感染症
+cor(data$高齢化率, data$コロナ患者数)
+```
+
+
+# 課題2
+
+:::work
+先ほどのコロナ感染者数とNHK受信料支払世帯のデータについて，高齢化率を統制した場合の偏相関を求めよ．
+:::
+
+```{r}
+library(ppcor)
+data <- read.csv("./practice/example_09_Corona_NHK.csv")
+head(data)
+
+# 偏相関
+Res.pcor<-pcor.test(data$NHK支払率,
+               data$コロナ患者数, 
+               data$高齢化率)
+print(Res.pcor)
+```
+
+:::work
+[このデータ](./practice/example_09_HiddenCorrel.csv)は高校生における対人依存欲求（他者と親密な関係を築くことで自身の心の安定を得るとともに，問題に直面したときに他者に助けを求めようとする欲求）と，SNSの利用時間との関係を調べたものである．
+
+1. このデータにhead()とsummary()を適用し，データの概要を把握せよ．
+1. このデータの散布図を作成せよ．
+1. このデータを用いて，対人依存欲求とSNSの利用時間の間の相関係数を求めよ．
+1. このデータの「性別」を要因型に変換し，男性と女性のそれぞれのデータを抽出してsummary()を適用し，それぞれのデータの概要を把握せよ.
+1. 先ほど作成した散布図を男女別に色分けした散布図にせよ．
+1. 男女別で，対人依存欲求とSNSの利用時間の相関係数を求めよ．
+:::
+
+```{r}
+library(tidyverse)
+data <- read.csv("./practice/example_09_HiddenCorrel.csv")
+
+# 1.
+head(data)
+summary(data)
+
+# 2.
+g<-ggplot(data, aes(x=対人依存欲求, y=SNS利用時間)) + geom_point()
+plot(g)
+
+# 3.
+cor(data$対人依存欲求, data$SNS利用時間)
+
+# 4.
+data$性別 <-as.factor(data$性別)
+男性 <- filter(data, 性別 == "男")
+女性 <- filter(data, 性別 == "女")
+
+summary(男性)
+summary(女性)
+
+# 5.
+g<-ggplot(data, aes(x=対人依存欲求, y=SNS利用時間, color=性別)) + geom_point()
+plot(g)
+
+# 6.
+cor(男性$対人依存欲求, 男性$SNS利用時間)
+cor(女性$対人依存欲求, 女性$SNS利用時間)
+```
+
