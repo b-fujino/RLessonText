@@ -665,6 +665,8 @@ knitr::kable(mydata_cross, format = "html", table.attr = "class='custom-table'")
 数学と物理の相関係と，英語と国語の相関の差が有意かどうか検定せよ．
 :::
 
+この場合，数学がJ，物理がK,英語がH，国語がMだと考えればよい．
+
 ```{r}
 # 同一サンプルにおける互いに異なる変数間の相関の差の検定
 cocor.dep.groups.nonoverlap(r.jk=0.42, r.hm=0.72,
