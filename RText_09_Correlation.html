@@ -1481,7 +1481,7 @@ border-radius: 0px;
 
 <h1 class="title toc-ignore">相関分析</h1>
 <h4 class="author">藤野秀則,</h4>
-<h4 class="date">初版日:2024-09-30 更新日:2024-12-09</h4>
+<h4 class="date">初版日:2024-09-30 更新日:2024-12-10</h4>
 
 </div>
 
@@ -2082,8 +2082,13 @@ Applied Psychology, 96(4), 863–871. <a href="https://doi.org/10.1037/a0022625"
 <p>相関行列を可視化する方法として，ヒートマップが用いられることがある．ヒートマップは，相関係数の値によって色を変えて表示することで，相関係数の強さを視覚的に把握することができる．</p>
 <p>以下のコードは，先のCSVファイルから算出した相関行列をヒートマップで表示する例である．<span class="math inline">\(-1\)</span>を青，<span class="math inline">\(1\)</span>を赤，<span class="math inline">\(0\)</span>を白に設定し，間の値はそれに合わせてグラデーションしていくような形で表示させている．</p>
 <pre class="r"><code>library(ggplot2)
-library(reshape2)
-data &lt;- read.csv(&quot;./practice/example_09_CorMatrix.csv&quot;)
+library(reshape2)</code></pre>
+<pre><code>## 
+## 次のパッケージを付け加えます: &#39;reshape2&#39;</code></pre>
+<pre><code>## 以下のオブジェクトは &#39;package:tidyr&#39; からマスクされています:
+## 
+##     smiths</code></pre>
+<pre class="r"><code>data &lt;- read.csv(&quot;./practice/example_09_CorMatrix.csv&quot;)
 cor_matrix &lt;- cor(data)
 melted_cor_matrix &lt;- melt(cor_matrix)
 ggplot(melted_cor_matrix, aes(Var1, Var2, fill = value)) +
@@ -2271,6 +2276,11 @@ R_{cb}}{\sqrt{(1-R_{ca}^2)}\sqrt{(1-R_{cb}^2)}}
 </div>
 <pre class="r"><code>library(ppcor)</code></pre>
 <pre><code>## 要求されたパッケージ MASS をロード中です</code></pre>
+<pre><code>## 
+## 次のパッケージを付け加えます: &#39;MASS&#39;</code></pre>
+<pre><code>## 以下のオブジェクトは &#39;package:dplyr&#39; からマスクされています:
+## 
+##     select</code></pre>
 <pre class="r"><code>data &lt;- read.csv(&quot;./practice/example_09_ice_and_accident.csv&quot;)
 head(data)</code></pre>
 <pre><code>##       年   月 アイスクリームの購入金額_世帯当たり 海浜事故発生件数_全国計
@@ -2368,6 +2378,7 @@ pcor.test(data$`アイスクリームの購入金額_世帯当たり`, data$`海
 </div>
 <p>具体的な例としては，日本においては低所得世帯と高所得者世帯とでは，食事の摂取カロリー量にほとんど違いはない（<a href="https://www.mhlw.go.jp/content/10900000/000688863.pdf">平成 30 年
 国民健康・栄養調査結果の概要</a>より），一方で，米国においては低所得世帯と高所得世帯では，食事の摂取カロリー量は低所得世帯の方が高くなりがちであると言われている（<a href="https://www.ipss.go.jp/syoushika/bunken/data/pdf/19857406.pdf">子どもの頃の家庭環境と健康格差：肥満の要因分析</a>（研究論文），　<a href="https://www.cnn.co.jp/fringe/35147412.html">米国人の肥満率，１０年以内に５０％超える恐れ　研究報告</a>（CNNニュースより））．こうしたデータを，「国別である」ということを考慮せずに，まとめて相関分析に掛けた場合，アメリカにおける世帯収入と摂取カロリーの相関関係が，日本の低い相関関係によって希薄化する可能性がある．</p>
+<p>このように一見相関がないという結果になっていたとしても，ある属性でデータを切り分けてみると，それぞれの属性で逆方向の相関ががある，ということはたまにある．このため，相関分析を行う際には，手許にある生のデータを実際に眺めてみて「もしかして，この属性で分けたら相関関係が出てくるのでは？」という直感を働かせてみたり，属性ごとで散布図を描いてみるなどして，潜在していた相関関係を探ることが大切である．</p>
 <div class="work">
 <p><a href="./practice/example_09_HiddenCorrel.csv">このデータ</a>は高校生における対人依存欲求（他者と親密な関係を築くことで自身の心の安定を得るとともに，問題に直面したときに他者に助けを求めようとする欲求）と，SNSの利用時間との関係を調べたものである．</p>
 <ol style="list-style-type: decimal">
@@ -2668,7 +2679,17 @@ cocor.dep.groups.nonoverlap(r.jk=0.42, r.hm=0.72,
 偏相関の有意差検定</h2>
 <p>たとえば，J-KとJ-Hの間の相関を比較したい場合に，その背後で別の変数ZがJ-K，J-Hの相関に影響を与えている場合には，Zを統制した偏相関を求め，その差の有意性を検定することができる．その方法は，単にZを統制したJ-K，J-Hの偏相関を求め，その偏相関を上記の<code>cocor.indep.groups()</code>や<code>cocor.dep.groups.overlap()</code>，<code>cocor.dep.groups.nonoverlap()</code>にそれぞれ代入すればよい．</p>
 <div class="work">
-
+<p>ある組織で従業員満足度調査として，従業員323名（課長級以上の管理職は除く）に対して以下の項目について調査した．</p>
+<ul>
+<li>Q1: 直属の上司のリーダーシップの評価（7段階評価）</li>
+<li>Q2: 自身の職務内容に対する満足度（7段階評価）</li>
+<li>Q3: 自身の給与に対する満足度（7段階評価）</li>
+<li>Q4: 所属している部署の雰囲気に対する満足度（7段階評価）</li>
+<li>F1: 所属部署（13の部署からの選択）</li>
+<li>F2: 性別（男女）</li>
+<li>F3: 年齢（20歳から65歳まで5年区切り）</li>
+</ul>
+<p>その結果，<a href="./practice/09_work_Cor.csv">次のようなデータ</a>が得られた．</p>
 </div>
 </div>
 </div>

@@ -24,6 +24,7 @@ editor_options:
 
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE)
+library(tidyverse)
 ```
 
 
@@ -518,6 +519,8 @@ print(Res.pcor, digits=3)
 
 具体的な例としては，日本においては低所得世帯と高所得者世帯とでは，食事の摂取カロリー量にほとんど違いはない（[平成 30 年 国民健康・栄養調査結果の概要](https://www.mhlw.go.jp/content/10900000/000688863.pdf)より），一方で，米国においては低所得世帯と高所得世帯では，食事の摂取カロリー量は低所得世帯の方が高くなりがちであると言われている（[子どもの頃の家庭環境と健康格差：肥満の要因分析](https://www.ipss.go.jp/syoushika/bunken/data/pdf/19857406.pdf)（研究論文），　[米国人の肥満率，１０年以内に５０％超える恐れ　研究報告](https://www.cnn.co.jp/fringe/35147412.html)（CNNニュースより））．こうしたデータを，「国別である」ということを考慮せずに，まとめて相関分析に掛けた場合，アメリカにおける世帯収入と摂取カロリーの相関関係が，日本の低い相関関係によって希薄化する可能性がある．
 
+このように一見相関がないという結果になっていたとしても，ある属性でデータを切り分けてみると，それぞれの属性で逆方向の相関ががある，ということはたまにある．このため，相関分析を行う際には，手許にある生のデータを実際に眺めてみて「もしかして，この属性で分けたら相関関係が出てくるのでは？」という直感を働かせてみたり，属性ごとで散布図を描いてみるなどして，潜在していた相関関係を探ることが大切である．
+
 
 :::work
 [このデータ](./practice/example_09_HiddenCorrel.csv)は高校生における対人依存欲求（他者と親密な関係を築くことで自身の心の安定を得るとともに，問題に直面したときに他者に助けを求めようとする欲求）と，SNSの利用時間との関係を調べたものである．
@@ -690,5 +693,132 @@ cocor.dep.groups.nonoverlap(r.jk=0.42, r.hm=0.72,
 たとえば，J-KとJ-Hの間の相関を比較したい場合に，その背後で別の変数ZがJ-K，J-Hの相関に影響を与えている場合には，Zを統制した偏相関を求め，その差の有意性を検定することができる．その方法は，単にZを統制したJ-K，J-Hの偏相関を求め，その偏相関を上記の`cocor.indep.groups()`や`cocor.dep.groups.overlap()`，`cocor.dep.groups.nonoverlap()`にそれぞれ代入すればよい．
 
 :::work
+ある組織で従業員満足度調査として，従業員323名（課長級以上の管理職は除く）に対して以下の項目について調査した．
+
+- Q1: 直属の上司のリーダーシップの評価（7段階評価）
+- Q2: 自身の職務内容に対する満足度（7段階評価）
+- Q3: 自身の給与に対する満足度（7段階評価）
+- Q4: 所属している部署の雰囲気に対する満足度（7段階評価）
+- F1: 所属部署（13の部署からの選択）
+- F2: 性別（男女）
+- F3: 年齢（20歳から65歳まで5年区切り）
+
+その結果，[次のようなデータ](./practice/09_work_Cor.csv)が得られた．
+
+```{r include=FALSE}
+# データの作成
+## 経理部
+## 人事部
+## 総務部
+## 営業部
+## 流通管理部
+## 開発部
+## 情報システム管理部
+## 製造部
+## マーケティング部
+## 資材調達部
+## 品質管理部
+## 法務部
+## 経営企画室
+
+library(truncnorm)
+set.seed(34)
+
+n <- 323
+所属名 <- c("経理部","人事部","総務部","営業部","流通管理部","開発部","情報システム管理部","製造部","マーケティング部","資材調達部","品質管理部","法務部","経営企画室")
+
+部署人数 <-c("経理部"=15,
+       "人事部"=12,
+       "総務部"=12,
+       "営業部"=50,
+       "流通管理部"=20,
+       "開発部"=25,
+       "情報システム管理部"=18,
+       "製造部"=100,
+       "マーケティング部"=20,
+       "資材調達部"=18,
+       "品質管理部"=15,
+       "法務部"=8,
+       "経営企画室"=10)
+
+# 年齢
+年齢 <- c("20-24","25-29","30-34","35-39","40-44","45-49","50-54","55-59","60-64","65-69")
+
+# 年齢ごとの人数
+年齢人数 <-c("20-24"=35,
+       "25-29"=34,
+       "30-34"=35,
+       "35-39"=36,
+       "40-44"=35,
+       "45-49"=28,
+       "50-54"=31,
+       "55-59"=41,
+       "60-64"=40,
+       "65-69"=8)
+
+#性別
+性別 <- c("男"=195, "女"=128)
+
+
+# 部署別のデータ作成
+for(i in 1:length(所属名)){
+  n <- 部署人数[i]
+  F1 <- rep(所属名[i], n)
+  F2 <- sample(年齢, n, replace = TRUE, prob = 年齢人数/323)
+  F3 <- sample(c("男","女"), n, replace = TRUE, prob=性別/323)
+  Q1 <- rnorm(n, 4.0, 2.3)
+  Q2 <- scale(Q1)*0.5+2*rnorm(n)
+  Q3 <- scale(Q1)*0.2+scale(Q2)*0.5+2*rnorm(n)
+  Q4 <- scale(Q1)*0.4+scale(Q2)*0.3+scale(Q3)*0.2+2*rnorm(n)
+  
+  if(i==1){
+    data <- data.frame(Q1=Q1, Q2=Q2, Q3=Q3, Q4=Q4, F1=factor(F1), F2=factor(F2), F3=factor(F3))
+  }else{
+    data <- rbind(data, data.frame(Q1=Q1, Q2=Q2, Q3=Q3, Q4=Q4, F1=factor(F1), F2=factor(F2), F3=factor(F3)))
+  }
+}
+
+# 数値を7段階に戻す
+data$Q1 <- round((data$Q1-min(data$Q1))/(max(data$Q1)-min(data$Q1))*6+1,0)
+data$Q2 <- round((data$Q2-min(data$Q2))/(max(data$Q2)-min(data$Q2))*6+1,0)
+data$Q3 <- round((data$Q3-min(data$Q3))/(max(data$Q3)-min(data$Q3))*6+1,0)
+data$Q4 <- round((data$Q4-min(data$Q4))/(max(data$Q4)-min(data$Q4))*6+1,0)
+
+#データの確認
+summary(data)
+
+#クロス集計表の確認
+table(data$F1, data$F2)
+table(data$F1, data$F3)
+
+#相関の確認
+cor(data[c("Q1","Q2","Q3","Q4")])
+
+# データの保存
+write.csv(data, "./practice/09_work_Cor.csv", row.names = FALSE)
+```
+
+```{r eval=FALSE, include=FALSE}
+# 部署別の平均と標準偏差
+data %>%
+  group_by(F1) %>%
+  summarise_at(vars(Q1:Q4), list(mean=mean, sd=sd))%>%
+  print()
+
+
+library(tidyverse)
+# F1因子でデータをグループ化し、Q1～Q4の相関行列を計算
+correlation_matrices <- data %>%
+  group_by(F1) %>%
+  summarise(cor_matrix = list(cor(select(cur_data(), Q1:Q4), use = "complete.obs")))
+
+print(correlation_matrices)
+# 結果を確認
+for(i in 1:nrow(correlation_matrices)){
+  print(correlation_matrices$F1[i])
+  print(correlation_matrices$cor_matrix[[i]] , digits=1)
+}
+
+```
 
 :::
