@@ -313,7 +313,7 @@ p_values <- c(
 p.adjust(p_values)
 
 # 5. 多重比較
-pairwise.t.test(mydata_work6$売上, mydata_work6$地域)
+pairwise.t.test(mydata_work6$売上, mydata_work6$地域,  pool.sd =  FALSE)
 ```
 
 # 課題8

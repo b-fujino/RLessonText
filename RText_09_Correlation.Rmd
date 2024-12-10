@@ -759,17 +759,68 @@ n <- 323
 #性別
 性別 <- c("男"=195, "女"=128)
 
+#平均とSDのパラメータ
+dparam <- list(
+  経理=c(q1.m=4.0, q1.sd=2.3, q2.m=3.5, q2.sd=2.0, q3.m=3.2, q3.sd=2.5, q4.m=5.0, q4.sd=2.3),
+  人事=c(q1.m=4.2, q1.sd=2.1, q2.m=4.5, q2.sd=2.0, q3.m=4.2, q3.sd=2.5, q4.m=4.5, q4.sd=2.3),
+  総務=c(q1.m=3.8, q1.sd=2.5, q2.m=3.5, q2.sd=2.0, q3.m=3.2, q3.sd=2.5, q4.m=3.0, q4.sd=2.3),
+  営業=c(q1.m=4.5, q1.sd=2.0, q2.m=4.0, q2.sd=2.0, q3.m=3.7, q3.sd=2.5, q4.m=3.0, q4.sd=3.3),
+  流通=c(q1.m=4.3, q1.sd=2.2, q2.m=4.0, q2.sd=2.0, q3.m=3.7, q3.sd=2.5, q4.m=4.0, q4.sd=2.3),
+  開発=c(q1.m=4.1, q1.sd=2.4, q2.m=4.5, q2.sd=2.0, q3.m=4.2, q3.sd=2.5, q4.m=5.0, q4.sd=2.3),
+  情報=c(q1.m=4.2, q1.sd=2.3, q2.m=3.5, q2.sd=2.0, q3.m=3.2, q3.sd=2.5, q4.m=4.0, q4.sd=2.3),
+  製造=c(q1.m=4.0, q1.sd=2.3, q2.m=4.0, q2.sd=2.0, q3.m=3.7, q3.sd=2.5, q4.m=4.5, q4.sd=3.3),
+  マー=c(q1.m=4.5, q1.sd=2.0, q2.m=4.5, q2.sd=2.0, q3.m=4.2, q3.sd=2.5, q4.m=4.0, q4.sd=2.3),
+  資材=c(q1.m=4.3, q1.sd=2.2, q2.m=3.5, q2.sd=2.0, q3.m=3.2, q3.sd=2.5, q4.m=4.0, q4.sd=2.3),
+  品質=c(q1.m=4.1, q1.sd=2.4, q2.m=3.5, q2.sd=2.0, q3.m=3.2, q3.sd=2.5, q4.m=3.5, q4.sd=2.3),
+  法務=c(q1.m=4.2, q1.sd=2.3, q2.m=4.5, q2.sd=2.0, q3.m=4.5, q3.sd=2.5, q4.m=5.0, q4.sd=2.3),
+  経営=c(q1.m=4.0, q1.sd=2.3, q2.m=4.5, q2.sd=2.0, q3.m=4.5, q3.sd=2.5, q4.m=5.0, q4.sd=2.3)  
+)
+
+#相関のパラメータ設定
+rparam <- list(
+  経理=c(r_q2q1=0.25, r_q3q1=0.1, r_q3q2=0.3, r_q4q1=0.5, r_q4q2=0.3, r_q4q3=0.2),
+  人事=c(r_q2q1=0.32, r_q3q1=0.1, r_q3q2=0.3, r_q4q1=0.5, r_q4q2=0.2, r_q4q3=0.2),
+  総務=c(r_q2q1=0.35, r_q3q1=0.1, r_q3q2=0.3, r_q4q1=0.5, r_q4q2=0.2, r_q4q3=0.1),
+  営業=c(r_q2q1=0.40, r_q3q1=0.1, r_q3q2=0.2, r_q4q1=0.2, r_q4q2=0.3, r_q4q3=0.2),
+  流通=c(r_q2q1=0.32, r_q3q1=0.1, r_q3q2=0.3, r_q4q1=0.2, r_q4q2=0.2, r_q4q3=0.2),
+  開発=c(r_q2q1=0.20, r_q3q1=0.1, r_q3q2=0.4, r_q4q1=0.4, r_q4q2=0.3, r_q4q3=0.2),
+  情報=c(r_q2q1=0.25, r_q3q1=0.1, r_q3q2=0.2, r_q4q1=0.5, r_q4q2=0.2, r_q4q3=0.2),
+  製造=c(r_q2q1=0.40, r_q3q1=0.1, r_q3q2=0.2, r_q4q1=0.4, r_q4q2=0.3, r_q4q3=0.2),
+  マー=c(r_q2q1=0.31, r_q3q1=0.1, r_q3q2=0.3, r_q4q1=0.3, r_q4q2=0.3, r_q4q3=0.2),
+  資材=c(r_q2q1=0.28, r_q3q1=0.1, r_q3q2=0.2, r_q4q1=0.4, r_q4q2=0.2, r_q4q3=0.1),
+  品質=c(r_q2q1=0.32, r_q3q1=0.1, r_q3q2=0.2, r_q4q1=0.4, r_q4q2=0.3, r_q4q3=0.2),
+  法務=c(r_q2q1=0.20, r_q3q1=0.1, r_q3q2=0.1, r_q4q1=0.3, r_q4q2=0.2, r_q4q3=0.1),
+  経営=c(r_q2q1=0.40, r_q3q1=0.1, r_q3q2=0.4, r_q4q1=0.4, r_q4q2=0.3, r_q4q3=0.2)
+)
+
+param[[1]]["q1.m"]
 
 # 部署別のデータ作成
 for(i in 1:length(所属名)){
   n <- 部署人数[i]
+  q1.m<- dparam[[i]]["q1.m"] 
+  q1.sd<- dparam[[i]]["q1.sd"] 
+  q2.m<- dparam[[i]]["q1.m"] 
+  q2.sd<- dparam[[i]]["q1.sd"] 
+  q3.m<- dparam[[i]]["q1.m"] 
+  q3.sd<- dparam[[i]]["q1.sd"] 
+  q4.m<- dparam[[i]]["q1.m"] 
+  q4.sd<- dparam[[i]]["q1.sd"] 
+  
+  r_q2q1<- rparam[[i]]["r_q2q1"] 
+  r_q3q1<- rparam[[i]]["r_q3q1"] 
+  r_q3q2<- rparam[[i]]["r_q3q2"] 
+  r_q4q1<- rparam[[i]]["r_q4q1"] 
+  r_q4q2<- rparam[[i]]["r_q4q2"]
+  r_q4q3<- rparam[[i]]["r_q4q3"]
+  
   F1 <- rep(所属名[i], n)
   F2 <- sample(年齢, n, replace = TRUE, prob = 年齢人数/323)
   F3 <- sample(c("男","女"), n, replace = TRUE, prob=性別/323)
-  Q1 <- rnorm(n, 4.0, 2.3)
-  Q2 <- scale(Q1)*0.5+2*rnorm(n)
-  Q3 <- scale(Q1)*0.2+scale(Q2)*0.5+2*rnorm(n)
-  Q4 <- scale(Q1)*0.4+scale(Q2)*0.3+scale(Q3)*0.2+2*rnorm(n)
+  Q1 <- rnorm(n, q1.m, q1.sd)
+  Q2 <- scale(r_q2q1*scale(Q1)                                  +(1+r_q2q1              )*rnorm(n))*q2.sd+q2.m
+  Q3 <- scale(r_q3q1*scale(Q1)+r_q3q2*scale(Q2)                 +(0.7+r_q3q1+r_q3q2       )*rnorm(n))*q3.sd+q3.m
+  Q4 <- scale(r_q4q1*scale(Q1)+r_q4q2*scale(Q2)+r_q4q3*scale(Q3)+(0.5+r_q4q1+r_q4q2+r_q4q3)*rnorm(n))*q4.sd+q4.m
   
   if(i==1){
     data <- data.frame(Q1=Q1, Q2=Q2, Q3=Q3, Q4=Q4, F1=factor(F1), F2=factor(F2), F3=factor(F3))
@@ -798,7 +849,7 @@ cor(data[c("Q1","Q2","Q3","Q4")])
 write.csv(data, "./practice/09_work_Cor.csv", row.names = FALSE)
 ```
 
-```{r eval=FALSE, include=FALSE}
+```{r }
 # 部署別の平均と標準偏差
 data %>%
   group_by(F1) %>%

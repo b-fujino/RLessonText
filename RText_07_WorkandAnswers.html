@@ -11,7 +11,7 @@
 
 <meta name="author" content="藤野秀則," />
 
-<meta name="date" content="2024-12-03" />
+<meta name="date" content="2024-12-10" />
 
 <title>第7章の課題と模範解答</title>
 
@@ -1482,7 +1482,7 @@ border-radius: 0px;
 
 <h1 class="title toc-ignore">第7章の課題と模範解答</h1>
 <h4 class="author">藤野秀則,</h4>
-<h4 class="date">2024-12-03</h4>
+<h4 class="date">2024-12-10</h4>
 
 </div>
 
@@ -1895,15 +1895,15 @@ p_values &lt;- c(
 p.adjust(p_values)</code></pre>
 <pre><code>## [1] 0.050231388 0.000892136 0.050231388</code></pre>
 <pre class="r"><code># 5. 多重比較
-pairwise.t.test(mydata_work6$売上, mydata_work6$地域)</code></pre>
+pairwise.t.test(mydata_work6$売上, mydata_work6$地域,  pool.sd =  FALSE)</code></pre>
 <pre><code>## 
-##  Pairwise comparisons using t tests with pooled SD 
+##  Pairwise comparisons using t tests with non-pooled SD 
 ## 
 ## data:  mydata_work6$売上 and mydata_work6$地域 
 ## 
 ##   A       B      
-## B 0.06951 -      
-## C 0.06951 0.00023
+## B 0.05023 -      
+## C 0.05023 0.00089
 ## 
 ## P value adjustment method: holm</code></pre>
 </div>
