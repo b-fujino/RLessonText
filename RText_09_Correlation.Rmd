@@ -573,11 +573,11 @@ write.csv(data, "./practice/example_09_HiddenCorrel.csv", row.names = FALSE)
 差の有意性を検定することによって，二つの要因のいずれがより強くある変数と相関しているかを比較することが可能となる．
 
 相関の差の検定の方法には次の3つの種類がある．
-いずれもcocorパッケージを用いるので，パッケージのインストールが必要である．
+いずれもcocorパッケージを用いるので，**パッケージのインストールと読み込みが必要**である．
 
 
 ## 独立サンプルにおける相関の差の検定
-互いに異なるサンプルから得られた2つの相関係数の差が有意かどうかを検定するには，`cocor`パッケージの`cocor.indep()`関数を用いる．引数は以下の通りである．
+互いに異なるサンプルから得られた2つの相関係数の差が有意かどうかを検定するには，`cocor`パッケージの`cocor.indep.groups()`関数を用いる．引数は以下の通りである．
 
 - 第1引数r1: 1つ目の相関係数
 - 第2引数r2: 2つ目の相関係数
@@ -592,7 +592,7 @@ write.csv(data, "./practice/example_09_HiddenCorrel.csv", row.names = FALSE)
 library(cocor)
 
 # 独立サンプルにおける相関の差の検定
-cocor.indep.groups(r1=0.65,  r2=0.72, n1=165,n2=181)
+cocor.indep.groups(r1=0.65, r2=0.72, n1=165, n2=181)
 ```
 結果の表記は大きく3つのパートに分かれているが，前半は入力した値の情報が記載されているだけである．
 検定結果は中段の`fisher1925`の部分にあり，この中の`p-value`が有意確率である．これが有意水準0.05より小さければ，帰無仮説を棄却し，相関係数の差が有意であると結論する（この検定のことをFisherのZ検定もしくはFisherのZ変換を用いた検定と呼ぶ）．
@@ -604,7 +604,7 @@ cocor.indep.groups(r1=0.65,  r2=0.72, n1=165,n2=181)
 
 1つの変数を共有した相関とは，変数J, K, Hという3つの変数があるとき，**Jを共通の変数とした(オーバーラップさせた)**  JとKの相関係数と，JとHの相関係数の差を検定することである．
 
-この場合には，`cocor`パッケージの`cocor.dep.groups.nonoverlap()`関数を用いる．引数は以下の通りである．
+この場合には，`cocor`パッケージの`cocor.dep.groups.overlap()`関数を用いる．引数は以下の通りである．
 
 - 第1引数r.jk: 1つ目(J-K)の相関係数
 - 第2引数r.jh: 2つ目(J-H)の相関係数
@@ -793,7 +793,6 @@ rparam <- list(
   経営=c(r_q2q1=0.40, r_q3q1=0.1, r_q3q2=0.4, r_q4q1=0.4, r_q4q2=0.3, r_q4q3=0.2)
 )
 
-param[[1]]["q1.m"]
 
 # 部署別のデータ作成
 for(i in 1:length(所属名)){
@@ -851,24 +850,33 @@ write.csv(data, "./practice/09_work_Cor.csv", row.names = FALSE)
 
 ```{r }
 # 部署別の平均と標準偏差
+data <- read.csv("./practice/09_work_Cor.csv")
+data$F1 <- as.factor(data$F1)
+data$F2 <- as.factor(data$F2)
+data$F3 <- as.factor(data$F3)
+
 data %>%
   group_by(F1) %>%
   summarise_at(vars(Q1:Q4), list(mean=mean, sd=sd))%>%
   print()
 
 
-library(tidyverse)
 # F1因子でデータをグループ化し、Q1～Q4の相関行列を計算
 correlation_matrices <- data %>%
   group_by(F1) %>%
-  summarise(cor_matrix = list(cor(select(cur_data(), Q1:Q4), use = "complete.obs")))
+summarise(correlation_matrix =  list(cor(across(Q1:Q4)))) %>%  print()
+  
+  #summarise_at(cor_matrix = list(cor(select(cur_data(), Q1:Q4), use = "complete.obs")))
+# 
+# print(correlation_matrices)
+# # 結果を確認
+# for(i in 1:nrow(correlation_matrices)){
+#   print(correlation_matrices$F1[i])
+#   print(correlation_matrices$cor_matrix[[i]] , digits=1)
+# }
 
-print(correlation_matrices)
-# 結果を確認
-for(i in 1:nrow(correlation_matrices)){
-  print(correlation_matrices$F1[i])
-  print(correlation_matrices$cor_matrix[[i]] , digits=1)
-}
+psych::describeBy(data[c("Q1","Q2","Q3","Q4")], group=data$F1)
+
 
 ```
 
