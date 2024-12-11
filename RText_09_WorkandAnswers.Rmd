@@ -71,6 +71,7 @@ Res.pcor<-pcor.test(data$NHK支払率,
 print(Res.pcor)
 ```
 
+# 課題3
 :::work
 [このデータ](./practice/example_09_HiddenCorrel.csv)は高校生における対人依存欲求（他者と親密な関係を築くことで自身の心の安定を得るとともに，問題に直面したときに他者に助けを求めようとする欲求）と，SNSの利用時間との関係を調べたものである．
 
@@ -114,20 +115,6 @@ cor(男性$対人依存欲求, 男性$SNS利用時間)
 cor(女性$対人依存欲求, 女性$SNS利用時間)
 ```
 
-# 課題3
-
-
-:::work
-[このデータ](./practice/example_09_HiddenCorrel.csv)は高校生における対人依存欲求（他者と親密な関係を築くことで自身の心の安定を得るとともに，問題に直面したときに他者に助けを求めようとする欲求）と，SNSの利用時間との関係を調べたものである．
-
-1. このデータにhead()とsummary()を適用し，データの概要を把握せよ．
-1. このデータの散布図を作成せよ．
-1. このデータを用いて，対人依存欲求とSNSの利用時間の間の相関係数を求めよ．
-1. このデータの「性別」を要因型に変換し，男性と女性のそれぞれのデータを抽出してsummary()を適用し，それぞれのデータの概要を把握せよ.
-1. 先ほど作成した散布図を男女別に色分けした散布図にせよ．
-1. 男女別で，対人依存欲求とSNSの利用時間の相関係数を求めよ．
-:::
-
 
 # 課題4 
 
@@ -144,11 +131,51 @@ cor(女性$対人依存欲求, 女性$SNS利用時間)
 
 その結果，[次のようなデータ](./practice/09_work_Cor.csv)が得られた．このデータについて以下の課題を行え．
 
-- Q1からQ4について，部署ごとの平均と標準偏差を求めよ（[参考](./RText_04_DescriptiveStatisitcs.html#グループごとの統計量の算出)）．
-- Q1からQ4について，データ全体での相関行列を求めよ．
-- データ全体でのQ1とQ2の相関とQ1とQ3の相関に有意な差があるかどうかを検定せよ．
-― 営業部におけるQ1からQ4の相関行列を求めよ．
-- 営業部におけるQ1とQ4の相関と，開発部におけるQ1とQ4の相関に有意な差があるかどうかを検定せよ．
-― 営業部におけるQ1とQ4の相関と，同じく営業部におけるQ2とQ3の相関に有意な差があるかどうかを検定せよ．
-
+1. Q1からQ4について，部署ごとの平均と標準偏差を求めよ（[参考](./RText_04_DescriptiveStatisitcs.html#グループごとの統計量の算出)）．
+1. Q1からQ4について，データ全体での相関行列を求めよ．
+1. データ全体でのQ1とQ2の相関とQ1とQ3の相関に有意な差があるかどうかを検定せよ．
+1. 営業部におけるQ1からQ4の相関行列を求めよ．
+1. 営業部におけるQ1とQ4の相関と，開発部におけるQ1とQ4の相関に有意な差があるかどうかを検定せよ．
+1. 営業部におけるQ1とQ4の相関と，同じく営業部におけるQ2とQ3の相関に有意な差があるかどうかを検定せよ．
 :::
+
+```{r}
+data <- read.csv("./practice/09_work_Cor.csv")
+
+# Q1からQ4について，部署ごとの平均と標準偏差を求めよ
+aggregate(Q1~F1, data, mean)
+aggregate(Q1~F1, data, sd)
+aggregate(Q2~F1, data, mean)
+aggregate(Q2~F1, data, sd)
+aggregate(Q3~F1, data, mean)
+aggregate(Q3~F1, data, sd)
+aggregate(Q4~F1, data, mean)
+aggregate(Q4~F1, data, sd)
+
+# Q1からQ4について，データ全体での相関行列を求めよ
+cor(data[c("Q1","Q2","Q3","Q4")])
+
+# データ全体でのQ1とQ2の相関とQ1とQ3の相関に有意な差があるかどうかを検定せよ
+library(cocor)
+cocor.dep.groups.overlap(cor(data$Q1, data$Q2), cor(data$Q1, data$Q3), cor(data$Q2, data$Q3), nrow(data))
+
+# 営業部におけるQ1からQ4の相関行列を求めよ
+data_eigyo <- filter(data, F1 == "営業部")
+cor(data_eigyo[c("Q1","Q2","Q3","Q4")])
+
+# 営業部におけるQ1とQ4の相関と，開発部におけるQ1とQ4の相関に有意な差があるかどうかを検定せよ
+data_kaihatsu <- filter(data, F1 == "開発部")
+cocor.indep.groups(cor(data_eigyo$Q1, data_eigyo$Q4), cor(data_kaihatsu$Q1, data_kaihatsu$Q4), 
+                   nrow(data_eigyo), nrow(data_kaihatsu))
+
+# 営業部におけるQ1とQ4の相関と，同じく営業部におけるQ2とQ3の相関に有意な差があるかどうかを検定せよ
+res<-cocor.dep.groups.nonoverlap(cor(data_eigyo$Q1, data_eigyo$Q4), 
+                         cor(data_eigyo$Q2, data_eigyo$Q3), 
+                         cor(data_eigyo$Q1, data_eigyo$Q2), 
+                         cor(data_eigyo$Q1, data_eigyo$Q3),
+                         cor(data_eigyo$Q4, data_eigyo$Q2),
+                         cor(data_eigyo$Q4, data_eigyo$Q3),
+                         nrow(data_eigyo))
+print(res)
+```
+
