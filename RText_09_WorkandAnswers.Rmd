@@ -1,5 +1,5 @@
 ---
-title: "第8章相関係数の課題と正答例"
+title: "相関係数の課題と正答例"
 author: "藤野秀則,"
 date: "`r Sys.Date()`"
 output:
