@@ -31,6 +31,7 @@ library(tidyverse)
 「ある変数Aの値が上がると，他の変数Bの値も上がる」「ある変数Aの値が上がると，他の変数Bの値は下がる」といったように，2つの変数の動きが連動しているような場合，二つの変数の間に**相関がある**という．そして，その関係性の強さを数値で表したものを**相関係数**と呼び，相関係数を計算したり，その有意性を評価したりすることを**相関分析**と呼ぶ．
 
 # 相関係数
+相関係数は上述しているように，2つの変数の間の関係性の強さを数値で表したものである．数値は-1から1の間の値を取り，1に近いほど強い正の相関があることを示し，-1に近いほど強い負の相関があることを示す．0に近いほど相関が弱い，もしくは無相関であることを示す．
 
 相関係数を算出する式は以下の通りである．
 
@@ -579,8 +580,8 @@ write.csv(data, "./practice/example_09_HiddenCorrel.csv", row.names = FALSE)
 ## 独立サンプルにおける相関の差の検定
 互いに異なるサンプルから得られた2つの相関係数の差が有意かどうかを検定するには，`cocor`パッケージの`cocor.indep.groups()`関数を用いる．引数は以下の通りである．
 
-- 第1引数r1: 1つ目の相関係数
-- 第2引数r2: 2つ目の相関係数
+- 第1引数r1: 1つ目（比較先）の相関係数
+- 第2引数r2: 2つ目（比較元）の相関係数
 - 第3引数n1: 1つ目のサンプルサイズ
 - 第4引数n2: 2つ目のサンプルサイズ
 
@@ -703,7 +704,14 @@ cocor.dep.groups.nonoverlap(r.jk=0.42, r.hm=0.72,
 - F2: 性別（男女）
 - F3: 年齢（20歳から65歳まで5年区切り）
 
-その結果，[次のようなデータ](./practice/09_work_Cor.csv)が得られた．
+その結果，[次のようなデータ](./practice/09_work_Cor.csv)が得られた．このデータについて以下の課題を行え．
+
+1. Q1からQ4について，部署ごとの平均と標準偏差を求めよ（[参考](./RText_04_DescriptiveStatisitcs.html#グループごとの統計量の算出)）．
+1. Q1からQ4について，データ全体での相関行列を求めよ．
+1. データ全体でのQ1とQ2の相関とQ1とQ3の相関に有意な差があるかどうかを検定せよ．
+1. 営業部におけるQ1からQ4の相関行列を求めよ．
+1. 営業部におけるQ1とQ4の相関と，開発部におけるQ1とQ4の相関に有意な差があるかどうかを検定せよ．
+1. 営業部におけるQ1とQ4の相関と，同じく営業部におけるQ2とQ3の相関に有意な差があるかどうかを検定せよ．
 
 ```{r include=FALSE}
 # データの作成
@@ -848,7 +856,7 @@ cor(data[c("Q1","Q2","Q3","Q4")])
 write.csv(data, "./practice/09_work_Cor.csv", row.names = FALSE)
 ```
 
-```{r }
+```{r include=FALSE}
 # 部署別の平均と標準偏差
 data <- read.csv("./practice/09_work_Cor.csv")
 data$F1 <- as.factor(data$F1)
@@ -864,16 +872,7 @@ data %>%
 # F1因子でデータをグループ化し、Q1～Q4の相関行列を計算
 correlation_matrices <- data %>%
   group_by(F1) %>%
-summarise(correlation_matrix =  list(cor(across(Q1:Q4)))) %>%  print()
-  
-  #summarise_at(cor_matrix = list(cor(select(cur_data(), Q1:Q4), use = "complete.obs")))
-# 
-# print(correlation_matrices)
-# # 結果を確認
-# for(i in 1:nrow(correlation_matrices)){
-#   print(correlation_matrices$F1[i])
-#   print(correlation_matrices$cor_matrix[[i]] , digits=1)
-# }
+  summarise(correlation_matrix =  list(cor(across(Q1:Q4)))) %>%  print()
 
 psych::describeBy(data[c("Q1","Q2","Q3","Q4")], group=data$F1)
 
