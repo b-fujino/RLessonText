@@ -134,6 +134,9 @@ h1 {
   border-top: 1px solid #666;
 }
 
+.res_table .tr_bottomborder {
+  border-bottom: 1px solid #666;
+}
 
 /**数式**/
 .math .display {
