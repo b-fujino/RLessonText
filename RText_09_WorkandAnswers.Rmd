@@ -139,6 +139,7 @@ cor(女性$対人依存欲求, 女性$SNS利用時間)
 1. 営業部におけるQ1とQ4の相関と，同じく営業部におけるQ2とQ3の相関に有意な差があるかどうかを検定せよ．
 :::
 
+## 1
 ```{r}
 data <- read.csv("./practice/09_work_Cor.csv")
 
@@ -152,22 +153,44 @@ aggregate(Q3~F1, data, sd)
 aggregate(Q4~F1, data, mean)
 aggregate(Q4~F1, data, sd)
 
-# Q1からQ4について，データ全体での相関行列を求めよ
-cor(data[c("Q1","Q2","Q3","Q4")])
+# 別解
+data %>% 
+  group_by(F1) %>% 
+  summarise(across(c(Q1:Q4), list(M=mean,SD=sd)))
 
+```
+
+## 2
+```{r}
+# Q1からQ4について，データ全体での相関行列を求めよ
+cor(data[,c("Q1","Q2","Q3","Q4")])
+```
+
+## 3
+```{r}
 # データ全体でのQ1とQ2の相関とQ1とQ3の相関に有意な差があるかどうかを検定せよ
 library(cocor)
 cocor.dep.groups.overlap(cor(data$Q1, data$Q2), cor(data$Q1, data$Q3), cor(data$Q2, data$Q3), nrow(data))
+```
 
+## 4
+```{r}
 # 営業部におけるQ1からQ4の相関行列を求めよ
 data_eigyo <- filter(data, F1 == "営業部")
 cor(data_eigyo[c("Q1","Q2","Q3","Q4")])
+```
 
+## 5
+```{r}
 # 営業部におけるQ1とQ4の相関と，開発部におけるQ1とQ4の相関に有意な差があるかどうかを検定せよ
 data_kaihatsu <- filter(data, F1 == "開発部")
+cor(data_kaihatsu[c("Q1","Q2","Q3","Q4")])
 cocor.indep.groups(cor(data_eigyo$Q1, data_eigyo$Q4), cor(data_kaihatsu$Q1, data_kaihatsu$Q4), 
                    nrow(data_eigyo), nrow(data_kaihatsu))
+```
 
+## 6
+```{r}
 # 営業部におけるQ1とQ4の相関と，同じく営業部におけるQ2とQ3の相関に有意な差があるかどうかを検定せよ
 res<-cocor.dep.groups.nonoverlap(cor(data_eigyo$Q1, data_eigyo$Q4), 
                          cor(data_eigyo$Q2, data_eigyo$Q3), 

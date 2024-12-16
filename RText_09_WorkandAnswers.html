@@ -11,7 +11,7 @@
 
 <meta name="author" content="藤野秀則," />
 
-<meta name="date" content="2024-12-11" />
+<meta name="date" content="2024-12-16" />
 
 <title>相関係数の課題と正答例</title>
 
@@ -1322,7 +1322,7 @@ if (window.hljs) {
 
 
 
-<style type="text/css">.tocify-subheader { display: block !important;}.tocify-item {white-space: nowrap;}body{counter-reset: ref_number practice_number work_number;}.float img{ margin: auto;display: block;padding: 2%;border-radius: 8px 8px 0 0 ;position: relative;width : 60%;}.float .figcaption {position: relative;font-style: italic;font-size: large;font-weight: bold;color: #666;text-align: center;margin:0% auto 5% auto;border-bottom: solid 1px #666;border-left: solid 1px #666;border-right: solid 1px #666;border-radius:0 0 8px 8px;width : 60%}img {margin: auto;display: block;border: solid 1px #666;border-radius: 8px;position: relative;width : 60%;}.ref {position: relative;margin:5%;padding:5px;background-color: rgba(255, 255, 128, .5);color: #666;}.ref::before{counter-increment: ref_number 1;content: "[参考 " counter(ref_number) "]";font-weight: bold;display: block;margin-bottom: 3px;}h1 {margin-top : 10px;padding-top : 50px;}.practice {position: relative;margin:5%;padding:5px;background-color: rgba(128, 255, 200, .5);color: #666;}.practice::before{counter-increment: practice_number 1;content: "[例題 " counter(practice_number) "]";font-weight: bold;display: block;margin-bottom: 3px;}.work {position: relative;margin:5%;padding:5px;background-color: rgba(128, 200, 255, .2);color: #666;}.work::before{counter-increment: work_number 1;content: "[課題 " counter(work_number) "]";font-weight: bold;display: block;margin-bottom: 3px;}user-select: none;-moz-user-select: none;-webkit-user-select: none;-ms-user-select: none;-khtml-user-select: none;-webkit-touch-callout: none;}***/.res_table {border-collapse: collapse;width: 50%;margin: 0 auto;border-top: 1px solid #666;border-bottom: 1px solid #666;}.res_table th {border-bottom: 1px solid #666;text-align: center;}.res_table td {text-align: right;}.res_table .td_left {text-align: left;}.res_table .tr_topborder {border-top: 1px solid #666;}.math .display {text-align: center;font-size: small;}.custom-table {border: 2px solid #000;border-collapse: collapse;width: 75%;margin-left: auto;margin-right: auto;margin-bottom: 10px;margin-top: 10px;}.custom-table th, .custom-table td {border: 1px solid #000;padding: 8px;text-align: center;}.custom-table th {background-color: #f0f8ff;}a {text-decoration: underline;font-weight: bold;}</style>
+<style type="text/css">.tocify-subheader { display: block !important;}.tocify-item {white-space: nowrap;}body{counter-reset: ref_number practice_number work_number;}.float img{ margin: auto;display: block;padding: 2%;border-radius: 8px 8px 0 0 ;position: relative;width : 60%;}.float .figcaption {position: relative;font-style: italic;font-size: large;font-weight: bold;color: #666;text-align: center;margin:0% auto 5% auto;border-bottom: solid 1px #666;border-left: solid 1px #666;border-right: solid 1px #666;border-radius:0 0 8px 8px;width : 60%}img {margin: auto;display: block;border: solid 1px #666;border-radius: 8px;position: relative;width : 60%;}.ref {position: relative;margin:5%;padding:5px;background-color: rgba(255, 255, 128, .5);color: #666;}.ref::before{counter-increment: ref_number 1;content: "[参考 " counter(ref_number) "]";font-weight: bold;display: block;margin-bottom: 3px;}h1 {margin-top : 10px;padding-top : 50px;}.practice {position: relative;margin:5%;padding:5px;background-color: rgba(128, 255, 200, .5);color: #666;}.practice::before{counter-increment: practice_number 1;content: "[例題 " counter(practice_number) "]";font-weight: bold;display: block;margin-bottom: 3px;}.work {position: relative;margin:5%;padding:5px;background-color: rgba(128, 200, 255, .2);color: #666;}.work::before{counter-increment: work_number 1;content: "[課題 " counter(work_number) "]";font-weight: bold;display: block;margin-bottom: 3px;}user-select: none;-moz-user-select: none;-webkit-user-select: none;-ms-user-select: none;-khtml-user-select: none;-webkit-touch-callout: none;}***/.res_table {border-collapse: collapse;width: 50%;margin: 0 auto;border-top: 1px solid #666;border-bottom: 1px solid #666;}.res_table th {border-bottom: 1px solid #666;text-align: center;}.res_table td {text-align: right;}.res_table .td_left {text-align: left;}.res_table .tr_topborder {border-top: 1px solid #666;}.res_table .tr_bottomborder {border-bottom: 1px solid #666;}.math .display {text-align: center;font-size: small;}.custom-table {border: 2px solid #000;border-collapse: collapse;width: 75%;margin-left: auto;margin-right: auto;margin-bottom: 10px;margin-top: 10px;}.custom-table th, .custom-table td {border: 1px solid #000;padding: 8px;text-align: center;}.custom-table th {background-color: #f0f8ff;}a {text-decoration: underline;font-weight: bold;}</style>
 
 
 
@@ -1482,7 +1482,7 @@ border-radius: 0px;
 
 <h1 class="title toc-ignore">相関係数の課題と正答例</h1>
 <h4 class="author">藤野秀則,</h4>
-<h4 class="date">2024-12-11</h4>
+<h4 class="date">2024-12-16</h4>
 
 </div>
 
@@ -1651,6 +1651,8 @@ cor(男性$対人依存欲求, 男性$SNS利用時間)</code></pre>
 <li>営業部におけるQ1とQ4の相関と，同じく営業部におけるQ2とQ3の相関に有意な差があるかどうかを検定せよ．</li>
 </ol>
 </div>
+<div id="section" class="section level2" number="4.1">
+<h2><span class="header-section-number">4.1</span> 1</h2>
 <pre class="r"><code>data &lt;- read.csv(&quot;./practice/09_work_Cor.csv&quot;)
 
 # Q1からQ4について，部署ごとの平均と標準偏差を求めよ
@@ -1774,13 +1776,39 @@ aggregate(Q1~F1, data, mean)</code></pre>
 ## 11         品質管理部 1.0997835
 ## 12             法務部 1.0606602
 ## 13         流通管理部 1.0462967</code></pre>
+<pre class="r"><code># 別解
+data %&gt;% 
+  group_by(F1) %&gt;% 
+  summarise(across(c(Q1:Q4), list(M=mean,SD=sd)))</code></pre>
+<pre><code>## # A tibble: 13 × 9
+##    F1                  Q1_M Q1_SD  Q2_M Q2_SD  Q3_M Q3_SD  Q4_M Q4_SD
+##    &lt;chr&gt;              &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;
+##  1 マーケティング部    3.95  1.05  4.05  1.10  4.45 0.999  4.6  0.883
+##  2 人事部              4.08  1.08  3.83  1.19  4.33 1.07   4.25 0.965
+##  3 品質管理部          3.93  1.16  3.87  1.36  4.27 1.33   4.27 1.10 
+##  4 営業部              4.04  1.05  3.94  1.15  4.44 1.03   4.46 0.885
+##  5 情報システム管理部  3.67  1.19  3.83  1.42  4.28 1.13   4.39 0.979
+##  6 法務部              3.5   1.07  3.88  1.13  4.25 1.04   4.38 1.06 
+##  7 流通管理部          3.85  1.39  3.9   1.25  4.35 1.14   4.4  1.05 
+##  8 経営企画室          4     1.41  3.6   1.43  4.2  1.03   4.4  1.07 
+##  9 経理部              3.6   1.64  3.73  1.22  4.27 1.16   4.27 1.22 
+## 10 総務部              3.92  1.38  3.58  1.31  4.08 1.24   4.25 0.965
+## 11 製造部              3.83  1.23  3.73  1.34  4.22 1.19   4.27 1.07 
+## 12 資材調達部          3.78  1.40  3.94  1.26  4.33 1.14   4.39 0.979
+## 13 開発部              3.72  1.24  3.76  1.33  4.28 1.28   4.36 1.15</code></pre>
+</div>
+<div id="section-1" class="section level2" number="4.2">
+<h2><span class="header-section-number">4.2</span> 2</h2>
 <pre class="r"><code># Q1からQ4について，データ全体での相関行列を求めよ
-cor(data[c(&quot;Q1&quot;,&quot;Q2&quot;,&quot;Q3&quot;,&quot;Q4&quot;)])</code></pre>
+cor(data[,c(&quot;Q1&quot;,&quot;Q2&quot;,&quot;Q3&quot;,&quot;Q4&quot;)])</code></pre>
 <pre><code>##           Q1        Q2        Q3        Q4
 ## Q1 1.0000000 0.3342396 0.1777939 0.3128059
 ## Q2 0.3342396 1.0000000 0.2492102 0.2858166
 ## Q3 0.1777939 0.2492102 1.0000000 0.2043669
 ## Q4 0.3128059 0.2858166 0.2043669 1.0000000</code></pre>
+</div>
+<div id="section-2" class="section level2" number="4.3">
+<h2><span class="header-section-number">4.3</span> 3</h2>
 <pre class="r"><code># データ全体でのQ1とQ2の相関とQ1とQ3の相関に有意な差があるかどうかを検定せよ
 library(cocor)</code></pre>
 <pre><code>## Warning: パッケージ &#39;cocor&#39; はバージョン 4.4.2 の R の下で造られました</code></pre>
@@ -1837,6 +1865,9 @@ library(cocor)</code></pre>
 ## zou2007: Zou&#39;s (2007) confidence interval
 ##   95% confidence interval for r.jk - r.jh: 0.0289 0.2826
 ##   Null hypothesis rejected (Interval does not include 0)</code></pre>
+</div>
+<div id="section-3" class="section level2" number="4.4">
+<h2><span class="header-section-number">4.4</span> 4</h2>
 <pre class="r"><code># 営業部におけるQ1からQ4の相関行列を求めよ
 data_eigyo &lt;- filter(data, F1 == &quot;営業部&quot;)
 cor(data_eigyo[c(&quot;Q1&quot;,&quot;Q2&quot;,&quot;Q3&quot;,&quot;Q4&quot;)])</code></pre>
@@ -1845,9 +1876,18 @@ cor(data_eigyo[c(&quot;Q1&quot;,&quot;Q2&quot;,&quot;Q3&quot;,&quot;Q4&quot;)])<
 ## Q2  0.25575394 1.0000000  0.16003963 0.3883476
 ## Q3 -0.01656814 0.1600396  1.00000000 0.1534532
 ## Q4  0.11161179 0.3883476  0.15345318 1.0000000</code></pre>
+</div>
+<div id="section-4" class="section level2" number="4.5">
+<h2><span class="header-section-number">4.5</span> 5</h2>
 <pre class="r"><code># 営業部におけるQ1とQ4の相関と，開発部におけるQ1とQ4の相関に有意な差があるかどうかを検定せよ
 data_kaihatsu &lt;- filter(data, F1 == &quot;開発部&quot;)
-cocor.indep.groups(cor(data_eigyo$Q1, data_eigyo$Q4), cor(data_kaihatsu$Q1, data_kaihatsu$Q4), 
+cor(data_kaihatsu[c(&quot;Q1&quot;,&quot;Q2&quot;,&quot;Q3&quot;,&quot;Q4&quot;)])</code></pre>
+<pre><code>##           Q1        Q2        Q3        Q4
+## Q1 1.0000000 0.4614123 0.2882174 0.3941858
+## Q2 0.4614123 1.0000000 0.6299982 0.4123425
+## Q3 0.2882174 0.6299982 1.0000000 0.3260219
+## Q4 0.3941858 0.4123425 0.3260219 1.0000000</code></pre>
+<pre class="r"><code>cocor.indep.groups(cor(data_eigyo$Q1, data_eigyo$Q4), cor(data_kaihatsu$Q1, data_kaihatsu$Q4), 
                    nrow(data_eigyo), nrow(data_kaihatsu))</code></pre>
 <pre><code>## 
 ##   Results of a comparison of two correlations based on independent groups
@@ -1866,6 +1906,9 @@ cocor.indep.groups(cor(data_eigyo$Q1, data_eigyo$Q4), cor(data_kaihatsu$Q1, data
 ## zou2007: Zou&#39;s (2007) confidence interval
 ##   95% confidence interval for r1.jk - r2.hm: -0.6874 0.1942
 ##   Null hypothesis retained (Interval includes 0)</code></pre>
+</div>
+<div id="section-5" class="section level2" number="4.6">
+<h2><span class="header-section-number">4.6</span> 6</h2>
 <pre class="r"><code># 営業部におけるQ1とQ4の相関と，同じく営業部におけるQ2とQ3の相関に有意な差があるかどうかを検定せよ
 res&lt;-cocor.dep.groups.nonoverlap(cor(data_eigyo$Q1, data_eigyo$Q4), 
                          cor(data_eigyo$Q2, data_eigyo$Q3), 
@@ -1909,6 +1952,7 @@ print(res)</code></pre>
 ## zou2007: Zou&#39;s (2007) confidence interval
 ##   95% confidence interval for r.jk - r.hm: -0.4304 0.3383
 ##   Null hypothesis retained (Interval includes 0)</code></pre>
+</div>
 </div>
 
 
