@@ -26,7 +26,7 @@ editor_options:
 knitr::opts_chunk$set(echo = TRUE)
 ```
 
-前回までで[RMarkdownファイルの作り方](./RText_02_BasicUsage.html#RMakrdown)を学習しているので，これ以降はRMarkdownファイルにRのコードを書いていくこと．
+前回までで[RMarkdownファイルの作り方](./RText_02_BasicUsage.html#RMakrdown)を学習しているので，これ以降はRMarkdownファイルにR（もしくはpython)のコードを書いていくこと．
 
 # ベクトル
 
@@ -256,10 +256,10 @@ print(Full)
 実際には「追加」をしているのではなく，元のベクトルと新しいデータを結び付けた新しいベクトルを作成したうえで，元のオブジェクト（箱）に格納しているだけである．
 したがって，もし末尾ではなく，先頭に追加したり，途中に追加したければ，以下のようにすればよい．
 ```{r}
-Starting<-c("赤木", "桜木", "三井", "宮城", "流川")　#一旦元に戻す
+Starting<-c("赤木", "桜木", "三井", "宮城", "流川") #一旦元に戻す
 Starting<-c("木暮", Starting) #先頭に追加
 print(Starting)
-Starting<-c("赤木", "桜木", "三井", "宮城", "流川")　#一旦元に戻す
+Starting<-c("赤木", "桜木", "三井", "宮城", "流川") #一旦元に戻す
 Starting<-c(Starting[1:3], "木暮", Starting[4:5]) #途中に追加
 print(Starting)
 ```
@@ -271,7 +271,7 @@ print(Starting)
 末尾に追加した`木暮`を削除してみよう．6番目にある`木暮`を削除するには以下のようにする．
 
 ```{r}
-Starting<-c("赤木", "桜木", "三井", "宮城", "流川")　#一旦元に戻す
+Starting<-c("赤木", "桜木", "三井", "宮城", "流川") #一旦元に戻す
 Starting <- c(Starting, "小暮")#木暮を追加
 print(Starting) # 小暮が入っている
 Starting <- Starting[c(1:5)]
@@ -569,7 +569,7 @@ Shohoku
 特定の行を削除したい場合には，以下のように削除したい行番号をベクトルで与えた上で`-`をつけてやる．
 
 ```{r}
-Shohoku <- Shohoku[-c(6,7,8,9,10,11,12), ]　
+Shohoku <- Shohoku[-c(6,7,8,9,10,11,12), ]
 Shohoku
 ```
 
@@ -805,10 +805,9 @@ myData  # print(myData)でも可
 
 もっともシンプルなものとしては，以下のようなコードとなっているので，これをコピぺすればよ．
 
-```{r}
+```{r eval=FALSE, echo=TRUE}
 library(readxl)
 myData <- read_excel("test.xlsx")
-View(myData)
 ```
 
 このスクリプトを実行することで，Excelファイルを読み込むことができる．
