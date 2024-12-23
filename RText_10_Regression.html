@@ -1723,7 +1723,6 @@ summary(fit)</code></pre>
 <h2><span class="header-section-number">2.1</span> 標準化回帰係数</h2>
 <p>重回帰分析を利用する目的としては，先に述べた通り<strong>複数の説明変数を用いて予測精度の高いモデル式を得る</strong>ということが第一にあるが，その他に<strong>目的変数に対して影響力の強い説明変数がどれかを知る</strong>ということを目的とすることもある．
 この場合には，各説明変数の回帰係数を比較することになるが，単純な重回帰分析の場合，各説明変数の単位系としてどのような単位を取っているかによって，各説明変数の回帰係数の値が変わってしまう上，単位系が異なるもの同士を比較してもよいのか，という問題も生じる．</p>
-<div class="ref">
 <p>例えば，先の不動産価格の例では，面積の回帰係数が0.082となっているが，面積の表記を平方メートルから[a]（アール．100平方メートルのこと）に変えると，回帰係数は以下の通り約8.2となる．</p>
 <pre class="r"><code>data$面積 &lt;- data$面積/100
 fit &lt;- lm(価格 ~ 面積 + 築年数 + 徒歩分数 + 充実度, data)
@@ -1751,12 +1750,12 @@ summary(fit)</code></pre>
 ## Multiple R-squared:  0.2669, Adjusted R-squared:  0.236 
 ## F-statistic: 8.646 on 4 and 95 DF,  p-value: 5.393e-06</code></pre>
 <p>このように，単純な重回帰分析の場合，回帰係数そのものはその単位系に依存してしまう．</p>
-</div>
 <p>そこで，説明変数間での目的変数への影響力の強弱を見たい場合には，<strong>標準化回帰係数</strong>を用いる．標準化回帰係数は，<strong>各説明変数を平均0，標準偏差1に標準化</strong>した上で回帰分析を行った場合の回帰係数のことであり，各説明変数の単位系に依存しないため，説明変数間での影響力の強弱を比較することができる．</p>
 <p>Rで標準化回帰係数を得るには，以下のように<code>scale()</code>関数を用いて説明変数・目的変数を標準化した上で回帰分析を行う．
 <code>scale()</code>関数の使い方には2通りの方法がある．1つはモデル式の各説明変数・目的変数に<code>scale()</code>関数を適用する方法，もう1つはデータフレーム全体に<code>scale()</code>関数を適用する方法である．</p>
 <p>まずは個別に<code>scale()</code>関数を適用した場合を以下に示す．</p>
 <pre class="r"><code>data &lt;- read.csv(&quot;./practice/example_09_price.csv&quot;)
+# 式の中で個別にscaleを実行する
 fit &lt;- lm(scale(価格) ~ scale(面積) + scale(築年数) + scale(徒歩分数) + scale(充実度), data)
 summary(fit)</code></pre>
 <pre><code>## 
@@ -1782,11 +1781,12 @@ summary(fit)</code></pre>
 ## Multiple R-squared:  0.2669, Adjusted R-squared:  0.236 
 ## F-statistic: 8.646 on 4 and 95 DF,  p-value: 5.393e-06</code></pre>
 <p>続いて，データフレーム全体に<code>scale()</code>関数を適用した場合を以下に示す．データフレーム全体に<code>scale()</code>関数を適用することで，データフレームに含まれているすべての変数をまとめて標準化することができる．ただし，<code>scale()</code>関数の出力は行列型であるため，lm()関数にそのまま渡すことはできない．そのため，<strong><code>as.data.frame()</code>関数を用いて行列をデータフレームに変換する必要がある</strong>．</p>
+<p>さらに，データフレームの中に数値以外の変数（属性に関する要因型の変数など）が含まれていた場合は，scale()関数はエラーを返す(scale()関数はあくまで数値データしか受け付けない)．このため，式の中で標準化するのではなく，<strong>データを与える時点で標準化する際には，分析に掛ける変数だけを抽出して標準化する</strong>．</p>
 <div class="ref">
-<p>さらに，データフレームの中に数値以外の変数（属性に関する要因型の変数など）が含まれていた場合は，scale()関数はエラーを返す．このため，データ全体を標準化する際には，分析に掛ける変数だけを抽出して標準化するのがよい．</p>
-<p>なお，lm()関数自体は要因型の変数も説明変数に加えることができる．この点は<a href="./RText_11_HighLevelModeling.html">後の章</a>で改めて詳細に解説する</p>
+<p>lm()関数自体は要因型の変数も説明変数に加えることができる．この点は<a href="./RText_11_HighLevelModeling.html">後の章</a>で改めて詳細に解説する</p>
 </div>
 <pre class="r"><code>data &lt;- read.csv(&quot;./practice/example_09_price.csv&quot;)
+# 与えるデータにscaleを実行する
 data.scaled &lt;- scale(data)
 data.scaled &lt;- as.data.frame(data.scaled)
 fit &lt;- lm(価格 ~ 面積 + 築年数 + 徒歩分数 + 充実度, data.scaled)
