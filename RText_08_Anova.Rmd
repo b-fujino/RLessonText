@@ -1,7 +1,8 @@
 ---
 title: "分散分析"
 author: "藤野秀則,"
-date: "`r Sys.Date()`"
+date: 
+  更新日:`r Sys.Date()`
 output:
   html_document: 
     toc: true
