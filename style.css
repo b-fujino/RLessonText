@@ -46,6 +46,31 @@ img {
   width : 60%;
 }
 
+.WideFigure img{
+  margin: auto;
+  display: block;
+  border: solid 1px #666;
+  border-radius: 8px 8px 0 0;
+  position: relative;
+  width : 100%;
+}
+
+.WideFigure .float .figcaption {
+  position: relative;
+  font-style: italic;
+  font-size: large;
+  font-weight: bold;
+  color: #666;
+  text-align: center;
+  margin:0% auto 5% auto;
+  border-bottom: solid 1px #666;
+  border-left: solid 1px #666;
+  border-right: solid 1px #666;
+  border-radius:0 0 8px 8px;
+  width : 100%
+}
+
+
 .ref {
   position: relative;
   margin:5%;
