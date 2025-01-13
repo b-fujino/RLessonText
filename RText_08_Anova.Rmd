@@ -393,6 +393,16 @@ Anova(anova_res_within, type=2)
 ```
 
 この結果から，被験者要因を考慮に入れた上で，パンの種類によるおいしさの違いが検証され，結果，人それぞれ好みはあれど，全体としてパンの種類によっておいしさは有意に異なっていることが示された．
+```{r include=FALSE}
+#分散分析の実施
+anova_res_within <- aov(おいしさ~パンの種類 +Error(被験者No./パンの種類), mydata_anova_within_long)
+summary(anova_res_within)
+
+#afexを使う
+library(afex)
+res <-aov_ez(id="被験者No.", dv="おいしさ", within="パンの種類" , data=mydata_anova_within_long, type=3)
+summary(res)
+```
 
 
 
@@ -565,12 +575,12 @@ write_csv(data, "./practice/example_anova_2way.csv")
 
 ![この例題のモデル図（誤り）](./Img/2024_6_6_2wayAnova.png)
 
-しかしながら，このモデル図は誤りとなる．二要因分散分析では基本的に**交互作用**というものを考慮する必要がある．これは「説明変数同士の掛け算の効果」あるいは「相乗効果」のことである．例えば，品種AはBよりも病気に強い，肥料Xは肥料Yに対して基本的に効果が高い，ということであれば，A＋Xが最も収穫量が高く，B＋Yがもっとも収穫量が低いということになるだろう．しかしながら，既製品同士のBとYは非常に相性が良く，この二つを組み合わせると，AとYを組み合わせたり，BとXを組み合わせたりするよりも収穫量が高くなる，ということもあり得る．こうした**組み合わせたことによって相乗的に生じてくる効果のことを交互作用と呼ぶ**．
+しかしながら，このモデル図は誤りとなる．二要因分散分析では基本的に**交互作用**というものを考慮する必要がある．これは「説明変数同士の掛け算の効果」あるいは「相乗効果」のことである．例えば，品種AはBよりも病気に強い，肥料Xは肥料Yに対して基本的に効果が高い，ということであれば，A＋Xが最も収穫量が高く，B＋Yがもっとも収穫量が低いということになるだろう．しかしながら，既製品同士のBとYは非常に相性が良く，この二つを組み合わせると，AとYを組み合わせたり，BとXを組み合わせたりするよりも収穫量が高くなる，ということもあり得る．こうした**組み合わせたことによって相乗的に生じてくる効果**のことを**交互作用**と呼ぶ．
 二要因分散分析では基本的にこうした交互作用も含めたモデル図にする必要があるので，正しくは以下のようなモデル図となる．
 
 ![この例題の正しいモデル図](./Img/2024_6_6_2wayAnovaWithInteraction.png)
 
-こうした交互作用を含んだ二要因分散分析を行う方法も，基本的に[一要因分散分析（対応あり）](#一要因分散分析（対応あり）)と大して変わらない．すなわち，使うコマンドは`aov()`関数と`car`パッケージの`Anova()`関数である．違う点は，`aov()`関数に与えるモデル式に交互作用項が加わることと，`Anova()`関数の`type`引数に`3`を指定することである．
+こうした交互作用を含んだ二要因分散分析を行う方法も，基本的に[一要因分散分析（対応あり）](#一要因分散分析（対応あり）)と大して変わらない．すなわち，使うコマンドは`aov()`関数と`car`パッケージの`Anova()`関数である．違う点は，`aov()`関数に与えるモデル式に交互作用項(**要因1:要因2**と表現する)が加わることと，`Anova()`関数の`type`引数に`3`を指定することである．
 
 今回のデータもワイド形式となっているのでロング形式に変換する必要がある．
 ```{r results='hold'}
@@ -748,25 +758,101 @@ write_csv(data, "./practice/example_anova_2way_within.csv")
 ![この例題のモデル図](./Img/2024_7_3_2wayAnovaWithInteractionAndPaired.png)
 
 
-このような対応ありデータ(反復測定のデータ）での二要因分散分析を行う方法も，基本的に[一要因分散分析（対応あり）](#一要因分散分析（対応あり）)と大して変わらない．すなわち，使うコマンドは`aov()`関数と`car`パッケージの`Anova()`関数である．違う点は，`aov()`関数に与えるモデル式に交互作用項が加わることと，`Anova()`関数の`type`引数に`3`を指定することである．
+このような対応ありデータ(反復測定のデータ）での二要因分散分析を行う方法はこれまで紹介したようなaov関数をつかう方法もあるが，それらは設定が少々むずかしかったり，データによっては推定がうまく行かないケースがある．
+そこで，ここではafexパッケージのaov_ez関数を使って二要因分散分析を行う方法を紹介する．
+
+aov_ez関数の引数は以下の通りである．
+
+- id: 被験者を識別する列
+- dv: 従属変数(depend variableの略)の列名
+- within: 被験者内要因. 複数ある場合にはc("要因1", "要因2")のように指定する
+- between: 被験者間要因. もし被験者間要因がある場合には指定する．使わない場合には省略する．
+- data: 分析に掛けるデータフレーム
+- type: タイプIII分散分析を行うかどうかの指定. 1, 2, 3のいずれかを指定する
 
 
-この例題の場合は以下のようなコードとなる．なお，今回のデータでは，「パンの種類」「苺ジャム」「被験者No.」という3つの変数が存在しているため，ワイド形式では1枚の表で記述するのは不可能となる．このため，今回読み込むデータでも予めロング形式のデータとしている．また交互作用項の記述に関しても`*`を用いて省略した記述法を行っている．
 
 
-```{r results='hold'}
+<!-- 基本的に[一要因分散分析（対応あり）](#一要因分散分析（対応あり）)と大して変わらない．すなわち，使うコマンドは`aov()`関数と`car`パッケージの`Anova()`関数である．違う点は，`aov()`関数に与えるモデル式に交互作用項が加わることと，`Anova()`関数の`type`引数に`3`を指定することである． -->
+
+
+この例題の場合は以下のようなコードとなる．なお，今回のデータでは，「パンの種類」「苺ジャム」「被験者No.」という3つの変数が存在しているため，ワイド形式では1枚の表で記述するのは難しくなる．このため，今回読み込むデータでも予めロング形式のデータとしている．
+<!-- また交互作用項の記述に関しても`*`を用いて省略した記述法を行っている． -->
+
+
+```{r include=FALSE, results='hold'}
 mydata_anova_2way_within <- read.csv(
   "./practice/example_anova_2way_within.csv",
   header=T,
   fileEncoding="UTF8"
 ) # データ読み込み
 
+#
+mydata_anova_2way_within$個人No. <- as.factor(mydata_anova_2way_within$個人No.)
+
 #分散分析の実施
-anova_res_2way_within <- aov(評価~メーカー*ジャム + 個人No., mydata_anova_2way_within)
+anova_res_2way_within <- aov(評価~メーカー*ジャム + 個人No., 
+                             mydata_anova_2way_within)
+Anova(anova_res_2way_within, type=3)
+
+```
+
+```{r include=FALSE}
+mydata_anova_2way_within <- read.csv(
+  "./practice/example_anova_2way_within.csv",
+  header=T,
+  fileEncoding="UTF8"
+) # データ読み込み
+
+#
+mydata_anova_2way_within$個人No. <- as.factor(mydata_anova_2way_within$個人No.)
+
+# 混合モデルをlmerで
+#分散分析の実施
+library(lmerTest)
+options(contrasts = c("contr.sum", "contr.poly"))
+anova_res_2way_within<- lmer(評価~メーカー*ジャム + (1|個人No.), mydata_anova_2way_within)
 Anova(anova_res_2way_within, type=3)
 ```
 
+```{r}
+library(afex)
+mydata_anova_2way_within <- read.csv(
+  "./practice/example_anova_2way_within.csv",
+  header=T,
+  fileEncoding="UTF8"
+) # データ読み込み
+
+#個人No.を要因化
+mydata_anova_2way_within$個人No. <- as.factor(mydata_anova_2way_within$個人No.)
+
+anova_res_2way_within <- aov_ez(
+  id = "個人No.",       # 被験者を識別する列
+  dv = "評価",          # 従属変数
+  within = c("ジャム", "メーカー"),  # 被験者内要因
+  data = mydata_anova_2way_within,
+  type = 3              # タイプIII分散分析
+)
+summary(anova_res_2way_within)
+```
+
+```{r include=FALSE}
+mydata_anova_2way_within <- read.csv(
+  "./practice/example_anova_2way_within.csv",
+  header=T,
+  fileEncoding="UTF8"
+) # データ読み込み
+
+#個人No.を要因化
+mydata_anova_2way_within$個人No. <- as.factor(mydata_anova_2way_within$個人No.)
+anova_res_2way_within<-aov(評価~ジャム*メーカー + Error(個人No./(ジャム*メーカー)), mydata_anova_2way_within)
+summary(anova_res_2way_within)
+
+```
+
 この結果から，メーカーの主効果，ジャムの主効果とこれらの交互作用が評価に対して有意な影響を与えていることが示された．
+
+
 
 ## 下位検定（単純主効果検定）
 
@@ -960,49 +1046,49 @@ plot(g)
 
 ```
 
-:::work
+<!-- :::work -->
 
-```{r include=FALSE}
-# ToothGrowth
-data_ToothGrowth <- ToothGrowth
+<!-- ```{r include=FALSE} -->
+<!-- # ToothGrowth -->
+<!-- data_ToothGrowth <- ToothGrowth -->
 
-# ToothGrowthのデータの変数名を日本語にする
-colnames(data_ToothGrowth) <- c("歯の長さ","薬種",  "投与量")
+<!-- # ToothGrowthのデータの変数名を日本語にする -->
+<!-- colnames(data_ToothGrowth) <- c("歯の長さ","薬種",  "投与量") -->
 
-# サプリメントの種類を因子型に変換する
-data_ToothGrowth$薬種 <- as.factor(data_ToothGrowth$薬種)
-data_ToothGrowth$投与量 <- as.factor(data_ToothGrowth$投与量)
+<!-- # サプリメントの種類を因子型に変換する -->
+<!-- data_ToothGrowth$薬種 <- as.factor(data_ToothGrowth$薬種) -->
+<!-- data_ToothGrowth$投与量 <- as.factor(data_ToothGrowth$投与量) -->
 
-# 内容確認
-head(data_ToothGrowth)
-# 
-# 
-# # UKDriverDeaths
-# data_UKDriverDeaths <- UKDriverDeaths
-# 
-# # UKDriverDeathsのデータの変数名を日本語にする
-# colnames(data_UKDriverDeaths) <- c("年", "死亡者数")
-# 
-# # 内容確認
-# head(data_UKDriverDeaths)
+<!-- # 内容確認 -->
+<!-- head(data_ToothGrowth) -->
+<!-- #  -->
+<!-- #  -->
+<!-- # # UKDriverDeaths -->
+<!-- # data_UKDriverDeaths <- UKDriverDeaths -->
+<!-- #  -->
+<!-- # # UKDriverDeathsのデータの変数名を日本語にする -->
+<!-- # colnames(data_UKDriverDeaths) <- c("年", "死亡者数") -->
+<!-- #  -->
+<!-- # # 内容確認 -->
+<!-- # head(data_UKDriverDeaths) -->
 
-library(car)
+<!-- library(car) -->
 
-# type 3 の分散分析交互作用あり
-data_ToothGrowth$歯の長さ <-scale(data_ToothGrowth$歯の長さ)
-anova_res <- aov(歯の長さ~投与量*薬種 ,data_ToothGrowth)
-Anova(anova_res, type=3)
-summary(anova_res)
+<!-- # type 3 の分散分析交互作用あり -->
+<!-- data_ToothGrowth$歯の長さ <-scale(data_ToothGrowth$歯の長さ) -->
+<!-- anova_res <- aov(歯の長さ~投与量*薬種 ,data_ToothGrowth) -->
+<!-- Anova(anova_res, type=3) -->
+<!-- summary(anova_res) -->
 
-```
+<!-- ``` -->
 
-RにはデフォルトでToothGrowthというデータセットが含まれている．このデータセットは60匹のモルモットに対してサプリメントとしてビタミンC（VC）と単なるオレンジジュース（OJ）のいずれかを，それぞれ0.5mg/日, 1.0mg/日, 2.0㎎/日の3条件で一定期間与えた時のモルモットの歯の成長量を測定したものである．含まれている変数は`len`, `supp`, `dose`の3つであり，それぞれが「歯の長さ」，「薬種（VC/OJ)」，「投与量」を示している．このデータセットを使って以下の問いに答えよ．
+<!-- RにはデフォルトでToothGrowthというデータセットが含まれている．このデータセットは60匹のモルモットに対してサプリメントとしてビタミンC（VC）と単なるオレンジジュース（OJ）のいずれかを，それぞれ0.5mg/日, 1.0mg/日, 2.0㎎/日の3条件で一定期間与えた時のモルモットの歯の成長量を測定したものである．含まれている変数は`len`, `supp`, `dose`の3つであり，それぞれが「歯の長さ」，「薬種（VC/OJ)」，「投与量」を示している．このデータセットを使って以下の問いに答えよ． -->
 
-1. モルモットの歯の成長量はサプリメントの種類によって異なるかどうかを検証せよ．
-1. モルモットの歯の成長量は投与量によって異なるかどうかを検証せよ．
-1. モルモットの歯の成長量はサプリメントの種類と投与量の間に交互作用があるかどうかを検証せよ．
-:::
+<!-- 1. モルモットの歯の成長量はサプリメントの種類によって異なるかどうかを検証せよ． -->
+<!-- 1. モルモットの歯の成長量は投与量によって異なるかどうかを検証せよ． -->
+<!-- 1. モルモットの歯の成長量はサプリメントの種類と投与量の間に交互作用があるかどうかを検証せよ． -->
+<!-- ::: -->
 
-:::work
-二要因分散分析の例で示した単純主効果検定について，肥料ごとの小麦の品種の収穫量への影響を調べよ．結果はグラフで示せ．
-:::
+<!-- :::work -->
+<!-- 二要因分散分析の例で示した単純主効果検定について，肥料ごとの小麦の品種の収穫量への影響を調べよ．結果はグラフで示せ． -->
+<!-- ::: -->
