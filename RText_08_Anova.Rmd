@@ -763,7 +763,7 @@ write_csv(data, "./practice/example_anova_2way_within.csv")
 
 
 このような対応ありデータ(反復測定のデータ）での二要因分散分析を行う方法はこれまで紹介したようなaov関数をつかう方法もあるが，それらは設定が少々むずかしかったり，データによっては推定がうまく行かないケースがある．
-そこで，ここではafexパッケージのaov_ez関数を使って二要因分散分析を行う方法を紹介する．
+そこで，ここでは**`afex`パッケージ**のaov_ez関数を使って二要因分散分析を行う方法を紹介する．
 
 aov_ez関数の引数は以下の通りである．
 
@@ -862,7 +862,8 @@ summary(anova_res_2way_within)
 
 交互作用が有意であったことから下位検定として単純主効果検定を行うことになる．先に紹介した通り，単純主効果検定では，どちらの独立変数をデータ切り分けの基軸にするかによって2通りの単純主効果検定が可能である．
 
-なお，分析に先立って，それぞれの組み合わせの下での平均と標準偏差を算出しておく．
+#### 各群の平均と標準偏差の算出
+分析に先立って，それぞれの組み合わせの下での平均と標準偏差を算出しておく．
 
 ```{r}
 #メーカーAのデータきりだし
@@ -903,44 +904,50 @@ print(mean_data)
 #### メーカーを基軸にした単純主効果検定
 
 メーカーを基軸にして見る場合，食パンA，B，Cごとのジャム間の差を見ることになる．ジャムはX，Yの2水準しかないので，単純にT検定すればよい．
-個人で対応のあるデータなので，paired＝TRUEをつける必要がある点には注意してほしい．
+**個人で対応のあるデータなので，paired＝TRUEをつける必要がある点には注意してほしい．**
 
-**RのVer.4.3.3まではt.testに(式, data)の形でデータ与えた場合でもpairedオプションの設定が出来たが，R Ver.4.4.1(2024.10.9に時点でのPosit Cloudのバージョンはこちら）においては(式,data)方式でデータを与えた場合にはpairedオプションの設定が出来なくなった．このため，以下のコードはエラーを吐き出す．したがって，R Ver. 4.4.1の場合には，一つしたのコードを使うこと！！(2024.10.9)**
+<!-- **RのVer.4.3.3まではt.testに(式, data)の形でデータ与えた場合でもpairedオプションの設定が出来たが，R Ver.4.4.1(2024.10.9に時点でのPosit Cloudのバージョンはこちら）においては(式,data)方式でデータを与えた場合にはpairedオプションの設定が出来なくなった．このため，以下のコードはエラーを吐き出す．したがって，R Ver. 4.4.1の場合には，一つしたのコードを使うこと！！(2024.10.9)** -->
 
-```{r error=TRUE}
-# R 4.3.3ではこちらのコードでも正常に動作するが，R 4.4.1ではこちらだとエラーになる
-# メーカーAの場合
-data_A <- filter(mydata_anova_2way_within, メーカー == "A")
-t.test(評価~ジャム, data=data_A, paired=TRUE)
+<!-- ```{r error=TRUE} -->
+<!-- # R 4.3.3ではこちらのコードでも正常に動作するが，R 4.4.1ではこちらだとエラーになる -->
+<!-- # メーカーAの場合 -->
+<!-- data_A <- filter(mydata_anova_2way_within, メーカー == "A") -->
+<!-- t.test(評価~ジャム, data=data_A, paired=TRUE) -->
 
-# メーカーBの場合
-data_B <- filter(mydata_anova_2way_within, メーカー == "B")
-t.test(評価~ジャム, data=data_B, paired=TRUE)
+<!-- # メーカーBの場合 -->
+<!-- data_B <- filter(mydata_anova_2way_within, メーカー == "B") -->
+<!-- t.test(評価~ジャム, data=data_B, paired=TRUE) -->
 
-# メーカーCの場合
-data_C <- filter(mydata_anova_2way_within, メーカー == "C")
-t.test(評価~ジャム, data=data_C, paired=TRUE)
-```
+<!-- # メーカーCの場合 -->
+<!-- data_C <- filter(mydata_anova_2way_within, メーカー == "C") -->
+<!-- t.test(評価~ジャム, data=data_C, paired=TRUE) -->
+<!-- ``` -->
 
 ```{r}
 # R 4.4.1ではこちらのコード.(R 4.3.3でも動作する)
 # メーカーAの場合
+## Aのデータだけを抽出
 data_A <- filter(mydata_anova_2way_within, メーカー == "A")
+
+## Aの中のジャムX，Yのデータを抽出
 data_A_X <- filter(data_A, ジャム=="X")
 data_A_Y <- filter(data_A, ジャム=="Y")
-t.test(data_A_X$評価,data_A_Y$評価, paired=TRUE)
 
+## Aの中でジャムX，Yの評価の差を検定
+t.test(data_A_X$評価, data_A_Y$評価, paired=TRUE)
+
+# 以下同様．
 # メーカーBの場合
 data_B <- filter(mydata_anova_2way_within, メーカー == "B")
 data_B_X <- filter(data_B, ジャム=="X")
 data_B_Y <- filter(data_B, ジャム=="Y")
-t.test(data_B_X$評価,data_B_Y$評価, paired=TRUE)
+t.test(data_B_X$評価, data_B_Y$評価, paired=TRUE)
 
 # メーカーCの場合
 data_C <- filter(mydata_anova_2way_within, メーカー == "C")
 data_C_X <- filter(data_C, ジャム=="X")
 data_C_Y <- filter(data_C, ジャム=="Y")
-t.test(data_C_X$評価,data_C_Y$評価, paired=TRUE)
+t.test(data_C_X$評価, data_C_Y$評価, paired=TRUE)
 ```
 
 
@@ -1066,7 +1073,7 @@ plot(g)
 set.seed(32)
 num_samples <- 100
 受講前 <- round(rnorm(num_samples, mean = 50, sd = 10),0)
-受講後 <- round(rnorm(num_samples, mean = 60, sd = 10),0)
+受講後 <- round(rnorm(num_samples, mean = 60, sd = 10),0)+c(rep(0, num_samples/2), rep(10, num_samples/2))
 group <- rep(c("従来型", "新型"), each = num_samples/2)
 
 data <- tibble(
@@ -1082,11 +1089,17 @@ write_csv(data, "./practice/example_anova_2way_wb.csv")
 ```
 :::
 
-このようなデータの場合，一方理解度テストの「テスト時期」（受講前, 受講後）のみ対応ありであり，「講義方法」（従来型，新型）は対応なしである．このような場合の二要因分散分析は，一方が対応ありである場合の二要因分散分析として扱うことができる．
+このようなデータの場合，理解度テストの「テスト時期」（受講前, 受講後）のみ対応ありであり，「講義方法」（従来型，新型）は対応なしである．
+このような場合の二要因分散分析は，一方が対応ありである場合の二要因分散分析となる．
 
-このように一方のみが対応ありデータの場合，対応ありの要因のことを「被験者内要因」あるいは「Within要因」とよび，対応なしの要因のことを「被験者間要因」あるいは「Between要因」とよぶ．
+モデル図は以下の通りになる．
 
-このようなデータの場合にはaov_ez関数を使うさいに，**between引数の設定をする必要がある**．
+![この例題のモデル図](./Img/2024_7_3_2wayAnovaWandBInteractionAndPaired.png)
+
+このように一方のみが対応ありデータの場合，対応ありの要因のことを「被験者内要因」あるいは「Within要因」とよび，対応なしの要因のことを「被験者間要因」あるいは「Between要因」とよぶ．さらに，このようにWithin要因とBetween要因が混在しているようなケースを「混合計画」もしくは「混合モデル」と呼ぶ．
+
+
+このようなデータの場合にはaov_ez関数を使う際に，**between引数の設定をする必要がある**．
 
 ```{r}
 library(afex)
@@ -1097,7 +1110,7 @@ mydata_anova_2way_wb <- read.csv(
 ) # データ読み込み
 
 #個人No.を要因化
-mydata_anova_2way_within$個人No. <- as.factor(mydata_anova_2way_within$個人No.)
+mydata_anova_2way_wb$個人No. <- as.factor(mydata_anova_2way_wb$個人No.)
 
 anova_res_2way_wb <- aov_ez(
   id = "個人No.",       # 被験者を識別する列
@@ -1109,6 +1122,130 @@ anova_res_2way_wb <- aov_ez(
 )
 summary(anova_res_2way_wb)
 ```
+
+以上の結果から，講義方法の主効果，テスト時期の主効果，およびその交互作用が理解度に対して有意な影響を与えていることが示された．
+
+
+### 下位検定（単純主効果検定）
+
+今回の結果では，講義方法，テスト時期それぞれが有意であったが，この主効果が有意である点は大した意味はない．
+
+すなわち，講義方法の主効果が有意というのは，テストの実施時期を完全に無視して，講義方法だけでデータを分けて従来型と新型の平均点を算出し，両者に差があると言えるのか（水準が違うと平均が違うのか）を見ていることになるが，受講前と受講後をまとめた平均を算出することには何の意味をないのは容易に理解できるだろう．
+
+同様に，テスト時期の主効果が有意というのは，講義方法を完全に無視して，受講前と受講後の平均点を算出し，両者に差があると言えるのか（時期が違うと平均が違うのか）を見ていることになる．当然ながら，従来型と新型をまとめて受講前の平均点を出したり，受講後の平均点を出したりすることに何の意味もない．
+
+したがってあくまで注目するべきは交互作用の結果である．
+今回の設定の場合，想定しているのは以下のような結果が得られることである．
+
+- 講義受講前では，従来型群と新型群の間に有意な差はない．
+- 講義受講後では，従来型群と新型群の間に有意な差がある（新型の方が成績が良くなる）．
+
+そこで，こういうことを明らかにするための単純主効果検定を実施する必要がある．
+
+
+#### 各群の平均と標準偏差の算出
+まずは「従来型-受講前」「従来型-受講後」「新型-受講前」「新型-受講後」のそれぞれの平均と標準偏差を算出しておく．
+
+```{r}
+#従来型のデータきりだし
+data_old <- filter(mydata_anova_2way_wb, 講義方法 == "従来型")
+##従来型の受講前の理解度の平均・標準偏差
+mean_old_before <- mean(filter(data_old, テスト時期 == "受講前")$理解度)
+sd_old_before <- sd(filter(data_old, テスト時期 == "受講前")$理解度)
+##従来型の受講後の理解度の平均・標準偏差
+mean_old_after <- mean(filter(data_old, テスト時期 == "受講後")$理解度)
+sd_old_after <- sd(filter(data_old, テスト時期 == "受講後")$理解度)
+
+#新型の場合
+data_new <- filter(mydata_anova_2way_wb, 講義方法 == "新型")
+mean_new_before <- mean(filter(data_new, テスト時期 == "受講前")$理解度)
+sd_new_before <- sd(filter(data_new, テスト時期 == "受講前")$理解度)
+mean_new_after <- mean(filter(data_new, テスト時期 == "受講後")$理解度)
+sd_new_after <- sd(filter(data_new, テスト時期 == "受講後")$理解度)
+
+#データフレーム化
+mean_data <- data.frame(
+  講義方法 = as.factor(c("従来型", "従来型", "新型", "新型")),
+  テスト時期 = as.factor(c("受講前", "受講後", "受講前", "受講後")),
+  理解度 = c(mean_old_before, mean_old_after, mean_new_before, mean_new_after),
+  sd = c(sd_old_before, sd_old_after, sd_new_before, sd_new_after)
+)
+
+#出力
+print(mean_data)
+```
+
+#### 講義方式を基軸とした単純主効果検定
+
+講義方式を基軸として見る場合，従来型，新型ごとの受講前，受講後の差を見ることになる．今回だと受講前，受講後という2つの群の比較なので，単純にT検定（対応あり）をすればよい．
+
+```{r}
+# 従来型の場合
+data_old_before <- filter(data_old, テスト時期 == "受講前")
+data_old_after <- filter(data_old, テスト時期 == "受講後")
+t.test(data_old_before$理解度, data_old_after$理解度, paired=TRUE)
+
+# 新型の場合
+data_new_before <- filter(data_new, テスト時期 == "受講前")
+data_new_after <- filter(data_new, テスト時期 == "受講後")
+t.test(data_new_before$理解度, data_new_after$理解度, paired=TRUE)
+```
+この結果から，従来型も新型も受講前後では有意に理解度が向上することが確認できた．
+
+#### テスト時期を基軸とした単純主効果検定
+今度はテスト時期を基軸として見る．この場合，受講前，受講後ごとの従来型，新型の差を見ることになる．この場合も従来型，新型という2つの群の比較なので，単純にT検定（対応あり）をすればよい．
+
+```{r}
+# 受講前の場合
+t.test(data_old_before$理解度, data_new_before$理解度, paired=TRUE)
+
+# 受講後の場合
+t.test(data_old_after$理解度, data_new_after$理解度, paired=TRUE)
+```
+
+この結果から，受講前では従来型と新型の間に有意な差はないが，受講後では新型の方が従来型に比べて有意に理解度が高いことが示された．
+
+#### ggplotによる可視化
+ggplotでこの結果を可視化すると以下の通りとなる．
+
+```{r}
+# 順番を整理するためにfactor関数を使って再整理する
+mean_data$テスト時期 <- factor(mean_data$テスト時期, levels = c("受講前", "受講後"))
+
+# ggplotで棒グラフで表示
+g<-ggplot(mean_data, aes(x=テスト時期, y=理解度, fill=講義方法, group=講義方法, color=講義方法)) +
+  geom_point(position=position_dodge(width=0.2), size=3)+
+  geom_line(position=position_dodge(width=0.2))+
+  geom_errorbar(aes(ymin=理解度-sd, ymax=理解度+sd), width=.1, position=position_dodge(width=0.2)) +
+  coord_cartesian(ylim = c(35, max(mean_data$理解度) + 20))
+
+# 従来型に対するブラケットを記述
+g <- g + 
+  annotate("segment",x=0.95, xend=0.95, y=61, yend=75)+
+  annotate("segment",x=0.95, xend=1.95, y=75, yend=75)+
+  annotate("segment",x=1.95, xend=1.95, y=75, yend=71)+
+  annotate("text", x=(0.95+1.95)/2, y=78, label="p<.001,***")
+
+# 新型に対するブラケットを記述
+g <- g + 
+  annotate("segment",x=1.05, xend=1.05, y=59, yend=87)+
+  annotate("segment",x=1.05, xend=2.05, y=87, yend=87)+
+  annotate("segment",x=2.05, xend=2.05, y=87, yend=81)+
+  annotate("text", x=(1.05+2.05)/2, y=88, label="p<.001,***")
+
+
+# テスト実施時期での比較
+g <- g+
+  annotate("segment",x=2.10, xend=2.20, y=mean_data$理解度[4], yend=mean_data$理解度[4])+
+  annotate("segment",x=2.20, xend=2.20, y=mean_data$理解度[4], yend=mean_data$理解度[2])+
+  annotate("segment",x=2.20, xend=2.10, y=mean_data$理解度[2], yend=mean_data$理解度[2])+
+  annotate("text", x=2.4, y=(mean_data$理解度[2]+ mean_data$理解度[4])/2, label="p<.001,***")
+
+plot(g)
+```
+
+このように可視化すると，受講前の状態では講義の方式による差はみられず，受講後にはいずれの群も有意に理解度が向上していること，さらには新型の場合には講義後の理解度が従来型に比べて有意に高いことが一目瞭然で把握できる．
+
 
 <!-- :::work -->
 
