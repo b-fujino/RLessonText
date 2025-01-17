@@ -1481,7 +1481,7 @@ border-radius: 0px;
 
 <h1 class="title toc-ignore">主成分分析・因子分析</h1>
 <h4 class="author">藤野秀則</h4>
-<h4 class="date">初稿日:“2024-10-15” 更新日:2025-01-16</h4>
+<h4 class="date">初稿日:“2024-10-15” 更新日:2025-01-17</h4>
 
 </div>
 
@@ -1515,8 +1515,6 @@ summary(pca)</code></pre>
 ## Standard deviation     0.94168
 ## Proportion of Variance 0.09853
 ## Cumulative Proportion  1.00000</code></pre>
-<pre class="r"><code>round(pca$sdev[1]^2/sum(pca$sdev^2)*100,0)</code></pre>
-<pre><code>## [1] 12</code></pre>
 <p>主成分分析の結果，<code>summary()</code>関数で得られる結果は，1段目は主成分として抽出されたそれぞれの標準偏差，2弾目が各主成分がそれぞれ元のデータのばらつき情報（分散）をどの程度説明しているか（反映しているか）の割合，3段目はさらにその割合の累積値である．
 例えば，上記の結果の場合，第1主成分（PC1）は2段目の情報から元のデータの約12%の情報を説明しているということであり，第1～第3主成分の3つの主成分で元のデータの約36%の情報を説明しているということとなる．</p>
 </div>

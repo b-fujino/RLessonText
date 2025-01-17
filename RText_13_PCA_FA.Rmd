@@ -66,7 +66,6 @@ write.csv(data, "./practice/example_13_Test.csv")
 data <- read.csv("./practice/example_13_Test.csv")
 pca <- prcomp(data, scale=TRUE) #
 summary(pca)
-round(pca$sdev[1]^2/sum(pca$sdev^2)*100,0)
 ```
 
 主成分分析の結果，`summary()`関数で得られる結果は，1段目は主成分として抽出されたそれぞれの標準偏差，2弾目が各主成分がそれぞれ元のデータのばらつき情報（分散）をどの程度説明しているか（反映しているか）の割合，3段目はさらにその割合の累積値である．
