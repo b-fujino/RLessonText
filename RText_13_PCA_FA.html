@@ -1321,7 +1321,175 @@ if (window.hljs) {
 
 
 
-<style type="text/css">.tocify-subheader { display: block !important;}.tocify-item {white-space: nowrap;}body{counter-reset: ref_number practice_number work_number;}.float img{ margin: auto;display: block;padding: 2%;border-radius: 8px 8px 0 0 ;position: relative;width : 60%;}.float .figcaption {position: relative;font-style: italic;font-size: large;font-weight: bold;color: #666;text-align: center;margin:0% auto 5% auto;border-bottom: solid 1px #666;border-left: solid 1px #666;border-right: solid 1px #666;border-radius:0 0 8px 8px;width : 60%}img {margin: auto;display: block;border: solid 1px #666;border-radius: 8px;position: relative;width : 60%;}.WideFigure img{margin: auto;display: block;border: solid 1px #666;border-radius: 8px 8px 0 0;position: relative;width : 100%;}.WideFigure .float .figcaption {position: relative;font-style: italic;font-size: large;font-weight: bold;color: #666;text-align: center;margin:0% auto 5% auto;border-bottom: solid 1px #666;border-left: solid 1px #666;border-right: solid 1px #666;border-radius:0 0 8px 8px;width : 100%}.ref {position: relative;margin:5%;padding:5px;background-color: rgba(255, 255, 128, .5);color: #666;}.ref::before{counter-increment: ref_number 1;content: "[参考 " counter(ref_number) "]";font-weight: bold;display: block;margin-bottom: 3px;}h1 {margin-top : 10px;padding-top : 50px;}.practice {position: relative;margin:5%;padding:5px;background-color: rgba(128, 255, 200, .5);color: #666;}.practice::before{counter-increment: practice_number 1;content: "[例題 " counter(practice_number) "]";font-weight: bold;display: block;margin-bottom: 3px;}.work {position: relative;margin:5%;padding:5px;background-color: rgba(128, 200, 255, .2);color: #666;}.work::before{counter-increment: work_number 1;content: "[課題 " counter(work_number) "]";font-weight: bold;display: block;margin-bottom: 3px;}user-select: none;-moz-user-select: none;-webkit-user-select: none;-ms-user-select: none;-khtml-user-select: none;-webkit-touch-callout: none;}***/.res_table {border-collapse: collapse;width: 50%;margin: 0 auto;border-top: 1px solid #666;border-bottom: 1px solid #666;}.res_table th {border-bottom: 1px solid #666;text-align: center;}.res_table td {text-align: right;}.res_table .td_left {text-align: left;}.res_table .tr_topborder {border-top: 1px solid #666;}.res_table .tr_bottomborder {border-bottom: 1px solid #666;}.math .display {text-align: center;font-size: small;}.custom-table {border: 2px solid #000;border-collapse: collapse;width: 75%;margin-left: auto;margin-right: auto;margin-bottom: 10px;margin-top: 10px;}.custom-table th, .custom-table td {border: 1px solid #000;padding: 8px;text-align: center;}.custom-table th {background-color: #f0f8ff;}a {text-decoration: underline;font-weight: bold;}</style>
+<style type="text/css">.tocify-subheader { 
+display: block !important;
+}
+.tocify-item {
+white-space: nowrap;
+}
+body{
+counter-reset: ref_number practice_number work_number;
+}
+.float img{
+
+ 
+margin: auto;
+display: block;
+padding: 2%;
+border-radius: 8px 8px 0 0 ;
+position: relative;
+width : 60%;
+}
+.float .figcaption {
+position: relative;
+font-style: italic;
+font-size: large;
+font-weight: bold;
+color: #666;
+text-align: center;
+margin:0% auto 5% auto;
+border-bottom: solid 1px #666;
+border-left: solid 1px #666;
+border-right: solid 1px #666;
+border-radius:0 0 8px 8px;
+width : 60%
+}
+img {
+margin: auto;
+display: block;
+border: solid 1px #666;
+border-radius: 8px;
+position: relative;
+width : 60%;
+}
+.WideFigure img{
+margin: auto;
+display: block;
+border: solid 1px #666;
+border-radius: 8px 8px 0 0;
+position: relative;
+width : 100%;
+}
+.WideFigure .float .figcaption {
+position: relative;
+font-style: italic;
+font-size: large;
+font-weight: bold;
+color: #666;
+text-align: center;
+margin:0% auto 5% auto;
+border-bottom: solid 1px #666;
+border-left: solid 1px #666;
+border-right: solid 1px #666;
+border-radius:0 0 8px 8px;
+width : 100%
+}
+.ref {
+position: relative;
+margin:5%;
+padding:5px;
+background-color: rgba(255, 255, 128, .5);
+color: #666;
+}
+.ref::before{
+counter-increment: ref_number 1;
+content: "[参考 " counter(ref_number) "]";
+font-weight: bold;
+display: block;
+margin-bottom: 3px;
+}
+h1 {
+margin-top : 10px;
+padding-top : 50px;
+}
+.practice {
+position: relative;
+margin:5%;
+padding:5px;
+background-color: rgba(128, 255, 200, .5);
+color: #666;
+}
+.practice::before{
+counter-increment: practice_number 1;
+content: "[例題 " counter(practice_number) "]";
+font-weight: bold;
+display: block;
+margin-bottom: 3px;
+}
+.work {
+position: relative;
+margin:5%;
+padding:5px;
+background-color: rgba(128, 200, 255, .2);
+color: #666;
+}
+.work::before{
+counter-increment: work_number 1;
+content: "[課題 " counter(work_number) "]";
+font-weight: bold;
+display: block;
+margin-bottom: 3px;
+}
+
+user-select: none;
+-moz-user-select: none;
+-webkit-user-select: none;
+-ms-user-select: none;
+-khtml-user-select: none;
+-webkit-touch-callout: none;
+}
+***/
+.res_table {
+border-collapse: collapse;
+width: 50%;
+margin: 0 auto;
+border-top: 1px solid #666;
+border-bottom: 1px solid #666;
+}
+.res_table th {
+border-bottom: 1px solid #666;
+text-align: center;
+}
+.res_table td {
+text-align: right;
+}
+.res_table .td_left {
+text-align: left;
+}
+.res_table .tr_topborder {
+border-top: 1px solid #666;
+}
+.res_table .tr_bottomborder {
+border-bottom: 1px solid #666;
+}
+
+.math .display {
+text-align: center;
+font-size: small;
+}
+
+.custom-table {
+border: 2px solid #000;
+border-collapse: collapse;
+width: 75%;
+margin-left: auto;
+margin-right: auto;
+margin-bottom: 10px;
+margin-top: 10px;
+}
+.custom-table th, .custom-table td {
+border: 1px solid #000;
+padding: 8px;
+text-align: center;
+}
+.custom-table th {
+background-color: #f0f8ff;
+}
+
+a {
+text-decoration: underline;
+font-weight: bold;
+}</style>
 
 
 
@@ -1732,18 +1900,17 @@ summary(pca)</code></pre>
 <p>例えば，以下のようなアンケートを考えてみよう．</p>
 <ul>
 <li>Q1: 新しいものに興味がある</li>
-<li>Q2: 他人とのコミュニケーションが好き</li>
+<li>Q2: 他人とのコミュニケーションが好きである</li>
 <li>Q3: 物事をじっくり考える方である</li>
 <li>Q4: 知らないものにはとりあえず近づいてみる</li>
-<li>Q5: 人の意見よりも自分の意見を重視する</li>
-<li>Q6: 思いついたらすぐに行動する方である</li>
-<li>Q7: 同じことを続けるのが苦手である</li>
+<li>Q5: 人の意見よりも自分の意見を重視する（－）</li>
+<li>Q6: 思いついたらすぐに行動する方である（－）</li>
+<li>Q7: 同じことを続けるのは苦手である</li>
 <li>Q8: 誰とでも仲良くなれる方である</li>
 <li>Q9: 計画通りに物事が進まないとイライラする方である</li>
 </ul>
-<p>項目文から容易に想像つく通り，Q1, Q4,
-Q7は「好奇心」あるいは「変化志向性」に関する項目， Q2,
-Q5，Q8は「社交性」に関する項目， Q3, Q6,
+<p>項目文から容易に想像つく通り，Q1, Q4, Q7は「好奇性」に関する項目，
+Q2, Q5，Q8は「社交性」に関する項目， Q3, Q6,
 Q9は「計画性」に関する項目であると解釈できる．
 つまり，これら9つの項目は，その人が持つこうした3つの性質を測定するための項目と言える．</p>
 <p>さて，これらの3つの性質とこれら9つの質問項目はどのような関係にあるだろうか？
@@ -1784,12 +1951,14 @@ Q9は「計画性」に関する項目であると解釈できる．
 <p>学生のSNSの利用状況と学生の性格との関連を調査するために，学生400名に対して先に示した9つの項目のアンケートに回答（1：全く当てはまらない～5：すごく当てはまる，の5段階尺度）してもらうとともに，各自のスマートフォンに記録されているSNSアプリの1日に当たりの平均利用時間を回答してもらった．その結果，<a href="./practice/example_13_personality.csv">このようなデータ</a>が得られた．</p>
 <p>このデータから，まずは学生の性格に関する因子の値を推定せよ．</p>
 </div>
+<div id="データの確認" class="section level3" number="2.2.1">
+<h3><span class="header-section-number">2.2.1</span> データの確認</h3>
 <p>まずはデータ読み込みと内容確認．</p>
 <pre class="r"><code># ライブラリの読み込み
 library(psych)</code></pre>
 <pre><code>## 
-## 次のパッケージを付け加えます: &#39;psych&#39;</code></pre>
-<pre><code>## 以下のオブジェクトは &#39;package:ggplot2&#39; からマスクされています:
+## Attaching package: &#39;psych&#39;</code></pre>
+<pre><code>## The following objects are masked from &#39;package:ggplot2&#39;:
 ## 
 ##     %+%, alpha</code></pre>
 <pre class="r"><code># データの読み込み
@@ -1801,35 +1970,41 @@ head(data) # 冒頭6行表示</code></pre>
 ## 1  2  3  3  3  3  3  3  3  3
 ## 2  3  2  2  2  3  3  2  2  3
 ## 3  4  3  3  4  3  3  4  2  3
-## 4  3  3  4  3  3  4  2  3  5
+## 4  3  3  4  3  3  2  2  3  5
 ## 5  3  3  3  3  3  3  4  3  2
-## 6  4  2  3  4  2  3  4  2  3</code></pre>
+## 6  4  2  3  4  4  3  4  2  3</code></pre>
 <pre class="r"><code>describe(data) # 記述統計量の表示</code></pre>
 <pre><code>##    vars   n mean   sd median trimmed  mad min max range  skew kurtosis   se
 ## Q1    1 400 2.73 0.74      3    2.69 1.48   1   5     4  0.15    -0.26 0.04
 ## Q2    2 400 2.90 0.80      3    2.91 0.00   1   5     4 -0.07    -0.02 0.04
 ## Q3    3 400 2.77 0.79      3    2.75 1.48   1   5     4  0.08    -0.17 0.04
 ## Q4    4 400 2.89 0.77      3    2.88 0.00   1   5     4 -0.04     0.07 0.04
-## Q5    5 400 3.10 0.71      3    3.12 0.00   1   5     4 -0.06    -0.14 0.04
-## Q6    6 400 3.14 0.77      3    3.15 1.48   1   5     4  0.04    -0.24 0.04
+## Q5    5 400 2.90 0.71      3    2.88 0.00   1   5     4  0.06    -0.14 0.04
+## Q6    6 400 2.86 0.77      3    2.85 1.48   1   5     4 -0.04    -0.24 0.04
 ## Q7    7 400 2.95 0.77      3    2.94 0.00   1   5     4 -0.01     0.09 0.04
 ## Q8    8 400 3.01 0.69      3    3.01 0.00   1   5     4  0.03     0.04 0.03
 ## Q9    9 400 3.19 0.79      3    3.20 1.48   1   5     4  0.04    -0.37 0.04</code></pre>
 <pre class="r"><code>round(cor(data),2) # 相関行列の表示.round関数を使って2桁までにしている</code></pre>
-<pre><code>##       Q1   Q2    Q3   Q4   Q5    Q6   Q7   Q8    Q9
-## Q1  1.00 0.28 -0.01 0.56 0.21 -0.03 0.45 0.15 -0.04
-## Q2  0.28 1.00  0.24 0.23 0.59  0.17 0.21 0.46  0.15
-## Q3 -0.01 0.24  1.00 0.07 0.12  0.69 0.09 0.07  0.52
-## Q4  0.56 0.23  0.07 1.00 0.20  0.03 0.68 0.19  0.06
-## Q5  0.21 0.59  0.12 0.20 1.00  0.03 0.11 0.68  0.01
-## Q6 -0.03 0.17  0.69 0.03 0.03  1.00 0.03 0.01  0.70
-## Q7  0.45 0.21  0.09 0.68 0.11  0.03 1.00 0.13  0.02
-## Q8  0.15 0.46  0.07 0.19 0.68  0.01 0.13 1.00  0.00
-## Q9 -0.04 0.15  0.52 0.06 0.01  0.70 0.02 0.00  1.00</code></pre>
+<pre><code>##       Q1    Q2    Q3    Q4    Q5    Q6    Q7    Q8    Q9
+## Q1  1.00  0.28 -0.01  0.56 -0.21  0.03  0.45  0.15 -0.04
+## Q2  0.28  1.00  0.24  0.23 -0.59 -0.17  0.21  0.46  0.15
+## Q3 -0.01  0.24  1.00  0.07 -0.12 -0.69  0.09  0.07  0.52
+## Q4  0.56  0.23  0.07  1.00 -0.20 -0.03  0.68  0.19  0.06
+## Q5 -0.21 -0.59 -0.12 -0.20  1.00  0.03 -0.11 -0.68 -0.01
+## Q6  0.03 -0.17 -0.69 -0.03  0.03  1.00 -0.03 -0.01 -0.70
+## Q7  0.45  0.21  0.09  0.68 -0.11 -0.03  1.00  0.13  0.02
+## Q8  0.15  0.46  0.07  0.19 -0.68 -0.01  0.13  1.00  0.00
+## Q9 -0.04  0.15  0.52  0.06 -0.01 -0.70  0.02  0.00  1.00</code></pre>
+<p>相関を見ると基本的に想定していた通りの３項目ずつで相関値が心理学的に高いとされる値になっていることや，逆転項目になっている項目については負の値になっていることがわかる．</p>
+<p>加えて，一部の項目では0.2〜0.3ほどの相関（心理学的には弱いながらも相関があるとされる）も見られる．</p>
+</div>
+<div id="因子分析の実行-1" class="section level3" number="2.2.2">
+<h3><span class="header-section-number">2.2.2</span> 因子分析の実行</h3>
 <p>Rで因子分析を行う関数はいくつかあるが，もっとも使いやすいのは<code>psych</code>パッケージに含まれる<code>fa()</code>関数である．引数は以下の通り．</p>
 <ul>
 <li>第1引数: 因子分析に掛ける多変量が含まれたデータフレーム</li>
-<li>第2引数: 因子数（省略可）． 何個の因子を抽出するかを指定する．</li>
+<li>第2引数: 因子数（省略可）．
+何個の因子を推定するのかを指定する．</li>
 <li>第3引数 rotate: 回転方法（省略可）．
 因子をどのように回転させるかを指定する．</li>
 <li>第4引数 fm: 推定方法（省略可）． 因子の推定方法を指定する．</li>
@@ -1844,21 +2019,21 @@ TRUEにすると因子負荷量の絶対値の大きい順に表示される．<
 表記の小数点以下の桁数を指定する．省略すると2桁表記となる．</li>
 </ul>
 <pre class="r"><code># 因子分析の実行
-fa &lt;- fa(data, 3)
-print(fa, sort=T) #digits=3とすると結果が3桁表記になる</code></pre>
+fa_result &lt;- fa(data, 3)
+print(fa_result, sort=T) #digits=3とすると結果が3桁表記になる</code></pre>
 <pre><code>## Factor Analysis using method =  minres
 ## Call: fa(r = data, nfactors = 3)
 ## Standardized loadings (pattern matrix) based upon correlation matrix
-##    item   MR2   MR1   MR3   h2    u2 com
-## Q6    6  0.96 -0.02 -0.02 0.91 0.092 1.0
-## Q9    9  0.74 -0.03  0.01 0.54 0.459 1.0
-## Q3    3  0.72  0.09  0.02 0.54 0.462 1.0
-## Q5    5 -0.02  0.95 -0.03 0.89 0.114 1.0
-## Q8    8 -0.03  0.72  0.01 0.52 0.481 1.0
-## Q2    2  0.16  0.59  0.14 0.46 0.545 1.3
-## Q4    4  0.01 -0.01  0.90 0.81 0.187 1.0
-## Q7    7  0.01 -0.04  0.76 0.56 0.438 1.0
-## Q1    1 -0.07  0.10  0.60 0.40 0.603 1.1
+##    item   MR2   MR1  MR3   h2    u2 com
+## Q6    6 -0.96  0.02 0.02 0.91 0.092 1.0
+## Q9    9  0.74 -0.03 0.01 0.54 0.459 1.0
+## Q3    3  0.72  0.09 0.02 0.54 0.462 1.0
+## Q5    5  0.02 -0.95 0.03 0.89 0.114 1.0
+## Q8    8 -0.03  0.72 0.01 0.52 0.481 1.0
+## Q2    2  0.16  0.59 0.14 0.46 0.545 1.3
+## Q4    4  0.01 -0.01 0.90 0.81 0.187 1.0
+## Q7    7  0.01 -0.04 0.76 0.56 0.438 1.0
+## Q1    1 -0.07  0.10 0.60 0.40 0.603 1.1
 ## 
 ##                        MR2  MR1  MR3
 ## SS loadings           2.01 1.82 1.79
@@ -1894,6 +2069,232 @@ print(fa, sort=T) #digits=3とすると結果が3桁表記になる</code></pre>
 ## Correlation of (regression) scores with factors   0.96 0.95 0.93
 ## Multiple R square of scores with factors          0.93 0.91 0.87
 ## Minimum correlation of possible factor scores     0.85 0.81 0.73</code></pre>
+</div>
+<div id="結果の見方" class="section level3" number="2.2.3">
+<h3><span class="header-section-number">2.2.3</span> 結果の見方</h3>
+<p>様々な結果が表記されるがとりあえず確認すべき箇所は以下の箇所である．</p>
+<pre><code>##    item   MR2   MR1  MR3
+## Q6    6 -0.96  0.02 0.02
+## Q9    9  0.74 -0.03 0.01
+## Q3    3  0.72  0.09 0.02
+## Q5    5  0.02 -0.95 0.03
+## Q8    8 -0.03  0.72 0.01
+## Q2    2  0.16  0.59 0.14
+## Q4    4  0.01 -0.01 0.90
+## Q7    7  0.01 -0.04 0.76
+## Q1    1 -0.07  0.10 0.60</code></pre>
+<p>この部分は推定された3つの因子が各質問項目にどの程度結びついているか（因子を説明変数，質問項目を目的変数としたときの回帰係数）を表している．この値のことを<strong>因子負荷量</strong>と呼ぶ．因子負荷量は−1から1の値を取り，1もしくは-1に近いほど強い結びつきを，0に近いほど弱い結びつきを意味する．正負は関係性の向きを表している</p>
+<p>因子負荷量は絶対値が0.4を超えている場合に，その項目はその因子に結びついていると判断するのが一般的である．
+今回の結果だと，MR2はQ3, Q6, Q9と，MR1はQ2, Q5, Q8と，MR3はQ1, Q4,
+Q7とそれぞれ結びついている，と判断される．
+つまり今回の例では，当初想定していた通りの因子構造が推定された，ということがこの結果からわかる．</p>
+</div>
+<div id="因子得点" class="section level3" number="2.2.4">
+<h3><span class="header-section-number">2.2.4</span> 因子得点</h3>
+<p>推定された因子得点はfa()の出力結果のscoresに格納されている．
+以下では，推定された因子得点の冒頭6行を表示している．</p>
+<pre class="r"><code>head(fa_result$scores)</code></pre>
+<pre><code>##             MR2         MR1          MR3
+## [1,] -0.1062418 -0.11977804  0.005913257
+## [2,] -0.3743964 -0.45588883 -1.088542941
+## [3,] -0.1291166 -0.21248013  1.512048370
+## [4,]  1.2922966 -0.07725064 -0.140764867
+## [5,] -0.2703695 -0.05647853  0.493830786
+## [6,] -0.1774206 -1.43937200  1.440993591</code></pre>
+<p>因子得点は平均が0，標準偏差が1になるように標準化されている．
+（実際には，計算誤差等により標準偏差が完全に1となるわけではないが1に近い値になっている）</p>
+</div>
+</div>
+<div id="探索的因子分析" class="section level2" number="2.3">
+<h2><span class="header-section-number">2.3</span> 探索的因子分析</h2>
+<p>先の例では当初の想定通りの因子構造が結果として得られがが，実際の因子分析では当初の想定通りの結果にならないことは多い．その場合には，いろいろと因子分析の設定を変えて探索的に因子分析を行うことになる．以下では，そうした探索的な因子分析を行う際に確認すべき点や設定項目，結果の解釈の仕方について説明する．</p>
+<div id="適合度指標" class="section level3" number="2.3.1">
+<h3><span class="header-section-number">2.3.1</span> 適合度指標</h3>
+<p>因子分析を行なった時にまず確認すべき点は因子負荷量の値だが，次に重要なのが<strong>適合度指標</strong>である．
+因子分析の結果の下部には，推定された因子構造がどの程度データと適合しているかを評価するための指標が出力されている．</p>
+<p>様々な適合度指標が表記されているが，代表的なものは以下の部分に記載されているものになる．</p>
+<pre><code>## Tucker Lewis Index of factoring reliability =  0.978</code></pre>
+<pre><code>## RMSEA index =  0.046  and the 90 % confidence intervals are  0.012 0.076</code></pre>
+<pre><code>## BIC =  -49.63</code></pre>
+<p><strong>TLI（Tucker Lewis
+Index）</strong>は，1に近いほど適合度が高いことを示す．一般には0.95以上であれば適合度が高いと解釈され，逆に0.90を下回る場合，適合度が低いとされることが多い．</p>
+<p><strong>RMSEA（Root Mean Square Error of
+Approximation）</strong>は，0に近いほど適合度が高いことを示す．一般には0.05以下であれば適合度が高いとされ，逆に0.10を超える場合，適合度が低いとされることが多い．</p>
+<p><strong>BIC (Bayesian Information
+Criterion)</strong>は絶対的な評価基準はなく，比較のために使われることが多い．BICが小さいほど適合度が高いとされる．</p>
+</div>
+<div id="回転と推定方法" class="section level3" number="2.3.2">
+<h3><span class="header-section-number">2.3.2</span> 回転と推定方法</h3>
+<p>デフォルトの設定で期待通りの因子構造とならなかった場合に，まず検討すべき点は<strong>第３引数の回転方法（rotate）と第４引数の推定方法（ml）</strong>である．</p>
+<p>これらが一体どういうものかについてはやや高度な内容となるため，ここでは引数の設定の仕方のみを説明する．</p>
+<ul>
+<li><strong>回転方法（rotate）</strong></li>
+</ul>
+<table>
+<colgroup>
+<col width="14%" />
+<col width="14%" />
+<col width="38%" />
+<col width="33%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th align="left">回転方法</th>
+<th align="left">タイプ</th>
+<th align="left">特徴</th>
+<th align="left">使用目的</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="left"><code>varimax</code></td>
+<td align="left">直交回転</td>
+<td align="left">解釈しやすく最も広く使われる</td>
+<td align="left">因子の独立性を保ちたい場合</td>
+</tr>
+<tr class="even">
+<td align="left"><code>quartimax</code></td>
+<td align="left">直交回転</td>
+<td align="left">単一因子の影響を強調</td>
+<td align="left">単純構造を強調したい場合</td>
+</tr>
+<tr class="odd">
+<td align="left"><code>promax</code></td>
+<td align="left">斜交回転</td>
+<td align="left">計算効率が良く、大規模データに適している</td>
+<td align="left">因子の相関を許容したい場合</td>
+</tr>
+<tr class="even">
+<td align="left"><code>oblimin</code></td>
+<td align="left">斜交回転</td>
+<td align="left">因子の相関を許容しつつ適応的に単純化</td>
+<td align="left">現実のデータに近いモデルを探る（デフォルト）</td>
+</tr>
+<tr class="odd">
+<td align="left"><code>simplimax</code></td>
+<td align="left">直交・斜交両方</td>
+<td align="left">特定の変数を特定の因子に結びつける</td>
+<td align="left">解釈を明確化したい場合</td>
+</tr>
+</tbody>
+</table>
+<ul>
+<li><strong>推定方法（fm）</strong></li>
+</ul>
+<table>
+<colgroup>
+<col width="6%" />
+<col width="37%" />
+<col width="56%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th align="left">手法</th>
+<th align="left">名称</th>
+<th align="left">説明</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="left"><code>ml</code></td>
+<td align="left">最尤法（Maximum Likelihood）</td>
+<td align="left">尤度を最大化する形で因子を推定する．データが正規分布に従う場合に有効</td>
+</tr>
+<tr class="even">
+<td align="left"><code>minres</code></td>
+<td align="left">最小二乗法（Minimum Residual）</td>
+<td align="left">誤差分散を最小化する形で因子を推定する．因子構造のシンプル化に適している（デフォルト）</td>
+</tr>
+<tr class="odd">
+<td align="left"><code>pa</code></td>
+<td align="left">主軸法（Principal Axis Factoring）</td>
+<td align="left">相関行列の固有値分解に基づき、共通因子の抽出を行う</td>
+</tr>
+<tr class="even">
+<td align="left"><code>uls</code></td>
+<td align="left">最小二乗法（Unweighted Least Squares）</td>
+<td align="left">標準誤差を考慮せず、単純な回帰モデルに基づいて因子を推定する</td>
+</tr>
+<tr class="odd">
+<td align="left"><code>wls</code></td>
+<td align="left">重み付き最小二乗法（Weighted Least Squares）</td>
+<td align="left">誤差分散を考慮した最小二乗推定法で因子を推定する．信頼性の高い推定が可能</td>
+</tr>
+<tr class="even">
+<td align="left"><code>gls</code></td>
+<td align="left">一般化最小二乗法（Generalized Least Squares）</td>
+<td align="left">共分散構造に基づく推定方法で、観測変数の分散の違いを考慮</td>
+</tr>
+<tr class="odd">
+<td align="left"><code>pc</code></td>
+<td align="left">主成分法（Principal Components）</td>
+<td align="left">因子分析とは異なり、データの分散を最大限に説明する成分を抽出する手法</td>
+</tr>
+</tbody>
+</table>
+<p>デフォルトの設定（第３引数，第４引数）を省略した場合，obliminとminresが適用される．
+もし，デフォルトの設定で期待通りの因子構造が得られない場合には，回転方法や推定方法を上記の中から選択・設定する．<strong>一般にはpromax回転，最尤法がよく用いられる</strong>．</p>
+<p>先ほどの例のデータでpromax回転，最尤法を実施してみると以下の通りとなる．</p>
+<pre class="r"><code>fa_result &lt;- fa(data, 3, rotate=&quot;promax&quot;, fm=&quot;ml&quot;)
+print(fa_result, sort=T)</code></pre>
+<pre><code>## Factor Analysis using method =  ml
+## Call: fa(r = data, nfactors = 3, rotate = &quot;promax&quot;, fm = &quot;ml&quot;)
+## Standardized loadings (pattern matrix) based upon correlation matrix
+##    item   ML1   ML2   ML3   h2    u2 com
+## Q6    6 -0.96  0.03  0.04 0.91 0.091 1.0
+## Q9    9  0.74 -0.05  0.01 0.55 0.453 1.0
+## Q3    3  0.72  0.07  0.00 0.54 0.463 1.0
+## Q5    5  0.06 -0.97  0.08 0.89 0.113 1.0
+## Q8    8 -0.06  0.74 -0.02 0.53 0.473 1.0
+## Q2    2  0.12  0.60  0.08 0.44 0.564 1.1
+## Q4    4  0.02 -0.03  0.91 0.81 0.189 1.0
+## Q7    7  0.02 -0.07  0.78 0.57 0.428 1.0
+## Q1    1 -0.06  0.08  0.60 0.39 0.607 1.1
+## 
+##                        ML1  ML2  ML3
+## SS loadings           2.01 1.84 1.77
+## Proportion Var        0.22 0.20 0.20
+## Cumulative Var        0.22 0.43 0.62
+## Proportion Explained  0.36 0.33 0.32
+## Cumulative Proportion 0.36 0.68 1.00
+## 
+##  With factor correlations of 
+##      ML1  ML2  ML3
+## ML1 1.00 0.15 0.07
+## ML2 0.15 1.00 0.33
+## ML3 0.07 0.33 1.00
+## 
+## Mean item complexity =  1
+## Test of the hypothesis that 3 factors are sufficient.
+## 
+## df null model =  36  with the objective function =  3.63 with Chi Square =  1434.4
+## df of  the model are 12  and the objective function was  0.05 
+## 
+## The root mean square of the residuals (RMSR) is  0.02 
+## The df corrected root mean square of the residuals is  0.03 
+## 
+## The harmonic n.obs is  400 with the empirical chi square  9.55  with prob &lt;  0.66 
+## The total n.obs was  400  with Likelihood Chi Square =  21.01  with prob &lt;  0.05 
+## 
+## Tucker Lewis Index of factoring reliability =  0.981
+## RMSEA index =  0.043  and the 90 % confidence intervals are  0 0.073
+## BIC =  -50.89
+## Fit based upon off diagonal values = 1
+## Measures of factor score adequacy             
+##                                                    ML1  ML2  ML3
+## Correlation of (regression) scores with factors   0.96 0.95 0.93
+## Multiple R square of scores with factors          0.93 0.91 0.87
+## Minimum correlation of possible factor scores     0.85 0.82 0.73</code></pre>
+<p>因子負荷量を見ると先ほどの結果とはわずかに各値が異なっており，推定方法や回転方法が異なったことによって値が変わったことがわかる．</p>
+<p>適合度指標を見てみると，TLIやRMSEA，BICの値もわずかに変わっていることがわかる．また，いずれも適合度が改善していることから，今回のデータではデフォルトの設定よりもpromax回転，最尤法を用いた方がより正確な因子の推定ができるという結果となった．</p>
+</div>
+<div id="推定する因子数" class="section level3" number="2.3.3">
+<h3><span class="header-section-number">2.3.3</span> 推定する因子数</h3>
+</div>
+<div id="因子の解釈" class="section level3" number="2.3.4">
+<h3><span class="header-section-number">2.3.4</span> 因子の解釈</h3>
+<p>上記の通り，今回の例の場合は当初の想定の通りの因子が推定されたが，場合によっては当初の想定通りの推定結果にならない場合がある．その場合，各因子がどの質問に強く結びついているかを見て，その因子が何を表しているかを解釈する必要がある．</p>
+</div>
 </div>
 </div>
 
