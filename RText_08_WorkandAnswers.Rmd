@@ -1,0 +1,196 @@
+---
+title: "分散分析の課題"
+author: "藤野秀則,"
+date: "`r Sys.Date()`"
+output:
+  html_document: 
+    toc: true
+    toc_depth: 4
+    toc_float: true
+    number_section: true
+    fig_width: 8
+    css: style.css
+  # html_notebook:
+  #   toc: true
+  #   toc_depth: 3
+  #   toc_float: true
+  #   number_section: true
+editor_options:
+  markdown:
+    wrap: 72
+---
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+library(tidyverse)
+library(car)
+```
+
+
+
+:::work
+ある研究者が経済学部生に対する環境教育の方法として，一方的に環境問題についての講義を行う方法と，講義の中で学生同士で議論をさせる方法とで教育効果に違いがあるかを検証するために，ある大学で2年間かけて，それぞれの方法での教育を行った（1年目は講義のみ，2年目は議論を取り入れた方法を実施）．そして，講義の最終回の際に，アンケートで普段の環境配慮行動の実施の程度を尋ねた．加えて，統制条件として授業を受講していない学生からランダムで50人サンプリングして，同じアンケートに回答してもらった．そうして得られたデータが[次の通り](./practice/08_work_anova.csv)である．以下の問に答えよ．
+
+1. print()を用いてこのデータがワイド形式であることを確認せよ．特に3つの条件でサンプル数が異なっている点を確認せよ．
+1. このデータをロング型に変更せよ
+1. aggregate()を用いて，3つの条件のそれぞれの平均と標準偏差を求めよ，
+1. ロング型に変更したデータを用いて，環境教育の方法による環境配慮行動の実施の程度の違いが有意かどうかを分散分析により検証せよ．
+:::
+
+```{r include=TRUE}
+###### 以下　回答##############
+
+# 1 
+mydata_anova<- read.csv("./practice/08_work_anova.csv")
+print(mydata_anova)
+
+# 2
+#ワイド形式からロング形式に変換
+mydata_anova_long <- pivot_longer(
+  mydata_anova,
+  cols=colnames(mydata_anova),
+  names_to = "条件",
+  values_to= "評価" #測定変数に与える列名
+)
+
+
+#3
+mydata_anova_long$条件 <- as.factor(mydata_anova_long$条件)
+aggregate(評価~条件, data=mydata_anova_long, FUN=mean)
+aggregate(評価~条件, data=mydata_anova_long, FUN=sd)
+aggregate(評価~条件, data=mydata_anova_long, FUN=length)
+
+#4
+summary(aov(評価~条件, data=mydata_anova_long))
+```
+
+:::work
+次のデータは，ある企業が開発した新しいパンと従来品の2種類のパンについて，30名のモニターに試食してもらい，その評価を10段階で評価してもらったデータである．このデータ（[リンク](./practice/08_work_anova_2way.csv)）をもとに，以下の問に答えよ
+
+1. print()を用いてこのデータがワイド形式であることを確認せよ．
+1. このデータをロング型に変更せよ
+1. aggregate()を用いて，2つの条件のそれぞれの平均と標準偏差を求めよ，
+1. ロング型に変更したデータを用いて，パンの種類によるおいしさの違いが有意かどうかを分散分析により検証せよ．なお，この分析にあたっては，被験者No.を要因型に変換することを忘れないようにすること．
+1. 対応のあるT検定を行い，その結果と分散分析の結果でP値を比較せよ．
+:::
+```{r include=TRUE}
+
+mydata_anova_2way <- read.csv("./practice/08_work_anova_2way.csv")
+
+#1
+print(mydata_anova_2way)
+
+#2
+#ワイド形式からロング形式に変換
+mydata_anova_2way_long <- pivot_longer(
+  mydata_anova_2way,
+  cols=c("試作品", "従来品"),
+  names_to = "パンの種類",
+  values_to= "おいしさ" #測定変数に与える列名
+)
+
+#3
+aggregate(おいしさ~パンの種類, data=mydata_anova_2way_long, FUN=mean)
+aggregate(おいしさ~パンの種類, data=mydata_anova_2way_long, FUN=sd)
+
+#4
+mydata_anova_2way_long$被験者No. <- as.factor(mydata_anova_2way_long$被験者No.)
+#分散分析の実施
+anova_res_2way <- aov(おいしさ~被験者No.+パンの種類 , mydata_anova_2way_long)
+Anova(anova_res_2way, type=2)
+
+#5
+# T検定
+t.test(
+  mydata_anova_2way_long$おいしさ[mydata_anova_2way_long$パンの種類=="試作品"],
+  mydata_anova_2way_long$おいしさ[mydata_anova_2way_long$パンの種類=="従来品"],
+  paired=TRUE
+)
+```
+
+
+:::work
+ある大手スーパーマーケットでは，ある商品の売上を向上させるために，その商品の陳列方法を変える実験を行った．具体的には，ある地域の店舗を偏りが出ないように大きく二つに分けた上で，1つのグループで商品の陳列棚の照明の色をより暖色にしたものに変え，残る1つのグループでは特に変更はせずに，その棚に並べられている商品の1カ月間の売上げを測定した．次のデータは，照明を変える前1カ月分と，照明を変えた後1カ月分のデータである．
+[このデータ](./practice/08_work_anova_3.csv)を用いて，棚の高さを変更することが売り上げ向上に結び付くのかを検討せよ．
+
+:::
+
+```{r include=TRUE}
+# 
+data <- read.csv("./practice/08_work_anova_3.csv")
+# 分析
+library(afex)
+aov_ez(
+  id = "店舗No.",       # 被験者を識別する列
+  dv = "売上げ",          # 従属変数
+  within = "時期",  # 被験者内要因
+  between = "条件",  # 被験者間要因
+  data = data,
+  type = 3              # タイプIII分散分析
+)
+
+#
+data_Area_A <- filter(data, 条件 == "実験群")
+data_Area_B <- filter(data, 条件 == "対照群")
+data_Area_A_before <- filter(data_Area_A, 時期 == "変更前")
+data_Area_A_after <- filter(data_Area_A, 時期 == "変更後")
+data_Area_B_before <- filter(data_Area_B, 時期 == "変更前")
+data_Area_B_after <- filter(data_Area_B, 時期 == "変更後")
+
+print("時期を軸にした単純主効果検定")
+t.test(data_Area_A_before$売上げ, data_Area_A_after$売上げ , paired=TRUE)
+t.test(data_Area_B_before$売上げ, data_Area_B_after$売上げ , paired=TRUE)
+
+print("条件を軸にした単純主効果検定")
+t.test(data_Area_A_before$売上げ, data_Area_B_before$売上げ, paired=FALSE)
+t.test(data_Area_A_after$売上げ,  data_Area_B_after$売上げ,  paired=FALSE)
+
+```
+
+
+:::work
+ある研究者が，オフィスデスクに置かれた観葉植物が，オフィスワーカーのストレスを軽減する効果があるのかを検討するために次の実験を行った．
+
+被験者は20名の学生として，各被験者には，まず，オフィスでの事務作業に見立てた単純な作業（2桁×1桁の掛け算をひたすら計算し続ける課題）を15分間行ってもらった．
+
+その後，現在の心理的なストレス状態を測定するためのアンケートに回答してもらった上で，被験者を二つのグループに分けて，一方には1分間オフィスデスクの中央に置かれた観葉植物を見てもらい，もう一方にはデスクの中央に書かれたX印を見てもらった．デスク上には観葉植物ないしは×印以外は何もない状態にしていた．1分間それらを見てもらった後に再び心理的なストレス状態を測定するアンケートに回答してもらった．そのあと，15分間の休憩時間を置いたうえで，先ほどと同様の計算課題を行ってもらいストレスの測定も行ったあと，今度は先ほど観葉植物を見てもらったグループにはデスク上のX印を，先ほどX印を見てもらったグループには観葉植物を，それぞれ1分間見てもらい，その後ストレス状態を測定した．以上の実験を行った結果，次のデータが得られた．[このデータ](./practice/08_work_anova_4.csv)を用いて，観葉植物がストレス軽減に効果があるのかを検討せよ．
+
+:::
+
+```{r include=T}
+data <- read_csv("./practice/08_work_anova_4.csv")
+
+data$学生No. <- as.factor(data$学生No.)
+data$時期 <- as.factor(data$時期)
+data$条件 <- as.factor(data$条件)
+
+aov_ez(
+  id = "学生No.",       # 被験者を識別する列
+  dv = "ストレス",          # 従属変数
+  within = c("時期","条件"),  # 被験者内要因
+  #between = "実験パターン",  # 被験者間要因
+  data = data,
+  type = 3              # タイプIII分散分析
+)
+
+data_1 <- filter(data, 時期 == "見る前")
+data_2 <- filter(data, 時期 == "見た後")
+
+data_1_1 <- filter(data_1, 条件 == "実験群")
+data_1_2 <- filter(data_1, 条件 == "対照群")
+data_2_1 <- filter(data_2, 条件 == "実験群")
+data_2_2 <- filter(data_2, 条件 == "対照群")
+
+print("実験群での見た前後のストレスの差")
+t.test(data_1_1$ストレス, data_2_1$ストレス , paired=TRUE)
+print("対照群での見た前後のストレスの差")
+t.test(data_1_2$ストレス, data_2_2$ストレス , paired=TRUE)
+
+print("条件を軸にした単純主効果検定")
+print("")
+
+print("時期を軸にした単純主効果検定")
+print("見る前での条件間のストレスの差")
+t.test(data_1_1$ストレス, data_1_2$ストレス, paired=TRUE)
+print("見た後での条件間のストレスの差")
+t.test(data_2_1$ストレス,  data_2_2$ストレス,  paired=TRUE)
+```
