@@ -492,7 +492,7 @@ plot(g)
 データそのものを使って描く場合には以下のようにする．
 ポイントは以下の通りである．
 
-- `geom_bar`の`stat`を`summary`に設定し，`fun`に平均を求める関数である`mean`を設定することである．
+- `geom_bar`の`stat`を`summary`に設定し，`fun.data`に平均と標準偏差を求める関数である`mean_sdl`に設定するか，`fun`に平均を求める関数である`mean`を設定することである．
 - `geom_errorbar`の`stat`を同じく`summary`に設定し，`fun.data`に平均と標準偏差を求める関数である`mean_sdl`に設定する．さらに`fun.args`には`mean_sdl`関数の引数である`mult`を`1`に設定することで，`1`倍の標準偏差を算出させる．
     - `mean_sdl`は`Hmisc`パッケージに含まれている`smean.sdl`という関数を用いて平均と標準偏差を算出してくれる関数である．この`smean_sdl`関数では，第2引数として`mult`という引数があり，これを`1`に指定すると1\*標準偏差が，`2`とすると2\*標準偏差が算出されるようになる．もし引数を設定しなかった場合には，デフォルト値をとして2に自動で設定される．
     - `mean_sdl`を実施するためには`Hmisc`パッケージをインストールしておく必要がある．
@@ -501,11 +501,25 @@ plot(g)
 
 ```{r}
 g <- ggplot(data_iris, aes(x=種類,y=がく長,fill=種類))+
-  geom_bar(stat = "summary", fun = "mean")+
+  geom_bar(stat = "summary", fun.data = "mean_sdl")+ # geom_bar(stat = "summary", fun = "mean") でもよい
   geom_errorbar(stat = "summary", fun.data = "mean_sdl", fun.args = list(mult = 1), width=0.15)+
   geom_text(aes(label = round(after_stat(y), 2)), stat = "summary", fun = "mean", vjust = -0.5)
 plot(g)
+
 ```
+
+
+なお，上記はエラーバーとして**標準偏差**を表示させる方法であるが，エラーバーとして**標準誤差**を使う場合には，もう少しシンプルに書く事が出来る．
+
+```{r}
+g <- ggplot(data_iris, aes(x=種類,y=がく長,fill=種類))+
+  geom_bar(stat = "summary",fun.data = mean_se)+
+  geom_errorbar(stat = "summary", fun.data = "mean_se", width=0.15)+
+  geom_text(aes(label = round(after_stat(y), 2)), stat = "summary", fun = "mean", vjust = -0.5)
+plot(g)
+```
+
+geom_bar()に対いて警告が表示されるが，それは`"summary"`に指定しているのに明示的に`fun`を指定していないため，デフォルトである"mean_se"が適用されていた，ということを示しているだけであるので，気にする必要はない．もし表示を消したければ，`fun="mean_se"`を明示的に指定すればよい．
 
 </details>
 :::
