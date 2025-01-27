@@ -530,8 +530,109 @@ for(i in 2:10){
 </details>
 :::
 
+:::work
+[次のデータ](./practice/13_work_fa.csv)は主成分分析
+・因子分析の時の課題で出したデータである．
 
 
+
+- Q1: 何かを選ぶ時は些細なことは気にしない
+- Q2: 重要なことを決めるとき，些細な問題にこだわり多くの時間を費やす
+- Q3: 決断を先送りにしようとする
+- Q4: 重要な問題は，直前まで決定を延ばす
+- Q5: 他の人が何を選ぶのか気になる
+- Q6: 自分が選んだものが他の人と違うと不安になる
+- Q7: 決断した後，その決断に後悔しない
+- Q8: 決めた後で，間違ってしまったと思うことがよくある
+
+このデータは因子分析を実施したところ，因子数4，Varimax回転，Pa推定の場合に，次のような因子構造となる．
+
+```{r echo=FALSE, message=FALSE}
+library(psych)
+data <- read.csv("./practice/13_work_fa.csv")
+fa_result <- fa(data[-1], 4, rotate="varimax", fm="pa")
+fa.diagram(fa_result,cut=.4, digits=2, simple = FALSE)
+```
+- 因子1（熟慮）: Q1, Q2
+- 因子2（先延ばし）: Q3, Q4
+- 因子3（他者参照）: Q5, Q6
+- 因子4（不安）: Q7, Q8
+
+実際にこの結果は[文献(齊藤・緑川, 2016)](#優柔不断)の通りであり，もともとこれらの質問項目は[文献](#優柔不断)に記載されている項目から因子負荷量の大きいものを2つずつ選んだものである．
+
+さて，このデータについて，以下の問に答えよ．
+
+1. 上記の因子について，それぞれ紐づいた質問の回答値を平均したものとをその因子の尺度として，熟慮，先延ばし，他者参照，不安の4つの尺度データを作成せよ．なお，逆転項目が含まれていることに注意すること．
+1. 作成した4つの因子の尺度データを用いて，階層的クラスタリングを実施し，デンドログラムを表示させよ．
+1. デンドログラムを基に，各自なりの判断でクラスター分けを実施し，各クラスタに含まれるサンプル数を示せ．
+1. クラスター分けの結果を元に，各クラスタの平均値から各クラスターの特徴を述べよ．
+1．以上のことをk-means法でも実施し，結果を階層的クラスタリングの場合と比較せよ．
+
+:::
+```{r work, include=FALSE}
+data <- read.csv("./practice/13_work_fa.csv")
+
+summary(data)
+
+# 1. 因子の尺度データの作成
+data$熟慮 <- (6-data$Q1 + data$Q2) / 2
+data$先延ばし <- (data$Q3 + data$Q4) / 2
+data$他者参照 <- (6-data$Q5 + data$Q6) / 2
+data$不安 <- (6-data$Q7 + data$Q8) / 2
+
+# 2. 階層的クラスタリング
+dist_data <- dist(data[c("熟慮", "先延ばし", "他者参照", "不安")])
+hc <- hclust(dist_data, method="ward.D2")
+plot(hc)
+
+# 3. クラスター分け
+cluster_res <- cutree(hc, k=3)
+table(cluster_res)
+
+# 4. クラスターの特徴
+data$cluster_res <- cluster_res
+data$m熟慮 <- data$熟慮 - mean(data$熟慮)
+data$m先延ばし <- data$先延ばし - mean(data$先延ばし)
+data$m他者参照 <- data$他者参照 - mean(data$他者参照)
+data$m不安 <- data$不安 - mean(data$不安)
+
+df <- pivot_longer(data, 
+        cols = c("m熟慮", "m先延ばし", "m他者参照", "m不安"), 
+        names_to = "因子", 
+        values_to = "値")
+
+ggplot(df,aes(x=因子, y=値,fill=因子)) +
+  geom_bar( stat="summary", fun.data = mean_se) +
+  theme(axis.text.x = element_text(angle = 90, hjust = 1, vjust = 0.5)) + # x軸のラベルを縦向きに
+  facet_wrap(~cluster_res, nrow=1)
+
+# 5. k-means法
+set.seed(13)
+kmeans_res <- kmeans(data[c("熟慮", "先延ばし", "他者参照", "不安")], centers=3, nstart=25)
+
+data$cluster_res_kmeans <- kmeans_res$cluster
+table(data$cluster_res_kmeans)
+
+data$m熟慮 <- data$熟慮 - mean(data$熟慮)
+data$m先延ばし <- data$先延ばし - mean(data$先延ばし)
+data$m他者参照 <- data$他者参照 - mean(data$他者参照)
+data$m不安 <- data$不安 - mean(data$不安)
+
+df <- pivot_longer(data, 
+        cols = c("m熟慮", "m先延ばし", "m他者参照", "m不安"), 
+        names_to = "因子", 
+        values_to = "値")
+
+ggplot(df,aes(x=因子, y=値,fill=因子)) +
+  geom_bar( stat="summary", fun.data = mean_se) +
+  theme(axis.text.x = element_text(angle = 90, hjust = 1, vjust = 0.5)) + # x軸のラベルを縦向きに
+  facet_wrap(~cluster_res_kmeans, nrow=1)
+
+
+
+
+```
 
 # 参考文献 {.unnumbered}
 - <a id="SC"></a>[Kaufman, L., & Rousseeuw, P. J. (1990). Finding Groups in Data: An Introduction to Cluster Analysis. John Wiley & Sons, Inc](https://onlinelibrary.wiley.com/doi/book/10.1002/9780470316801)
+- <a id="優柔不断"></a>[斎藤 聖子, 緑川 晶. (2016). 優柔不断尺度の作成と信頼性および妥当性の検討. 心理学研究, 87 巻, 5号, pp. 535– 545]( https://doi.org/10.4992/jjpsy.87.15227)

@@ -996,7 +996,7 @@ summary(fa_result_6)
 1. 主成分分析を実施し，累積説明率が60％を超えたところまでの主成分について，その内容を質問項目と照らしてを解釈せよ．
 1. 探索的因子分析を実施し，適切だと思う因子構造を各自で見つけ，推定された因子の内容を質問項目に照らして解釈せよ．
 
-```{r include=FALSE}
+```{r include=T}
 data <- read.csv("./practice/13_work_fa.csv")
 
 head(data)
