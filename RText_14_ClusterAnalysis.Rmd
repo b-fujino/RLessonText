@@ -553,6 +553,7 @@ data <- read.csv("./practice/13_work_fa.csv")
 fa_result <- fa(data[-1], 4, rotate="varimax", fm="pa")
 fa.diagram(fa_result,cut=.4, digits=2, simple = FALSE)
 ```
+
 - 因子1（熟慮）: Q1, Q2
 - 因子2（先延ばし）: Q3, Q4
 - 因子3（他者参照）: Q5, Q6
@@ -566,7 +567,7 @@ fa.diagram(fa_result,cut=.4, digits=2, simple = FALSE)
 1. 作成した4つの因子の尺度データを用いて，階層的クラスタリングを実施し，デンドログラムを表示させよ．
 1. デンドログラムを基に，各自なりの判断でクラスター分けを実施し，各クラスタに含まれるサンプル数を示せ．
 1. クラスター分けの結果を元に，各クラスタの平均値から各クラスターの特徴を述べよ．
-1．以上のことをk-means法でも実施し，結果を階層的クラスタリングの場合と比較せよ．
+1. 以上のことをk-means法でも実施し，結果を階層的クラスタリングの場合と比較せよ．
 
 :::
 ```{r work, include=FALSE}
