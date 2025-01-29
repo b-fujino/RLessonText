@@ -9,10 +9,11 @@
 <meta http-equiv="X-UA-Compatible" content="IE=EDGE" />
 
 
-<meta name="author" content="福井県立大学経済学部教授　藤野秀則" />
+<meta name="author" content="藤野秀則," />
 
+<meta name="date" content="2025-01-27" />
 
-<title>RとRStudio学習教材</title>
+<title>分散分析の課題の模範回答</title>
 
 <script>// Pandoc 2.9 adds attributes on both header and div. We remove the former (to
 // be compatible with the behavior of Pandoc < 2.8).
@@ -1479,105 +1480,276 @@ border-radius: 0px;
 
 
 
-<h1 class="title toc-ignore">RとRStudio学習教材</h1>
-<h4 class="author">福井県立大学経済学部教授　藤野秀則</h4>
-<h4 class="date">初稿日:2024-05-01 更新日:2025-01-27</h4>
+<h1 class="title toc-ignore">分散分析の課題の模範回答</h1>
+<h4 class="author">藤野秀則,</h4>
+<h4 class="date">2025-01-27</h4>
 
 </div>
 
 
-<div id="r実行環境の整備と基本的な計算" class="section level1" number="1">
-<h1><span class="header-section-number">1</span>
-R実行環境の整備と基本的な計算</h1>
-<p><a href="./RText_01_Preparing_REnvironment.html">こちら</a>を参照してください。</p>
+<div id="課題1" class="section level1" number="1">
+<h1><span class="header-section-number">1</span> 課題1</h1>
+<div class="work">
+<p>ある研究者が経済学部生に対する環境教育の方法として，一方的に環境問題についての講義を行う方法と，講義の中で学生同士で議論をさせる方法とで教育効果に違いがあるかを検証するために，ある大学で2年間かけて，それぞれの方法での教育を行った（1年目は講義のみ，2年目は議論を取り入れた方法を実施）．そして，講義の最終回の際に，アンケートで普段の環境配慮行動の実施の程度を尋ねた．加えて，統制条件として授業を受講していない学生からランダムで50人サンプリングして，同じアンケートに回答してもらった．そうして得られたデータが<a href="./practice/08_work_anova.csv">次の通り</a>である．以下の問に答えよ．</p>
+<ol style="list-style-type: decimal">
+<li>print()を用いてこのデータがワイド形式であることを確認せよ．特に3つの条件でサンプル数が異なっている点を確認せよ．</li>
+<li>このデータをロング型に変更せよ</li>
+<li>aggregate()を用いて，3つの条件のそれぞれの平均と標準偏差を求めよ，</li>
+<li>ロング型に変更したデータを用いて，環境教育の方法による環境配慮行動の実施の程度の違いが有意かどうかを分散分析により検証せよ．</li>
+</ol>
 </div>
-<div id="rとrstudioの基本操作-その1" class="section level1" number="2">
-<h1><span class="header-section-number">2</span>
-RとRStudioの基本操作　その1</h1>
-<p><a href="./RText_02_BasicUsage.html">こちら</a>を参照してください。</p>
+<pre class="r"><code>###### 以下　回答##############
+
+mydata_anova &lt;- read.csv(
+  &quot;./practice/08_work_anova.csv&quot;,
+  header=T,
+  fileEncoding=&quot;UTF8&quot;
+) # データ読み込み
+
+#ワイド形式からロング形式に変換
+mydata_anova_long &lt;- pivot_longer(
+  mydata_anova,
+  cols=colnames(mydata_anova),
+  names_to = &quot;条件&quot;,
+  values_to= &quot;評価&quot; #測定変数に与える列名
+)
+
+summary(aov(評価~条件, data=mydata_anova_long))</code></pre>
+<pre><code>##              Df Sum Sq Mean Sq F value Pr(&gt;F)    
+## 条件          2  108.1   54.06   55.77 &lt;2e-16 ***
+## Residuals   149  144.4    0.97                   
+## ---
+## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1
+## 13 個の観測値が欠損のため削除されました</code></pre>
 </div>
-<div id="rとrstudioの基本操作-その2" class="section level1" number="3">
-<h1><span class="header-section-number">3</span>
-RとRStudioの基本操作　その2</h1>
-<p><a href="./RText_03_BasicUsage2.html">こちら</a>を参照してください。</p>
+<div id="課題2" class="section level1" number="2">
+<h1><span class="header-section-number">2</span> 課題2</h1>
+<div class="work">
+<p>次のデータは，ある企業が開発した新しいパンと従来品の2種類のパンについて，30名のモニターに試食してもらい，その評価を10段階で評価してもらったデータである．このデータ（<a href="./practice/08_work_anova_2way.csv">リンク</a>）をもとに，以下の問に答えよ</p>
+<ol style="list-style-type: decimal">
+<li>print()を用いてこのデータがワイド形式であることを確認せよ．</li>
+<li>このデータをロング型に変更せよ</li>
+<li>aggregate()を用いて，2つの条件のそれぞれの平均と標準偏差を求めよ，</li>
+<li>ロング型に変更したデータを用いて，パンの種類によるおいしさの違いが有意かどうかを分散分析により検証せよ．なお，この分析にあたっては，被験者No.を要因型に変換することを忘れないようにすること．</li>
+<li>対応のあるT検定を行い，その結果と分散分析の結果でP値を比較せよ．</li>
+</ol>
 </div>
-<div id="記述統計量と推測統計量" class="section level1" number="4">
-<h1><span class="header-section-number">4</span>
-記述統計量と推測統計量</h1>
-<p><a href="./RText_04_DescriptiveStatistics.html">こちら</a>を参照してください。</p>
+<pre class="r"><code>mydata_anova_2way &lt;- read.csv(
+  &quot;./practice/08_work_anova_2way.csv&quot;,
+  header=T,
+  fileEncoding=&quot;UTF8&quot;
+) # データ読み込み
+
+print(mydata_anova_2way)</code></pre>
+<pre><code>##    被験者No. 試作品 従来品
+## 1          1      6      8
+## 2          2      6      8
+## 3          3      9      4
+## 4          4      8      7
+## 5          5      9      6
+## 6          6      5      3
+## 7          7      7      4
+## 8          8      8      5
+## 9          9      4      4
+## 10        10      5      6
+## 11        11      4      7
+## 12        12      6      3
+## 13        13      7      7
+## 14        14      4      5
+## 15        15      4      6
+## 16        16      4      6
+## 17        17      6      1
+## 18        18      8      8
+## 19        19      6      6
+## 20        20      4      9
+## 21        21      3      9
+## 22        22      6      5
+## 23        23      8     10
+## 24        24      8      6
+## 25        25      6      5
+## 26        26      6      6
+## 27        27      6      8
+## 28        28      6      4
+## 29        29      6      5
+## 30        30      4      9</code></pre>
+<pre class="r"><code>mydata_anova_2way$従来品 &lt;- as.factor(mydata_anova_2way$従来品)
+mydata_anova_2way$試作品 &lt;- as.factor(mydata_anova_2way$試作品)
+
+#############
+#ワイド形式からロング形式に変換
+mydata_anova_2way_long &lt;- pivot_longer(
+  mydata_anova_2way,
+  cols=c(&quot;試作品&quot;, &quot;従来品&quot;),
+  names_to = &quot;パンの種類&quot;,
+  values_to= &quot;おいしさ&quot; #測定変数に与える列名
+)
+mydata_anova_2way_long$おいしさ &lt;- as.integer(mydata_anova_2way_long$おいしさ)
+mydata_anova_2way_long$パンの種類&lt;- as.factor(mydata_anova_2way_long$パンの種類)
+d&lt;- mydata_anova_2way_long %&gt;% filter(パンの種類==&quot;試作品&quot;)
+print(mydata_anova_2way_long)</code></pre>
+<pre><code>## # A tibble: 60 × 3
+##    被験者No. パンの種類 おいしさ
+##        &lt;int&gt; &lt;fct&gt;         &lt;int&gt;
+##  1         1 試作品            4
+##  2         1 従来品            6
+##  3         2 試作品            4
+##  4         2 従来品            6
+##  5         3 試作品            7
+##  6         3 従来品            2
+##  7         4 試作品            6
+##  8         4 従来品            5
+##  9         5 試作品            7
+## 10         5 従来品            4
+## # ℹ 50 more rows</code></pre>
+<pre class="r"><code>aggregate(おいしさ~パンの種類, data=mydata_anova_2way_long, FUN=mean)</code></pre>
+<pre><code>##   パンの種類 おいしさ
+## 1     試作品 3.966667
+## 2     従来品 4.333333</code></pre>
+<pre class="r"><code>aggregate(おいしさ~パンの種類, data=mydata_anova_2way_long, FUN=sd)</code></pre>
+<pre><code>##   パンの種類 おいしさ
+## 1     試作品 1.650148
+## 2     従来品 2.056668</code></pre>
+<pre class="r"><code>mydata_anova_2way_long$被験者No. &lt;- as.factor(mydata_anova_2way_long$被験者No.)
+
+#分散分析の実施
+anova_res_2way &lt;- aov(おいしさ~被験者No.+パンの種類 , mydata_anova_2way_long)
+Anova(anova_res_2way, type=2)</code></pre>
+<pre><code>## Anova Table (Type II tests)
+## 
+## Response: おいしさ
+##             Sum Sq Df F value Pr(&gt;F)
+## 被験者No.   94.150 29  0.8759 0.6381
+## パンの種類   2.017  1  0.5441 0.4667
+## Residuals  107.483 29</code></pre>
 </div>
-<div id="データハンドリング" class="section level1" number="5">
-<h1><span class="header-section-number">5</span> データハンドリング</h1>
-<p><a href="./RText_05_DataHandling.html">こちらのページ</a>を参照してください。</p>
+<div id="課題3" class="section level1" number="3">
+<h1><span class="header-section-number">3</span> 課題3</h1>
+<div class="work">
+<p>ある大手スーパーマーケットでは，ある商品の売上を向上させるために，その商品の陳列方法を変える実験を行った．具体的には，ある地域の店舗を偏りが出ないように大きく二つに分けた上で，1つのグループで商品の陳列棚の照明の色をより暖色にしたものに変え，残る1つのグループでは特に変更はせずに，その棚に並べられている商品の1カ月間の売上げを測定した．次のデータは，照明を変える前1カ月分と，照明を変えた後1カ月分のデータである．
+<a href="./practice/08_work_anova_3.csv">このデータ</a>を用いて，棚の高さを変更することが売り上げ向上に結び付くのかを検討せよ．</p>
 </div>
-<div id="基本的なデータの可視化" class="section level1" number="6">
-<h1><span class="header-section-number">6</span>
-基本的なデータの可視化</h1>
-<p><a href="./RText_06_ggplot2_basicUsage.html">こちらのページ</a>を参照してください．
-課題の正答例は<a href="./RText_06_WorkandAnswers.html">こちら</a>を参照してください．</p>
+<pre class="r"><code>data &lt;- read.csv(
+  &quot;./practice/08_work_anova_3.csv&quot;,
+  header=T,
+  fileEncoding=&quot;UTF8&quot;
+) # データ読み込み
+
+data$店舗No. &lt;- as.factor(data$店舗No.)
+
+#
+d&lt;-aggregate(data$売上げ, by=list(data$条件, data$時期), FUN=mean)
+print(d)</code></pre>
+<pre><code>##   Group.1 Group.2         x
+## 1  実験群  変更後 107.10000
+## 2  対照群  変更後  98.63636
+## 3  実験群  変更前 102.25000
+## 4  対照群  変更前 102.22727</code></pre>
+<pre class="r"><code># 分析
+library(afex)</code></pre>
+<pre><code>## 要求されたパッケージ lme4 をロード中です</code></pre>
+<pre><code>## 要求されたパッケージ Matrix をロード中です</code></pre>
+<pre><code>## 
+## 次のパッケージを付け加えます: &#39;Matrix&#39;</code></pre>
+<pre><code>## 以下のオブジェクトは &#39;package:tidyr&#39; からマスクされています:
+## 
+##     expand, pack, unpack</code></pre>
+<pre><code>## ************
+## Welcome to afex. For support visit: http://afex.singmann.science/</code></pre>
+<pre><code>## - Functions for ANOVAs: aov_car(), aov_ez(), and aov_4()
+## - Methods for calculating p-values with mixed(): &#39;S&#39;, &#39;KR&#39;, &#39;LRT&#39;, and &#39;PB&#39;
+## - &#39;afex_aov&#39; and &#39;mixed&#39; objects can be passed to emmeans() for follow-up tests
+## - Get and set global package options with: afex_options()
+## - Set sum-to-zero contrasts globally: set_sum_contrasts()
+## - For example analyses see: browseVignettes(&quot;afex&quot;)
+## ************</code></pre>
+<pre><code>## 
+## 次のパッケージを付け加えます: &#39;afex&#39;</code></pre>
+<pre><code>## 以下のオブジェクトは &#39;package:lme4&#39; からマスクされています:
+## 
+##     lmer</code></pre>
+<pre class="r"><code>aov_ez(
+  id = &quot;店舗No.&quot;,       # 被験者を識別する列
+  dv = &quot;売上げ&quot;,          # 従属変数
+  within = &quot;時期&quot;,  # 被験者内要因
+  between = &quot;条件&quot;,  # 被験者間要因
+  data = data,
+  type = 3              # タイプIII分散分析
+)</code></pre>
+<pre><code>## Converting to factor: 条件</code></pre>
+<pre><code>## Contrasts set to contr.sum for the following variables: 条件</code></pre>
+<pre><code>## Anova Table (Type 3 tests)
+## 
+## Response: 売上げ
+##      Effect    df   MSE      F  ges p.value
+## 1      条件 1, 40 74.96 5.03 * .066    .030
+## 2      時期 1, 40 58.25   0.14 .002    .708
+## 3 条件:時期 1, 40 58.25 6.41 * .065    .015
+## ---
+## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;+&#39; 0.1 &#39; &#39; 1</code></pre>
+<pre class="r"><code>#
+data_Area_A &lt;- filter(data, 条件 == &quot;実験群&quot;)
+data_Area_B &lt;- filter(data, 条件 == &quot;対照群&quot;)
+data_Area_A_before &lt;- filter(data_Area_A, 時期 == &quot;変更前&quot;)
+data_Area_A_after &lt;- filter(data_Area_A, 時期 == &quot;変更後&quot;)
+data_Area_B_before &lt;- filter(data_Area_B, 時期 == &quot;変更前&quot;)
+data_Area_B_after &lt;- filter(data_Area_B, 時期 == &quot;変更後&quot;)
+
+# 時期を軸にした単純主効果検定
+t.test(data_Area_A_before$売上げ, data_Area_A_after$売上げ , paired=TRUE)</code></pre>
+<pre><code>## 
+##  Paired t-test
+## 
+## data:  data_Area_A_before$売上げ and data_Area_A_after$売上げ
+## t = -2.5997, df = 19, p-value = 0.0176
+## alternative hypothesis: true mean difference is not equal to 0
+## 95 percent confidence interval:
+##  -8.7547072 -0.9452928
+## sample estimates:
+## mean difference 
+##           -4.85</code></pre>
+<pre class="r"><code>t.test(data_Area_B_before$売上げ, data_Area_B_after$売上げ , paired=TRUE)</code></pre>
+<pre><code>## 
+##  Paired t-test
+## 
+## data:  data_Area_B_before$売上げ and data_Area_B_after$売上げ
+## t = 1.3361, df = 21, p-value = 0.1958
+## alternative hypothesis: true mean difference is not equal to 0
+## 95 percent confidence interval:
+##  -1.998431  9.180249
+## sample estimates:
+## mean difference 
+##        3.590909</code></pre>
+<pre class="r"><code># 条件を軸にした単純主効果検定
+t.test(data_Area_A_before$売上げ, data_Area_B_before$売上げ, paired=FALSE)</code></pre>
+<pre><code>## 
+##  Welch Two Sample t-test
+## 
+## data:  data_Area_A_before$売上げ and data_Area_B_before$売上げ
+## t = 0.010105, df = 35.084, p-value = 0.992
+## alternative hypothesis: true difference in means is not equal to 0
+## 95 percent confidence interval:
+##  -4.542899  4.588353
+## sample estimates:
+## mean of x mean of y 
+##  102.2500  102.2273</code></pre>
+<pre class="r"><code>t.test(data_Area_A_after$売上げ,  data_Area_B_after$売上げ,  paired=FALSE)</code></pre>
+<pre><code>## 
+##  Welch Two Sample t-test
+## 
+## data:  data_Area_A_after$売上げ and data_Area_B_after$売上げ
+## t = 3.1433, df = 39.149, p-value = 0.003181
+## alternative hypothesis: true difference in means is not equal to 0
+## 95 percent confidence interval:
+##   3.018029 13.909244
+## sample estimates:
+## mean of x mean of y 
+## 107.10000  98.63636</code></pre>
 </div>
-<div id="基本的な統計検定" class="section level1" number="7">
-<h1><span class="header-section-number">7</span> 基本的な統計検定</h1>
-<p><a href="./Rtext_07_BasicTest.html">こちらのページ</a>を参照してください。
-課題の正答例は<a href="./RText_07_WorkandAnswers.html">こちら</a>を参照してください．</p>
+<div id="課題4" class="section level1" number="4">
+<h1><span class="header-section-number">4</span> 課題4</h1>
+<div class="work">
+<p>ある研究者が，オフィスデスクに置かれた観葉植物が，オフィスワーカーのストレスを軽減する効果があるのかを検討するために次の実験を行った．被験者は20名の学生として，各被験者には，まず，オフィスでの事務作業に見立てた単純な作業（2桁×1桁の掛け算をひたすら計算し続ける課題）を15分間行ってもらった．その後，現在の心理的なストレス状態を測定するためのアンケートに回答してもらった上で，被験者を二つのグループに分けて，一方には1分間オフィスデスクの中央に置かれた観葉植物を見てもらい，もう一方にはデスクの中央に書かれたX印を見てもらった．デスク上には観葉植物ないしは×印以外は何もない状態にしていた．1分間それらを見てもらった後に再び心理的なストレス状態を測定するアンケートに回答してもらった．そのあと，15分間の休憩時間を置いたうえで，先ほどと同様の計算課題を行ってもらいストレスの測定も行ったあと，今度は先ほど観葉植物を見てもらったグループにはデスク上のX印を，先ほどX印を見てもらったグループには観葉植物を，それぞれ1分間見てもらい，その後ストレス状態を測定した．以上の実験を行った結果，次のデータが得られた．<a href="./practice/08_work_anova_4.csv">このデータ</a>を用いて，観葉植物がストレス軽減に効果があるのかを検討せよ．</p>
 </div>
-<div id="相関分析" class="section level1" number="8">
-<h1><span class="header-section-number">8</span> 相関分析</h1>
-<p><a href="./RText_09_Correlation.html">こちらのページ</a>を参照してください。
-課題の正答例は<a href="./RText_09_WorkandAnswers.html">こちら</a>を参照してください．</p>
-</div>
-<div id="回帰分析" class="section level1" number="9">
-<h1><span class="header-section-number">9</span> 回帰分析</h1>
-<p><a href="./RText_10_Regression.html">こちらのページ</a>を参照してください。
-課題の正答例は<a href="./RText_10_WorkandAnswers.html">こちら</a>を参照してください．</p>
-</div>
-<div id="分散分析" class="section level1" number="10">
-<h1><span class="header-section-number">10</span> 分散分析</h1>
-<p><a href="./RText_08_Anova.html">こちらのページ</a>を参照してください。
-課題の正答例は<a href="./RText_08_WorkandAnswers.html">こちら</a>を参照してください．</p>
-</div>
-<div id="分散分析と回帰分析の統一" class="section level1" number="11">
-<h1><span class="header-section-number">11</span>
-分散分析と回帰分析の統一</h1>
-<p><a href="./RText_11_RegressionAndAnova.html">こちらのページ</a>を参照してください。</p>
-</div>
-<div id="一般化線形モデル" class="section level1" number="12">
-<h1><span class="header-section-number">12</span> 一般化線形モデル</h1>
-<p><a href="./RText_12_AdvancedRegression.html">こちらのページ</a>を参照してください。</p>
-</div>
-<div id="主成分分析因子分析" class="section level1" number="13">
-<h1><span class="header-section-number">13</span>
-主成分分析・因子分析</h1>
-<p><a href="./RText_13_PCA_FA.html">こちらのページ</a>を参照してください。</p>
-</div>
-<div id="クラスター分析" class="section level1" number="14">
-<h1><span class="header-section-number">14</span> クラスター分析</h1>
-<p><a href="./RText_14_ClusterAnalysis.html">こちらのページ</a>を参照してください。</p>
-<!--   <!----------------------------- 仕切り ----------------------------------->
-<p>–&gt;</p>
-<!-- # 関係性の分析（2） -->
-<!-- ## 一般化線形モデル -->
-<!-- ## 混合モデル -->
-<!--   <!----------------------------- 仕切り ----------------------------------->
-<p>–&gt;</p>
-<!-- # 共分散構造分析 -->
-<!-- ## パス解析 -->
-<!-- ## 構造方程式モデリング -->
-<!--   <!----------------------------- 仕切り ----------------------------------->
-<p>–&gt;</p>
-<!-- # 主成分分析と因子分析 -->
-<!--   <!----------------------------- 仕切り ----------------------------------->
-<p>–&gt;</p>
-<!-- # クラスター分析 -->
-<!--   <!----------------------------- 仕切り ----------------------------------->
-<p>–&gt;</p>
-<!-- # テキストマイニング -->
-<!--   <!----------------------------- 仕切り ----------------------------------->
-<p>–&gt;</p>
-<!-- # R・RStudioのさらなる活用 -->
-<!-- ## プログラムを活用した分析と自作関数の利用 -->
-<!-- ## RmarkdownとHTML出力 -->
-<!-- ## GitHubとPosit Cloudとの連携 -->
 </div>
 
 

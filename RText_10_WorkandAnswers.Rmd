@@ -1,0 +1,55 @@
+---
+title: "回帰分析の課題と正答例"
+author: "藤野秀則,"
+date: "`r Sys.Date()`"
+output:
+  html_document: 
+    toc: true
+    toc_depth: 4
+    toc_float: true
+    number_section: true
+    fig_width: 8
+    css: style.css
+  # html_notebook:
+  #   toc: true
+  #   toc_depth: 3
+  #   toc_float: true
+  #   number_section: true
+editor_options:
+  markdown:
+    wrap: 72
+---
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+library(tidyverse)
+```
+
+
+:::work
+[このデータ](./practice/09_work_Cor.csv)(前回の課題4のデータ)について以下の問に答えよ．
+
+- Q1: 直属の上司のリーダーシップの評価（7段階評価）
+- Q2: 自身の職務内容に対する満足度（7段階評価）
+- Q3: 自身の給与に対する満足度（7段階評価）
+- Q4: 所属している部署の雰囲気に対する満足度（7段階評価）
+
+1. Q1～Q4の4つの質問からなるデータを用いて，Q1～Q3からQ4を予測する重回帰分析を行え．
+1. Q1～Q4の4つの質問からなるデータを用いて，Q1～Q3からQ4を予測する標準化重回帰分析を行え．
+1. 「標準化」というものがつくか，つかないかの違いを考慮して，それぞれの結果の解釈を述べよ．
+:::
+
+```{r include=T}
+data <-read.csv("./practice/09_work_Cor.csv")
+fit <- lm(Q4 ~ Q1 + Q2 + Q3, data)
+summary(fit)
+
+fit <- lm(scale(Q4) ~ scale(Q1) + scale(Q2) + scale(Q3), data)
+summary(fit)
+```
+
+課題1については，標準化を行わない素点での重回帰分析の結果であり，いずれの係数も有意である．
+具体的には，切片は2.6となっており，これに対して，Q1の回答値が1点上がるごとに，約0.2点，Q2の回答が1点上がるごとに，約1.4点，Q3の回答が上がるおとに約0.11点，Q4の値が上昇する，という結果であった．
+
+課題2については，目的変素も説明変数も標準化されているため，それぞれの係数は，その変数の標準偏差が1であるときの効果を示している．
+具体的には，切片はほぼ0である．これに対して，Q1の標準偏差が1上昇するごとに，Q4は約0.23標準偏差，Q2の標準偏差が1上昇するごとに，約0.18標準偏差，Q3の標準偏差が1上昇するごとに約0.19標準偏差，Q4の標準偏差が上昇する，という結果であった．
+すなわち，この結果から，Q1~3のうち，Q4に弱いながらも関係が確認されたのはQ1の見であったｌ

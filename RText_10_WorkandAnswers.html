@@ -9,10 +9,11 @@
 <meta http-equiv="X-UA-Compatible" content="IE=EDGE" />
 
 
-<meta name="author" content="福井県立大学経済学部教授　藤野秀則" />
+<meta name="author" content="藤野秀則," />
 
+<meta name="date" content="2025-01-27" />
 
-<title>RとRStudio学習教材</title>
+<title>回帰分析の課題と正答例</title>
 
 <script>// Pandoc 2.9 adds attributes on both header and div. We remove the former (to
 // be compatible with the behavior of Pandoc < 2.8).
@@ -1479,106 +1480,77 @@ border-radius: 0px;
 
 
 
-<h1 class="title toc-ignore">RとRStudio学習教材</h1>
-<h4 class="author">福井県立大学経済学部教授　藤野秀則</h4>
-<h4 class="date">初稿日:2024-05-01 更新日:2025-01-27</h4>
+<h1 class="title toc-ignore">回帰分析の課題と正答例</h1>
+<h4 class="author">藤野秀則,</h4>
+<h4 class="date">2025-01-27</h4>
 
 </div>
 
 
-<div id="r実行環境の整備と基本的な計算" class="section level1" number="1">
-<h1><span class="header-section-number">1</span>
-R実行環境の整備と基本的な計算</h1>
-<p><a href="./RText_01_Preparing_REnvironment.html">こちら</a>を参照してください。</p>
+<div class="work">
+<p><a href="./practice/09_work_Cor.csv">このデータ</a>(前回の課題4のデータ)について以下の問に答えよ．</p>
+<ul>
+<li>Q1: 直属の上司のリーダーシップの評価（7段階評価）</li>
+<li>Q2: 自身の職務内容に対する満足度（7段階評価）</li>
+<li>Q3: 自身の給与に対する満足度（7段階評価）</li>
+<li>Q4: 所属している部署の雰囲気に対する満足度（7段階評価）</li>
+</ul>
+<ol style="list-style-type: decimal">
+<li>Q1～Q4の4つの質問からなるデータを用いて，Q1～Q3からQ4を予測する重回帰分析を行え．</li>
+<li>Q1～Q4の4つの質問からなるデータを用いて，Q1～Q3からQ4を予測する標準化重回帰分析を行え．</li>
+<li>「標準化」というものがつくか，つかないかの違いを考慮して，それぞれの結果の解釈を述べよ．</li>
+</ol>
 </div>
-<div id="rとrstudioの基本操作-その1" class="section level1" number="2">
-<h1><span class="header-section-number">2</span>
-RとRStudioの基本操作　その1</h1>
-<p><a href="./RText_02_BasicUsage.html">こちら</a>を参照してください。</p>
-</div>
-<div id="rとrstudioの基本操作-その2" class="section level1" number="3">
-<h1><span class="header-section-number">3</span>
-RとRStudioの基本操作　その2</h1>
-<p><a href="./RText_03_BasicUsage2.html">こちら</a>を参照してください。</p>
-</div>
-<div id="記述統計量と推測統計量" class="section level1" number="4">
-<h1><span class="header-section-number">4</span>
-記述統計量と推測統計量</h1>
-<p><a href="./RText_04_DescriptiveStatistics.html">こちら</a>を参照してください。</p>
-</div>
-<div id="データハンドリング" class="section level1" number="5">
-<h1><span class="header-section-number">5</span> データハンドリング</h1>
-<p><a href="./RText_05_DataHandling.html">こちらのページ</a>を参照してください。</p>
-</div>
-<div id="基本的なデータの可視化" class="section level1" number="6">
-<h1><span class="header-section-number">6</span>
-基本的なデータの可視化</h1>
-<p><a href="./RText_06_ggplot2_basicUsage.html">こちらのページ</a>を参照してください．
-課題の正答例は<a href="./RText_06_WorkandAnswers.html">こちら</a>を参照してください．</p>
-</div>
-<div id="基本的な統計検定" class="section level1" number="7">
-<h1><span class="header-section-number">7</span> 基本的な統計検定</h1>
-<p><a href="./Rtext_07_BasicTest.html">こちらのページ</a>を参照してください。
-課題の正答例は<a href="./RText_07_WorkandAnswers.html">こちら</a>を参照してください．</p>
-</div>
-<div id="相関分析" class="section level1" number="8">
-<h1><span class="header-section-number">8</span> 相関分析</h1>
-<p><a href="./RText_09_Correlation.html">こちらのページ</a>を参照してください。
-課題の正答例は<a href="./RText_09_WorkandAnswers.html">こちら</a>を参照してください．</p>
-</div>
-<div id="回帰分析" class="section level1" number="9">
-<h1><span class="header-section-number">9</span> 回帰分析</h1>
-<p><a href="./RText_10_Regression.html">こちらのページ</a>を参照してください。
-課題の正答例は<a href="./RText_10_WorkandAnswers.html">こちら</a>を参照してください．</p>
-</div>
-<div id="分散分析" class="section level1" number="10">
-<h1><span class="header-section-number">10</span> 分散分析</h1>
-<p><a href="./RText_08_Anova.html">こちらのページ</a>を参照してください。
-課題の正答例は<a href="./RText_08_WorkandAnswers.html">こちら</a>を参照してください．</p>
-</div>
-<div id="分散分析と回帰分析の統一" class="section level1" number="11">
-<h1><span class="header-section-number">11</span>
-分散分析と回帰分析の統一</h1>
-<p><a href="./RText_11_RegressionAndAnova.html">こちらのページ</a>を参照してください。</p>
-</div>
-<div id="一般化線形モデル" class="section level1" number="12">
-<h1><span class="header-section-number">12</span> 一般化線形モデル</h1>
-<p><a href="./RText_12_AdvancedRegression.html">こちらのページ</a>を参照してください。</p>
-</div>
-<div id="主成分分析因子分析" class="section level1" number="13">
-<h1><span class="header-section-number">13</span>
-主成分分析・因子分析</h1>
-<p><a href="./RText_13_PCA_FA.html">こちらのページ</a>を参照してください。</p>
-</div>
-<div id="クラスター分析" class="section level1" number="14">
-<h1><span class="header-section-number">14</span> クラスター分析</h1>
-<p><a href="./RText_14_ClusterAnalysis.html">こちらのページ</a>を参照してください。</p>
-<!--   <!----------------------------- 仕切り ----------------------------------->
-<p>–&gt;</p>
-<!-- # 関係性の分析（2） -->
-<!-- ## 一般化線形モデル -->
-<!-- ## 混合モデル -->
-<!--   <!----------------------------- 仕切り ----------------------------------->
-<p>–&gt;</p>
-<!-- # 共分散構造分析 -->
-<!-- ## パス解析 -->
-<!-- ## 構造方程式モデリング -->
-<!--   <!----------------------------- 仕切り ----------------------------------->
-<p>–&gt;</p>
-<!-- # 主成分分析と因子分析 -->
-<!--   <!----------------------------- 仕切り ----------------------------------->
-<p>–&gt;</p>
-<!-- # クラスター分析 -->
-<!--   <!----------------------------- 仕切り ----------------------------------->
-<p>–&gt;</p>
-<!-- # テキストマイニング -->
-<!--   <!----------------------------- 仕切り ----------------------------------->
-<p>–&gt;</p>
-<!-- # R・RStudioのさらなる活用 -->
-<!-- ## プログラムを活用した分析と自作関数の利用 -->
-<!-- ## RmarkdownとHTML出力 -->
-<!-- ## GitHubとPosit Cloudとの連携 -->
-</div>
+<pre class="r"><code>data &lt;-read.csv(&quot;./practice/09_work_Cor.csv&quot;)
+fit &lt;- lm(Q4 ~ Q1 + Q2 + Q3, data)
+summary(fit)</code></pre>
+<pre><code>## 
+## Call:
+## lm(formula = Q4 ~ Q1 + Q2 + Q3, data = data)
+## 
+## Residuals:
+##      Min       1Q   Median       3Q      Max 
+## -3.10728 -0.65981 -0.00162  0.71070  2.33632 
+## 
+## Coefficients:
+##             Estimate Std. Error t value Pr(&gt;|t|)    
+## (Intercept)  2.60158    0.25660  10.139  &lt; 2e-16 ***
+## Q1           0.19324    0.04592   4.208 3.36e-05 ***
+## Q2           0.14384    0.04509   3.190  0.00156 ** 
+## Q3           0.10653    0.04820   2.210  0.02781 *  
+## ---
+## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1
+## 
+## Residual standard error: 0.9414 on 319 degrees of freedom
+## Multiple R-squared:  0.1479, Adjusted R-squared:  0.1399 
+## F-statistic: 18.45 on 3 and 319 DF,  p-value: 4.592e-11</code></pre>
+<pre class="r"><code>fit &lt;- lm(scale(Q4) ~ scale(Q1) + scale(Q2) + scale(Q3), data)
+summary(fit)</code></pre>
+<pre><code>## 
+## Call:
+## lm(formula = scale(Q4) ~ scale(Q1) + scale(Q2) + scale(Q3), data = data)
+## 
+## Residuals:
+##     Min      1Q  Median      3Q     Max 
+## -3.0612 -0.6500 -0.0016  0.7002  2.3017 
+## 
+## Coefficients:
+##              Estimate Std. Error t value Pr(&gt;|t|)    
+## (Intercept) 2.001e-16  5.160e-02   0.000  1.00000    
+## scale(Q1)   2.320e-01  5.513e-02   4.208 3.36e-05 ***
+## scale(Q2)   1.787e-01  5.602e-02   3.190  0.00156 ** 
+## scale(Q3)   1.186e-01  5.366e-02   2.210  0.02781 *  
+## ---
+## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1
+## 
+## Residual standard error: 0.9274 on 319 degrees of freedom
+## Multiple R-squared:  0.1479, Adjusted R-squared:  0.1399 
+## F-statistic: 18.45 on 3 and 319 DF,  p-value: 4.592e-11</code></pre>
+<p>課題1については，標準化を行わない素点での重回帰分析の結果であり，いずれの係数も有意である．
+具体的には，切片は2.6となっており，これに対して，Q1の回答値が1点上がるごとに，約0.2点，Q2の回答が1点上がるごとに，約1.4点，Q3の回答が上がるおとに約0.11点，Q4の値が上昇する，という結果であった．</p>
+<p>課題2については，目的変素も説明変数も標準化されているため，それぞれの係数は，その変数の標準偏差が1であるときの効果を示している．
+具体的には，切片はほぼ0である．これに対して，Q1の標準偏差が1上昇するごとに，Q4は約0.23標準偏差，Q2の標準偏差が1上昇するごとに，約0.18標準偏差，Q3の標準偏差が1上昇するごとに約0.19標準偏差，Q4の標準偏差が上昇する，という結果であった．
+すなわち，この結果から，Q1~3のうち，Q4に弱いながらも関係が確認されたのはQ1の見であったｌ</p>
 
 
 

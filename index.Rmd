@@ -56,12 +56,17 @@ knitr::opts_chunk$set(echo = TRUE)
 # 相関分析
 
 [こちらのページ](./RText_09_Correlation.html)を参照してください。
+課題の正答例は[こちら](./RText_09_WorkandAnswers.html)を参照してください．
+
+
 
 # 回帰分析
 [こちらのページ](./RText_10_Regression.html)を参照してください。
+課題の正答例は[こちら](./RText_10_WorkandAnswers.html)を参照してください．
 
 # 分散分析
 [こちらのページ](./RText_08_Anova.html)を参照してください。
+課題の正答例は[こちら](./RText_08_WorkandAnswers.html)を参照してください．
 
 # 分散分析と回帰分析の統一
 [こちらのページ](./RText_11_RegressionAndAnova.html)を参照してください。
