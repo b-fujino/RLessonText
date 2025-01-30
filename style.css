@@ -1,9 +1,11 @@
+/****
 .tocify-subheader { /* 全部のサブヘッダーを最初から表示する*/
     display: block !important;
 }
 .tocify-item {/*長いヘッダーも折り返さない*/
     white-space: nowrap;
 }
+***/
 
 body{
   counter-reset: ref_number practice_number work_number;
