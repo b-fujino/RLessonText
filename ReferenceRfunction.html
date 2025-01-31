@@ -1322,6 +1322,175 @@ if (window.hljs) {
 
 
 
+<style type="text/css">.tocify-subheader { 
+
+}
+.tocify-item {
+white-space: nowrap;
+}
+body{
+counter-reset: ref_number practice_number work_number;
+}
+.float img{
+
+ 
+margin: auto;
+display: block;
+padding: 2%;
+border-radius: 8px 8px 0 0 ;
+position: relative;
+width : 60%;
+}
+.float .figcaption {
+position: relative;
+font-style: italic;
+font-size: large;
+font-weight: bold;
+color: #666;
+text-align: center;
+margin:0% auto 5% auto;
+border-bottom: solid 1px #666;
+border-left: solid 1px #666;
+border-right: solid 1px #666;
+border-radius:0 0 8px 8px;
+width : 60%
+}
+img {
+margin: auto;
+display: block;
+border: solid 1px #666;
+border-radius: 8px;
+position: relative;
+width : 60%;
+}
+.WideFigure img{
+margin: auto;
+display: block;
+border: solid 1px #666;
+border-radius: 8px 8px 0 0;
+position: relative;
+width : 100%;
+}
+.WideFigure .float .figcaption {
+position: relative;
+font-style: italic;
+font-size: large;
+font-weight: bold;
+color: #666;
+text-align: center;
+margin:0% auto 5% auto;
+border-bottom: solid 1px #666;
+border-left: solid 1px #666;
+border-right: solid 1px #666;
+border-radius:0 0 8px 8px;
+width : 100%
+}
+.ref {
+position: relative;
+margin:5%;
+padding:5px;
+background-color: rgba(255, 255, 128, .5);
+color: #666;
+}
+.ref::before{
+counter-increment: ref_number 1;
+content: "[参考 " counter(ref_number) "]";
+font-weight: bold;
+display: block;
+margin-bottom: 3px;
+}
+h1 {
+margin-top : 10px;
+padding-top : 50px;
+}
+.practice {
+position: relative;
+margin:5%;
+padding:5px;
+background-color: rgba(128, 255, 200, .5);
+color: #666;
+}
+.practice::before{
+counter-increment: practice_number 1;
+content: "[例題 " counter(practice_number) "]";
+font-weight: bold;
+display: block;
+margin-bottom: 3px;
+}
+.work {
+position: relative;
+margin:5%;
+padding:5px;
+background-color: rgba(128, 200, 255, .2);
+color: #666;
+}
+.work::before{
+counter-increment: work_number 1;
+content: "[課題 " counter(work_number) "]";
+font-weight: bold;
+display: block;
+margin-bottom: 3px;
+}
+
+user-select: none;
+-moz-user-select: none;
+-webkit-user-select: none;
+-ms-user-select: none;
+-khtml-user-select: none;
+-webkit-touch-callout: none;
+}
+***/
+.res_table {
+border-collapse: collapse;
+width: 50%;
+margin: 0 auto;
+border-top: 1px solid #666;
+border-bottom: 1px solid #666;
+}
+.res_table th {
+border-bottom: 1px solid #666;
+text-align: center;
+}
+.res_table td {
+text-align: right;
+}
+.res_table .td_left {
+text-align: left;
+}
+.res_table .tr_topborder {
+border-top: 1px solid #666;
+}
+.res_table .tr_bottomborder {
+border-bottom: 1px solid #666;
+}
+
+.math .display {
+text-align: center;
+font-size: small;
+}
+
+.custom-table {
+border: 2px solid #000;
+border-collapse: collapse;
+width: 75%;
+margin-left: auto;
+margin-right: auto;
+margin-bottom: 10px;
+margin-top: 10px;
+}
+.custom-table th, .custom-table td {
+border: 1px solid #000;
+padding: 8px;
+text-align: center;
+}
+.custom-table th {
+background-color: #f0f8ff;
+}
+
+a {
+text-decoration: underline;
+font-weight: bold;
+}</style>
 
 
 
@@ -1489,9 +1658,7 @@ border-radius: 0px;
 <div id="ライブラリの読み込み" class="section level1" number="1">
 <h1><span class="header-section-number">1</span>
 ライブラリの読み込み</h1>
-<p><code>library()</code></p>
 <ul>
-<li>ライブラリを読み込む．</li>
 <li>例文: <code>library(tidyverse)</code></li>
 <li>引数：読み込むライブラリ名</li>
 <li>返り値: 特になし</li>
@@ -2130,9 +2297,9 @@ head(data_wide)</code></pre>
 <li>返り値: 指定した分位数の値を含むベクトル（名前付き）．</li>
 </ul>
 </div>
-<div id="数値ベクトルのの度数分布を求める" class="section level3" number="6.1.8">
+<div id="度数分布を求める" class="section level3" number="6.1.8">
 <h3><span class="header-section-number">6.1.8</span>
-数値ベクトルのの度数分布を求める．</h3>
+度数分布を求める．</h3>
 <ul>
 <li>例文: <code>table(data)</code>,
 <code>table(data$factor1, data$factor2)</code></li>
@@ -2407,13 +2574,13 @@ t.test(data1, data2, paired=TRUE)</code></pre>
 ##  Paired t-test
 ## 
 ## data:  data1 and data2
-## t = -3.8506, df = 4, p-value = 0.01829
+## t = -0.27598, df = 4, p-value = 0.7962
 ## alternative hypothesis: true mean difference is not equal to 0
 ## 95 percent confidence interval:
-##  -2.4623554 -0.3991176
+##  -2.007150  1.644208
 ## sample estimates:
 ## mean difference 
-##       -1.430736</code></pre>
+##      -0.1814709</code></pre>
 </div>
 </div>
 <div id="群で分散を比較したい" class="section level2" number="7.2">
@@ -2445,7 +2612,7 @@ t.test(data1, data2, paired=TRUE)</code></pre>
 それぞれの群での総数（分母に来る数）をベクトルで指定する．</li>
 </ul></li>
 </ul>
-<p>予め<a href="#table">table()</a>を用いてクロス集計表を作成しておくと，それを引数としてprop.test()を適用することもできる．</p>
+<p>予め<a href="#度数分布を求める">table()</a>を用いてクロス集計表を作成しておくと，それを引数としてprop.test()を適用することもできる．</p>
 <ul>
 <li>例文: <code>prop.test(data_table)</code></li>
 <li>引数:
@@ -2721,9 +2888,336 @@ cor.test(data1, data2)</code></pre>
 </div>
 </div>
 </div>
-<div id="連続変数間での予測式を作りたい因果関係を調べたい" class="section level1" number="9">
+<div id="連続変数間での予測式を作りたい因果関係を調べたい回帰分析" class="section level1" number="9">
 <h1><span class="header-section-number">9</span>
-連続変数間での予測式を作りたい・因果関係を調べたい</h1>
+連続変数間での予測式を作りたい・因果関係を調べたい(回帰分析)</h1>
+<div id="単純な重回帰分析" class="section level2" number="9.1">
+<h2><span class="header-section-number">9.1</span> 単純な重回帰分析</h2>
+<ul>
+<li>例文: <code>lm(y ~ x1 + x2, data)</code></li>
+<li>引数：
+<ul>
+<li>第1引数:
+目的変数（従属変数）と説明変数（独立変数）を<code>~</code>で結んで指定する．</li>
+<li>第2引数: データフレームオブジェクト</li>
+</ul></li>
+<li>返り値:
+回帰分析の結果を含むオブジェクト．summary()で出力させることができる．</li>
+</ul>
+<pre class="r"><code># 例用データの作成
+set.seed(12)
+data &lt;- data.frame(x1=rnorm(25, 4.0, 2),
+                   x2=rnorm(25, 5.0, 2),
+                   y=rnorm(25, 6.0, 2)
+                   )
+
+# 回帰分析
+res.lm &lt;- lm(y ~ x1 + x2, data)
+summary(res.lm)</code></pre>
+<pre><code>## 
+## Call:
+## lm(formula = y ~ x1 + x2, data = data)
+## 
+## Residuals:
+##     Min      1Q  Median      3Q     Max 
+## -4.3926 -1.0023  0.0423  1.2526  3.6039 
+## 
+## Coefficients:
+##             Estimate Std. Error t value Pr(&gt;|t|)    
+## (Intercept)  7.97796    1.65828   4.811 8.33e-05 ***
+## x1          -0.04193    0.21172  -0.198    0.845    
+## x2          -0.27413    0.25672  -1.068    0.297    
+## ---
+## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1
+## 
+## Residual standard error: 1.91 on 22 degrees of freedom
+## Multiple R-squared:  0.04956,    Adjusted R-squared:  -0.03684 
+## F-statistic: 0.5736 on 2 and 22 DF,  p-value: 0.5717</code></pre>
+</div>
+<div id="標準化重回帰分析" class="section level2" number="9.2">
+<h2><span class="header-section-number">9.2</span> 標準化重回帰分析</h2>
+<ul>
+<li>例文: <code>lm(scale(y) ~ scale(x1) + scale(x2), data)</code></li>
+<li>引数：
+<ul>
+<li>第1引数:
+目的変数（従属変数）と説明変数（独立変数）を<code>~</code>で結んで指定する．このとき，標準化したい変数には<code>scale()</code>を適用すると，その変数が標準化された上で回帰分析が掛けられる．</li>
+<li>第2引数: データフレームオブジェクト</li>
+</ul></li>
+<li>返り値:
+回帰分析の結果を含むオブジェクト．summary()で出力させることができる．</li>
+</ul>
+<pre class="r"><code># 例用データの作成
+set.seed(12)
+data &lt;- data.frame(x1=rnorm(25, 4.0, 2),
+                   x2=rnorm(25, 5.0, 2),
+                   y=rnorm(25, 6.0, 2)
+                   )
+
+# 回帰分析
+res.lm &lt;- lm(scale(y) ~ scale(x1) + scale(x2), data)
+summary(res.lm)</code></pre>
+<pre><code>## 
+## Call:
+## lm(formula = scale(y) ~ scale(x1) + scale(x2), data = data)
+## 
+## Residuals:
+##      Min       1Q   Median       3Q      Max 
+## -2.34192 -0.53436  0.02255  0.66781  1.92142 
+## 
+## Coefficients:
+##               Estimate Std. Error t value Pr(&gt;|t|)
+## (Intercept)  1.826e-16  2.037e-01   0.000    1.000
+## scale(x1)   -4.264e-02  2.153e-01  -0.198    0.845
+## scale(x2)   -2.299e-01  2.153e-01  -1.068    0.297
+## 
+## Residual standard error: 1.018 on 22 degrees of freedom
+## Multiple R-squared:  0.04956,    Adjusted R-squared:  -0.03684 
+## F-statistic: 0.5736 on 2 and 22 DF,  p-value: 0.5717</code></pre>
+<p>全変数を標準化する場合には，データそのものに<code>scale()</code>を適用することもできる．ただし，その場合にはscale()の返り値が行列型になるため，データフレームオブジェクトとして扱うためには<code>as.data.frame()</code>を適用する必要がある．</p>
+<pre class="r"><code># 例用データの作成
+set.seed(12)
+data &lt;- data.frame(x1=rnorm(25, 4.0, 2),
+                   x2=rnorm(25, 5.0, 2),
+                   y=rnorm(25, 6.0, 2)
+                   )
+
+# 回帰分析
+res.lm &lt;- lm(y~ x1+x2, as.data.frame(scale(data)))
+summary(res.lm)</code></pre>
+<pre><code>## 
+## Call:
+## lm(formula = y ~ x1 + x2, data = as.data.frame(scale(data)))
+## 
+## Residuals:
+##      Min       1Q   Median       3Q      Max 
+## -2.34192 -0.53436  0.02255  0.66781  1.92142 
+## 
+## Coefficients:
+##               Estimate Std. Error t value Pr(&gt;|t|)
+## (Intercept)  1.826e-16  2.037e-01   0.000    1.000
+## x1          -4.264e-02  2.153e-01  -0.198    0.845
+## x2          -2.299e-01  2.153e-01  -1.068    0.297
+## 
+## Residual standard error: 1.018 on 22 degrees of freedom
+## Multiple R-squared:  0.04956,    Adjusted R-squared:  -0.03684 
+## F-statistic: 0.5736 on 2 and 22 DF,  p-value: 0.5717</code></pre>
+</div>
+<div id="交互作用項を含む重回帰分析" class="section level2" number="9.3">
+<h2><span class="header-section-number">9.3</span>
+交互作用項を含む重回帰分析</h2>
+<ul>
+<li>例文: <code>lm(y ~ x1 * x2, data)</code></li>
+<li>引数：
+<ul>
+<li>第1引数:
+目的変数（従属変数）と説明変数（独立変数）を<code>~</code>で結んで指定する．交互作用項を含む場合には<code>*</code>を用いて指定する．なお，交互作用と主効果を明確に分けて表現したい場合には，<code>x1+x2+x1:x2</code>と記述すれば良い．</li>
+<li>第2引数: データフレームオブジェクト</li>
+</ul></li>
+<li>返り値:
+回帰分析の結果を含むオブジェクト．summary()で出力させることができる．</li>
+</ul>
+<pre class="r"><code># 例用データの作成
+set.seed(12)
+data &lt;- data.frame(x1=rnorm(25, 4.0, 2),
+                   x2=rnorm(25, 5.0, 2),
+                   y=rnorm(25, 6.0, 2)
+                   )
+
+# 回帰分析
+res.lm &lt;- lm(y ~ x1 * x2, data)
+summary(res.lm)</code></pre>
+<pre><code>## 
+## Call:
+## lm(formula = y ~ x1 * x2, data = data)
+## 
+## Residuals:
+##     Min      1Q  Median      3Q     Max 
+## -3.8214 -0.5765  0.2439  1.1113  3.3846 
+## 
+## Coefficients:
+##             Estimate Std. Error t value Pr(&gt;|t|)
+## (Intercept)   2.4077     3.8505   0.625    0.539
+## x1            1.2798     0.8555   1.496    0.150
+## x2            0.9283     0.7955   1.167    0.256
+## x1:x2        -0.3000     0.1885  -1.591    0.127
+## 
+## Residual standard error: 1.847 on 21 degrees of freedom
+## Multiple R-squared:  0.1518, Adjusted R-squared:  0.03065 
+## F-statistic: 1.253 on 3 and 21 DF,  p-value: 0.3159</code></pre>
+</div>
+<div id="一部の変数をカテゴリカル変数として扱いたい" class="section level2" number="9.4">
+<h2><span class="header-section-number">9.4</span>
+一部の変数をカテゴリカル変数として扱いたい</h2>
+<ul>
+<li>例文: <code>lm(y ~ factor(x1) + x2, data)</code></li>
+<li>引数：
+<ul>
+<li>第1引数:
+目的変数（従属変数）と説明変数（独立変数）を<code>~</code>で結んで指定する．カテゴリカル変数には<code>factor()</code>を適用する．</li>
+<li>第2引数: データフレームオブジェクト</li>
+</ul></li>
+<li>返り値:
+回帰分析の結果を含むオブジェクト．summary()で出力させることができる．</li>
+</ul>
+<pre class="r"><code># 例用データの作成
+set.seed(12)
+data &lt;- data.frame(x1=sample(c(&quot;A&quot;,&quot;B&quot;,&quot;C&quot;), 25, replace=TRUE),
+                   x2=rnorm(25, 5.0, 2),
+                   y=rnorm(25, 6.0, 2)
+                   )
+
+# 回帰分析
+res.lm &lt;- lm(y ~ factor(x1) + x2, data)
+summary(res.lm)</code></pre>
+<pre><code>## 
+## Call:
+## lm(formula = y ~ factor(x1) + x2, data = data)
+## 
+## Residuals:
+##     Min      1Q  Median      3Q     Max 
+## -3.3037 -1.4960  0.1166  1.1641  3.8223 
+## 
+## Coefficients:
+##             Estimate Std. Error t value Pr(&gt;|t|)    
+## (Intercept)   7.2936     1.3799   5.286 3.06e-05 ***
+## factor(x1)B  -0.2991     0.8982  -0.333    0.742    
+## factor(x1)C   0.2327     0.9978   0.233    0.818    
+## x2           -0.1467     0.2319  -0.632    0.534    
+## ---
+## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1
+## 
+## Residual standard error: 1.851 on 21 degrees of freedom
+## Multiple R-squared:  0.04358,    Adjusted R-squared:  -0.09305 
+## F-statistic: 0.319 on 3 and 21 DF,  p-value: 0.8115</code></pre>
+</div>
+<div id="ステップワイズ法による変数選択" class="section level2" number="9.5">
+<h2><span class="header-section-number">9.5</span>
+ステップワイズ法による変数選択</h2>
+<ul>
+<li>例文: <code>step(res.lm, direction=&quot;both&quot;, trace=FALSE)</code></li>
+<li>引数：
+<ul>
+<li>第1引数: 回帰分析の結果を含むオブジェクト．</li>
+<li>第2引数<code>direction</code>（省略化）:
+変数選択の方向を指定する．<code>&quot;both&quot;</code>で前進選択と後退選択を同時に行う．他には<code>&quot;forward&quot;</code>や<code>&quot;backward&quot;</code>がある．省略すると<code>&quot;both&quot;</code>となる．</li>
+<li>第3引数<code>trace</code>（省略化）:
+途中経過を表示するかどうか．<code>TRUE</code>で表示する．省略すると<code>FALSE</code>となる．</li>
+</ul></li>
+<li>返り値:
+ステップワイズ法による変数選択の結果を含むlmオブジェクト．summary()で出力させることができる．</li>
+</ul>
+<pre class="r"><code># 例用データの作成
+set.seed(12)
+data &lt;- data.frame(x1=rnorm(25, 4.0, 2),
+                   x2=rnorm(25, 5.0, 2),
+                   x3=rnorm(25, 6.0, 2),
+                   x4=rnorm(25, 7.0, 2),
+                   x5=rnorm(25, 8.0, 2)
+                   )
+data &lt;- mutate(data, y = 0.2*x1 + 0.3*x2 + 0.4*x3 + 0.05*x4 + 0.05*x5 + rnorm(25, 0, 1))
+
+# 回帰分析
+res.lm &lt;- lm(y ~ x1 + x2 + x3 + x4 + x5, data)
+summary(res.lm)</code></pre>
+<pre><code>## 
+## Call:
+## lm(formula = y ~ x1 + x2 + x3 + x4 + x5, data = data)
+## 
+## Residuals:
+##     Min      1Q  Median      3Q     Max 
+## -1.7729 -0.8686  0.3601  0.8099  1.6465 
+## 
+## Coefficients:
+##             Estimate Std. Error t value Pr(&gt;|t|)  
+## (Intercept)  0.27922    2.42395   0.115   0.9095  
+## x1           0.03475    0.13752   0.253   0.8032  
+## x2           0.21758    0.17425   1.249   0.2270  
+## x3           0.32056    0.13553   2.365   0.0288 *
+## x4           0.12822    0.17376   0.738   0.4696  
+## x5           0.14025    0.12938   1.084   0.2919  
+## ---
+## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1
+## 
+## Residual standard error: 1.209 on 19 degrees of freedom
+## Multiple R-squared:  0.2763, Adjusted R-squared:  0.08589 
+## F-statistic: 1.451 on 5 and 19 DF,  p-value: 0.2519</code></pre>
+<pre class="r"><code># ステップワイズ法による変数選択
+res.step &lt;- step(res.lm, direction=&quot;both&quot;, trace=TRUE)</code></pre>
+<pre><code>## Start:  AIC=14.65
+## y ~ x1 + x2 + x3 + x4 + x5
+## 
+##        Df Sum of Sq    RSS    AIC
+## - x1    1    0.0934 27.886 12.731
+## - x4    1    0.7966 28.589 13.354
+## - x5    1    1.7190 29.511 14.147
+## - x2    1    2.2805 30.073 14.619
+## &lt;none&gt;              27.792 14.647
+## - x3    1    8.1833 35.976 19.099
+## 
+## Step:  AIC=12.73
+## y ~ x2 + x3 + x4 + x5
+## 
+##        Df Sum of Sq    RSS    AIC
+## - x4    1    0.7190 28.605 11.367
+## - x5    1    1.7917 29.677 12.288
+## - x2    1    2.2149 30.101 12.642
+## &lt;none&gt;              27.886 12.731
+## + x1    1    0.0934 27.792 14.647
+## - x3    1    8.1141 36.000 17.116
+## 
+## Step:  AIC=11.37
+## y ~ x2 + x3 + x5
+## 
+##        Df Sum of Sq    RSS    AIC
+## - x5    1    1.7430 30.348 10.846
+## - x2    1    1.7468 30.352 10.849
+## &lt;none&gt;              28.605 11.367
+## + x4    1    0.7190 27.886 12.731
+## + x1    1    0.0158 28.589 13.354
+## - x3    1    7.8366 36.441 15.421
+## 
+## Step:  AIC=10.85
+## y ~ x2 + x3
+## 
+##        Df Sum of Sq    RSS    AIC
+## - x2    1    1.7723 32.120 10.265
+## &lt;none&gt;              30.348 10.846
+## + x5    1    1.7430 28.605 11.367
+## + x4    1    0.6703 29.677 12.288
+## + x1    1    0.0532 30.294 12.802
+## - x3    1    7.4938 37.841 14.363
+## 
+## Step:  AIC=10.27
+## y ~ x3
+## 
+##        Df Sum of Sq    RSS    AIC
+## &lt;none&gt;              32.120 10.265
+## + x2    1    1.7723 30.348 10.846
+## + x5    1    1.7685 30.352 10.849
+## + x4    1    0.2210 31.899 12.092
+## + x1    1    0.0165 32.103 12.252
+## - x3    1    6.2848 38.405 12.733</code></pre>
+<pre class="r"><code>summary(res.step)</code></pre>
+<pre><code>## 
+## Call:
+## lm(formula = y ~ x3, data = data)
+## 
+## Residuals:
+##     Min      1Q  Median      3Q     Max 
+## -2.5676 -0.7603  0.1840  0.8117  2.1289 
+## 
+## Coefficients:
+##             Estimate Std. Error t value Pr(&gt;|t|)    
+## (Intercept)   3.7704     0.8698   4.335 0.000244 ***
+## x3            0.2728     0.1286   2.121 0.044879 *  
+## ---
+## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1
+## 
+## Residual standard error: 1.182 on 23 degrees of freedom
+## Multiple R-squared:  0.1636, Adjusted R-squared:  0.1273 
+## F-statistic:   4.5 on 1 and 23 DF,  p-value: 0.04488</code></pre>
+</div>
 </div>
 <div id="離散変数と連続変数の間の因果関係を調べたい" class="section level1" number="10">
 <h1><span class="header-section-number">10</span>

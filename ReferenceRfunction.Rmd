@@ -10,7 +10,7 @@ output:
       collapsed: true
       smooth_scroll: true    
     number_section: true
-    # css: style.css
+    css: style.css
   word_document:
     toc: true
     toc_depth: '4'
@@ -20,9 +20,6 @@ editor_options:
 ---
 # ライブラリの読み込み
 
-`library()`
-
-- ライブラリを読み込む．
 - 例文: `library(tidyverse)`
 - 引数：読み込むライブラリ名
 - 返り値: 特になし
@@ -438,7 +435,7 @@ head(data_wide)
   - 第2引数：分位数の位置を0から1で指定する．複数のものを同時に得たい場合には`c(0.25, 0.75)`のように指定する．
 - 返り値: 指定した分位数の値を含むベクトル（名前付き）．
 
-### 数値ベクトルのの度数分布を求める．
+### 度数分布を求める．
 - 例文: `table(data)`, `table(data$factor1, data$factor2)`
 - 引数：含まれている値の頻度を求めたいオブジェクト
 - 返り値: 水準ごとの頻度を含むテーブルオブジェクト．
@@ -646,7 +643,7 @@ t.test(data1, data2, paired=TRUE)
   - 第2引数: それぞれの群での総数（分母に来る数）をベクトルで指定する．
   
   
-予め[table()](#table)を用いてクロス集計表を作成しておくと，それを引数としてprop.test()を適用することもできる．
+予め[table()](#度数分布を求める)を用いてクロス集計表を作成しておくと，それを引数としてprop.test()を適用することもできる．
 
 - 例文: `prop.test(data_table)`
 - 引数: table()で作成したクロス集計表オブジェクト．関数の中でtable()を使ってもよい．
@@ -822,8 +819,132 @@ cor.test(data1, data2)
 ![互いに異なる変数間の相関の差の検定](./Img/2024_12_09_Deff_Relations_2.png)
 
 
-# 連続変数間での予測式を作りたい・因果関係を調べたい
+# 連続変数間での予測式を作りたい・因果関係を調べたい(回帰分析)
+
+## 単純な重回帰分析
+- 例文: `lm(y ~ x1 + x2, data)`
+- 引数：
+  - 第1引数: 目的変数（従属変数）と説明変数（独立変数）を`~`で結んで指定する．
+  - 第2引数: データフレームオブジェクト
+- 返り値: 回帰分析の結果を含むオブジェクト．summary()で出力させることができる．
+
+```{r}
+# 例用データの作成
+set.seed(12)
+data <- data.frame(x1=rnorm(25, 4.0, 2),
+                   x2=rnorm(25, 5.0, 2),
+                   y=rnorm(25, 6.0, 2)
+                   )
+
+# 回帰分析
+res.lm <- lm(y ~ x1 + x2, data)
+summary(res.lm)
+```
+
+## 標準化重回帰分析
+- 例文: `lm(scale(y) ~ scale(x1) + scale(x2), data)`
+- 引数：
+  - 第1引数: 目的変数（従属変数）と説明変数（独立変数）を`~`で結んで指定する．このとき，標準化したい変数には`scale()`を適用すると，その変数が標準化された上で回帰分析が掛けられる．
+  - 第2引数: データフレームオブジェクト
+- 返り値: 回帰分析の結果を含むオブジェクト．summary()で出力させることができる．
+
+```{r}
+# 例用データの作成
+set.seed(12)
+data <- data.frame(x1=rnorm(25, 4.0, 2),
+                   x2=rnorm(25, 5.0, 2),
+                   y=rnorm(25, 6.0, 2)
+                   )
+
+# 回帰分析
+res.lm <- lm(scale(y) ~ scale(x1) + scale(x2), data)
+summary(res.lm)
+```
+
+全変数を標準化する場合には，データそのものに`scale()`を適用することもできる．ただし，その場合にはscale()の返り値が行列型になるため，データフレームオブジェクトとして扱うためには`as.data.frame()`を適用する必要がある．
+
+```{r}
+# 例用データの作成
+set.seed(12)
+data <- data.frame(x1=rnorm(25, 4.0, 2),
+                   x2=rnorm(25, 5.0, 2),
+                   y=rnorm(25, 6.0, 2)
+                   )
+
+# 回帰分析
+res.lm <- lm(y~ x1+x2, as.data.frame(scale(data)))
+summary(res.lm)
+```
+
+## 交互作用項を含む重回帰分析
+- 例文: `lm(y ~ x1 * x2, data)`
+- 引数：
+  - 第1引数: 目的変数（従属変数）と説明変数（独立変数）を`~`で結んで指定する．交互作用項を含む場合には`*`を用いて指定する．なお，交互作用と主効果を明確に分けて表現したい場合には，`x1+x2+x1:x2`と記述すれば良い．
+  - 第2引数: データフレームオブジェクト
+- 返り値: 回帰分析の結果を含むオブジェクト．summary()で出力させることができる．
 
 
+```{r}
+# 例用データの作成
+set.seed(12)
+data <- data.frame(x1=rnorm(25, 4.0, 2),
+                   x2=rnorm(25, 5.0, 2),
+                   y=rnorm(25, 6.0, 2)
+                   )
+
+# 回帰分析
+res.lm <- lm(y ~ x1 * x2, data)
+summary(res.lm)
+```
+
+## 一部の変数をカテゴリカル変数として扱いたい
+- 例文: `lm(y ~ factor(x1) + x2, data)`
+- 引数：
+  - 第1引数: 目的変数（従属変数）と説明変数（独立変数）を`~`で結んで指定する．カテゴリカル変数には`factor()`を適用する．
+  - 第2引数: データフレームオブジェクト
+- 返り値: 回帰分析の結果を含むオブジェクト．summary()で出力させることができる．
+
+```{r}
+# 例用データの作成
+set.seed(12)
+data <- data.frame(x1=sample(c("A","B","C"), 25, replace=TRUE),
+                   x2=rnorm(25, 5.0, 2),
+                   y=rnorm(25, 6.0, 2)
+                   )
+
+# 回帰分析
+res.lm <- lm(y ~ factor(x1) + x2, data)
+summary(res.lm)
+```
+## ステップワイズ法による変数選択
+- 例文: `step(res.lm, direction="both", trace=FALSE)`
+- 引数：
+  - 第1引数: 回帰分析の結果を含むオブジェクト．
+  - 第2引数`direction`（省略化）: 変数選択の方向を指定する．`"both"`で前進選択と後退選択を同時に行う．他には`"forward"`や`"backward"`がある．省略すると`"both"`となる．
+  - 第3引数`trace`（省略化）: 途中経過を表示するかどうか．`TRUE`で表示する．省略すると`FALSE`となる．
+- 返り値: ステップワイズ法による変数選択の結果を含むlmオブジェクト．summary()で出力させることができる．
+
+```{r}
+# 例用データの作成
+set.seed(12)
+data <- data.frame(x1=rnorm(25, 4.0, 2),
+                   x2=rnorm(25, 5.0, 2),
+                   x3=rnorm(25, 6.0, 2),
+                   x4=rnorm(25, 7.0, 2),
+                   x5=rnorm(25, 8.0, 2)
+                   )
+data <- mutate(data, y = 0.2*x1 + 0.3*x2 + 0.4*x3 + 0.05*x4 + 0.05*x5 + rnorm(25, 0, 1))
+
+# 回帰分析
+res.lm <- lm(y ~ x1 + x2 + x3 + x4 + x5, data)
+summary(res.lm)
+
+# ステップワイズ法による変数選択
+res.step <- step(res.lm, direction="both", trace=TRUE)
+summary(res.step)
+```
+
+  
+  
 
 # 離散変数と連続変数の間の因果関係を調べたい
