@@ -46,6 +46,7 @@ img {
   width : 60%;
 }
 
+/** 画像の幅を横幅一杯に変更する場合は，<div class=WideFigure>にする．**/
 .WideFigure img{
   margin: auto;
   display: block;
