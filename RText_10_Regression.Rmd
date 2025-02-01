@@ -537,12 +537,8 @@ summary(fit)
 fit.step<-step(fit)
 summary(fit.step)
 ```
-このように，`step()`関数を実施すると，デフォルトでは変数選択していく過程がすべて表示されていく．変数の数が多い場合には非常に多くの過程が表示され鬱陶しい．そのような場合には`step()`の第2引数として`trace=FALSE`を引数に与えることで，過程の表示を抑制することができる．
 
-```{r}
-fit.step<-step(fit, trace=FALSE)
-summary(fit.step)
-```
+
 
 ::: ref
 Rで搭載されている`step()`関数は，AIC（赤池情報量規準）と呼ばれる指標を用いて変数選択を行う．AICはモデルの良さを示す指標であり，AICが小さいほどモデルの予測精度が高いことを示す．
@@ -568,6 +564,44 @@ Rで搭載されている`step()`関数は，AIC（赤池情報量規準）と�
 \*1:Smith, G.(2018), Step away from stepwise. Journal of Big Data Vol.5, article number 32 . https://doi.org/10.1186/s40537-018-0143-6 [Open Access]
 
 \*2:WHITTINGHAM, M.J., STEPHENS, P.A., BRADBURY, R.B. and FRECKLETON, R.P. (2006), Why do we still use stepwise modelling in ecology and behaviour?. Journal of Animal Ecology, vol.75, pp. 1182-1189. https://doi.org/10.1111/j.1365-2656.2006.01141.x [Open Access]
+:::
+
+
+### 選択過程を非表示にしたい 
+
+このように，`step()`関数を実施すると，デフォルトでは変数選択していく過程がすべて表示されていく．変数の数が多い場合には非常に多くの過程が表示され鬱陶しい．そのような場合には`step()`の第2引数として`trace=FALSE`を引数に与えることで，過程の表示を抑制することができる．
+
+```{r}
+fit.step<-step(fit, trace=FALSE)
+summary(fit.step)
+```
+
+### 特定の変数は削除しないようにしたい
+
+ステップワイズ法を用いて変数選択を行う際に場合によっては削除されてほしくない変数（例えば統制変数として投入した変数など）がある場合がある．そのような場合には，それらの変数を残した回帰分析を実施したうえで，その結果を`step()`関数の`scope`引数に含まれる`lower`に与える．
+．
+
+例えば，先ほどの結果から，E2とE3はステップワイズ法を実施することによって，モデルから省略されていたが，以下のようにすることによって，最終的なモデルでE2を含めたモデルを作成することができる．
+
+```{r}
+data <- read.csv("./practice/example_09_step.csv")
+
+# すべてを含めたモデル
+fit <- lm(O ~ E1 + E2 + E3 + E4 + E5 + E6 + E7 + E8 + E9 + E10 + E11 + E12 + E13 + E14 + E15 + E16, data)
+
+# E2とE3のみを含めたモデル
+fit.lower <- lm(O ~ E2+E3, data)
+
+fit.step<-step(fit, scope=list(lower=fit.lower),direction="both", trace=FALSE)
+summary(fit.step)
+```
+:::ref
+<details>
+<summary>scope引数のupperの設定</summary>
+`scope`引数には`lower`と`upper`を指定することができる．`lower`は上記の通り，削除してほしくない変数指定するものであるが，`upper`は探索の範囲を指定するものである．つまり，`upper`のモデルを指定すると，そのモデルに含まれていない変数は探索の範囲から外れるため，その変数が含まれるモデルは作成されなくなる．
+
+ただし，通常はstep()関数の第1引数で与えたモデルに含まれていない変数は探索の対象とならないため，`upper`を指定することはあまり一般的ではない．
+</details>
 :::
 
 ## 多重共線性という問題
