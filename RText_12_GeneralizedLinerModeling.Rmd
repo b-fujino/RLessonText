@@ -8,7 +8,9 @@ output:
   html_document: 
     toc: true
     toc_depth: 4
-    toc_float: true
+    toc_float: 
+      collapsed: false
+      smooth_scroll: true
     number_section: true
     fig_width: 8
     css: ./style.css
@@ -277,8 +279,8 @@ Firthのバイアス補正法を適用したロジスティック回帰分析の
 
 関数内部での数値計算の方法や小数の扱い方の違いによってわずかな数値の違いが生じることはあるが，ほぼ同じ結果を返す．
 
-### ligstrfパッケージを用いた場合
-まずはligstrf関数を用いた場合の実行方法を示す．
+### logistfパッケージを用いた場合
+まずはlogistf関数を用いた場合の実行方法を示す．
 ```{r} 
 # インストールしたパッケージの読み込み
 library(logistf) 
@@ -409,8 +411,10 @@ logLik(fit_brglm2)
 
 以下，結果報告の例を示す．この例では各説明変数のオッズ比，有意性とオッズ比の信頼区間を報告している．また適合度を示す指標として，対数尤度とAICを報告している．適合度指標としてこれらを表記するのは，この研究では(1)～(3)という3つのモデルの比較をしているためであると考えられる．(1)は統制変数をモデルに加えずに分析したモデル，(2)は統制変数をモデルに加えたモデル，(3)はさらに交互作用項も加えたモデルである．
 
-
+<div class=WideFigure>
 ![ロジスティック回帰分析の結果報告の例](./Img/2024_10_12_LogiReg.png)
+</div>
+
 (出典：Alzen, J.L., Langdon, L.S. & Otero, V.K. A logistic regression investigation of the relationship between the Learning Assistant model and failure rates in introductory STEM courses. International Journal of STEM Education Vol.5, No.56 (2018). https://doi.org/10.1186/s40594-018-0152-1)
 
 

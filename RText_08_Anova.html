@@ -1451,6 +1451,12 @@ font-size: 0.90em;
 .tocify .list-group-item {
 border-radius: 0px;
 }
+.tocify-subheader {
+display: inline;
+}
+.tocify-subheader .tocify-item {
+font-size: 0.95em;
+}
 </style>
 
 
@@ -1481,7 +1487,7 @@ border-radius: 0px;
 
 <h1 class="title toc-ignore">分散分析</h1>
 <h4 class="author">藤野秀則,</h4>
-<h4 class="date">更新日:2025-02-01</h4>
+<h4 class="date">更新日:2025-02-02</h4>
 
 </div>
 
@@ -1983,9 +1989,9 @@ Excelでの一要因分散分析（対応あり）の実施
 </ol>
 </div>
 </div>
-<div id="二要因分散分析2要因とも対応なし繰り返しのある2元配置分散分析被験者間計画二要因分散分析" class="section level1" number="6">
+<div id="二要因分散分析2要因とも対応なし被験者間計画二要因分散分析" class="section level1" number="6">
 <h1><span class="header-section-number">6</span>
-二要因分散分析(2要因とも対応なし)／繰り返しのある2元配置分散分析／被験者間計画二要因分散分析</h1>
+二要因分散分析(2要因とも対応なし)／被験者間計画二要因分散分析</h1>
 <p>次のような例題を考えてみよう．</p>
 <div class="practice">
 <p>ある農業試験場では新しい小麦の品種開発とその品種向けの新しい肥料の開発を行っている．今回，新しい小麦の品種Aと新しい肥料Xが開発された．AとXが既製品種B，既製肥料Yよりもより病気に強く収穫量が多くなることを実証するために，実際にそれぞれ40の畝を10ずつの4グループに分け，A-X，A-Y，B-X，B-Yの組み合わせで小麦を作付けし収穫量を評価することにした．結果そうして得られたデータである．このデータ（<a href="./practice/example_anova_2way.csv">リンク</a>）をもとに，新しい品種，新しい肥料がそれぞれ既製のものに比べて優れているのかを検証せよ．</p>
@@ -2864,7 +2870,7 @@ $(document).ready(function ()  {
       ignoreSelector: ".toc-ignore",
       scrollTo: 0
     };
-    options.showAndHide = true;
+    options.showAndHide = false;
     options.smoothScroll = true;
 
     // tocify

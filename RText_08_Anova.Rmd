@@ -7,15 +7,12 @@ output:
   html_document: 
     toc: true
     toc_depth: 4
-    toc_float: true
+    toc_float: 
+      collapsed: false
+      smooth_scroll: true
     number_section: true
     fig_width: 8
-    css: style.css
-  # html_notebook:
-  #   toc: true
-  #   toc_depth: 3
-  #   toc_float: true
-  #   number_section: true
+    css: ./style.css
 editor_options:
   markdown:
     wrap: 72
@@ -494,7 +491,7 @@ Anova(anova_res_2way, type=2)
 
 :::
 
-# 二要因分散分析(2要因とも対応なし)／繰り返しのある2元配置分散分析／被験者間計画二要因分散分析
+# 二要因分散分析(2要因とも対応なし)／被験者間計画二要因分散分析
 
 次のような例題を考えてみよう．
 
@@ -822,7 +819,8 @@ mydata_anova_2way_within$個人No. <- as.factor(mydata_anova_2way_within$個人N
 #分散分析の実施
 library(lmerTest)
 options(contrasts = c("contr.sum", "contr.poly"))
-anova_res_2way_within<- lmer(評価~メーカー*ジャム + (1|個人No.), mydata_anova_2way_within)
+anova_res_2way_within<- lmerTest::lmer(評価~メーカー*ジャム+(1+メーカー+ジャム||個人No.) , mydata_anova_2way_within)
+#残念ながらisSilgularがTRUEになり，パラメータが過剰となってしまった．
 Anova(anova_res_2way_within, type=3)
 ```
 
@@ -1134,6 +1132,12 @@ anova_res_2way_wb <- aov_ez(
   type = 3              # タイプIII分散分析
 )
 summary(anova_res_2way_wb)
+```
+
+```{R include=FALSE}
+anova_res_2way_wb <- aov(理解度~講義方法*テスト時期 + Error(個人No./(テスト時期)), mydata_anova_2way_wb)
+summary(anova_res_2way_wb)
+
 ```
 
 以上の結果から，講義方法の主効果，テスト時期の主効果，およびその交互作用が理解度に対して有意な影響を与えていることが示された．

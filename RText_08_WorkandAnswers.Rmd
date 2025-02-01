@@ -6,15 +6,12 @@ output:
   html_document: 
     toc: true
     toc_depth: 4
-    toc_float: true
+    toc_float: 
+      collapsed: false
+      smooth_scroll: true
     number_section: true
     fig_width: 8
-    css: style.css
-  # html_notebook:
-  #   toc: true
-  #   toc_depth: 3
-  #   toc_float: true
-  #   number_section: true
+    css: ./style.css
 editor_options:
   markdown:
     wrap: 72
