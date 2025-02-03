@@ -11,7 +11,7 @@
 
 <meta name="author" content="藤野秀則," />
 
-<meta name="date" content="2025-02-02" />
+<meta name="date" content="2025-02-03" />
 
 <title>逆引きR関数</title>
 
@@ -1482,7 +1482,7 @@ border-radius: 0px;
 
 <h1 class="title toc-ignore">逆引きR関数</h1>
 <h4 class="author">藤野秀則,</h4>
-<h4 class="date">2025-02-02</h4>
+<h4 class="date">2025-02-03</h4>
 
 </div>
 
@@ -1572,6 +1572,14 @@ Cloud上でフォルダを作って，フォルダの中にCSVファイルがあ
 データフレームに含まれる変数名のベクトル</li>
 </ul>
 </div>
+<div id="出力" class="section level2" number="3.5">
+<h2><span class="header-section-number">3.5</span> 出力</h2>
+<ul>
+<li>例文: <code>print(data)</code></li>
+<li>引数：出力したいオブジェクト</li>
+<li>留意点：単純な数値や，ベクトル，データフレームなどは，printを付けなくても，オブジェクト名をそのまま実行するだけで出力されるが，オブジェクトによってはprint()で出力する場合と，オブジェクト名をそのまま実行した場合とで結果が異なる場合がある．</li>
+</ul>
+</div>
 </div>
 <div id="基本的な処理" class="section level1" number="4">
 <h1><span class="header-section-number">4</span> 基本的な処理</h1>
@@ -1580,15 +1588,15 @@ Cloud上でフォルダを作って，フォルダの中にCSVファイルがあ
 <div id="絶対値を求める" class="section level3" number="4.1.1">
 <h3><span class="header-section-number">4.1.1</span>
 絶対値を求める．</h3>
-<p>． - 例文: <code>abs(data)</code> -
-引数：絶対値を求めたい数値を含むオブジェクト ― 返り値：絶対値</p>
-</div>
-<div id="数値を四捨五入する" class="section level3" number="4.1.2">
-<h3><span class="header-section-number">4.1.2</span>
-数値を四捨五入する．</h3>
 <ul>
-<li><code>round()</code></li>
-<li>オブジェクトに含まれる小数を四捨五入をする</li>
+<li>例文: <code>abs(data)</code></li>
+<li>引数：絶対値を求めたい数値を含むオブジェクト ― 返り値：絶対値</li>
+</ul>
+</div>
+<div id="数値の小数部を四捨五入する" class="section level3" number="4.1.2">
+<h3><span class="header-section-number">4.1.2</span>
+数値の小数部を四捨五入する．</h3>
+<ul>
 <li>例文: <code>round(data, 2)</code></li>
 <li>引数：
 <ul>
@@ -1596,18 +1604,39 @@ Cloud上でフォルダを作って，フォルダの中にCSVファイルがあ
 <li>第2引数：有効にする小数点以下の桁数．この桁数までが表記される</li>
 </ul></li>
 <li>返り値：四捨五入された数値</li>
+<li>留意点：あくまで少数以下の指定の桁数までを四捨五入する，というものである．したがって，整数位での四捨五入をするためには，一旦，全体を1/100や1/1000をして，小数位にまで落としてからround()を適用し，後で100や1000でかけるといった処理が必要になる．</li>
 </ul>
 </div>
-<div id="平方根を求める" class="section level3" number="4.1.3">
-<h3><span class="header-section-number">4.1.3</span> 平方根を求める</h3>
+<div id="数値の小数部を切り捨てるする" class="section level3" number="4.1.3">
+<h3><span class="header-section-number">4.1.3</span>
+数値の小数部を切り捨てるする．</h3>
+<ul>
+<li>例文: <code>floor(data)</code></li>
+<li>引数：少数以下を切り捨てたい数値を含むオブジェクト</li>
+<li>返り値：切り捨てられた整数値</li>
+<li>留意点：小数以下は全て切り捨てられるので，例えば小数第1位まで残したい場合には，全体を10倍してからfloor()を掛け，後で10で割るといった処理が必要になる．</li>
+</ul>
+</div>
+<div id="数値の小数部を切り上げる" class="section level3" number="4.1.4">
+<h3><span class="header-section-number">4.1.4</span>
+数値の小数部を切り上げる．</h3>
+<ul>
+<li>例文: <code>ceiling(data)</code></li>
+<li>引数：少数以下を切り上げたい数値を含むオブジェクト</li>
+<li>返り値：切り上げられた整数値</li>
+<li>留意点：小数以下は全て切り上げられるので，例えば小数第1位まで残したい場合には，全体を10倍してからceiling()を掛け，後で10で割るといった処理が必要になる．</li>
+</ul>
+</div>
+<div id="平方根を求める" class="section level3" number="4.1.5">
+<h3><span class="header-section-number">4.1.5</span> 平方根を求める</h3>
 <ul>
 <li>例文: <code>qrt(data)</code></li>
 <li>引数：平方根を求めたい数値を含むオブジェクト</li>
 <li>返り値：平方根</li>
 </ul>
 </div>
-<div id="合計を求める" class="section level3" number="4.1.4">
-<h3><span class="header-section-number">4.1.4</span> 合計を求める</h3>
+<div id="合計を求める" class="section level3" number="4.1.6">
+<h3><span class="header-section-number">4.1.6</span> 合計を求める</h3>
 <ul>
 <li><code>sum()</code></li>
 <li>ベクトルオブジェクトに含まれる数値の合計値を求める．</li>
@@ -1687,10 +1716,8 @@ Cloud上でフォルダを作って，フォルダの中にCSVファイルがあ
 <ul>
 <li>例文: <code>data[3]</code>,
 <code>data[1:10]</code>，<code>data[c(1,3,5)]</code>,
-<code>data[-1]</code>, <code>data[c(-1,-4)]</code> ― 引数：
-<ul>
-<li>引数：抽出したい要素のインデックス番号．複数のものを取り出したい場合には<code>c(1,3,5:10)</code>のようにベクトルで指定.</li>
-</ul></li>
+<code>data[-1]</code>, <code>data[c(-1,-4)]</code> ―
+引数：抽出したい要素のインデックス番号．複数のものを取り出したい場合には<code>c(1,3,5:10)</code>のようにベクトルで指定.</li>
 <li>返り値：抽出した要素だけのベクトルデータ．</li>
 <li>留意点：負の値を指定するとその列が除外されたものが返される．負の値と正の値を混在させることはできない．</li>
 </ul>
@@ -1700,9 +1727,9 @@ Cloud上でフォルダを作って，フォルダの中にCSVファイルがあ
 データフレームオブジェクトから指定した行，列を抽出する．</h3>
 <ul>
 <li>例文: <code>data[3,5]</code>,
-<code>data[c(1,3,5:10), c(1,3,5:10)]</code>,
+<code>data[c(1,3,5:10), c(1,3,5:10)]</code>, \
 <code>data[c(1,3,5:10), ]</code>, <code>data[, c(1,3,5:10)]</code>,
-<code>ddata[c(1,3,5:10)]</code></li>
+<code>data[c(1,3,5:10)]</code></li>
 <li>引数：
 <ul>
 <li>第1引数：抽出したい行のインデックス番号．記載方法はベクトルデータの抽出と同様．省略した場合，すべての行が抽出される</li>
@@ -1726,7 +1753,7 @@ Cloud上でフォルダを作って，フォルダの中にCSVファイルがあ
 <h3><span class="header-section-number">4.2.9</span>
 ベクトルに含まれる要素数を求める</h3>
 <ul>
-<li>例文: <code>dlength(data)</code></li>
+<li>例文: <code>length(data)</code></li>
 <li>引数：要素数を求めたいベクトルデータ</li>
 <li>返り値：ベクトルに含まれる要素数</li>
 </ul>
@@ -1735,8 +1762,7 @@ Cloud上でフォルダを作って，フォルダの中にCSVファイルがあ
 <h3><span class="header-section-number">4.2.10</span>
 データフレームの行数（サンプル数）を求める．</h3>
 <ul>
-<li>データフレームの行数（サンプル数）を求める．</li>
-<li>例文: <code>data_res&lt;-nrow(data)</code></li>
+<li>例文: <code>nrow(data)</code></li>
 <li>引数：行数を求めたいデータフレームオブジェクト</li>
 <li>返り値：データフレームオブジェクトの行数（サンプル数）</li>
 </ul>
@@ -1745,23 +1771,16 @@ Cloud上でフォルダを作って，フォルダの中にCSVファイルがあ
 <h3><span class="header-section-number">4.2.11</span>
 データフレームの列数（変数数）を求める．</h3>
 <ul>
-<li>例文: <code>data_res&lt;-ncol(data)</code></li>
+<li>例文: <code>ncol(data)</code></li>
 <li>引数：列数を求めたいデータフレームオブジェクト</li>
 <li>返り値：データフレームオブジェクトの列数（変数数）</li>
 </ul>
 </div>
 </div>
-<div id="出力" class="section level2" number="4.3">
-<h2><span class="header-section-number">4.3</span> 出力</h2>
-<ul>
-<li>例文: <code>print(data)</code></li>
-<li>引数：出力したいオブジェクト</li>
-</ul>
-</div>
-<div id="型の変換" class="section level2" number="4.4">
-<h2><span class="header-section-number">4.4</span> 型の変換</h2>
-<div id="オブジェクトを要因型に変換する" class="section level3" number="4.4.1">
-<h3><span class="header-section-number">4.4.1</span>
+<div id="型の変換" class="section level2" number="4.3">
+<h2><span class="header-section-number">4.3</span> 型の変換</h2>
+<div id="オブジェクトを要因型に変換する" class="section level3" number="4.3.1">
+<h3><span class="header-section-number">4.3.1</span>
 オブジェクトを要因型に変換する．</h3>
 <ul>
 <li>例文: <code>as.factor(data$var1)</code></li>
@@ -1769,8 +1788,8 @@ Cloud上でフォルダを作って，フォルダの中にCSVファイルがあ
 <li>返り値：要因型に変換されたオブジェクト</li>
 </ul>
 </div>
-<div id="オブジェクトを数値型に変換する" class="section level3" number="4.4.2">
-<h3><span class="header-section-number">4.4.2</span>
+<div id="オブジェクトを数値型に変換する" class="section level3" number="4.3.2">
+<h3><span class="header-section-number">4.3.2</span>
 オブジェクトを数値型に変換する．</h3>
 <ul>
 <li>例文: <code>as.numeric(data$var1)</code></li>
@@ -1778,8 +1797,8 @@ Cloud上でフォルダを作って，フォルダの中にCSVファイルがあ
 <li>返り値：数値型に変換されたオブジェクト</li>
 </ul>
 </div>
-<div id="オブジェクトを文字列型に変換する" class="section level3" number="4.4.3">
-<h3><span class="header-section-number">4.4.3</span>
+<div id="オブジェクトを文字列型に変換する" class="section level3" number="4.3.3">
+<h3><span class="header-section-number">4.3.3</span>
 オブジェクトを文字列型に変換する．</h3>
 <ul>
 <li>例文: <code>as.character(data$var1)</code></li>
@@ -1787,8 +1806,8 @@ Cloud上でフォルダを作って，フォルダの中にCSVファイルがあ
 <li>返り値：文字列型に変換されたオブジェクト</li>
 </ul>
 </div>
-<div id="行列型オブジェクトをデータフレーム型に変換する" class="section level3" number="4.4.4">
-<h3><span class="header-section-number">4.4.4</span>
+<div id="行列型オブジェクトをデータフレーム型に変換する" class="section level3" number="4.3.4">
+<h3><span class="header-section-number">4.3.4</span>
 行列型オブジェクトをデータフレーム型に変換する．</h3>
 <ul>
 <li>例文: <code>as.data.frame(data)</code></li>
@@ -2159,7 +2178,6 @@ data_res&lt;-sd(data)/sqrt(num)</code></pre>
 <h3><span class="header-section-number">7.1.1</span>
 データに対応関係がない場合</h3>
 <ul>
-<li>2群間の平均値の差を検定する．</li>
 <li>例文: <code>t.test(x=data1, y=data2)</code></li>
 <li>引数：
 <ul>
@@ -2473,9 +2491,11 @@ p値はいずれの検定の場合も，出力されるオブジェクトに<cod
 <div id="離散変数と連続変数の間の因果関係を調べたい分散分析" class="section level1" number="10">
 <h1><span class="header-section-number">10</span>
 離散変数と連続変数の間の因果関係を調べたい（分散分析）</h1>
-<div id="要因分散分析対応なしデータ被験者間計画" class="section level2" number="10.1">
-<h2><span class="header-section-number">10.1</span>
-1要因分散分析（対応なしデータ/被験者間計画）</h2>
+<div id="要因分散分析" class="section level2" number="10.1">
+<h2><span class="header-section-number">10.1</span> 1要因分散分析</h2>
+<div id="対応なしデータ被験者間計画" class="section level3" number="10.1.1">
+<h3><span class="header-section-number">10.1.1</span>
+対応なしデータ/被験者間計画</h3>
 <ul>
 <li>例文: <code>aov(y ~ x, data)</code></li>
 <li>引数：
@@ -2488,12 +2508,12 @@ p値はいずれの検定の場合も，出力されるオブジェクトに<cod
 分散分析の結果を含むオブジェクト．summary()で出力させることができる．</li>
 </ul>
 </div>
-<div id="要因分散分析対応ありデータ被験者内計画" class="section level2" number="10.2">
-<h2><span class="header-section-number">10.2</span>
-1要因分散分析（対応ありデータ/被験者内計画）</h2>
+<div id="対応ありデータ被験者内計画" class="section level3" number="10.1.2">
+<h3><span class="header-section-number">10.1.2</span>
+対応ありデータ/被験者内計画</h3>
 <p>2つの書き方がある．</p>
-<div id="その1" class="section level3" number="10.2.1">
-<h3><span class="header-section-number">10.2.1</span> その1</h3>
+<div id="その1" class="section level4" number="10.1.2.1">
+<h4><span class="header-section-number">10.1.2.1</span> その1</h4>
 <ul>
 <li>例文: <code>aov(y ~ x + Error(subject/x), data)</code></li>
 <li>引数：
@@ -2515,8 +2535,8 @@ subject（被験者IDもしくはサンプルID．）の違いによる影響（
 分散分析の結果を含むオブジェクト．summary()で出力させることができる．</li>
 </ul>
 </div>
-<div id="その2" class="section level3" number="10.2.2">
-<h3><span class="header-section-number">10.2.2</span> その2</h3>
+<div id="その2" class="section level4" number="10.1.2.2">
+<h4><span class="header-section-number">10.1.2.2</span> その2</h4>
 <ul>
 <li>例文:
 <code>aov_ez(id=subject, dv=y, within=x, data=data)</code></li>
@@ -2535,13 +2555,16 @@ subject（被験者IDもしくはサンプルID．）の違いによる影響（
 </ul>
 </div>
 </div>
-<div id="要因分散分析対応なしデータ被験者間計画-1" class="section level2" number="10.3">
-<h2><span class="header-section-number">10.3</span>
-2要因分散分析（対応なしデータ/被験者間計画）</h2>
+</div>
+<div id="要因分散分析-1" class="section level2" number="10.2">
+<h2><span class="header-section-number">10.2</span> 2要因分散分析</h2>
+<div id="対応なしデータ被験者間計画-1" class="section level3" number="10.2.1">
+<h3><span class="header-section-number">10.2.1</span>
+対応なしデータ/被験者間計画</h3>
 <p>2つの要因が共に被験者間計画になっている場合である．
 2つの方法がある．．</p>
-<div id="その1-1" class="section level3" number="10.3.1">
-<h3><span class="header-section-number">10.3.1</span> その1</h3>
+<div id="その1-1" class="section level4" number="10.2.1.1">
+<h4><span class="header-section-number">10.2.1.1</span> その1</h4>
 <p><code>aov()</code>と<code>Anova()</code>を組み合わせて行う．</p>
 <ul>
 <li>例文:</li>
@@ -2578,8 +2601,8 @@ Anova(res.aov, type=3) </code></pre>
 2要因分散分析を行う場合には，<code>aov()</code>の結果を<code>Anova()</code>に与えることで，2要因分散分析を行うことができる．</li>
 </ul>
 </div>
-<div id="その2-1" class="section level3" number="10.3.2">
-<h3><span class="header-section-number">10.3.2</span> その2</h3>
+<div id="その2-1" class="section level4" number="10.2.1.2">
+<h4><span class="header-section-number">10.2.1.2</span> その2</h4>
 <ul>
 <li>例文:
 <code>aov_ez(id=subject, dv=y, between=c(x1, x2), data=data, type=3)</code></li>
@@ -2601,13 +2624,13 @@ Anova(res.aov, type=3) </code></pre>
 </ul>
 </div>
 </div>
-<div id="要因分散分析対応ありデータ被験者内計画-1" class="section level2" number="10.4">
-<h2><span class="header-section-number">10.4</span>
-2要因分散分析（対応ありデータ/被験者内計画）</h2>
+<div id="対応ありデータ被験者内計画-1" class="section level3" number="10.2.2">
+<h3><span class="header-section-number">10.2.2</span>
+対応ありデータ/被験者内計画</h3>
 <p>2つの要因が共に被験者内計画になっている場合である．
 2つの方法がある．</p>
-<div id="その1-2" class="section level3" number="10.4.1">
-<h3><span class="header-section-number">10.4.1</span> その1</h3>
+<div id="その1-2" class="section level4" number="10.2.2.1">
+<h4><span class="header-section-number">10.2.2.1</span> その1</h4>
 <ul>
 <li>例文:
 <code>aov(y ~ x1*x2 + Error(subject/(x1*x2)), data)</code></li>
@@ -2630,8 +2653,8 @@ subject（被験者IDもしくはサンプルID．）の違いによる影響（
 分散分析の結果を含むオブジェクト．summary()で出力させることができる．</li>
 </ul>
 </div>
-<div id="その2-2" class="section level3" number="10.4.2">
-<h3><span class="header-section-number">10.4.2</span> その2</h3>
+<div id="その2-2" class="section level4" number="10.2.2.2">
+<h4><span class="header-section-number">10.2.2.2</span> その2</h4>
 <ul>
 <li>例文:
 <code>aov_ez(id=subject, dv=y, within=c(x,x2), data=data, type=3)</code></li>
@@ -2651,13 +2674,13 @@ subject（被験者IDもしくはサンプルID．）の違いによる影響（
 </ul>
 </div>
 </div>
-<div id="要因分散分析対応ありデータ混合計画" class="section level2" number="10.5">
-<h2><span class="header-section-number">10.5</span>
-2要因分散分析（対応ありデータ/混合計画）</h2>
+<div id="一方の変数だけ対応ありデータ混合計画" class="section level3" number="10.2.3">
+<h3><span class="header-section-number">10.2.3</span>
+一方の変数だけ対応ありデータ/混合計画</h3>
 <p>2つの要因のうち1つは被験者間計画，もう一つが被験者内計画になっている場合である．
 2つの方法がある．</p>
-<div id="その1-3" class="section level3" number="10.5.1">
-<h3><span class="header-section-number">10.5.1</span> その1</h3>
+<div id="その1-3" class="section level4" number="10.2.3.1">
+<h4><span class="header-section-number">10.2.3.1</span> その1</h4>
 <ul>
 <li>例文: <code>aov(y ~ x1*x2 + Error(subject/x2), data)</code></li>
 <li>引数：
@@ -2679,8 +2702,8 @@ subject（被験者IDもしくはサンプルID．）の違いによる影響（
 分散分析の結果を含むオブジェクト．summary()で出力させることができる．</li>
 </ul>
 </div>
-<div id="その2-3" class="section level3" number="10.5.2">
-<h3><span class="header-section-number">10.5.2</span> その2</h3>
+<div id="その2-3" class="section level4" number="10.2.3.2">
+<h4><span class="header-section-number">10.2.3.2</span> その2</h4>
 <ul>
 <li>例文:
 <code>aov_ez(id=subject, dv=y, between=x1, within=x2, data=data, type=3)</code></li>
@@ -2700,6 +2723,7 @@ subject（被験者IDもしくはサンプルID．）の違いによる影響（
 <li>返り値:
 分散分析の結果を含むオブジェクト．summary()で出力させることができる．</li>
 </ul>
+</div>
 </div>
 </div>
 </div>

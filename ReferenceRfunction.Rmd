@@ -3,11 +3,6 @@ title: "逆引きR関数"
 author: "藤野秀則,"
 date: "`r Sys.Date()`"
 output:
-  pdf_document:
-    latex_engine: xelatex
-    toc: true
-    toc_depth: '4'
-    number_section: true
   html_document:
     toc: true
     toc_depth: 4
@@ -16,6 +11,11 @@ output:
       smooth_scroll: true
     number_section: true
     css: style.css
+  pdf_document:
+    latex_engine: xelatex
+    toc: true
+    toc_depth: '4'
+    number_section: true
   word_document:
     toc: true
     toc_depth: '4'
@@ -28,7 +28,6 @@ header-includes:
   - \usepackage{tocloft}
   - \renewcommand{\cftbeforesecskip}{2pt}  # セクション間の間隔を狭くする
   - \renewcommand{\cftbeforesubsecskip}{1pt}  # サブセクション間の間隔を狭くする
-
 ---
 # ライブラリの読み込み
 
@@ -104,15 +103,29 @@ header-includes:
 - 引数：絶対値を求めたい数値を含むオブジェクト
 ― 返り値：絶対値
 
-### 数値を四捨五入する．
+### 数値の小数部を四捨五入する．
 
-- `round()`
-- オブジェクトに含まれる小数を四捨五入をする
 - 例文: `round(data, 2)`
 - 引数：
   - 第1引数：数値を含むオブジェクト
   - 第2引数：有効にする小数点以下の桁数．この桁数までが表記される
 - 返り値：四捨五入された数値
+- 留意点：あくまで少数以下の指定の桁数までを四捨五入する，というものである．したがって，整数位での四捨五入をするためには，一旦，全体を1/100や1/1000をして，小数位にまで落としてからround()を適用し，後で100や1000でかけるといった処理が必要になる．
+
+### 数値の小数部を切り捨てるする．
+
+- 例文: `floor(data)`
+- 引数：少数以下を切り捨てたい数値を含むオブジェクト
+- 返り値：切り捨てられた整数値
+- 留意点：小数以下は全て切り捨てられるので，例えば小数第1位まで残したい場合には，全体を10倍してからfloor()を掛け，後で10で割るといった処理が必要になる．
+
+### 数値の小数部を切り上げる．
+
+- 例文: `ceiling(data)`
+- 引数：少数以下を切り上げたい数値を含むオブジェクト
+- 返り値：切り上げられた整数値
+- 留意点：小数以下は全て切り上げられるので，例えば小数第1位まで残したい場合には，全体を10倍してからceiling()を掛け，後で10で割るといった処理が必要になる．
+
 
 ### 平方根を求める
 
@@ -974,17 +987,19 @@ summary(res.step)
 
 # 離散変数と連続変数の間の因果関係を調べたい（分散分析）
 
-## 1要因分散分析（対応なしデータ/被験者間計画）
+## 1要因分散分析
+
+### 対応なしデータ/被験者間計画
 - 例文: `aov(y ~ x, data)`
 - 引数：
   - 第1引数: モデル式．目的変数（従属変数）と説明変数（独立変数）を`~`で結んで指定する．**説明変数は要因型である必要がある．**
   - 第2引数: データフレームオブジェクト
 - 返り値: 分散分析の結果を含むオブジェクト．summary()で出力させることができる．
 
-## 1要因分散分析（対応ありデータ/被験者内計画）
+### 対応ありデータ/被験者内計画
 2つの書き方がある．
 
-### その1
+#### その1
 
 - 例文: `aov(y ~ x + Error(subject/x), data)`
 - 引数：
@@ -997,7 +1012,7 @@ summary(res.step)
 - 返り値: 分散分析の結果を含むオブジェクト．summary()で出力させることができる．
 
 
-### その2
+#### その2
 
 - 例文: `aov_ez(id=subject, dv=y, within=x, data=data)`
 - `afex`パッケージを用いる．
@@ -1038,11 +1053,13 @@ res.aov <- aov_ez(id="subject", dv="y", within="x", data=data, type = 3)
 summary(res.aov)
 ```
 
-## 2要因分散分析（対応なしデータ/被験者間計画）
+## 2要因分散分析
+
+### 対応なしデータ/被験者間計画
 2つの要因が共に被験者間計画になっている場合である．
 2つの方法がある．．
 
-### その1
+#### その1
 `aov()`と`Anova()`を組み合わせて行う．
 
 - 例文: 
@@ -1066,7 +1083,7 @@ Anova(res.aov, type=3)
 - 返り値: 結果を含むオブジェクト．
 - 留意点: 2要因分散分析を行う場合には，`aov()`の結果を`Anova()`に与えることで，2要因分散分析を行うことができる．
 
-### その2
+#### その2
 - 例文: `aov_ez(id=subject, dv=y, between=c(x1, x2), data=data, type=3)`
 - `afex`パッケージを用いる．
 - 引数：
@@ -1102,12 +1119,12 @@ res.aov <- aov_ez(id="subject", dv="y", between=c("x1", "x2"), data=data, type=3
 summary(res.aov)
 ```
 
-## 2要因分散分析（対応ありデータ/被験者内計画）
+### 対応ありデータ/被験者内計画
 2つの要因が共に被験者内計画になっている場合である．
 2つの方法がある．
 
 
-### その1
+#### その1
 
 - 例文: `aov(y ~ x1*x2 + Error(subject/(x1*x2)), data)`
 - 引数：
@@ -1121,7 +1138,7 @@ summary(res.aov)
 - 返り値: 分散分析の結果を含むオブジェクト．summary()で出力させることができる．
 
 
-### その2
+#### その2
 
 - 例文: `aov_ez(id=subject, dv=y, within=c(x,x2), data=data, type=3)`
 - `afex`パッケージを用いる．
@@ -1155,11 +1172,11 @@ res.aov <- aov_ez(id="subject", dv="y", within=c("x1", "x2"), data=data, type = 
 summary(res.aov)
 ```
 
-## 2要因分散分析（対応ありデータ/混合計画）
+### 一方の変数だけ対応ありデータ/混合計画
 2つの要因のうち1つは被験者間計画，もう一つが被験者内計画になっている場合である．
 2つの方法がある．
 
-### その1
+#### その1
 
 - 例文: `aov(y ~ x1*x2 + Error(subject/x2), data)`
 - 引数：
@@ -1172,7 +1189,7 @@ summary(res.aov)
   - 第2引数: データフレームオブジェクト
 - 返り値: 分散分析の結果を含むオブジェクト．summary()で出力させることができる．
 
-### その2
+#### その2
 
 - 例文: `aov_ez(id=subject, dv=y, between=x1, within=x2, data=data, type=3)`
 - `afex`パッケージを用いる．
