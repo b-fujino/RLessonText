@@ -1,0 +1,67 @@
+---
+title: "主成分分析・因子分析の課題の解答例"
+author: "藤野秀則,"
+date: "`r Sys.Date()`"
+output:
+  html_document: 
+    toc: true
+    toc_depth: 4
+    toc_float: 
+      collapsed: false
+      smooth_scroll: true
+    number_section: true
+    fig_width: 8
+    css: ./style.css
+editor_options:
+  markdown:
+    wrap: 72
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+:::work
+[次のデータ](./practice/13_work_fa.csv)は実際に著者が指導したゼミ生が2021年度に行った優柔不断度を測るアンケート結果である．
+アンケート項目は以下の通りである．
+
+- Q1: 何かを選ぶ時は些細なことは気にしない
+- Q2: 重要なことを決めるとき，些細な問題にこだわり多くの時間を費やす
+- Q3: 決断を先送りにしようとする
+- Q4: 重要な問題は，直前まで決定を延ばす
+- Q5: 他の人が何を選ぶのか気になる
+- Q6: 自分が選んだものが他の人と違うと不安になる
+- Q7: 決断した後，その決断に後悔しない
+- Q8: 決めた後で，間違ってしまったと思うことがよくある
+
+このデータを使って，以下の2つのことを行え．
+
+1. 主成分分析を実施し，累積説明率が60％を超えたところまでの主成分について，その内容を質問項目と照らしてを解釈せよ．
+1. 探索的因子分析を実施し，適切だと思う因子構造を各自で見つけ，推定された因子の内容を質問項目に照らして解釈せよ．
+
+:::
+
+```{r include=T}
+library(psych)
+data <- read.csv("./practice/13_work_fa.csv")
+
+head(data)
+
+# colnames(data) <- c("time_stamp","Q1","Q2","Q3","Q4","Q5","Q6","Q7","Q8")
+# 
+# head(data[-c(10,11)])
+# 
+# data <- data[-c(10,11)]
+# write_csv(data,"./practice/13_work_fa.csv")
+
+pc_res<-prcomp(data[-1])
+summary(pc_res)
+biplot(pc_res)
+round(pc_res$rotation,2)
+
+
+fa.parallel(data[-1], fa="fa")
+vss(data[-1])
+fa_result <- fa(data[-1], 4, rotate="varimax", fm="pa")
+fa.diagram(fa_result,cut=.4, digits=2, simple = FALSE)
+```
