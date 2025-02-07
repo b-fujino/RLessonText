@@ -76,9 +76,11 @@ knitr::opts_chunk$set(echo = TRUE)
 
 # 主成分分析・因子分析
 [こちらのページ](./RText_13_PCA_FA.html)を参照してください。
+課題の正答例は[こちら](./RText_13_WorkandAnswers.html)を参照してください．
 
 # クラスター分析
 [こちらのページ](./RText_14_ClusterAnalysis.html)を参照してください。
+課題の正答例は[こちら](./RText_14_WorkandAnswers.html)を参照してください．
 
 <!--   <!----------------------------- 仕切り -----------------------------------> -->
 
