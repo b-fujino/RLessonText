@@ -54,7 +54,7 @@ head(data)
 # data <- data[-c(10,11)]
 # write_csv(data,"./practice/13_work_fa.csv")
 
-pc_res<-prcomp(data[-1])
+pc_res<-prcomp(data[-1], scale. = TRUE)
 summary(pc_res)
 biplot(pc_res)
 round(pc_res$rotation,2)

@@ -123,7 +123,7 @@ round(cor(data),2)
 主成分分析を行う関数は`prcomp()`である．引数は以下の通り．
 
 - 第1引数: 主成分分析に掛ける多変量が含まれたデータフレーム
-- 第2引数 scale（省略可）: データを標準化するかどうか．省略すると`TRUE`が設定される．通常は省略してよい．
+- 第2引数 `scale.=TRUE`: データを標準化するかどうか．省略すると`FALSE`(標準化しない)が設定される．通常はTRUEにすべきとされる．
 
 
 :::ref
@@ -136,7 +136,7 @@ round(cor(data),2)
 結果は一旦オブジェクト`PCA`に収めた上で，`summary()`で出力させる．
 
 ```{R}
-pca <- prcomp(data)
+pca <- prcomp(data, scale. = TRUE)
 summary(pca)
 ```
 
@@ -1011,7 +1011,7 @@ head(data)
 # data <- data[-c(10,11)]
 # write_csv(data,"./practice/13_work_fa.csv")
 
-pc_res<-prcomp(data[-1])
+pc_res<-prcomp(data[-1], scale. = TRUE)
 summary(pc_res)
 biplot(pc_res)
 round(pc_res$rotation,2)
