@@ -59,7 +59,6 @@ knitr::opts_chunk$set(echo = TRUE)
 課題の正答例は[こちら](./RText_09_WorkandAnswers.html)を参照してください．
 
 
-
 # 回帰分析
 [こちらのページ](./RText_10_Regression.html)を参照してください。
 課題の正答例は[こちら](./RText_10_WorkandAnswers.html)を参照してください．
@@ -81,6 +80,9 @@ knitr::opts_chunk$set(echo = TRUE)
 # クラスター分析
 [こちらのページ](./RText_14_ClusterAnalysis.html)を参照してください。
 課題の正答例は[こちら](./RText_14_WorkandAnswers.html)を参照してください．
+
+# 逆引きR関数
+[こちらのページ](./ReferenceRfunction.html)を参照してください。
 
 <!--   <!----------------------------- 仕切り -----------------------------------> -->
 
