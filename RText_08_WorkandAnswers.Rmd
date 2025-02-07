@@ -163,7 +163,7 @@ t.test(data_Area_A_after$売上げ,  data_Area_B_after$売上げ,  paired=FALSE)
 
 :::
 
-```{r include=FALSE}
+```{r include=TRUE}
 data<- read_csv("./practice/08_work_anova_4.csv")
 
 print(data)
@@ -179,5 +179,11 @@ aov_ez(
   type = 3              # タイプIII分散分析
 )
 
+t.test(filter(data, 条件=="実験群" & 時期=="見る前")$ストレス, 
+       filter(data, 条件=="実験群" & 時期=="見た後")$ストレス, 
+       paired=TRUE)
 
+t.test(filter(data, 条件=="対照群" & 時期=="見る前")$ストレス, 
+       filter(data, 条件=="対照群" & 時期=="見た後")$ストレス, 
+       paired=TRUE)
 ```

@@ -11,7 +11,7 @@
 
 <meta name="author" content="藤野秀則," />
 
-<meta name="date" content="2025-02-02" />
+<meta name="date" content="2025-02-07" />
 
 <title>分散分析の課題の模範回答</title>
 
@@ -1322,7 +1322,176 @@ if (window.hljs) {
 
 
 
-<style type="text/css">.tocify-subheader { }.tocify-item {white-space: nowrap;}body{counter-reset: ref_number practice_number work_number;}.float img{ margin: auto;display: block;padding: 2%;border-radius: 8px 8px 0 0 ;position: relative;width : 60%;}.float .figcaption {position: relative;font-style: italic;font-size: large;font-weight: bold;color: #666;text-align: center;margin:0% auto 5% auto;border-bottom: solid 1px #666;border-left: solid 1px #666;border-right: solid 1px #666;border-radius:0 0 8px 8px;width : 60%}img {margin: auto;display: block;border: solid 1px #666;border-radius: 8px;position: relative;width : 60%;}.WideFigure img{margin: auto;display: block;border: solid 1px #666;border-radius: 8px 8px 0 0;position: relative;width : 100%;}.WideFigure .float .figcaption {position: relative;font-style: italic;font-size: large;font-weight: bold;color: #666;text-align: center;margin:0% auto 5% auto;border-bottom: solid 1px #666;border-left: solid 1px #666;border-right: solid 1px #666;border-radius:0 0 8px 8px;width : 100%}.ref {position: relative;margin:5%;padding:5px;background-color: rgba(255, 255, 128, .5);color: #666;}.ref::before{counter-increment: ref_number 1;content: "[参考 " counter(ref_number) "]";font-weight: bold;display: block;margin-bottom: 3px;}h1 {margin-top : 10px;padding-top : 50px;}.practice {position: relative;margin:5%;padding:5px;background-color: rgba(128, 255, 200, .5);color: #666;}.practice::before{counter-increment: practice_number 1;content: "[例題 " counter(practice_number) "]";font-weight: bold;display: block;margin-bottom: 3px;}.work {position: relative;margin:5%;padding:5px;background-color: rgba(128, 200, 255, .2);color: #666;}.work::before{counter-increment: work_number 1;content: "[課題 " counter(work_number) "]";font-weight: bold;display: block;margin-bottom: 3px;}user-select: none;-moz-user-select: none;-webkit-user-select: none;-ms-user-select: none;-khtml-user-select: none;-webkit-touch-callout: none;}***/.res_table {border-collapse: collapse;width: 50%;margin: 0 auto;border-top: 1px solid #666;border-bottom: 1px solid #666;}.res_table th {border-bottom: 1px solid #666;text-align: center;}.res_table td {text-align: right;}.res_table .td_left {text-align: left;}.res_table .tr_topborder {border-top: 1px solid #666;}.res_table .tr_bottomborder {border-bottom: 1px solid #666;}.math .display {text-align: center;font-size: small;}.custom-table {border: 2px solid #000;border-collapse: collapse;width: 75%;margin-left: auto;margin-right: auto;margin-bottom: 10px;margin-top: 10px;}.custom-table th, .custom-table td {border: 1px solid #000;padding: 8px;text-align: center;}.custom-table th {background-color: #f0f8ff;}a {text-decoration: underline;font-weight: bold;}</style>
+<style type="text/css">.tocify-subheader { 
+
+}
+.tocify-item {
+white-space: nowrap;
+}
+body{
+counter-reset: ref_number practice_number work_number;
+}
+.float img{
+
+ 
+margin: auto;
+display: block;
+padding: 2%;
+border-radius: 8px 8px 0 0 ;
+position: relative;
+width : 60%;
+}
+.float .figcaption {
+position: relative;
+font-style: italic;
+font-size: large;
+font-weight: bold;
+color: #666;
+text-align: center;
+margin:0% auto 5% auto;
+border-bottom: solid 1px #666;
+border-left: solid 1px #666;
+border-right: solid 1px #666;
+border-radius:0 0 8px 8px;
+width : 60%
+}
+img {
+margin: auto;
+display: block;
+border: solid 1px #666;
+border-radius: 8px;
+position: relative;
+width : 60%;
+}
+
+.WideFigure img{
+margin: auto;
+display: block;
+border: solid 1px #666;
+border-radius: 8px 8px 0 0;
+position: relative;
+width : 100%;
+}
+.WideFigure .float .figcaption {
+position: relative;
+font-style: italic;
+font-size: large;
+font-weight: bold;
+color: #666;
+text-align: center;
+margin:0% auto 5% auto;
+border-bottom: solid 1px #666;
+border-left: solid 1px #666;
+border-right: solid 1px #666;
+border-radius:0 0 8px 8px;
+width : 100%
+}
+.ref {
+position: relative;
+margin:5%;
+padding:5px;
+background-color: rgba(255, 255, 128, .5);
+color: #666;
+}
+.ref::before{
+counter-increment: ref_number 1;
+content: "[参考 " counter(ref_number) "]";
+font-weight: bold;
+display: block;
+margin-bottom: 3px;
+}
+h1 {
+margin-top : 10px;
+padding-top : 50px;
+}
+.practice {
+position: relative;
+margin:5%;
+padding:5px;
+background-color: rgba(128, 255, 200, .5);
+color: #666;
+}
+.practice::before{
+counter-increment: practice_number 1;
+content: "[例題 " counter(practice_number) "]";
+font-weight: bold;
+display: block;
+margin-bottom: 3px;
+}
+.work {
+position: relative;
+margin:5%;
+padding:5px;
+background-color: rgba(128, 200, 255, .2);
+color: #666;
+}
+.work::before{
+counter-increment: work_number 1;
+content: "[課題 " counter(work_number) "]";
+font-weight: bold;
+display: block;
+margin-bottom: 3px;
+}
+
+user-select: none;
+-moz-user-select: none;
+-webkit-user-select: none;
+-ms-user-select: none;
+-khtml-user-select: none;
+-webkit-touch-callout: none;
+}
+***/
+.res_table {
+border-collapse: collapse;
+width: 50%;
+margin: 0 auto;
+border-top: 1px solid #666;
+border-bottom: 1px solid #666;
+}
+.res_table th {
+border-bottom: 1px solid #666;
+text-align: center;
+}
+.res_table td {
+text-align: right;
+}
+.res_table .td_left {
+text-align: left;
+}
+.res_table .tr_topborder {
+border-top: 1px solid #666;
+}
+.res_table .tr_bottomborder {
+border-bottom: 1px solid #666;
+}
+
+.math .display {
+text-align: center;
+font-size: small;
+}
+
+.custom-table {
+border: 2px solid #000;
+border-collapse: collapse;
+width: 75%;
+margin-left: auto;
+margin-right: auto;
+margin-bottom: 10px;
+margin-top: 10px;
+}
+.custom-table th, .custom-table td {
+border: 1px solid #000;
+padding: 8px;
+text-align: center;
+}
+.custom-table th {
+background-color: #f0f8ff;
+}
+
+a {
+text-decoration: underline;
+font-weight: bold;
+}</style>
 
 
 
@@ -1488,7 +1657,7 @@ font-size: 0.95em;
 
 <h1 class="title toc-ignore">分散分析の課題の模範回答</h1>
 <h4 class="author">藤野秀則,</h4>
-<h4 class="date">2025-02-02</h4>
+<h4 class="date">2025-02-07</h4>
 
 </div>
 
@@ -1526,7 +1695,7 @@ summary(aov(評価~条件, data=mydata_anova_long))</code></pre>
 ## Residuals   149  144.4    0.97                   
 ## ---
 ## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1
-## 13 個の観測値が欠損のため削除されました</code></pre>
+## 13 observations deleted due to missingness</code></pre>
 </div>
 <div id="課題2" class="section level1" number="2">
 <h1><span class="header-section-number">2</span> 課題2</h1>
@@ -1609,12 +1778,12 @@ print(mydata_anova_2way_long)</code></pre>
 ## # ℹ 50 more rows</code></pre>
 <pre class="r"><code>aggregate(おいしさ~パンの種類, data=mydata_anova_2way_long, FUN=mean)</code></pre>
 <pre><code>##   パンの種類 おいしさ
-## 1     試作品 3.966667
-## 2     従来品 4.333333</code></pre>
+## 1     従来品 4.333333
+## 2     試作品 3.966667</code></pre>
 <pre class="r"><code>aggregate(おいしさ~パンの種類, data=mydata_anova_2way_long, FUN=sd)</code></pre>
 <pre><code>##   パンの種類 おいしさ
-## 1     試作品 1.650148
-## 2     従来品 2.056668</code></pre>
+## 1     従来品 2.056668
+## 2     試作品 1.650148</code></pre>
 <pre class="r"><code>mydata_anova_2way_long$被験者No. &lt;- as.factor(mydata_anova_2way_long$被験者No.)
 
 #分散分析の実施
@@ -1646,17 +1815,17 @@ data$店舗No. &lt;- as.factor(data$店舗No.)
 d&lt;-aggregate(data$売上げ, by=list(data$条件, data$時期), FUN=mean)
 print(d)</code></pre>
 <pre><code>##   Group.1 Group.2         x
-## 1  実験群  変更後 107.10000
-## 2  対照群  変更後  98.63636
-## 3  実験群  変更前 102.25000
-## 4  対照群  変更前 102.22727</code></pre>
+## 1  実験群  変更前 102.25000
+## 2  対照群  変更前 102.22727
+## 3  実験群  変更後 107.10000
+## 4  対照群  変更後  98.63636</code></pre>
 <pre class="r"><code># 分析
 library(afex)</code></pre>
-<pre><code>## 要求されたパッケージ lme4 をロード中です</code></pre>
-<pre><code>## 要求されたパッケージ Matrix をロード中です</code></pre>
+<pre><code>## Loading required package: lme4</code></pre>
+<pre><code>## Loading required package: Matrix</code></pre>
 <pre><code>## 
-## 次のパッケージを付け加えます: &#39;Matrix&#39;</code></pre>
-<pre><code>## 以下のオブジェクトは &#39;package:tidyr&#39; からマスクされています:
+## Attaching package: &#39;Matrix&#39;</code></pre>
+<pre><code>## The following objects are masked from &#39;package:tidyr&#39;:
 ## 
 ##     expand, pack, unpack</code></pre>
 <pre><code>## ************
@@ -1669,8 +1838,8 @@ library(afex)</code></pre>
 ## - For example analyses see: browseVignettes(&quot;afex&quot;)
 ## ************</code></pre>
 <pre><code>## 
-## 次のパッケージを付け加えます: &#39;afex&#39;</code></pre>
-<pre><code>## 以下のオブジェクトは &#39;package:lme4&#39; からマスクされています:
+## Attaching package: &#39;afex&#39;</code></pre>
+<pre><code>## The following object is masked from &#39;package:lme4&#39;:
 ## 
 ##     lmer</code></pre>
 <pre class="r"><code>aov_ez(
@@ -1756,6 +1925,77 @@ t.test(data_Area_A_before$売上げ, data_Area_B_before$売上げ, paired=FALSE)
 <div class="work">
 <p>ある研究者が，オフィスデスクに置かれた観葉植物が，オフィスワーカーのストレスを軽減する効果があるのかを検討するために次の実験を行った．被験者は20名の学生として，各被験者には，まず，オフィスでの事務作業に見立てた単純な作業（2桁×1桁の掛け算をひたすら計算し続ける課題）を15分間行ってもらった．その後，現在の心理的なストレス状態を測定するためのアンケートに回答してもらった上で，被験者を二つのグループに分けて，一方には1分間オフィスデスクの中央に置かれた観葉植物を見てもらい，もう一方にはデスクの中央に書かれたX印を見てもらった．デスク上には観葉植物ないしは×印以外は何もない状態にしていた．1分間それらを見てもらった後に再び心理的なストレス状態を測定するアンケートに回答してもらった．そのあと，15分間の休憩時間を置いたうえで，先ほどと同様の計算課題を行ってもらいストレスの測定も行ったあと，今度は先ほど観葉植物を見てもらったグループにはデスク上のX印を，先ほどX印を見てもらったグループには観葉植物を，それぞれ1分間見てもらい，その後ストレス状態を測定した．以上の実験を行った結果，次のデータが得られた．<a href="./practice/08_work_anova_4.csv">このデータ</a>を用いて，観葉植物がストレス軽減に効果があるのかを検討せよ．</p>
 </div>
+<pre class="r"><code>data&lt;- read_csv(&quot;./practice/08_work_anova_4.csv&quot;)</code></pre>
+<pre><code>## Rows: 80 Columns: 4
+## ── Column specification ────────────────────────────────────────────────────────
+## Delimiter: &quot;,&quot;
+## chr (2): 条件, 時期
+## dbl (2): 学生No., ストレス
+## 
+## ℹ Use `spec()` to retrieve the full column specification for this data.
+## ℹ Specify the column types or set `show_col_types = FALSE` to quiet this message.</code></pre>
+<pre class="r"><code>print(data)</code></pre>
+<pre><code>## # A tibble: 80 × 4
+##    学生No. 条件   時期   ストレス
+##      &lt;dbl&gt; &lt;chr&gt;  &lt;chr&gt;     &lt;dbl&gt;
+##  1       1 実験群 見る前      3.9
+##  2       2 実験群 見る前      4  
+##  3       3 実験群 見る前      5.1
+##  4       4 実験群 見る前      3.8
+##  5       5 実験群 見る前      1.6
+##  6       6 実験群 見る前      4.5
+##  7       7 実験群 見る前      3.2
+##  8       8 実験群 見る前      4.9
+##  9       9 実験群 見る前      4.8
+## 10      10 実験群 見る前      2.8
+## # ℹ 70 more rows</code></pre>
+<pre class="r"><code>write_csv(data, &quot;./practice/08_work_anova_4.csv&quot;)
+data$学生No. &lt;- as.factor(data$学生No.)
+aov_ez(
+  id = &quot;学生No.&quot;,       # 被験者を識別する列
+  dv = &quot;ストレス&quot;,          # 従属変数
+  within = c(&quot;時期&quot;,&quot;条件&quot;),  # 被験者内要因
+  #between = &quot;実験パターン&quot;,  # 被験者間要因
+  data = data,
+  type = 3              # タイプIII分散分析
+)</code></pre>
+<pre><code>## Anova Table (Type 3 tests)
+## 
+## Response: ストレス
+##      Effect    df  MSE         F  ges p.value
+## 1      時期 1, 19 0.56 26.20 *** .145   &lt;.001
+## 2      条件 1, 19 1.67   9.27 ** .153    .007
+## 3 時期:条件 1, 19 1.07  10.40 ** .114    .004
+## ---
+## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;+&#39; 0.1 &#39; &#39; 1</code></pre>
+<pre class="r"><code>t.test(filter(data, 条件==&quot;実験群&quot; &amp; 時期==&quot;見る前&quot;)$ストレス, 
+       filter(data, 条件==&quot;実験群&quot; &amp; 時期==&quot;見た後&quot;)$ストレス, 
+       paired=TRUE)</code></pre>
+<pre><code>## 
+##  Paired t-test
+## 
+## data:  filter(data, 条件 == &quot;実験群&quot; &amp; 時期 == &quot;見る前&quot;)$ストレス and filter(data, 条件 == &quot;実験群&quot; &amp; 時期 == &quot;見た後&quot;)$ストレス
+## t = 5.1682, df = 19, p-value = 5.468e-05
+## alternative hypothesis: true mean difference is not equal to 0
+## 95 percent confidence interval:
+##  0.9520337 2.2479663
+## sample estimates:
+## mean difference 
+##             1.6</code></pre>
+<pre class="r"><code>t.test(filter(data, 条件==&quot;対照群&quot; &amp; 時期==&quot;見る前&quot;)$ストレス, 
+       filter(data, 条件==&quot;対照群&quot; &amp; 時期==&quot;見た後&quot;)$ストレス, 
+       paired=TRUE)</code></pre>
+<pre><code>## 
+##  Paired t-test
+## 
+## data:  filter(data, 条件 == &quot;対照群&quot; &amp; 時期 == &quot;見る前&quot;)$ストレス and filter(data, 条件 == &quot;対照群&quot; &amp; 時期 == &quot;見た後&quot;)$ストレス
+## t = 0.42599, df = 19, p-value = 0.6749
+## alternative hypothesis: true mean difference is not equal to 0
+## 95 percent confidence interval:
+##  -0.4304663  0.6504663
+## sample estimates:
+## mean difference 
+##            0.11</code></pre>
 </div>
 
 
