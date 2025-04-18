@@ -1,0 +1,89 @@
+---
+title: "第2章の課題と模範解答"
+author: "藤野秀則,"
+date: "`r Sys.Date()`"
+output:
+  html_document: 
+    toc: true
+    toc_depth: 4
+    toc_float: 
+      collapsed: false
+      smooth_scroll: true
+    number_section: true
+    fig_width: 8
+    css: ./style.css
+editor_options:
+  markdown:
+    wrap: 72
+---
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+# 課題1
+
+```{r}
+res <- sqrt(2)
+print(res, digits=5)
+
+res <- sqrt(3)
+print(res, digits=5)
+
+res <- sqrt(5)
+print(res, digits = 5)
+
+```
+
+# 課題2
+
+```{r}
+res <- 25*3+4/2
+print(res)
+
+res<-11^3
+print(res)
+
+res <- 100%%7
+print(res)
+
+res <- 2 * (3 + 4) - 5
+print(res)
+
+res <- 2^3 * 3^2
+print(res)
+
+res<-((2 + 3) * (4 + 5)) / 6
+print(res)
+
+res <-3+4*5-6/3
+print(res)
+
+res <- 453 %/% 10
+print(res)
+
+res<- 453 %% 10
+print(res)
+
+res <- sqrt(256)
+print(res)
+```
+
+
+# 課題3
+
+```{r}
+myname <- "Hidenori Fujino"
+print(myname)
+nchar(myname)
+```
+
+# 課題4
+```{r}
+res <- sqrt(5)
+print(res)
+class(res)
+res.char <- as.character(res)
+print(res.char)
+```
+
+数字型の場合には数字が直接表示されるが，文字列型の場合には，ダブルコーテーションで括られて表示される
