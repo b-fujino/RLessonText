@@ -370,6 +370,27 @@ write.csv(score_df, file = "./practice/04_work_basicStatistics.csv", row.names =
 
 [【課題ファイル】](./practice/04_work_basicStatistics.csv)には大学共通テストの結果を基にシミュレーションした1000人分の各教科の得点を記載している．このデータについて，各教科の平均値，中央値，最頻値，分散，標準偏差，第1四分位数，第3四分位数を求めなさい．ただし，summary()関数とdescribe()関数は用いてはらならない．
 
+```{r echo =FALSE, include= FALSE}
+# 課題ファイルの読み込み
+KyotsuTest <- read.csv("./practice/04_work_basicStatistics.csv", header = TRUE, fileEncoding = "UTF-8")
+
+BasicStatistics <- function(x) {
+  mean_value <- mean(x)
+  median_value <- median(x)
+  mode_value <- as.numeric(names(which.max(table(x))))
+  variance_value <- var(x) * (nrow(KyotsuTest) - 1) / nrow(KyotsuTest)
+  sd_value <- sqrt(variance_value)
+  Q1_value <- quantile(x, 0.25)
+  Q3_value <- quantile(x, 0.75)
+  
+  return(data.frame(mean = mean_value, median = median_value, mode = mode_value,
+                    variance = variance_value, sd = sd_value, Q1 = Q1_value, Q3 = Q3_value))
+}
+
+# 各教科の統計量を計算
+print(BasicStatistics(KyotsuTest$国語))
+```
+
 :::
 
 
