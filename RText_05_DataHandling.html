@@ -1487,7 +1487,7 @@ font-size: 0.95em;
 
 <h1 class="title toc-ignore">データハンドリング</h1>
 <h4 class="author">藤野秀則,</h4>
-<h4 class="date">初稿日:2024-05-16 更新日:2025-02-02</h4>
+<h4 class="date">初稿日:2024-05-16 更新日:2025-05-28</h4>
 
 </div>
 
@@ -1531,10 +1531,14 @@ head(data_iris)</code></pre>
 ## 4    4.6    3.1      1.5      0.2 setosa
 ## 5    5.0    3.6      1.4      0.2 setosa
 ## 6    5.4    3.9      1.7      0.4 setosa</code></pre>
-<div id="抽出" class="section level1" number="1">
-<h1><span class="header-section-number">1</span> 抽出</h1>
+<div id="準備" class="section level1" number="1">
+<h1><span class="header-section-number">1</span> 準備</h1>
+<p>以降では，<code>tidyverse</code>パッケージを用いてデータの抽出や置換を行う．利用するためには<strong>Tools-&gt;install.packagesで<code>tidyverse</code>パッケージを自身のRStudioにインストールしたうえで，Rmdファイル上で<code>library(tidyverse)</code>と入力して，現在のRmdファイルにパッケージを読み込む必要がある</strong>．Rmdファイル上でのパッケージの読み込みは一度行えば，そのファイル全体に対して適用されるので，Rmdの冒頭のセルで読み込みを行っておけば，改めて別のセルで<code>library(tidyverse)</code>を記入する必要はない．</p>
+</div>
+<div id="抽出" class="section level1" number="2">
+<h1><span class="header-section-number">2</span> 抽出</h1>
 <p>グループ分け変数を持ったデータを処理するときに，ある特定のグループのデータだけを抜き出したいということはよくある．
-そうした「データの抽出」を行うための関数として<code>tidyverse</code>パッケージに<code>filter()</code>関数が設けられている．利用するためにはT<strong>ools-&gt;install.packagesで<code>tidyverse</code>パッケージをインストールしたうえで，スクリプト上で<code>library(tidyverse)</code>と入力してパッケージを読み込む必要がある</strong>．</p>
+そうした「データの抽出」を行うための関数として<code>tidyverse</code>パッケージに<code>filter()</code>関数が設けられている．</p>
 <p><code>filter()</code>関数の利用法は，第1引数に元のデータを与え，第2引数に検索条件を与える．検索条件の書式のパターンは以下の通り．</p>
 <table>
 <colgroup>
@@ -1730,8 +1734,8 @@ head(res3)</code></pre>
 <p><code>$</code>と<code>[]</code>とで出力が違うのは<a href="./RText_03_BasicUsage2.html#列へのアクセス">こちら</a>で説明したように，<code>$</code>は指定した列をベクトルとして取り出すのに対して，<code>[]</code>は指定した列だけで構成されるデータフレームとして取り出されるためである．</p>
 <!--以下，2024/5/16　追記 -->
 </div>
-<div id="数値の置換" class="section level1" number="2">
-<h1><span class="header-section-number">2</span> 数値の置換</h1>
+<div id="数値の置換" class="section level1" number="3">
+<h1><span class="header-section-number">3</span> 数値の置換</h1>
 <p>数値の置換には<code>ifelse()</code>関数を応用する．<code>ifelse()</code>関数は，第1引数に条件を記述し（条件の記述方法は検索と同じ），第2引数には条件にマッチした場合に置き換える値，第3引数にはマッチしなかった場合に置き換える値を記載する（Excelの<code>if()</code>関数と同じ引数構造である）．<code>ifelse()</code>関数の実行結果として最終的に返ってくるのは，そうした置き換えが行われたベクトルとなる．あくまでベクトルが返ってくるだけなので，実際に置き換えをデータに反映させるためには，元のデータの元の列に返ってきたベクトルを代入するなり，元のデータに新しい列を作ってベクトルを代入するなりする必要がある．</p>
 <div class="ref">
 <p>「値」と記載しているが，コンピュータの用語として「値」という場合には，数値だけでなく文字列も含められていることは覚えておこう．数値だけをいう場合には「数値」，文字列だけを言う場合には「文字列」とはっきりと言わなければならない．</p>
@@ -1762,8 +1766,8 @@ summary(data_iris2)</code></pre>
 ##                         
 ##                         
 ## </code></pre>
-<div id="ifelseの入れ子" class="section level2" number="2.1">
-<h2><span class="header-section-number">2.1</span> ifelse()の入れ子</h2>
+<div id="ifelseの入れ子" class="section level2" number="3.1">
+<h2><span class="header-section-number">3.1</span> ifelse()の入れ子</h2>
 <p><code>ifelse()</code>関数は入れ子にすることもできる．すなわち，</p>
 <pre><code>ifelse(&lt;&lt;条件&gt;&gt;, &lt;&lt;条件が真の場合の処理&gt;&gt;, 
     ifelse(&lt;&lt;条件2&gt;&gt;, &lt;&lt;条件2が真の場合の処理&gt;&gt;, &lt;&lt;条件2が偽の場合の処理)
@@ -1864,8 +1868,8 @@ print(data_iris2$がく長r)</code></pre>
 </div>
 </div>
 </div>
-<div id="文字列の置換" class="section level1" number="3">
-<h1><span class="header-section-number">3</span> 文字列の置換</h1>
+<div id="文字列の置換" class="section level1" number="4">
+<h1><span class="header-section-number">4</span> 文字列の置換</h1>
 <p>文字列型の列や要因型の列を置換したい場合には<code>ifelse()</code>関数を使うよりも，<code>recode()</code>関数を使うほうが簡単である．</p>
 <p>第1引数には，変換したいベクトル，第2引数以降には，置換内容を記述していく．置換内容が指定されていないものは元の値が維持される．以下の例では，<code>setosa</code>を<code>セトサ</code>に，<code>versicolor</code>を<code>バーシカラー</code>に置換している．</p>
 <pre class="r"><code>data_iris2 &lt;- data_iris 
@@ -1988,8 +1992,8 @@ summary(data_iris2$種類) #サマリー表示　要因型に変換したので�
 </details>
 </div>
 </div>
-<div id="欠損データの除外" class="section level1" number="4">
-<h1><span class="header-section-number">4</span> 欠損データの除外</h1>
+<div id="欠損データの除外" class="section level1" number="5">
+<h1><span class="header-section-number">5</span> 欠損データの除外</h1>
 <p>実験や調査を行った際にデータの一部が欠損しているケースは多々ある．Rでは欠損データはデータフレーム上で<code>NA</code>（Not
 Available：利用不可能の意味）と表記されている．</p>
 <p>関数によっては欠損データを含んでいるデータを受け付けないケースがある．例えばすでに<a href="#平均値">平均値</a>で紹介したように<code>mean()</code>関数は，そのままでは欠損値を含んだデータは受け付けない．</p>
@@ -2029,8 +2033,8 @@ data_iris3.naomit</code></pre>
 <pre><code>## [1] 0.5773503</code></pre>
 <p>こうした欠損値は特に任意回答の項目を入れているアンケート調査では間違いなく含まれてくるし，紙でとったアンケート調査においては無回答であったり，択一回答の質問なのに勝手に2つ以上の選ぶなど不正回答をしてくるケースも多々ある．そういう場合にはデータ上は<code>NA</code>として処理すべきデータとなる．そのような形で<code>NA</code>を含んだデータではデータを読み込んだ時点で上記の通りに<code>na.omit()</code>を実施しておくとよい．</p>
 </div>
-<div id="データの整理方法ワイド形式とロング形式" class="section level1" number="5">
-<h1><span class="header-section-number">5</span>
+<div id="データの整理方法ワイド形式とロング形式" class="section level1" number="6">
+<h1><span class="header-section-number">6</span>
 データの整理方法（ワイド形式とロング形式）</h1>
 <p>例えば，ある中学校のあるクラス(25人)での1年間の定期テストでの数学の得点をデータとして扱う事例を考えてみよう．</p>
 <p>人がそのようなデータを扱うときには以下のような表を作るだろう．</p>
@@ -2284,8 +2288,8 @@ data_iris3.naomit</code></pre>
 <p>また，ワイド形式の場合，例えば，数学の得点を並べた表とは国語の得点を並べた表ば別個に作成する必要がある．
 一方で，ロング形式の場合，数学の得点の列，国語の得点の列，というように並べて行けばよい．</p>
 <p>データ処理という点では，人の目からはわかりづらいがロング形式のデータの方が，<strong>何が変数なのか</strong>が明確に分かるため，ロング形式のデータを作る習慣を持っておこう．</p>
-<div id="ワイド形式からロング形式への変換" class="section level2" number="5.1">
-<h2><span class="header-section-number">5.1</span>
+<div id="ワイド形式からロング形式への変換" class="section level2" number="6.1">
+<h2><span class="header-section-number">6.1</span>
 ワイド形式からロング形式への変換</h2>
 <p><code>tidyverse</code>パッケージ（正確には<code>tidyr</code>パッケージ）ではワイド形式のデータをロング形式のデータに変換する<code>pivot_longer()</code>関数が存在している．もし提供されたデータがワイド形式であった場合には，<code>pivot_longer()</code>関数を用いればよい（もちろん，Excelで手作業で並べ変えを行っても構わない）．</p>
 <p>pivot_longer()関数の引数は以下のとおりである．</p>
@@ -2374,8 +2378,8 @@ Cを試食し，風味の良さを10段階で回答してもらったデータ�
 </div>
 </div>
 </div>
-<div id="まとめ" class="section level1" number="6">
-<h1><span class="header-section-number">6</span> まとめ</h1>
+<div id="まとめ" class="section level1" number="7">
+<h1><span class="header-section-number">7</span> まとめ</h1>
 <p>今回用いた関数は以下の通りである．</p>
 <ul>
 <li><code>colnames()</code>：データフレームの列名を取得する関数.これを左辺に<code>&lt;-</code>で新しい列名を収めたベクトルを与えることによって列名（変数名）を置換できる．
