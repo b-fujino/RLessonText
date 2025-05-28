@@ -1487,7 +1487,7 @@ font-size: 0.95em;
 
 <h1 class="title toc-ignore">基本的な検定</h1>
 <h4 class="author">藤野秀則,</h4>
-<h4 class="date">初版日:2024-05-02 更新日:2025-02-02</h4>
+<h4 class="date">初版日:2024-05-02 更新日:2025-05-28</h4>
 
 </div>
 
@@ -1508,7 +1508,7 @@ t検定の方法（基本）</h2>
 <ul>
 <li>第1引数：比較先のベクトルデータ</li>
 <li>第2引数：比較元のベクトルデータ</li>
-<li>第3引数<code>alternative</code>（省略可）:「両側検定」を行うのか「片側検定」を行うの指定．デフォルトでは両側検定となっていおり，通常は両側検定を行うのが一般的であるため，省略するのが一般的である．特に片側検定にしたい場合には，比較先の平均が比較元の平均より「高い」ということを検証したい場合には
+<li>第3引数<code>alternative</code>（省略可）:「両側検定」を行うのか「片側検定」を行うの指定．デフォルトでは両側検定となっていおり，通常は両側検定を行うのが一般的であるため，<strong>省略するのが一般的</strong>である．特に片側検定にしたい場合には，比較先の平均が比較元の平均より「高い」ということを検証したい場合には
 “greater”，「低い」ということを検証したい “less”を指定する．</li>
 </ul>
 <p>．いずれも<strong>ベクトルデータ</strong>で与える必要がある点に注意が必要である．</p>
@@ -1566,7 +1566,7 @@ t.test(新肥料, 旧肥料)#Alternativeは省略　</code></pre>
 ## sample estimates:
 ## mean of x mean of y 
 ##    53.645    45.960</code></pre>
-<p>2行目の<code>p-value = 0.0002922</code>という箇所が結果を示す箇所であり，また最後の</p>
+<p>2行目の0.0002922という箇所が結果を示す箇所であり，また最後の</p>
 <pre><code>mean of x mean of y 
    53.645    45.960 </code></pre>
 <p>は，それぞれのデータの平均値である．</p>
@@ -1617,9 +1617,31 @@ t.test(mydata_ttest_paired$従来品, mydata_ttest_paired$試作品, paired=TRUE
 <div id="ロング形式データでのt検定" class="section level2" number="1.4">
 <h2><span class="header-section-number">1.4</span>
 ロング形式データでのt検定</h2>
-<p>ロング形式のデータの場合，<code>filter()</code>を使って，分析に掛けるベクトルデータをそれぞれ取り出せば，基本のt検定の方法で分析ができるが，いちいち個別にベクトルデータを取りださなくても，<strong>測定変数と属性変数を<code>~</code>（チルダ）で結んだ「式」</strong>を<code>t.test()</code>関数の第1引数に与えることでも分析ができる．なお，<strong>属性変数のデータは要因型</strong>である必要がある．この場合，第2引数にはそれぞれの変数を含んだデータフレームのオブジェクト名を与える．</p>
-<p>第3引数（alternative）は，上記の通りである．</p>
-<p>以下は例題1のデータをロング形式に変換したうえで，式形式でのt検定を行う例である．</p>
+<p>ロング形式のデータの場合，<code>filter()</code>と<code>$</code>を使って，分析に掛けるデータをそれぞれ取り出せば，基本のt検定の方法で分析ができる．</p>
+<div class="ref">
+<p>多いうっかりミスとして，<code>filter()</code>の結果を受け取ったオブジェクトをそのまま<code>t.test()</code>の第1引数に与えてしまうことがある．しかし，<code>filter()</code>が返してくるのは，検索条件にマッチしたサンプルの全てのデータをふくむ<strong>データフレーム</strong>であり，そのまま<code>t.test()</code>に掛けてもエラーが返るだけである．t.test()に掛ける際には，<code>filter()</code>が返してきたオブジェクトに<code>$</code>をつけて，どの列のデータ（ベクトルデータ）をt.test()に掛けるのかを指定すること．</p>
+</div>
+<!-- が，いちいち個別にベクトルデータを取りださなくても，**測定変数と属性変数を`~`（チルダ）で結んだ「式」**を`t.test()`関数の第1引数に与えることでも分析ができる．なお，**属性変数のデータは要因型**である必要がある．この場合，第2引数にはそれぞれの変数を含んだデータフレームのオブジェクト名を与える． -->
+<!-- 第3引数（alternative）は，上記の通りである． -->
+<!-- 以下は例題1のデータをロング形式に変換したうえで，式形式でのt検定を行う例である． -->
+<p>以下は例題1のデータをロング形式に変換したうえで，filter()を使ってそれぞれのベクトルデータを取り出し，t検定を行う例である．</p>
+<!-- ```{r include=FALSE, eval=FALSE} -->
+<!-- library(tidyverse) # pivot_longer関数を使うにはtidyverseを読み込む必要がある -->
+<!-- # ロング形式のデータを作成 -->
+<!-- long_data <- pivot_longer( -->
+<!--   mydata_ttest, -->
+<!--   cols=colnames(mydata_ttest), -->
+<!--   names_to = "肥料", -->
+<!--   values_to= "収穫量" #測定変数に与える列名 -->
+<!-- ) -->
+<!-- # 肥料列を要因型に変換 -->
+<!-- long_data$肥料 <- as.factor(long_data$肥料) -->
+<!-- # 内容確認 -->
+<!-- summary(long_data) -->
+<!-- #t検定 -->
+<!-- t.test(収穫量~肥料, long_data) -->
+<!-- ``` -->
+<p>まずは，データをロング形式に変換する．</p>
 <pre class="r"><code>library(tidyverse) # pivot_longer関数を使うにはtidyverseを読み込む必要がある</code></pre>
 <pre><code>## ── Attaching core tidyverse packages ──────────────────────── tidyverse 2.0.0 ──
 ## ✔ dplyr     1.1.4     ✔ readr     2.1.5
@@ -1651,65 +1673,47 @@ summary(long_data)</code></pre>
 ##                        Mean   :49.80  
 ##                        3rd Qu.:54.38  
 ##                        Max.   :64.48</code></pre>
-<pre class="r"><code>#t検定
-t.test(収穫量~肥料, long_data)</code></pre>
+<p>それぞれのデータをfilterで取り出してt検定を行う．</p>
+<pre class="r"><code># 新しい肥料を使用した場合の収穫量
+新肥料&lt;- filter(long_data, 肥料==&quot;新しい肥料を使用&quot;)$収穫量
+旧肥料&lt;- filter(long_data, 肥料==&quot;通常の肥料を使用&quot;)$収穫量
+
+#t検定
+t.test(新肥料, 旧肥料)#Alternativeは省略　</code></pre>
 <pre><code>## 
 ##  Welch Two Sample t-test
 ## 
-## data:  収穫量 by 肥料
+## data:  新肥料 and 旧肥料
 ## t = 3.9995, df = 36.981, p-value = 0.0002922
-## alternative hypothesis: true difference in means between group 新しい肥料を使用 and group 通常の肥料を使用 is not equal to 0
+## alternative hypothesis: true difference in means is not equal to 0
 ## 95 percent confidence interval:
 ##   3.791649 11.578351
 ## sample estimates:
-## mean in group 新しい肥料を使用 mean in group 通常の肥料を使用 
-##                         53.645                         45.960</code></pre>
-<!-- (以下，2024.10.9追記) -->
-<div id="式-data形式では対応ありデータの分析はできない" class="section level3" number="1.4.1">
-<h3><span class="header-section-number">1.4.1</span> 式,
-data形式では対応ありデータの分析はできない！！</h3>
-<p>ただし，<strong>ロング形式のデータとなっている場合に，R
-4.4.1（2024.10.9時点の最新）では，<code>式, data</code>形式での分析はできない．対応ありデータ(第4引数<code>paired=TRUE</code>となるデータ）の場合には，以下の例のようにそれぞれのデータを取り出してt.testにかける必要がある．</strong>
+## mean of x mean of y 
+##    53.645    45.960</code></pre>
+<p><!-- (以下，2024.10.9追記) -->
+<!-- ### 式, data形式では対応ありデータの分析はできない！！ -->
+<!-- ただし，**ロング形式のデータとなっている場合に，R 4.4.1（2024.10.9時点の最新）では，`式, data`形式での分析はできない．対応ありデータ(第4引数`paired=TRUE`となるデータ）の場合には，以下の例のようにそれぞれのデータを取り出してt.testにかける必要がある．** -->
 <!-- （R 4.3.3であれば(式, data)形式でもpaired=TRUEの設定が可能）． --></p>
-<pre class="r"><code>## ロング形式のデータを作成
-long_data_paired &lt;- pivot_longer(
-  mydata_ttest_paired,
-  cols=colnames(mydata_ttest_paired),
-  names_to = &quot;食パン&quot;,
-  values_to= &quot;評価&quot; #測定変数に与える列名
-)
-
-# 確認
-long_data_paired$食パン &lt;- as.factor(long_data_paired$食パン)
-summary(long_data_paired)</code></pre>
-<pre><code>##     食パン        評価       
-##  試作品:15   Min.   : 4.000  
-##  従来品:15   1st Qu.: 6.000  
-##              Median : 7.000  
-##              Mean   : 6.867  
-##              3rd Qu.: 8.000  
-##              Max.   :10.000</code></pre>
-<pre class="r"><code># 以下の形式だとエラーになる．
-t.test(評価~食パン, long_data_paired, paired=TRUE, na.rm=TRUE) </code></pre>
-<pre><code>## Error in t.test.formula(評価 ~ 食パン, long_data_paired, paired = TRUE, : cannot use &#39;paired&#39; in formula method</code></pre>
-<pre class="r"><code># ロングデータからの食パンごとのデータを取り出し
-data1 &lt;- filter(long_data_paired, 食パン==&quot;従来品&quot;)
-data2 &lt;- filter(long_data_paired, 食パン==&quot;試作品&quot;)
-
-
-# t検定
-t.test(data1$評価, data2$評価, paired=TRUE)</code></pre>
-<pre><code>## 
-##  Paired t-test
-## 
-## data:  data1$評価 and data2$評価
-## t = -0.24203, df = 14, p-value = 0.8123
-## alternative hypothesis: true mean difference is not equal to 0
-## 95 percent confidence interval:
-##  -1.314899  1.048232
-## sample estimates:
-## mean difference 
-##      -0.1333333</code></pre>
+<!-- ```{r error=TRUE} -->
+<!-- ## ロング形式のデータを作成 -->
+<!-- long_data_paired <- pivot_longer( -->
+<!--   mydata_ttest_paired, -->
+<!--   cols=colnames(mydata_ttest_paired), -->
+<!--   names_to = "食パン", -->
+<!--   values_to= "評価" #測定変数に与える列名 -->
+<!-- ) -->
+<!-- # 確認 -->
+<!-- long_data_paired$食パン <- as.factor(long_data_paired$食パン) -->
+<!-- summary(long_data_paired) -->
+<!-- # 以下の形式だとエラーになる． -->
+<!-- t.test(評価~食パン, long_data_paired, paired=TRUE, na.rm=TRUE)  -->
+<!-- # ロングデータからの食パンごとのデータを取り出し -->
+<!-- data1 <- filter(long_data_paired, 食パン=="従来品") -->
+<!-- data2 <- filter(long_data_paired, 食パン=="試作品") -->
+<!-- # t検定 -->
+<!-- t.test(data1$評価, data2$評価, paired=TRUE) -->
+<!-- ``` -->
 <div class="ref">
 <details>
 <summary>
@@ -1739,14 +1743,13 @@ https://doi.org/10.5334/irsp.82</a></p>
 </details>
 </div>
 </div>
-</div>
 <div id="t検定の結果の報告方法" class="section level2" number="1.5">
 <h2><span class="header-section-number">1.5</span>
 t検定の結果の報告方法</h2>
 <p>t検定の結果を報告する際には棒グラフを用いるのが一般的である（平均なので箱ひげ図は用いない）．二つの群の平均と標準偏差を棒グラフで表現したうえで，角傘（ブラケットと呼ぶ）をつけてp値を記載する．</p>
 <p><a name="推測統計量"></a></p>
 <div class="ref">
-<p>t検定は，あくまでそのデータの違いを見ているのではなく，そのデータから推定される母集団に違いがあるかを検証するものである．このため，t検定の結果を報告する際に用いる統計量は，推測統計量となる．このことはt検定だけに限らず，あらゆる分析にあてはまる．今後解説していくあらゆる分析は得られているデータを基に推定される母集団の比較をしたり，母集団間の関係性を分析したりするものである．このため，<strong>今後の分析の中で出てくる平均や標準偏差は全て基本的に推測統計量となる</strong>．</p>
+<p>t検定は，あくまでそのデータの違いを見ているのではなく，そのデータから推定される<strong>母集団に違いがあるか</strong>を検証するものである．このため，t検定の結果を報告する際に用いる統計量は，推測統計量となる．このことはt検定だけに限らず，あらゆる分析にあてはまる．今後解説していくあらゆる分析は得られているデータを基に推定される母集団の比較をしたり，母集団間の関係性を分析したりするものである．このため，<strong>今後の分析の中で出てくる平均や標準偏差は全て基本的に推測統計量となる</strong>．</p>
 </div>
 <p>具体的にggplotを使って，先の2つの例題の結果を棒グラフで表記してみよう．まずは，<a href="./RText_06_ggplot2_basicUsage.html#棒グラフ">こちら</a>のコードを参考に棒グラフを作成する．まずは例題1．</p>
 <pre class="r"><code>library(ggplot2) # ggplotを使うためにはまずこのライブライを読み込んでおく必要がある
@@ -1914,7 +1917,8 @@ var.test(変更後,変更前 )</code></pre>
 <div id="ロング形式のデータでのf検定" class="section level2" number="2.2">
 <h2><span class="header-section-number">2.2</span>
 ロング形式のデータでのF検定</h2>
-<p>ｔ検定の時と同様に，ロング形式のデータの場合には<code>測定変数~要因変数, データ</code>の形でも検定を行うことができる．以下にその例を示す．</p>
+<p>ｔ検定の時と同様に，ロング形式のデータの場合には，filter()を用いる．</p>
+<!-- `測定変数~要因変数, データ`の形でも検定を行うことができる．以下にその例を示す． -->
 <pre class="r"><code>#ワイド形式からロング形式に変換
 long_data_vartest &lt;- pivot_longer(
   mydata_vartest,
@@ -1926,12 +1930,23 @@ long_data_vartest &lt;- pivot_longer(
 # 工程を要因型（要因型）に変換
 long_data_vartest$工程 &lt;- as.factor(long_data_vartest$工程)
 
+summary(long_data_vartest)</code></pre>
+<pre><code>##          工程         重量       
+##  工程変更後:20   Min.   : 75.86  
+##  工程変更前:20   1st Qu.: 93.83  
+##                  Median : 99.50  
+##                  Mean   : 99.13  
+##                  3rd Qu.:105.42  
+##                  Max.   :118.95</code></pre>
+<pre class="r"><code>変更前 &lt;- filter(long_data_vartest, 工程==&quot;工程変更前&quot;)$重量
+変更後 &lt;- filter(long_data_vartest, 工程==&quot;工程変更後&quot;)$重量
+
 # F検定の実施
-var.test(重量~工程, long_data_vartest)</code></pre>
+var.test(変更後,変更前)</code></pre>
 <pre><code>## 
 ##  F test to compare two variances
 ## 
-## data:  重量 by 工程
+## data:  変更後 and 変更前
 ## F = 2.8598, num df = 19, denom df = 19, p-value = 0.02698
 ## alternative hypothesis: true ratio of variances is not equal to 1
 ## 95 percent confidence interval:
