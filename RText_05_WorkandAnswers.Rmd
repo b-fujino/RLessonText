@@ -1,0 +1,130 @@
+---
+title: "第5章の課題と模範解答"
+author: "藤野秀則,"
+date: "`r Sys.Date()`"
+output:
+  html_document: 
+    toc: true
+    toc_depth: 4
+    toc_float: 
+      collapsed: false
+      smooth_scroll: true
+    number_section: true
+    fig_width: 8
+    css: ./style.css
+editor_options:
+  markdown:
+    wrap: 72
+---
+
+TidyverseのRmdへの読み込み
+
+```{R}
+library(tidyverse)
+```
+
+
+
+# 課題1
+:::work
+次の[データ](./practice/05_work_1.csv)を読み込み，以下の処理を行え．
+
+1. summay()関数によって，このデータの内容がどのようなものかを確認せよ．
+1. 性別と血液型をそれぞれ要因型にし，再度sumary()関数を実施し，先の結果との違いを確認せよ．
+1. 性別の`M`を「男性」，`F`を「女性」に置換し，再度sumary()関数を実施し，先の結果との違いを確認せよ．
+1. 男性のみのデータを抽出し，そのデータの`身長`の平均値と標準偏差，ならびに平均の95\%信頼区間を求めよ.
+1. 女性でかつ`身長`が170㎝以上の人の数が何人か求めよ．
+1. BMIが25以上には「過体重」，18.5以上で25未満には「標準」，18.5未満には「低体重」というルールでラベルを付け，新たな列「体重ラベル」としてデータに追加し，その列を要因型に変換して，summary()関数で各ラベルがついた人数を確認せよ．
+:::    
+
+```{R}
+myData <- read.csv("./practice/05_work_1.csv", header = TRUE, fileEncoding = "UTF-8")
+```
+
+## 課題1.1
+
+```{R}
+summary(myData)
+```
+
+## 課題1.2
+
+```{R}
+myData$性別 <- as.factor(myData$性別)
+myData$血液型 <- as.factor(myData$血液型)
+summary(myData)
+
+```
+
+## 課題1.3
+```{R}
+myData$性別 <- recode(myData$性別, `M` = "男性", `F` = "女性")
+```
+
+## 課題1.4
+```{r}
+男性データ <- filter(myData, 性別 == "男性")
+平均 <- mean(男性データ$身長, na.rm = TRUE)
+print(平均)
+
+標準偏差 <- sd(男性データ$身長, na.rm = TRUE)
+print(標準偏差)
+
+res.ttest <- t.test(男性データ$身長)
+信頼区間 <- res.ttest$conf.int
+print(信頼区間)
+```
+
+## 課題1.5
+```{R}
+女性170cm以上 <- filter(myData, 性別 == "女性" & 身長 >= 170)
+人数 <- nrow(女性170cm以上)
+print(人数)
+```
+
+## 課題1.6
+```{r}
+myData$体重ラベル <- ifelse(myData$BMI >= 25, "過体重",
+                             ifelse(myData$BMI >= 18.5, "標準", "低体重"))
+myData$体重ラベル <- factor(myData$体重ラベル)
+summary(myData$体重ラベル)
+```
+ 
+ 
+# 課題2   
+:::work
+次の[データ](./practice/05_work_2.csv)は，調査協力者40名（男性19名，女性21名）に対して，食パンA, B, Cを試食し，風味の良さを10段階で回答してもらったデータである．以下の課題を行え．
+
+1. head()関数によって，このデータの内容がどのようなものかを確認せよ．
+1. ワイド形式のデータをロング形式に変換し，同様にhead()関数で内容を確認せよ．
+1. ロング形式に変換したデータを用いて，男性の食パンAの平均点と女性の食パンAの平均点をそれぞれ算出せよ．
+:::
+
+## 課題2.1
+
+```{R}
+myData2 <- read.csv("./practice/05_work_2.csv", header = TRUE, fileEncoding = "UTF-8")
+head(myData2)
+```
+
+## 課題2.2
+
+```{R}
+myData2_long <-pivot_longer(myData2,
+               cols = starts_with("食パン"), 
+               names_to = "食パン", 
+               values_to = "風味の良さ")
+
+head(myData2_long)
+```
+
+## 課題2.3
+
+```{R}
+男性_A <- filter(myData2_long, 性別 == "男性" & 食パン == "食パンA")
+男性_A_平均 <- mean(男性_A$風味の良さ, na.rm = TRUE)
+print(男性_A_平均)
+
+女性_A <- filter(myData2_long, 性別 == "女性" & 食パン == "食パンA")
+女性_A_平均 <- mean(女性_A$風味の良さ, na.rm = TRUE)
+print(女性_A_平均)

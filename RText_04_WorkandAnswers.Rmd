@@ -30,6 +30,97 @@ knitr::opts_chunk$set(echo = TRUE)
 
 ```{r}
 myData <- read.csv("./practice/04_work_basicStatistics.csv", header = TRUE, fileEncoding = "UTF-8")
-psych::describe(myData)
+
+# 平均値
+国語.平均 <- mean(myData$国語)
+print(国語.平均)
+
+# 分散
+s2 <- var(myData$国語)
+n <- nrow(myData)
+国語.分散 <- s2 * (n - 1) / n
+print(国語.分散)
+
+#標準偏差
+s <- sd(myData$国語)
+n <- nrow(myData)
+国語.標準偏差 <- s * sqrt(n / (n - 1))
+print(国語.標準偏差)
+
+#標準偏差（分散の平方根から）
+国語.標準偏差2 <- sqrt(国語.分散)
+print(国語.標準偏差2)
+
+# 中央値
+国語.中央値 <- median(myData$国語)
+print(国語.中央値)
+
+# 最頻値
+国語.最頻値 <- as.numeric(names(which.max(table(myData$国語))))
+print(国語.最頻値)
+
+# 第1四分位数
+国語.第1四分位数 <- quantile(myData$国語, 0.25)
+print(国語.第1四分位数)
+
+# 第3四分位数
+国語.第3四分位数 <- quantile(myData$国語, 0.75)
+print(国語.第3四分位数)
+
 
 ```
+
+以下は各科目で繰り返すだけなので省略．
+
+# 課題2
+
+:::work
+先ほどの[【課題ファイル】](./practice/04_work_basicStatistics.csv)にある大学共通テストのデータについて，各教科の平均と分散の点推定値および95%の推定区間を求めなさい．
+:::
+
+```{r}
+# 平均の点推定値
+国語.平均 <- mean(myData$国語)
+print(国語.平均)
+
+# 分散の点推定値
+国語.分散 <- var(myData$国語)
+print(国語.分散)
+
+# 平均の95%信頼区間
+国語.平均.信頼区間  <- t.test(myData$国語, conf.level = 0.95)
+print(国語.平均.信頼区間$conf.int)
+
+# 分散の95%信頼区間
+library(EnvStats)
+国語.分散.信頼区間 <- varTest(myData$国語, conf.level = 0.95)
+print(国語.分散.信頼区間$conf.int)
+
+
+```
+
+以下は各科目で繰り返すだけなので省略．
+
+# 課題3
+
+:::work
+次の[【課題ファイル】](./practice/04_work_basicStatistics2.csv)は，Setosa, Versicolor, Verginica,という 3種類のアイリスの花の花びらとがくの長さと幅についてのデータである．このデータについて，花の種類ごとに花びらとがくの長さと幅の平均と標準偏差をそれぞれ求めなさい．
+:::
+
+```{r}
+myData2 <- read.csv("./practice/04_work_basicStatistics2.csv", header = TRUE, fileEncoding = "UTF-8")
+View(myData2)
+
+# 種類を要因型に変換
+myData2$種類 <- as.factor(myData2$種類)
+
+#がくの長さと幅の平均と標準偏差
+がくの長さ.平均 <- aggregate(がくの長さ ~ 種類, data = myData2, FUN = mean)
+print(がくの長さ.平均)
+
+がくの長さ.標準偏差 <- aggregate(がくの長さ ~ 種類, data = myData2, FUN = sd)
+print(がくの長さ.標準偏差)
+
+```
+
+以下，がくの幅，花びらの幅と長さで繰り返すだけのなので省略．
