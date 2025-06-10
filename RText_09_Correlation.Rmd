@@ -565,6 +565,15 @@ write.csv(data, "./practice/example_09_HiddenCorrel.csv", row.names = FALSE)
 
 :::
 
+
+:::ref
+<summary>相関係数の差の検定
+
+以下の内容はかなり複雑なものであるとともに，実際にはそう使うものでもないので，興味があれば見るという程度でよい．
+
+
+</summary>
+<details>
 # 相関係数の差の検定
 
 相関係数の差が有意かどうかを検定することが可能である．帰無仮説は，2つの相関係数が等しいということである．
@@ -876,4 +885,6 @@ psych::describeBy(data[c("Q1","Q2","Q3","Q4")], group=data$F1)
 
 ```
 
+:::
+</details>
 :::
