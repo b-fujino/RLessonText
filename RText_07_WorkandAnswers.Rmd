@@ -250,7 +250,7 @@ s1 <- 141
 n2 <- 1732
 s2 <- 1492
 # 検定
-prop.test(c(s1, s2), c(n1, n2))
+prop.test(c(s1, s2), c(n1, n2), correct = FALSE)
 
 ```
 
