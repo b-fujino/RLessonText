@@ -1681,7 +1681,15 @@ mydata_anova &lt;- read.csv(
   fileEncoding=&quot;UTF8&quot;
 ) # データ読み込み
 
-#ワイド形式からロング形式に変換
+head(mydata_anova)</code></pre>
+<pre><code>##   統制 講義 議論
+## 1  7.4  6.3  6.5
+## 2  5.4  5.2  8.1
+## 3  6.4  7.6  8.7
+## 4  6.6  6.6  9.2
+## 5  6.4  6.1  9.0
+## 6  5.9  6.3  7.0</code></pre>
+<pre class="r"><code>#ワイド形式からロング形式に変換
 mydata_anova_long &lt;- pivot_longer(
   mydata_anova,
   cols=colnames(mydata_anova),
@@ -1689,7 +1697,17 @@ mydata_anova_long &lt;- pivot_longer(
   values_to= &quot;評価&quot; #測定変数に与える列名
 )
 
-summary(aov(評価~条件, data=mydata_anova_long))</code></pre>
+head(mydata_anova_long)</code></pre>
+<pre><code>## # A tibble: 6 × 2
+##   条件   評価
+##   &lt;chr&gt; &lt;dbl&gt;
+## 1 統制    7.4
+## 2 講義    6.3
+## 3 議論    6.5
+## 4 統制    5.4
+## 5 講義    5.2
+## 6 議論    8.1</code></pre>
+<pre class="r"><code>summary(aov(評価~条件, data=mydata_anova_long))</code></pre>
 <pre><code>##              Df Sum Sq Mean Sq F value Pr(&gt;F)    
 ## 条件          2  108.1   54.06   55.77 &lt;2e-16 ***
 ## Residuals   149  144.4    0.97                   
