@@ -1798,7 +1798,7 @@ print(mydata_anova_2way_long)</code></pre>
 ## 2     試作品 1.650148</code></pre>
 <pre class="r"><code>#分散分析の実施
 mydata_anova_2way_long$被験者No. &lt;- as.factor(mydata_anova_2way_long$被験者No.)
-res &lt;- aov(おいしさ~パンの種類+Error(被験者No./パンの種類), mydata_anova_2way_long)
+res &lt;- aov(おいしさ~パンの種類+Error(被験者No./パンの種類), data=mydata_anova_2way_long)
 summary(res)</code></pre>
 <pre><code>## 
 ## Error: 被験者No.

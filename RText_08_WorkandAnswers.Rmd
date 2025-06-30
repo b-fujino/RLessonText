@@ -97,7 +97,7 @@ aggregate(おいしさ~パンの種類, data=mydata_anova_2way_long, FUN=sd)
 
 #分散分析の実施
 mydata_anova_2way_long$被験者No. <- as.factor(mydata_anova_2way_long$被験者No.)
-res <- aov(おいしさ~パンの種類+Error(被験者No./パンの種類), mydata_anova_2way_long)
+res <- aov(おいしさ~パンの種類+Error(被験者No./パンの種類), data=mydata_anova_2way_long)
 summary(res)
 
 #対応のあるT検定
