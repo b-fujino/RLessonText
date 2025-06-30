@@ -11,7 +11,7 @@
 
 <meta name="author" content="藤野秀則," />
 
-<meta name="date" content="2025-02-07" />
+<meta name="date" content="2025-06-30" />
 
 <title>分散分析の課題の模範回答</title>
 
@@ -1657,7 +1657,7 @@ font-size: 0.95em;
 
 <h1 class="title toc-ignore">分散分析の課題の模範回答</h1>
 <h4 class="author">藤野秀則,</h4>
-<h4 class="date">2025-02-07</h4>
+<h4 class="date">2025-06-30</h4>
 
 </div>
 
@@ -1747,10 +1747,7 @@ print(mydata_anova_2way)</code></pre>
 ## 28        28      6      4
 ## 29        29      6      5
 ## 30        30      4      9</code></pre>
-<pre class="r"><code>mydata_anova_2way$従来品 &lt;- as.factor(mydata_anova_2way$従来品)
-mydata_anova_2way$試作品 &lt;- as.factor(mydata_anova_2way$試作品)
-
-#############
+<pre class="r"><code>#############
 #ワイド形式からロング形式に変換
 mydata_anova_2way_long &lt;- pivot_longer(
   mydata_anova_2way,
@@ -1758,44 +1755,55 @@ mydata_anova_2way_long &lt;- pivot_longer(
   names_to = &quot;パンの種類&quot;,
   values_to= &quot;おいしさ&quot; #測定変数に与える列名
 )
-mydata_anova_2way_long$おいしさ &lt;- as.integer(mydata_anova_2way_long$おいしさ)
-mydata_anova_2way_long$パンの種類&lt;- as.factor(mydata_anova_2way_long$パンの種類)
-d&lt;- mydata_anova_2way_long %&gt;% filter(パンの種類==&quot;試作品&quot;)
 print(mydata_anova_2way_long)</code></pre>
 <pre><code>## # A tibble: 60 × 3
 ##    被験者No. パンの種類 おいしさ
-##        &lt;int&gt; &lt;fct&gt;         &lt;int&gt;
-##  1         1 試作品            4
-##  2         1 従来品            6
-##  3         2 試作品            4
-##  4         2 従来品            6
-##  5         3 試作品            7
-##  6         3 従来品            2
-##  7         4 試作品            6
-##  8         4 従来品            5
-##  9         5 試作品            7
-## 10         5 従来品            4
+##        &lt;int&gt; &lt;chr&gt;         &lt;int&gt;
+##  1         1 試作品            6
+##  2         1 従来品            8
+##  3         2 試作品            6
+##  4         2 従来品            8
+##  5         3 試作品            9
+##  6         3 従来品            4
+##  7         4 試作品            8
+##  8         4 従来品            7
+##  9         5 試作品            9
+## 10         5 従来品            6
 ## # ℹ 50 more rows</code></pre>
 <pre class="r"><code>aggregate(おいしさ~パンの種類, data=mydata_anova_2way_long, FUN=mean)</code></pre>
 <pre><code>##   パンの種類 おいしさ
-## 1     従来品 4.333333
-## 2     試作品 3.966667</code></pre>
+## 1     従来品 6.000000
+## 2     試作品 5.966667</code></pre>
 <pre class="r"><code>aggregate(おいしさ~パンの種類, data=mydata_anova_2way_long, FUN=sd)</code></pre>
 <pre><code>##   パンの種類 おいしさ
-## 1     従来品 2.056668
+## 1     従来品 2.084425
 ## 2     試作品 1.650148</code></pre>
-<pre class="r"><code>mydata_anova_2way_long$被験者No. &lt;- as.factor(mydata_anova_2way_long$被験者No.)
-
-#分散分析の実施
-anova_res_2way &lt;- aov(おいしさ~被験者No.+パンの種類 , mydata_anova_2way_long)
-Anova(anova_res_2way, type=2)</code></pre>
-<pre><code>## Anova Table (Type II tests)
+<pre class="r"><code>#分散分析の実施
+mydata_anova_2way_long$被験者No. &lt;- as.factor(mydata_anova_2way_long$被験者No.)
+res &lt;- aov(おいしさ~パンの種類+Error(被験者No./パンの種類), mydata_anova_2way_long)
+summary(res)</code></pre>
+<pre><code>## 
+## Error: 被験者No.
+##           Df Sum Sq Mean Sq F value Pr(&gt;F)
+## Residuals 29  93.48   3.224               
 ## 
-## Response: おいしさ
-##             Sum Sq Df F value Pr(&gt;F)
-## 被験者No.   94.150 29  0.8759 0.6381
-## パンの種類   2.017  1  0.5441 0.4667
-## Residuals  107.483 29</code></pre>
+## Error: 被験者No.:パンの種類
+##            Df Sum Sq Mean Sq F value Pr(&gt;F)
+## パンの種類  1   0.02   0.017   0.004  0.948
+## Residuals  29 111.48   3.844</code></pre>
+<pre class="r"><code>#対応のあるT検定
+t.test(mydata_anova_2way$試作品, mydata_anova_2way$従来品, paired=TRUE)</code></pre>
+<pre><code>## 
+##  Paired t-test
+## 
+## data:  mydata_anova_2way$試作品 and mydata_anova_2way$従来品
+## t = -0.065844, df = 29, p-value = 0.948
+## alternative hypothesis: true mean difference is not equal to 0
+## 95 percent confidence interval:
+##  -1.068720  1.002053
+## sample estimates:
+## mean difference 
+##     -0.03333333</code></pre>
 </div>
 <div id="課題3" class="section level1" number="3">
 <h1><span class="header-section-number">3</span> 課題3</h1>
