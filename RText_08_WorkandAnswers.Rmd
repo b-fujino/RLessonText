@@ -43,6 +43,8 @@ mydata_anova <- read.csv(
   fileEncoding="UTF8"
 ) # データ読み込み
 
+head(mydata_anova)
+
 #ワイド形式からロング形式に変換
 mydata_anova_long <- pivot_longer(
   mydata_anova,
@@ -50,6 +52,8 @@ mydata_anova_long <- pivot_longer(
   names_to = "条件",
   values_to= "評価" #測定変数に与える列名
 )
+
+head(mydata_anova_long)
 
 summary(aov(評価~条件, data=mydata_anova_long))
 ```
@@ -76,8 +80,6 @@ mydata_anova_2way <- read.csv(
 
 print(mydata_anova_2way)
 
-mydata_anova_2way$従来品 <- as.factor(mydata_anova_2way$従来品)
-mydata_anova_2way$試作品 <- as.factor(mydata_anova_2way$試作品)
 
 #############
 #ワイド形式からロング形式に変換
@@ -87,20 +89,19 @@ mydata_anova_2way_long <- pivot_longer(
   names_to = "パンの種類",
   values_to= "おいしさ" #測定変数に与える列名
 )
-mydata_anova_2way_long$おいしさ <- as.integer(mydata_anova_2way_long$おいしさ)
-mydata_anova_2way_long$パンの種類<- as.factor(mydata_anova_2way_long$パンの種類)
-d<- mydata_anova_2way_long %>% filter(パンの種類=="試作品")
 print(mydata_anova_2way_long)
 
 aggregate(おいしさ~パンの種類, data=mydata_anova_2way_long, FUN=mean)
 aggregate(おいしさ~パンの種類, data=mydata_anova_2way_long, FUN=sd)
 
 
-mydata_anova_2way_long$被験者No. <- as.factor(mydata_anova_2way_long$被験者No.)
-
 #分散分析の実施
-anova_res_2way <- aov(おいしさ~被験者No.+パンの種類 , mydata_anova_2way_long)
-Anova(anova_res_2way, type=2)
+mydata_anova_2way_long$被験者No. <- as.factor(mydata_anova_2way_long$被験者No.)
+res <- aov(おいしさ~パンの種類+Error(被験者No./パンの種類), data=mydata_anova_2way_long)
+summary(res)
+
+#対応のあるT検定
+t.test(mydata_anova_2way$試作品, mydata_anova_2way$従来品, paired=TRUE)
 ```
 
 # 課題3

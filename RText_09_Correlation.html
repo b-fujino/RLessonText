@@ -1487,7 +1487,7 @@ font-size: 0.95em;
 
 <h1 class="title toc-ignore">相関分析</h1>
 <h4 class="author">藤野秀則,</h4>
-<h4 class="date">初版日:2024-09-30 更新日:2025-02-02</h4>
+<h4 class="date">初版日:2024-09-30 更新日:2025-06-10</h4>
 
 </div>
 
@@ -2090,6 +2090,7 @@ Applied Psychology, 96(4), 863–871. <a href="https://doi.org/10.1037/a0022625"
 <p>以下のコードは，先のCSVファイルから算出した相関行列をヒートマップで表示する例である．<span class="math inline">\(-1\)</span>を青，<span class="math inline">\(1\)</span>を赤，<span class="math inline">\(0\)</span>を白に設定し，間の値はそれに合わせてグラデーションしていくような形で表示させている．</p>
 <pre class="r"><code>library(ggplot2)
 library(reshape2)</code></pre>
+<pre><code>## Warning: パッケージ &#39;reshape2&#39; はバージョン 4.4.2 の R の下で造られました</code></pre>
 <pre><code>## 
 ## 次のパッケージを付け加えます: &#39;reshape2&#39;</code></pre>
 <pre><code>## 以下のオブジェクトは &#39;package:tidyr&#39; からマスクされています:
@@ -2282,6 +2283,7 @@ R_{cb}}{\sqrt{(1-R_{ca}^2)}\sqrt{(1-R_{cb}^2)}}
 <p>アイスの売上高と海辺での人身事故のデータを用いて，アイスの売上高と海辺での人身事故の間の偏相関を求めよ．</p>
 </div>
 <pre class="r"><code>library(ppcor)</code></pre>
+<pre><code>## Warning: パッケージ &#39;ppcor&#39; はバージョン 4.4.2 の R の下で造られました</code></pre>
 <pre><code>## 要求されたパッケージ MASS をロード中です</code></pre>
 <pre><code>## 
 ## 次のパッケージを付け加えます: &#39;MASS&#39;</code></pre>
@@ -2404,7 +2406,12 @@ pcor.test(data$`アイスクリームの購入金額_世帯当たり`, data$`海
 日本教育工学会論文誌, Vol.41 (Suppl.), pp.89-92，2017.</a></li>
 </ul>
 </div>
-</div>
+<div class="ref">
+<summary>
+<p>相関係数の差の検定</p>
+<p>以下の内容はかなり複雑なものであるとともに，実際にはそう使うものでもないので，興味があれば見るという程度でよい．</p>
+</summary>
+<details>
 <div id="相関係数の差の検定" class="section level1" number="9">
 <h1><span class="header-section-number">9</span> 相関係数の差の検定</h1>
 <p>相関係数の差が有意かどうかを検定することが可能である．帰無仮説は，2つの相関係数が等しいということである．
@@ -2424,9 +2431,9 @@ pcor.test(data$`アイスクリームの購入金額_世帯当たり`, data$`海
 <div class="practice">
 <p>ある高校の3年生（男子165名，女子181名）で，数学と英語のテストの点数についての相関を調べたところ，男性の相関係数は0.65，女性の相関係数は0.72であった．この2つの相関係数の差が有意かどうかを検定せよ．</p>
 </div>
-<pre class="r"><code>library(cocor)
-
-# 独立サンプルにおける相関の差の検定
+<pre class="r"><code>library(cocor)</code></pre>
+<pre><code>## Warning: パッケージ &#39;cocor&#39; はバージョン 4.4.2 の R の下で造られました</code></pre>
+<pre class="r"><code># 独立サンプルにおける相関の差の検定
 cocor.indep.groups(r1=0.65, r2=0.72, n1=165, n2=181)</code></pre>
 <pre><code>## 
 ##   Results of a comparison of two correlations based on independent groups
@@ -2705,6 +2712,9 @@ cocor.dep.groups.nonoverlap(r.jk=0.42, r.hm=0.72,
 <li>営業部におけるQ1とQ4の相関と，開発部におけるQ1とQ4の相関に有意な差があるかどうかを検定せよ．</li>
 <li>営業部におけるQ1とQ4の相関と，同じく営業部におけるQ2とQ3の相関に有意な差があるかどうかを検定せよ．</li>
 </ol>
+</div>
+</details>
+</div>
 </div>
 </div>
 </div>
