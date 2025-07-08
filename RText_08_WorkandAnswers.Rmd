@@ -128,7 +128,7 @@ print(d)
 
 # 分析
 library(afex)
-aov_ez(
+res<-aov_ez(
   id = "店舗No.",       # 被験者を識別する列
   dv = "売上げ",          # 従属変数
   within = "時期",  # 被験者内要因
@@ -136,6 +136,7 @@ aov_ez(
   data = data,
   type = 3              # タイプIII分散分析
 )
+summary(res)
 
 #
 data_Area_A <- filter(data, 条件 == "実験群")
@@ -171,7 +172,7 @@ print(data)
 
 write_csv(data, "./practice/08_work_anova_4.csv")
 data$学生No. <- as.factor(data$学生No.)
-aov_ez(
+res<-aov_ez(
   id = "学生No.",       # 被験者を識別する列
   dv = "ストレス",          # 従属変数
   within = c("時期","条件"),  # 被験者内要因
@@ -179,6 +180,7 @@ aov_ez(
   data = data,
   type = 3              # タイプIII分散分析
 )
+summary(res)
 
 t.test(filter(data, 条件=="実験群" & 時期=="見る前")$ストレス, 
        filter(data, 条件=="実験群" & 時期=="見た後")$ストレス, 

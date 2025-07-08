@@ -11,7 +11,7 @@
 
 <meta name="author" content="藤野秀則," />
 
-<meta name="date" content="2025-06-30" />
+<meta name="date" content="2025-07-08" />
 
 <title>分散分析の課題の模範回答</title>
 
@@ -1322,176 +1322,7 @@ if (window.hljs) {
 
 
 
-<style type="text/css">.tocify-subheader { 
-
-}
-.tocify-item {
-white-space: nowrap;
-}
-body{
-counter-reset: ref_number practice_number work_number;
-}
-.float img{
-
- 
-margin: auto;
-display: block;
-padding: 2%;
-border-radius: 8px 8px 0 0 ;
-position: relative;
-width : 60%;
-}
-.float .figcaption {
-position: relative;
-font-style: italic;
-font-size: large;
-font-weight: bold;
-color: #666;
-text-align: center;
-margin:0% auto 5% auto;
-border-bottom: solid 1px #666;
-border-left: solid 1px #666;
-border-right: solid 1px #666;
-border-radius:0 0 8px 8px;
-width : 60%
-}
-img {
-margin: auto;
-display: block;
-border: solid 1px #666;
-border-radius: 8px;
-position: relative;
-width : 60%;
-}
-
-.WideFigure img{
-margin: auto;
-display: block;
-border: solid 1px #666;
-border-radius: 8px 8px 0 0;
-position: relative;
-width : 100%;
-}
-.WideFigure .float .figcaption {
-position: relative;
-font-style: italic;
-font-size: large;
-font-weight: bold;
-color: #666;
-text-align: center;
-margin:0% auto 5% auto;
-border-bottom: solid 1px #666;
-border-left: solid 1px #666;
-border-right: solid 1px #666;
-border-radius:0 0 8px 8px;
-width : 100%
-}
-.ref {
-position: relative;
-margin:5%;
-padding:5px;
-background-color: rgba(255, 255, 128, .5);
-color: #666;
-}
-.ref::before{
-counter-increment: ref_number 1;
-content: "[参考 " counter(ref_number) "]";
-font-weight: bold;
-display: block;
-margin-bottom: 3px;
-}
-h1 {
-margin-top : 10px;
-padding-top : 50px;
-}
-.practice {
-position: relative;
-margin:5%;
-padding:5px;
-background-color: rgba(128, 255, 200, .5);
-color: #666;
-}
-.practice::before{
-counter-increment: practice_number 1;
-content: "[例題 " counter(practice_number) "]";
-font-weight: bold;
-display: block;
-margin-bottom: 3px;
-}
-.work {
-position: relative;
-margin:5%;
-padding:5px;
-background-color: rgba(128, 200, 255, .2);
-color: #666;
-}
-.work::before{
-counter-increment: work_number 1;
-content: "[課題 " counter(work_number) "]";
-font-weight: bold;
-display: block;
-margin-bottom: 3px;
-}
-
-user-select: none;
--moz-user-select: none;
--webkit-user-select: none;
--ms-user-select: none;
--khtml-user-select: none;
--webkit-touch-callout: none;
-}
-***/
-.res_table {
-border-collapse: collapse;
-width: 50%;
-margin: 0 auto;
-border-top: 1px solid #666;
-border-bottom: 1px solid #666;
-}
-.res_table th {
-border-bottom: 1px solid #666;
-text-align: center;
-}
-.res_table td {
-text-align: right;
-}
-.res_table .td_left {
-text-align: left;
-}
-.res_table .tr_topborder {
-border-top: 1px solid #666;
-}
-.res_table .tr_bottomborder {
-border-bottom: 1px solid #666;
-}
-
-.math .display {
-text-align: center;
-font-size: small;
-}
-
-.custom-table {
-border: 2px solid #000;
-border-collapse: collapse;
-width: 75%;
-margin-left: auto;
-margin-right: auto;
-margin-bottom: 10px;
-margin-top: 10px;
-}
-.custom-table th, .custom-table td {
-border: 1px solid #000;
-padding: 8px;
-text-align: center;
-}
-.custom-table th {
-background-color: #f0f8ff;
-}
-
-a {
-text-decoration: underline;
-font-weight: bold;
-}</style>
+<style type="text/css">.tocify-subheader { }.tocify-item {white-space: nowrap;}body{counter-reset: ref_number practice_number work_number;}.float img{ margin: auto;display: block;padding: 2%;border-radius: 8px 8px 0 0 ;position: relative;width : 60%;}.float .figcaption {position: relative;font-style: italic;font-size: large;font-weight: bold;color: #666;text-align: center;margin:0% auto 5% auto;border-bottom: solid 1px #666;border-left: solid 1px #666;border-right: solid 1px #666;border-radius:0 0 8px 8px;width : 60%}img {margin: auto;display: block;border: solid 1px #666;border-radius: 8px;position: relative;width : 60%;}.WideFigure img{margin: auto;display: block;border: solid 1px #666;border-radius: 8px 8px 0 0;position: relative;width : 100%;}.WideFigure .float .figcaption {position: relative;font-style: italic;font-size: large;font-weight: bold;color: #666;text-align: center;margin:0% auto 5% auto;border-bottom: solid 1px #666;border-left: solid 1px #666;border-right: solid 1px #666;border-radius:0 0 8px 8px;width : 100%}.ref {position: relative;margin:5%;padding:5px;background-color: rgba(255, 255, 128, .5);color: #666;}.ref::before{counter-increment: ref_number 1;content: "[参考 " counter(ref_number) "]";font-weight: bold;display: block;margin-bottom: 3px;}h1 {margin-top : 10px;padding-top : 50px;}.practice {position: relative;margin:5%;padding:5px;background-color: rgba(128, 255, 200, .5);color: #666;}.practice::before{counter-increment: practice_number 1;content: "[例題 " counter(practice_number) "]";font-weight: bold;display: block;margin-bottom: 3px;}.work {position: relative;margin:5%;padding:5px;background-color: rgba(128, 200, 255, .2);color: #666;}.work::before{counter-increment: work_number 1;content: "[課題 " counter(work_number) "]";font-weight: bold;display: block;margin-bottom: 3px;}user-select: none;-moz-user-select: none;-webkit-user-select: none;-ms-user-select: none;-khtml-user-select: none;-webkit-touch-callout: none;}***/.res_table {border-collapse: collapse;width: 50%;margin: 0 auto;border-top: 1px solid #666;border-bottom: 1px solid #666;}.res_table th {border-bottom: 1px solid #666;text-align: center;}.res_table td {text-align: right;}.res_table .td_left {text-align: left;}.res_table .tr_topborder {border-top: 1px solid #666;}.res_table .tr_bottomborder {border-bottom: 1px solid #666;}.math .display {text-align: center;font-size: small;}.custom-table {border: 2px solid #000;border-collapse: collapse;width: 75%;margin-left: auto;margin-right: auto;margin-bottom: 10px;margin-top: 10px;}.custom-table th, .custom-table td {border: 1px solid #000;padding: 8px;text-align: center;}.custom-table th {background-color: #f0f8ff;}a {text-decoration: underline;font-weight: bold;}</style>
 
 
 
@@ -1657,7 +1488,7 @@ font-size: 0.95em;
 
 <h1 class="title toc-ignore">分散分析の課題の模範回答</h1>
 <h4 class="author">藤野秀則,</h4>
-<h4 class="date">2025-06-30</h4>
+<h4 class="date">2025-07-08</h4>
 
 </div>
 
@@ -1713,7 +1544,7 @@ head(mydata_anova_long)</code></pre>
 ## Residuals   149  144.4    0.97                   
 ## ---
 ## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1
-## 13 observations deleted due to missingness</code></pre>
+## 13 個の観測値が欠損のため削除されました</code></pre>
 </div>
 <div id="課題2" class="section level1" number="2">
 <h1><span class="header-section-number">2</span> 課題2</h1>
@@ -1790,12 +1621,12 @@ print(mydata_anova_2way_long)</code></pre>
 ## # ℹ 50 more rows</code></pre>
 <pre class="r"><code>aggregate(おいしさ~パンの種類, data=mydata_anova_2way_long, FUN=mean)</code></pre>
 <pre><code>##   パンの種類 おいしさ
-## 1     従来品 6.000000
-## 2     試作品 5.966667</code></pre>
+## 1     試作品 5.966667
+## 2     従来品 6.000000</code></pre>
 <pre class="r"><code>aggregate(おいしさ~パンの種類, data=mydata_anova_2way_long, FUN=sd)</code></pre>
 <pre><code>##   パンの種類 おいしさ
-## 1     従来品 2.084425
-## 2     試作品 1.650148</code></pre>
+## 1     試作品 1.650148
+## 2     従来品 2.084425</code></pre>
 <pre class="r"><code>#分散分析の実施
 mydata_anova_2way_long$被験者No. &lt;- as.factor(mydata_anova_2way_long$被験者No.)
 res &lt;- aov(おいしさ~パンの種類+Error(被験者No./パンの種類), data=mydata_anova_2way_long)
@@ -1841,17 +1672,18 @@ data$店舗No. &lt;- as.factor(data$店舗No.)
 d&lt;-aggregate(data$売上げ, by=list(data$条件, data$時期), FUN=mean)
 print(d)</code></pre>
 <pre><code>##   Group.1 Group.2         x
-## 1  実験群  変更前 102.25000
-## 2  対照群  変更前 102.22727
-## 3  実験群  変更後 107.10000
-## 4  対照群  変更後  98.63636</code></pre>
+## 1  実験群  変更後 107.10000
+## 2  対照群  変更後  98.63636
+## 3  実験群  変更前 102.25000
+## 4  対照群  変更前 102.22727</code></pre>
 <pre class="r"><code># 分析
 library(afex)</code></pre>
-<pre><code>## Loading required package: lme4</code></pre>
-<pre><code>## Loading required package: Matrix</code></pre>
+<pre><code>## Warning: パッケージ &#39;afex&#39; はバージョン 4.4.3 の R の下で造られました</code></pre>
+<pre><code>## 要求されたパッケージ lme4 をロード中です</code></pre>
+<pre><code>## 要求されたパッケージ Matrix をロード中です</code></pre>
 <pre><code>## 
-## Attaching package: &#39;Matrix&#39;</code></pre>
-<pre><code>## The following objects are masked from &#39;package:tidyr&#39;:
+## 次のパッケージを付け加えます: &#39;Matrix&#39;</code></pre>
+<pre><code>## 以下のオブジェクトは &#39;package:tidyr&#39; からマスクされています:
 ## 
 ##     expand, pack, unpack</code></pre>
 <pre><code>## ************
@@ -1864,11 +1696,11 @@ library(afex)</code></pre>
 ## - For example analyses see: browseVignettes(&quot;afex&quot;)
 ## ************</code></pre>
 <pre><code>## 
-## Attaching package: &#39;afex&#39;</code></pre>
-<pre><code>## The following object is masked from &#39;package:lme4&#39;:
+## 次のパッケージを付け加えます: &#39;afex&#39;</code></pre>
+<pre><code>## 以下のオブジェクトは &#39;package:lme4&#39; からマスクされています:
 ## 
 ##     lmer</code></pre>
-<pre class="r"><code>aov_ez(
+<pre class="r"><code>res&lt;-aov_ez(
   id = &quot;店舗No.&quot;,       # 被験者を識別する列
   dv = &quot;売上げ&quot;,          # 従属変数
   within = &quot;時期&quot;,  # 被験者内要因
@@ -1878,15 +1710,17 @@ library(afex)</code></pre>
 )</code></pre>
 <pre><code>## Converting to factor: 条件</code></pre>
 <pre><code>## Contrasts set to contr.sum for the following variables: 条件</code></pre>
-<pre><code>## Anova Table (Type 3 tests)
+<pre class="r"><code>summary(res)</code></pre>
+<pre><code>## 
+## Univariate Type III Repeated-Measures ANOVA Assuming Sphericity
 ## 
-## Response: 売上げ
-##      Effect    df   MSE      F  ges p.value
-## 1      条件 1, 40 74.96 5.03 * .066    .030
-## 2      時期 1, 40 58.25   0.14 .002    .708
-## 3 条件:時期 1, 40 58.25 6.41 * .065    .015
+##             Sum Sq num Df Error SS den Df    F value  Pr(&gt;F)    
+## (Intercept) 881442      1   2998.6     40 11758.1585 &lt; 2e-16 ***
+## 条件           377      1   2998.6     40     5.0323 0.03049 *  
+## 時期             8      1   2329.9     40     0.1426 0.70774    
+## 条件:時期      373      1   2329.9     40     6.4072 0.01540 *  
 ## ---
-## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;+&#39; 0.1 &#39; &#39; 1</code></pre>
+## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1</code></pre>
 <pre class="r"><code>#
 data_Area_A &lt;- filter(data, 条件 == &quot;実験群&quot;)
 data_Area_B &lt;- filter(data, 条件 == &quot;対照群&quot;)
@@ -1977,23 +1811,25 @@ t.test(data_Area_A_before$売上げ, data_Area_B_before$売上げ, paired=FALSE)
 ## # ℹ 70 more rows</code></pre>
 <pre class="r"><code>write_csv(data, &quot;./practice/08_work_anova_4.csv&quot;)
 data$学生No. &lt;- as.factor(data$学生No.)
-aov_ez(
+res&lt;-aov_ez(
   id = &quot;学生No.&quot;,       # 被験者を識別する列
   dv = &quot;ストレス&quot;,          # 従属変数
   within = c(&quot;時期&quot;,&quot;条件&quot;),  # 被験者内要因
   #between = &quot;実験パターン&quot;,  # 被験者間要因
   data = data,
   type = 3              # タイプIII分散分析
-)</code></pre>
-<pre><code>## Anova Table (Type 3 tests)
+)
+summary(res)</code></pre>
+<pre><code>## 
+## Univariate Type III Repeated-Measures ANOVA Assuming Sphericity
 ## 
-## Response: ストレス
-##      Effect    df  MSE         F  ges p.value
-## 1      時期 1, 19 0.56 26.20 *** .145   &lt;.001
-## 2      条件 1, 19 1.67   9.27 ** .153    .007
-## 3 時期:条件 1, 19 1.07  10.40 ** .114    .004
+##              Sum Sq num Df Error SS den Df  F value    Pr(&gt;F)    
+## (Intercept) 1107.07      1   23.393     19 899.1736 &lt; 2.2e-16 ***
+## 時期          14.62      1   10.604     19  26.1954  6.11e-05 ***
+## 条件          15.49      1   31.747     19   9.2693  0.006669 ** 
+## 時期:条件     11.10      1   20.274     19  10.4027  0.004454 ** 
 ## ---
-## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;+&#39; 0.1 &#39; &#39; 1</code></pre>
+## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1</code></pre>
 <pre class="r"><code>t.test(filter(data, 条件==&quot;実験群&quot; &amp; 時期==&quot;見る前&quot;)$ストレス, 
        filter(data, 条件==&quot;実験群&quot; &amp; 時期==&quot;見た後&quot;)$ストレス, 
        paired=TRUE)</code></pre>
