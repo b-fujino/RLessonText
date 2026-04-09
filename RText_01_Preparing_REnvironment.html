@@ -11,7 +11,7 @@
 
 <meta name="author" content="福井県立大学経済学部教授　藤野秀則" />
 
-<meta name="date" content="2025-02-02" />
+<meta name="date" content="2026-04-09" />
 
 <title>R実行環境の整備と基本的な計算</title>
 
@@ -1322,7 +1322,176 @@ if (window.hljs) {
 
 
 
-<style type="text/css">.tocify-subheader { }.tocify-item {white-space: nowrap;}body{counter-reset: ref_number practice_number work_number;}.float img{ margin: auto;display: block;padding: 2%;border-radius: 8px 8px 0 0 ;position: relative;width : 60%;}.float .figcaption {position: relative;font-style: italic;font-size: large;font-weight: bold;color: #666;text-align: center;margin:0% auto 5% auto;border-bottom: solid 1px #666;border-left: solid 1px #666;border-right: solid 1px #666;border-radius:0 0 8px 8px;width : 60%}img {margin: auto;display: block;border: solid 1px #666;border-radius: 8px;position: relative;width : 60%;}.WideFigure img{margin: auto;display: block;border: solid 1px #666;border-radius: 8px 8px 0 0;position: relative;width : 100%;}.WideFigure .float .figcaption {position: relative;font-style: italic;font-size: large;font-weight: bold;color: #666;text-align: center;margin:0% auto 5% auto;border-bottom: solid 1px #666;border-left: solid 1px #666;border-right: solid 1px #666;border-radius:0 0 8px 8px;width : 100%}.ref {position: relative;margin:5%;padding:5px;background-color: rgba(255, 255, 128, .5);color: #666;}.ref::before{counter-increment: ref_number 1;content: "[参考 " counter(ref_number) "]";font-weight: bold;display: block;margin-bottom: 3px;}h1 {margin-top : 10px;padding-top : 50px;}.practice {position: relative;margin:5%;padding:5px;background-color: rgba(128, 255, 200, .5);color: #666;}.practice::before{counter-increment: practice_number 1;content: "[例題 " counter(practice_number) "]";font-weight: bold;display: block;margin-bottom: 3px;}.work {position: relative;margin:5%;padding:5px;background-color: rgba(128, 200, 255, .2);color: #666;}.work::before{counter-increment: work_number 1;content: "[課題 " counter(work_number) "]";font-weight: bold;display: block;margin-bottom: 3px;}user-select: none;-moz-user-select: none;-webkit-user-select: none;-ms-user-select: none;-khtml-user-select: none;-webkit-touch-callout: none;}***/.res_table {border-collapse: collapse;width: 50%;margin: 0 auto;border-top: 1px solid #666;border-bottom: 1px solid #666;}.res_table th {border-bottom: 1px solid #666;text-align: center;}.res_table td {text-align: right;}.res_table .td_left {text-align: left;}.res_table .tr_topborder {border-top: 1px solid #666;}.res_table .tr_bottomborder {border-bottom: 1px solid #666;}.math .display {text-align: center;font-size: small;}.custom-table {border: 2px solid #000;border-collapse: collapse;width: 75%;margin-left: auto;margin-right: auto;margin-bottom: 10px;margin-top: 10px;}.custom-table th, .custom-table td {border: 1px solid #000;padding: 8px;text-align: center;}.custom-table th {background-color: #f0f8ff;}a {text-decoration: underline;font-weight: bold;}</style>
+<style type="text/css">.tocify-subheader { 
+
+}
+.tocify-item {
+white-space: nowrap;
+}
+body{
+counter-reset: ref_number practice_number work_number;
+}
+.float img{
+
+ 
+margin: auto;
+display: block;
+padding: 2%;
+border-radius: 8px 8px 0 0 ;
+position: relative;
+width : 60%;
+}
+.float .figcaption {
+position: relative;
+font-style: italic;
+font-size: large;
+font-weight: bold;
+color: #666;
+text-align: center;
+margin:0% auto 5% auto;
+border-bottom: solid 1px #666;
+border-left: solid 1px #666;
+border-right: solid 1px #666;
+border-radius:0 0 8px 8px;
+width : 60%
+}
+img {
+margin: auto;
+display: block;
+border: solid 1px #666;
+border-radius: 8px;
+position: relative;
+width : 60%;
+}
+
+.WideFigure img{
+margin: auto;
+display: block;
+border: solid 1px #666;
+border-radius: 8px 8px 0 0;
+position: relative;
+width : 100%;
+}
+.WideFigure .float .figcaption {
+position: relative;
+font-style: italic;
+font-size: large;
+font-weight: bold;
+color: #666;
+text-align: center;
+margin:0% auto 5% auto;
+border-bottom: solid 1px #666;
+border-left: solid 1px #666;
+border-right: solid 1px #666;
+border-radius:0 0 8px 8px;
+width : 100%
+}
+.ref {
+position: relative;
+margin:5%;
+padding:5px;
+background-color: rgba(255, 255, 128, .5);
+color: #666;
+}
+.ref::before{
+counter-increment: ref_number 1;
+content: "[参考 " counter(ref_number) "]";
+font-weight: bold;
+display: block;
+margin-bottom: 3px;
+}
+h1 {
+margin-top : 10px;
+padding-top : 50px;
+}
+.practice {
+position: relative;
+margin:5%;
+padding:5px;
+background-color: rgba(128, 255, 200, .5);
+color: #666;
+}
+.practice::before{
+counter-increment: practice_number 1;
+content: "[例題 " counter(practice_number) "]";
+font-weight: bold;
+display: block;
+margin-bottom: 3px;
+}
+.work {
+position: relative;
+margin:5%;
+padding:5px;
+background-color: rgba(128, 200, 255, .2);
+color: #666;
+}
+.work::before{
+counter-increment: work_number 1;
+content: "[課題 " counter(work_number) "]";
+font-weight: bold;
+display: block;
+margin-bottom: 3px;
+}
+
+user-select: none;
+-moz-user-select: none;
+-webkit-user-select: none;
+-ms-user-select: none;
+-khtml-user-select: none;
+-webkit-touch-callout: none;
+}
+***/
+.res_table {
+border-collapse: collapse;
+width: 50%;
+margin: 0 auto;
+border-top: 1px solid #666;
+border-bottom: 1px solid #666;
+}
+.res_table th {
+border-bottom: 1px solid #666;
+text-align: center;
+}
+.res_table td {
+text-align: right;
+}
+.res_table .td_left {
+text-align: left;
+}
+.res_table .tr_topborder {
+border-top: 1px solid #666;
+}
+.res_table .tr_bottomborder {
+border-bottom: 1px solid #666;
+}
+
+.math .display {
+text-align: center;
+font-size: small;
+}
+
+.custom-table {
+border: 2px solid #000;
+border-collapse: collapse;
+width: 75%;
+margin-left: auto;
+margin-right: auto;
+margin-bottom: 10px;
+margin-top: 10px;
+}
+.custom-table th, .custom-table td {
+border: 1px solid #000;
+padding: 8px;
+text-align: center;
+}
+.custom-table th {
+background-color: #f0f8ff;
+}
+
+a {
+text-decoration: underline;
+font-weight: bold;
+}</style>
 
 
 
@@ -1488,7 +1657,7 @@ font-size: 0.95em;
 
 <h1 class="title toc-ignore">R実行環境の整備と基本的な計算</h1>
 <h4 class="author">福井県立大学経済学部教授　藤野秀則</h4>
-<h4 class="date">2025-02-02</h4>
+<h4 class="date">2026-04-09</h4>
 
 </div>
 
@@ -1564,8 +1733,7 @@ cloudのFreeプランには毎月25時間までの利用制限があり，これ
 <p><strong>[ダウンロード・インストール]</strong></p>
 <p>デスクトップ版のダウンロード・インストールは以下の2つのサイトからダウンロードとなる．</p>
 <ul>
-<li><a href="https://cran.r-project.org/bin/windows/base/">R(Windows版)</a></li>
-<li><a href="https://cran.r-project.org/bin/macosx/">R(Mac版)</a>
+<li>R本体<a href="https://cran.r-project.org/bin/windows/base/">(Windows版)</a>　<a href="https://cran.r-project.org/bin/macosx/">(Mac版)</a>
 <ul>
 <li>Mac版の場合にはCPUがIntelかApple
 Siliconかによってダウンロードするファイルが異なるので注意が必要．もし自分のPCのCPUがいずれかが不明である場合、<a href="https://tamoc.com/check-intel-mac/">このサイト</a>を参考に各自で確認すること。</li>
@@ -1575,7 +1743,7 @@ Siliconかによってダウンロードするファイルが異なるので注�
 <li>2 Install RStduioの方のボタンをクリックする．</li>
 </ul></li>
 </ul>
-<p>それぞれダウンロードが済んだら，インストールを行えばよい．</p>
+<p>それぞれダウンロードが済んだら，両方ともインストールを行えばよい．</p>
 <p>インストールが済めば，プログラム一覧に「RStudio」が表示されるので，これをクリックして起動する．</p>
 <p><strong>[アンインストール]</strong></p>
 <p>RStudioをアンインストールしたい場合には，Windowsの場合には「設定」→「アプリ」→「アプリと機能」から「RStduio」と「R
@@ -1618,109 +1786,109 @@ xxxx」（xxxはバージョン情報）を見つけ出してアンインスト�
 <p>このように，<code>+</code>，<code>-</code>，<code>*</code>，<code>/</code>，<code>()</code>，<code>^</code>，<code>%%</code>などの演算記号のことを<strong>演算子(Operator)</strong>と呼ぶ．演算子にはこれら以外にもいろいろある．以下にRで使われる代表的な演算子を示す．</p>
 <table>
 <thead>
-<tr class="header">
+<tr>
 <th>演算子</th>
 <th>説明</th>
 <th>例</th>
 </tr>
 </thead>
 <tbody>
-<tr class="odd">
+<tr>
 <td>+</td>
 <td>加算</td>
 <td><code>x + y</code></td>
 </tr>
-<tr class="even">
+<tr>
 <td>-</td>
 <td>減算</td>
 <td><code>x - y</code></td>
 </tr>
-<tr class="odd">
+<tr>
 <td>*</td>
 <td>乗算</td>
 <td><code>x * y</code></td>
 </tr>
-<tr class="even">
+<tr>
 <td>/</td>
 <td>除算</td>
 <td><code>x / y</code></td>
 </tr>
-<tr class="odd">
+<tr>
 <td>^</td>
 <td>累乗</td>
 <td><code>x ^ y</code></td>
 </tr>
-<tr class="even">
+<tr>
 <td>%%</td>
 <td>剰余</td>
 <td><code>x %% y</code></td>
 </tr>
-<tr class="odd">
+<tr>
 <td>%/%</td>
 <td>整数除算</td>
 <td><code>x %/% y</code></td>
 </tr>
-<tr class="even">
+<tr>
 <td>==</td>
 <td>等しい</td>
 <td><code>x == y</code></td>
 </tr>
-<tr class="odd">
+<tr>
 <td>!=</td>
 <td>等しくない</td>
 <td><code>x != y</code></td>
 </tr>
-<tr class="even">
+<tr>
 <td>&lt;</td>
 <td>より小さい</td>
 <td><code>x &lt; y</code></td>
 </tr>
-<tr class="odd">
+<tr>
 <td>&gt;</td>
 <td>より大きい</td>
 <td><code>x &gt; y</code></td>
 </tr>
-<tr class="even">
+<tr>
 <td>&lt;=</td>
 <td>以下</td>
 <td><code>x &lt;= y</code></td>
 </tr>
-<tr class="odd">
+<tr>
 <td>&gt;=</td>
 <td>以上</td>
 <td><code>x &gt;= y</code></td>
 </tr>
-<tr class="even">
+<tr>
 <td>&amp;</td>
 <td>論理積 (AND)</td>
 <td><code>x &amp; y</code></td>
 </tr>
-<tr class="odd">
+<tr>
 <td>|</td>
 <td>論理和 (OR)</td>
 <td><code>x | y</code></td>
 </tr>
-<tr class="even">
+<tr>
 <td>!</td>
 <td>否定 (NOT)</td>
 <td><code>!x</code></td>
 </tr>
-<tr class="odd">
+<tr>
 <td>%in%</td>
 <td>ベクトルの要素が含まれるか</td>
 <td><code>x %in% y</code></td>
 </tr>
-<tr class="even">
+<tr>
 <td>:</td>
 <td>シーケンスの生成</td>
 <td><code>1:10</code></td>
 </tr>
-<tr class="odd">
+<tr>
 <td>&lt;-</td>
 <td>代入</td>
 <td><code>x &lt;- 10</code></td>
 </tr>
-<tr class="even">
+<tr>
 <td>=</td>
 <td>代入 (引数で使用)</td>
 <td><code>func(x = 10)</code></td>
