@@ -98,13 +98,12 @@ posit cloudのFreeプランには毎月25時間までの利用制限があり，
 
 デスクトップ版のダウンロード・インストールは以下の2つのサイトからダウンロードとなる．
 
-- [R(Windows版)](https://cran.r-project.org/bin/windows/base/)
-- [R(Mac版)](https://cran.r-project.org/bin/macosx/)
+- R本体[(Windows版)](https://cran.r-project.org/bin/windows/base/)　[(Mac版)](https://cran.r-project.org/bin/macosx/)
   - Mac版の場合にはCPUがIntelかApple Siliconかによってダウンロードするファイルが異なるので注意が必要．もし自分のPCのCPUがいずれかが不明である場合、[このサイト](https://tamoc.com/check-intel-mac/)を参考に各自で確認すること。
 - [RStudio](https://posit.co/download/rstudio-desktop/)
   - 2 Install RStduioの方のボタンをクリックする．
   
-それぞれダウンロードが済んだら，インストールを行えばよい．
+それぞれダウンロードが済んだら，両方ともインストールを行えばよい．
 
 インストールが済めば，プログラム一覧に「RStudio」が表示されるので，これをクリックして起動する．
 
