@@ -1487,12 +1487,12 @@ font-size: 0.95em;
 
 <h1 class="title toc-ignore">RとRStuidoの基本操作</h1>
 <h4 class="author">藤野秀則,</h4>
-<h4 class="date">初稿日:2024-05-02 更新日:2025-05-28</h4>
+<h4 class="date">初稿日:2024-05-02 更新日:2026-04-23</h4>
 
 </div>
 
 
-<p>前回までで<a href="./RText_02_BasicUsage.html#RMakrdown">RMarkdownファイルの作り方</a>を学習しているので，これ以降はRMarkdownファイルにR（もしくはpython)のコードを書いていくこと．</p>
+<p>前回までで<a href="./RText_02_BasicUsage.html#RMakrdown">RMarkdownファイルの作り方</a>を学習しているので，これ以降はRMarkdownファイルにRのコードを書いていくこと．</p>
 <div id="ベクトル" class="section level1" number="1">
 <h1><span class="header-section-number">1</span> ベクトル</h1>
 <div id="ベクトルの作成" class="section level2" number="1.1">
@@ -1562,7 +1562,7 @@ print(NamedScore)</code></pre>
 print(NamedScore)</code></pre>
 <pre><code>## 赤木 桜木 三井 宮城 流川 
 ##    7    4   10    7    9</code></pre>
-<p>名前を付けておくとベクトル内の個々のデータにアクセスする際に，インデックス番号だけでなく，名前でアクセスすることもできる．詳しくは<a href="#個々のデータへのアクセス">個々のデータへのアクセス</a>へ．</p>
+<p>名前を付けておくとベクトル内の個々のデータにアクセスする際に，インデックス番号だけでなく，名前でアクセスすることもできる．詳しくは<a href="#%E5%80%8B%E3%80%85%E3%81%AE%E3%83%87%E3%83%BC%E3%82%BF%E3%81%B8%E3%81%AE%E3%82%A2%E3%82%AF%E3%82%BB%E3%82%B9">個々のデータへのアクセス</a>へ．</p>
 </div>
 </div>
 <div id="ベクトルの型" class="section level2" number="1.2">
@@ -1628,9 +1628,11 @@ print(NamedScore)</code></pre>
 <pre class="r"><code>NamedScore[[&quot;流川&quot;]]</code></pre>
 <pre><code>## [1] 9</code></pre>
 <pre class="r"><code>NamedScore[[c(1,3,4)]] #これはエラー</code></pre>
-<pre><code>## Error in NamedScore[[c(1, 3, 4)]]: attempt to select more than one element in vectorIndex</code></pre>
+<pre><code>## Error in `NamedScore[[c(1, 3, 4)]]`:
+## ! attempt to select more than one element in vectorIndex</code></pre>
 <pre class="r"><code>NamedScore[[c(&quot;赤木&quot;,&quot;三井&quot;,&quot;宮城&quot;)]] #これもエラー</code></pre>
-<pre><code>## Error in NamedScore[[c(&quot;赤木&quot;, &quot;三井&quot;, &quot;宮城&quot;)]]: attempt to select more than one element in vectorIndex</code></pre>
+<pre><code>## Error in `NamedScore[[c(&quot;赤木&quot;, &quot;三井&quot;, &quot;宮城&quot;)]]`:
+## ! attempt to select more than one element in vectorIndex</code></pre>
 </div>
 </div>
 <div id="個々のデータの書き換え" class="section level2" number="1.4">
@@ -1712,8 +1714,8 @@ NamedScore + namedhoge</code></pre>
 <p>演算するベクトルの長さが異なっているとWarningが出力される．興味深いことに，Errorではなく，あくまでWarningであって計算結果は出力される．長さが短い方が長い方に合わせて循環していく．また，長い方のベクトルの長さが短い方のベクトルの長さの整数倍の時には，Warningも表示されない．</p>
 <pre class="r"><code>hoge2 &lt;- c(3,5,0,2,1,4,3)
 Score + hoge2 # 長さが合ってないのでWarningが出てくる</code></pre>
-<pre><code>## Warning in Score + hoge2:
-## 長いオブジェクトの長さが短いオブジェクトの長さの倍数になっていません</code></pre>
+<pre><code>## Warning in Score + hoge2: longer object length is not a multiple of shorter
+## object length</code></pre>
 <pre><code>## [1] 10  9 10  9 10 11  7</code></pre>
 <pre class="r"><code>hoge3 &lt;- c(3,5,0,2,1,4,3,3,4,4) # hoge3の長さがScoreの2倍になっているのでWarningはでない
 Score + hoge3 </code></pre>
@@ -1782,7 +1784,8 @@ print(Full)</code></pre>
 ## [8] &quot;佐々岡&quot;   &quot;桑田&quot;</code></pre>
 <p>ただし，除外と抽出を同時にはできない．</p>
 <pre class="r"><code>Full[c(1:5,-3)] #これはエラー．取り出しと除外を同時できない．</code></pre>
-<pre><code>## Error in Full[c(1:5, -3)]: 負の添字と混在できるのは 0 という添字だけです</code></pre>
+<pre><code>## Error in `Full[c(1:5, -3)]`:
+## ! only 0&#39;s may be mixed with negative subscripts</code></pre>
 <div class="work">
 <p>RMarkdownファイルを作成し，以下の課題についてRMarkdown上で実行させ，KnitによってHTML出力させよ．</p>
 <ol style="list-style-type: decimal">
@@ -1940,9 +1943,11 @@ Shohoku</code></pre>
 ## 5 流川     11     9</code></pre>
 <p>注意しないといけない点として，あくまで元の列ベクトルに含まれるデータ数（要するに行数）と同じデータ数のベクトルを与えなければならない．異なるデータ数のベクトルを与えた場合，Errorが返される．</p>
 <pre class="r"><code>Shohoku$name &lt;- c(&quot;Akagi&quot;,&quot;Sakuragi&quot;,&quot;Mitsui&quot;,&quot;Miyagi&quot;) #データが1つ足りない</code></pre>
-<pre><code>## Error in `$&lt;-.data.frame`(`*tmp*`, name, value = c(&quot;Akagi&quot;, &quot;Sakuragi&quot;, : 置換は 4 列ですが、データは 5 列です</code></pre>
+<pre><code>## Error in `$&lt;-.data.frame`:
+## ! replacement has 4 rows, data has 5</code></pre>
 <pre class="r"><code>Shohoku[1] &lt;- c(&quot;Akagi&quot;,&quot;Sakuragi&quot;,&quot;Mitsui&quot;,&quot;Miyagi&quot;) #データが1つ足りない</code></pre>
-<pre><code>## Error in `[&lt;-.data.frame`(`*tmp*`, 1, value = c(&quot;Akagi&quot;, &quot;Sakuragi&quot;, &quot;Mitsui&quot;, : 置換は 4 列ですが、データは 5 列です</code></pre>
+<pre><code>## Error in `[&lt;-.data.frame`:
+## ! replacement has 4 rows, data has 5</code></pre>
 <p>与えるベクトルデータが数値の場合には，演算を伴ったものでもよい．</p>
 <pre class="r"><code>Shohoku$score &lt;- Shohoku$score + 5 # 5を足した
 Shohoku</code></pre>
@@ -2002,7 +2007,7 @@ Shohoku</code></pre>
 <pre class="r"><code>Shohoku[&quot;桜木&quot;,&quot;score&quot;] # これはNAが返される</code></pre>
 <pre><code>## [1] NA</code></pre>
 <div class="ref">
-<p>以下のように，ベクトル要素の検索機能を使って行の要素を使ったアクセスは可能であるが，これは5章で触れる<a href="(./RText_05_DataHandling.html#フィルタリング)">データフレームのフィルタリング</a>を使う方が直観的である．</p>
+<p>以下のように，ベクトル要素の検索機能を使って行の要素を使ったアクセスは可能であるが，これは5章で触れる<a href="(./RText_05_DataHandling.html#%E3%83%95%E3%82%A3%E3%83%AB%E3%82%BF%E3%83%AA%E3%83%B3%E3%82%B0)">データフレームのフィルタリング</a>を使う方が直観的である．</p>
 <pre class="r"><code>Shohoku[Shohoku$name==&quot;桜木&quot;,&quot;score&quot;] </code></pre>
 <pre><code>## [1] 4</code></pre>
 </div>
@@ -2188,7 +2193,8 @@ Shohoku</code></pre>
   score =c(6, 7, 7,  5,  5,  4)
 )
 Shohoku &lt;-rbind(Shohoku, Reserve2)</code></pre>
-<pre><code>## Error in match.names(clabs, names(xi)): 名前が以前の名前と一致しません</code></pre>
+<pre><code>## Error in `match.names()`:
+## ! names do not match previous names</code></pre>
 <pre class="r"><code>Shohoku</code></pre>
 <pre><code>##      name number score
 ## 1    赤木      4     7
@@ -2260,11 +2266,13 @@ Shohoku</code></pre>
 データフレームに対する演算</h2>
 <p>今回のデータフレームには，<code>name</code>のような文字列型や<code>number</code>や<code>score</code>のような数値型など様々な型のベクトル（列）が含まれている．このような複数の型が混在するデータフレームに対しては演算処理を行うことはできない．演算処理を行いたい場合にはあくまで演算処理をしたい数値型の列のみを抜き出して，演算処理を行う．</p>
 <pre class="r"><code>Shohoku * 2 #これはエラー</code></pre>
-<pre><code>## Error in FUN(left, right): 二項演算子の引数が数値ではありません</code></pre>
+<pre><code>## Error in `FUN()`:
+## ! non-numeric argument to binary operator</code></pre>
 <pre class="r"><code>Shohoku$score*2 #これは数値型のベクトルなので演算処理が可能</code></pre>
 <pre><code>## [1] 14  8 20 14 18</code></pre>
 <pre class="r"><code>Shohoku$name *2 #これは文字列型のベクトルなのでエラー</code></pre>
-<pre><code>## Error in Shohoku$name * 2: 二項演算子の引数が数値ではありません</code></pre>
+<pre><code>## Error in `Shohoku$name * 2`:
+## ! non-numeric argument to binary operator</code></pre>
 <pre class="r"><code>Shohoku[c(&quot;number&quot;,&quot;score&quot;)] *2 #データフレーム型だが，両方とも数値型なので演算処理が可能　</code></pre>
 <pre><code>##   number score
 ## 1      8    14
@@ -2441,7 +2449,7 @@ myData</code></pre>
 <p>なお，ExcelでCSVファイルを作った場合には，上記のコマンドではうまく読まない場合がある．その場合には3つ目のfileEncodingのオプションを以下の通りに”SJIS”と指定する．（上のコマンドでうまく行っている場合には，逆に以下のコマンドだとエラーとなる）</p>
 <pre class="r"><code>myData &lt;- read.csv(&quot;test.csv&quot;, header = TRUE, fileEncoding = &quot;SJIS&quot;) </code></pre>
 <pre><code>## Warning in read.table(file = file, header = header, sep = sep, quote = quote, :
-## 入力コネクション &#39;test.csv&#39; に不正な入力がありました</code></pre>
+## invalid input found on input connection &#39;test.csv&#39;</code></pre>
 <pre><code>## Warning in read.table(file = file, header = header, sep = sep, quote = quote, :
 ## incomplete final line found by readTableHeader on &#39;test.csv&#39;</code></pre>
 <pre class="r"><code>myData</code></pre>
@@ -2565,7 +2573,7 @@ Previewに反映されるので，それをコピーすると良いだろう．
 <div id="データのアクセス加工" class="section level2" number="3.3">
 <h2><span class="header-section-number">3.3</span>
 データのアクセス，加工</h2>
-<p>読み込んだデータはデータフレーム型となるため，<a href="#データフレーム">データフレーム</a>の中で説明した方法で，以下のようにして各列にアクセスしたり，データを書き換えたり，列を追加したりできる．</p>
+<p>読み込んだデータはデータフレーム型となるため，<a href="#%E3%83%87%E3%83%BC%E3%82%BF%E3%83%95%E3%83%AC%E3%83%BC%E3%83%A0">データフレーム</a>の中で説明した方法で，以下のようにして各列にアクセスしたり，データを書き換えたり，列を追加したりできる．</p>
 <pre class="r"><code>myData &lt;- read.csv(&quot;test.csv&quot;, header = TRUE, fileEncoding = &quot;UTF8&quot;) 
 myData$名前</code></pre>
 <pre><code>## [1] &quot;赤木&quot; &quot;桜木&quot; &quot;三井&quot; &quot;宮城&quot; &quot;流川&quot;</code></pre>

@@ -23,7 +23,7 @@ editor_options:
 knitr::opts_chunk$set(echo = TRUE)
 ```
 
-前回までで[RMarkdownファイルの作り方](./RText_02_BasicUsage.html#RMakrdown)を学習しているので，これ以降はRMarkdownファイルにR（もしくはpython)のコードを書いていくこと．
+前回までで[RMarkdownファイルの作り方](./RText_02_BasicUsage.html#RMakrdown)を学習しているので，これ以降はRMarkdownファイルにRのコードを書いていくこと．
 
 # ベクトル
 
